@@ -1,0 +1,50 @@
+<div class="LoginCardLayout">
+	<div class="LoginCardLayout-card">
+	<div class="LoginCardLayout-backButtonContainer"></div>
+	<div class="LoginCardLayout-LoginLogoContainer "><img src="../../assets/Login_assets/images/logo.png" alt="" class="LoginCardLayout-LogoLogo"/></div>
+		
+	<div class="LoginDefaultView-content">
+	
+		
+	<form class="LoginEmailPasswordForm">
+		<div class="LoginEmailPasswordForm-emailAndPassword">
+		<span class="Typography Typography--colorDarkGray1 Typography--s">Email address</span>
+			<input type="text" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput LoginEmailPasswordForm-emailInput" name="" value="" autocomplete="username" autofocus="">
+			
+		<span class="Typography Typography--colorDarkGray1 Typography--s">Password</span>
+			<input type="password" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput ValidatedTextInput-input OnBlurValidatedTextInput-input LoginEmailPasswordForm-passwordInput" name="" value="" autocomplete="username" autofocus="">
+			
+		
+		</div>
+		
+		<span class="Typography Typography--colorDarkGray1 Typography--s"><a routerLink='/forgetpassword' routerLinkActive="true">Forgot your password?</a></span>
+		
+		<div class="captureSec">
+			<span class="Typography Typography--colorDarkGray1 Typography--s"><strong>Enter the text as shown in the image</strong> </span>
+			<input type="text" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput ValidatedTextInput-input OnBlurValidatedTextInput-input LoginEmailPasswordForm-passwordInput" name="" value="" autocomplete="username" autofocus="">
+			<span class="captureImg"><img src="../../assets/Login_assets/images/capture.jpg" alt=""/></span>
+		</div>
+		
+		
+		<input type="button" value="Log in" class="loginBtn" (click)="goto_home()">
+		
+		
+		
+		
+	</form>
+	
+	<div class="LoginDefaultView-signUp">
+		<span class="Typography Typography--colorDarkGray1 Typography--m">Don't have an account?</span>
+		<a class="LoginDefaultView-signUpButtonLink PrimaryLink BaseLink" routerLink='/signup' routerLinkActive="true">Sign up</a></div>
+		
+	</div>
+	
+	<span class="LoginCardLayout-captchaNotice Typography Typography--colorDarkGray1 Typography--s Typography--textAlignCenter">This site is protected by reCAPTCHA and the Google 
+		<a target="_blank" rel="noreferrer noopener" class="SecondaryLink BaseLink" >Privacy Policy</a> and 
+		<a target="_blank" rel="noreferrer noopener" class="SecondaryLink BaseLink" >Terms of Service </a> apply. </span>
+		
+		
+		
+	</div>
+</div>
+<router-outlet></router-outlet>

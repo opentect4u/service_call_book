@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.card .card-body .titleSec {
+    /* margin: 0 0 30px 0; */
+    margin: -20px -20px 30px -20px;
+    background: #2c2e3e;
+    padding: 12px 12px 24px 12px;
+  }
+  
+  .card .card-body .titleSec h2 {
+    color: #fff;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 3px 0 0 0;
+    display: inline-block;
+  }
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 25%;
+  }
+  a:hover{
+    cursor: pointer;
+  }
+  textarea {
+    width: 300px;
+    height: 300px;
+  }

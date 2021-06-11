@@ -1,0 +1,177 @@
+<app-header></app-header>
+
+
+<div class="page-body-wrapper">
+    <app-sidebar></app-sidebar>
+    
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="card">
+                <div class="card-body">
+
+
+                    <div class="titleSec">
+                        <!-- <button type="button" class="btn btn-primary">Add</button> -->
+                        <h2>Add Employee</h2>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+
+                            <form>
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <label> Employee Code</label>
+                                    </div>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" placeholder="  Enter Code "
+                                            name="cust_code" id="itemcode" required="" #cust_code>
+
+                                        <!-- <span class="text-danger" *ngIf="upload&&!name">*please Enter Name</span> -->
+
+                                    </div>
+
+                                    <!-- <span [hidden]="name" >*please Enter Your Name</span> -->
+                                    <!-- <span class="text-danger" style="padding-left: 120px;">*please Enter Your Name</span> -->
+
+                                </div><br>
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <label> Name</label>
+                                    </div>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" placeholder="  Enter Name "
+                                            name="cust_name" id="itemname" required="" #cust_name>
+
+                                        <!-- <span class="text-danger" *ngIf="upload&&!name">*please Enter Name</span> -->
+
+                                    </div>
+
+                                    <!-- <span [hidden]="name" >*please Enter Your Name</span> -->
+                                    <!-- <span class="text-danger" style="padding-left: 120px;">*please Enter Your Name</span> -->
+
+                                </div>
+
+                                <br>
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <label>Phone No.</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="  Enter Phone Number" name="phone"
+                                            id="itemph" #phone>
+                                        <!-- <span class="text-danger" *ngIf="upload&&!gst1">*please Enter GST</span> -->
+
+                                    </div>
+                                    <div class="col-sm-3"></div>
+
+                                    <div class="col-sm-1">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="  Enter Email"
+                                            name="email" id="itememail" #email>
+
+                                        <!-- <span class="text-danger ml-3" *ngIf="upload&&!pan">*please Enter PAN</span> -->
+
+                                        <!-- <span [hidden]="pan" >*please Enter PAN number</span> -->
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group row">
+
+
+                                 
+                                    <!-- <span [hidden]="company" 
+                            >*please Enter Company type</span> -->
+
+
+                                </div>
+<br>
+                                <div class="form-group row">
+
+                                    <div class="col-sm-2">
+                                        <label>Designation</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="  Enter Designation"
+                                            name="designation" id="itemdesignation" #designation>
+
+                                        <!-- <span  class="text-danger"
+                                   *ngIf="upload&&!bank">*please Enter Bank name</span> -->
+
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                    
+
+                                </div>
+<br>
+
+                                <div class="form-group row">
+
+                                    <div class="col-sm-2">
+                                        <label>Remarks</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <textarea rows="5" type="text" class="form-control" placeholder="  Add Remarks..."
+                                            name="remarks" id="itemremarks" 
+                                            ></textarea>
+                                        <!-- <span class="text-danger" *ngIf="upload&&!mobile">*please Enter Mobile -->
+                                            <!-- Number</span> -->
+
+
+                                    </div>
+
+                                    <div class="col-sm-3"></div>
+                                    
+                                </div>
+
+
+
+                                
+                                <div class="form-group row mt-5">
+                                    <div class="col-sm-12 btnSubmitSec">
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit"
+                                            value="Submit"
+                >
+
+
+
+<!-- 
+                                            <input type="submit" class="btn btn-info" id="submit" name="submit"
+                                            value="Submit"
+                                            > -->
+
+                                        <button type="reset" class="btn btn-danger " id="Cancel" name="Cancel"
+                                            >Reset</button>
+                                    </div>
+                                </div>
+
+
+
+                            </form>
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
