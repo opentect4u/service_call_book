@@ -40,6 +40,7 @@ import { AdclComponent } from './master/addclient/addclientdashboard/adcl/adcl.c
 import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { ForgetpassComponent } from './login_reg_emp_client/forgetpass/forgetpass.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +83,7 @@ import { SignupComponent } from './login_reg_emp_client/signup/signup.component'
     MatInputModule,
     MatSelectModule,
   ],
-  providers: [],
+  providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
