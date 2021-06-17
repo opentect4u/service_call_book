@@ -26,6 +26,12 @@ import { PmdashboardComponent } from './master/prioritymode/pmdashboard/pmdashbo
 import { AddtsComponent } from './master/ticketstatus/addts/addts.component';
 import { EdittsComponent } from './master/ticketstatus/editts/editts.component';
 import { TsdashboardComponent } from './master/ticketstatus/tsdashboard/tsdashboard.component';
+import { AssignticketComponent } from './operations/assignticket/assignticket/assignticket.component';
+import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
+import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
+import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
+import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
 
 const routes: Routes = [
   {
@@ -123,7 +129,32 @@ const routes: Routes = [
   {
     path:'addclient/addcl',
     component:AdclComponent
+  },
+  {
+    path:'operations/assignticket',
+    component:AssignticketComponent
+  },
+  {
+    path:'operations/editassignticket',
+    component:EditatComponent
+  },
+  {
+    path:'operations/raiseticket',
+    component:RaiseticketComponent
+  },
+  {
+    path:'operations/addraiseticket',
+    component:AddrtComponent
+  },
+  {
+    path:'operations/attendanddeliver',
+    component:AttendanddeliverComponent
+  },
+  {
+    path:'operations/editattendanddeliver',
+    component:EditadanddComponent
   }
+
 
 ];
 

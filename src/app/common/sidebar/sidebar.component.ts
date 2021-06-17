@@ -22,25 +22,25 @@ export class SidebarComponent implements OnInit {
 
 
 
-  // openclosedropdown(){
-  //   this.store=document.getElementById('openclose');
-  //   this.marker1=document.getElementById('openclose1');
-  //   if(this.store.style.display=='block'){
-  //       this.store.style.display='none';
-  //     this.marker=document.getElementById('down');
+  openclosedropdown1(){
+    this.store=document.getElementById('openclose');
+    this.marker1=document.getElementById('openclose1');
+    if(this.store.style.display=='block'){
+        this.store.style.display='none';
+      this.marker=document.getElementById('down');
 
     
-  //     console.log("block");
-  //    }
-  //    else{
-  //     this.marker1.style.display='none';
-  //     this.store.style.display='block';
+      console.log("block");
+     }
+     else{
+      this.marker1.style.display='none';
+      this.store.style.display='block';
    
-  //     console.log("none");
+      console.log("none");
 
-  //    }
+     }
     
-  //   }
+    }
 
     openclosedropdown(){
       this.marker1=document.getElementById('openclose');
@@ -52,7 +52,7 @@ export class SidebarComponent implements OnInit {
       console.log("block");
      }
      else{
-     // this.marker1.style.display='none';
+      this.marker1.style.display='none';
       this.store.style.display='block';
    
       console.log("none");

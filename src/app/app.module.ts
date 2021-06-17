@@ -41,6 +41,12 @@ import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { ForgetpassComponent } from './login_reg_emp_client/forgetpass/forgetpass.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
+import { AssignticketComponent } from './operations/assignticket/assignticket/assignticket.component';
+import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
+import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
+import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
+import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +76,13 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     AdclComponent,
     LoginComponent,
     ForgetpassComponent,
-    SignupComponent
+    SignupComponent,
+    RaiseticketComponent,
+    AssignticketComponent,
+    AttendanddeliverComponent,
+    EditatComponent,
+    EditadanddComponent,
+    AddrtComponent
   ],
   imports: [
     BrowserModule,
