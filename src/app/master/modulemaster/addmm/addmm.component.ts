@@ -25,6 +25,7 @@ export class AddmmComponent implements OnInit {
   error=false;
   done=false;
   ngOnInit(): void {
+    localStorage.setItem('address','/mastermodule/addmm'); 
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){

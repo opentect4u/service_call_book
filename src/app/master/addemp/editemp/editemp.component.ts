@@ -63,6 +63,7 @@ export class EditempComponent implements OnInit {
   msg=''
   done=false;
  ngOnInit(): void {
+  localStorage.setItem('address', '/addemp/editemp');
   this.route.params.forEach((params: any) => {
     this.item0=params['id1']
     this.item1 = params['id2'];

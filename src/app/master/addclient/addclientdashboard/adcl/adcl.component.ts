@@ -115,6 +115,7 @@ export class AdclComponent implements OnInit,OnDestroy {
   private querySubscription: Subscription = new Subscription;
   private querySubscription1: Subscription = new Subscription;
   ngOnInit(): void {
+    localStorage.setItem('address', '/addclient/addcl');
     this.email_null=false;
     this.namevalid=false;
     this.addressvalid=false;

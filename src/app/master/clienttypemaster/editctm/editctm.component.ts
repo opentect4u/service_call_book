@@ -28,7 +28,8 @@ export class EditctmComponent implements OnInit {
   msg='';
   item1:any;
   item2:any;
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    localStorage.setItem('address','/clienttype/editctm'); 
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})

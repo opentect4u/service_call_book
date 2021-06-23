@@ -55,6 +55,7 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
 // import { GraphQLModule } from './graphql.module';
 // import { HttpClientModule } from '@angular/common/http';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
 @NgModule({
   declarations: [
     AppComponent,

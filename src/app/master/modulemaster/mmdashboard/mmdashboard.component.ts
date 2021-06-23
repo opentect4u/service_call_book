@@ -53,6 +53,7 @@ export class MmdashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    localStorage.setItem('address','/mastermodule/dashboard'); 
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

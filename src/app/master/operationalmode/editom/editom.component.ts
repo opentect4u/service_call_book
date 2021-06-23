@@ -28,6 +28,7 @@ export class EditomComponent implements OnInit {
   msg='';
   disable_button=false;
   ngOnInit(): void {
+    localStorage.setItem('address','/operationmode/editom'); 
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})

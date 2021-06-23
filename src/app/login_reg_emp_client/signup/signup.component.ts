@@ -76,6 +76,7 @@ export class SignupComponent implements OnInit {
   constructor(private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
+    // localStorage.setItem("address",'/signup')
     localStorage.setItem("Employee_signup",'0')
 
 

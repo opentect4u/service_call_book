@@ -48,6 +48,7 @@ export class RaiseticketComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+    localStorage.setItem('address','/operations/raiseticket');
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

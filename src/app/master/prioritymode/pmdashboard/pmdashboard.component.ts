@@ -52,6 +52,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+    localStorage.setItem('address','/prioritymode/dashboard'); 
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

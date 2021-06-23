@@ -53,6 +53,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
  
 
   ngOnInit(): void {
+    localStorage.setItem('address','/ticketstatus/dashboard');  
     this.posts_ts.length=0;
     this.fetch_data();
     this.dataSource.paginator = this.paginator;

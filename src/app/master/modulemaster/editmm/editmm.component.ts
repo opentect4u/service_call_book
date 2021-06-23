@@ -31,6 +31,7 @@ export class EditmmComponent implements OnInit {
   input_tag:any;
   msg='';
   ngOnInit(): void {
+    localStorage.setItem('address','/mastermodule/editmm'); 
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})

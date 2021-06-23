@@ -25,6 +25,7 @@ export class AddpmComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
+    localStorage.setItem('address','/prioritymode/addpm'); 
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){

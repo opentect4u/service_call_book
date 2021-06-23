@@ -48,9 +48,15 @@ export class LoginComponent implements OnInit {
   userid:any;
   user:any;
   successfull_register:boolean=true;
+
  
   
   ngOnInit(): void {
+   
+
+     localStorage.setItem('address', '/')
+  
+    
     if(localStorage.getItem("Employee_signup")== '1'){
       this.successfull_register=false
 
@@ -161,11 +167,14 @@ export class LoginComponent implements OnInit {
               //  console.log(this.user.user_id);
              localStorage.setItem("UserId",this.f.username.value);
                this.Success= data.userLogin.success;
+               
                if( this.Success == 1){
+                localStorage.setItem('isLoggedIn',"true");
 
                 this.user=JSON.parse(data.userLogin.message)[0];
                  console.log("success");
                  console.log("userid:" + this.user)
+                
                 //  alert("Success");
                  
                 this.router.navigate(['/dashboard'])
@@ -181,6 +190,7 @@ export class LoginComponent implements OnInit {
                 console.log("Failure");
                 // alert("failure");
                 this.error_log=false;
+                localStorage.setItem('isLoggedIn',"false");
 
                }
               
@@ -215,11 +225,8 @@ export class LoginComponent implements OnInit {
 
 
   close_alert(){
-
     localStorage.setItem("Employee_signup",'0');
     this.successfull_register=true;
-    
-
   }
 
  

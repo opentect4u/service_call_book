@@ -154,6 +154,7 @@ export class ComponentNameComponent implements OnInit {
   active2:boolean=false;
 
   ngOnInit(): void {
+    localStorage.setItem('address', '/addclient/editclient');
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
       variables:{

@@ -58,6 +58,7 @@ export class AddclientdashboardComponent implements OnInit {
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
+    localStorage.setItem('address', '/addclient/dashboard');
     this.fetch_data(1);
     //this.fetch_data(1);
     this.dataSource.paginator = this.paginator;
@@ -93,7 +94,7 @@ export class AddclientdashboardComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/addclient/addcl'])   ; 
+    this.router.navigate(['/addclient/addcl']); 
   }
   go_to_update(v1:any){
     this.router.navigate(['/addclient/editclient',v1])
