@@ -189,7 +189,8 @@
 		 (change)="sendTheNewValue($event)"> -->
          <input type="text" class="form-control" Placeholder="Enter Client Code"
 		  form-control="client_code"
-		  [ngClass]="{'is-invalid': login_c && c.client_code.errors}">
+		  [ngClass]="{'is-invalid': login_c && c.client_code.errors}"
+		  >
 		  <div *ngIf="login_c && c.client_code.errors" class="invalid-feedback text-danger">
 			<div *ngIf="c.client_code.errors.required"><span>*Please supply code</span></div>
 		  </div>

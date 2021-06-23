@@ -21,6 +21,7 @@ mutation insertMaster($client_type: String,$user_id: String) {
 export class AddclienttypeComponent implements OnInit {
 
   constructor(private apollo: Apollo) { }
+  User:any;
   input_tag:any;
   msg='';
   error=false;
@@ -28,6 +29,8 @@ export class AddclienttypeComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
+    this.User=localStorage.getItem("UserId");
+    console.log("type:" +typeof(this.User));
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -48,6 +51,7 @@ export class AddclienttypeComponent implements OnInit {
     }
   }
   send_item(v:any){
+    
     if(v=='')
     {
       this.done=false;
@@ -62,7 +66,7 @@ export class AddclienttypeComponent implements OnInit {
         mutation:ADD_CLIENT_TYPE,
         variables:{
           client_type:v,
-          user_id:'123'
+          user_id:this.User
         }
       }).subscribe(({data})=>{this.userdata=data;console.log(data);
         console.log("data:" +JSON.stringify(data))

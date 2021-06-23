@@ -348,7 +348,7 @@ export class ComponentNameComponent implements OnInit {
         rental_upto: rentalupto,
         support_status:activeinactiveradio,
         remarks: remarks,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
         
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);

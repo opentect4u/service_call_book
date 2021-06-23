@@ -68,7 +68,7 @@ export class EditmmComponent implements OnInit {
       variables:{
         id:v1,
         name:v2,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))

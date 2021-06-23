@@ -16,8 +16,8 @@ query getEmp($id: String!){
   }
 }`
 const EDIT_EMP=gql`
-mutation updateEmp($emp_code:Int, $id:String, $emp_name: String,$phone_no: String, $email:String, $emp_designation:String, $remarks: String){
-  updateEmp(emp_code: $emp_code, emp_name: $emp_name, phone_no: $phone_no, email: $email, emp_designation: $emp_designation, remarks:$remarks, id: $id, user_id: "132"){
+mutation updateEmp($emp_code:Int, $id:String, $emp_name: String,$phone_no: String, $email:String, $emp_designation:String, $remarks: String,$user_id:String){
+  updateEmp(emp_code: $emp_code, emp_name: $emp_name, phone_no: $phone_no, email: $email, emp_designation: $emp_designation, remarks:$remarks, id: $id, user_id:$user_id){
     success
     message
   }
@@ -169,7 +169,8 @@ export class EditempComponent implements OnInit {
       phone_no: phone, 
       email:email, 
       emp_designation:designation, 
-      remarks: remarks
+      remarks: remarks,
+      user_id:localStorage.getItem("UserId")
     }
   }).subscribe(({data})=>{this.userdata=data;console.log(data);
     console.log("data:" +JSON.stringify(data))
