@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgetpass',
@@ -9,10 +10,38 @@ import { Component, OnInit } from '@angular/core';
  '../../../assets/Login_assets/css/res.css']
 })
 export class ForgetpassComponent implements OnInit {
-
-  constructor() { }
+  LoginForm!: FormGroup;
+  login:boolean=false;
+  constructor(private fb:FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.LoginForm = this.fb.group({
+      email:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]]})
   }
 
+  get f() {
+    // console.log("touched:" +this.LoginForm.touched);
+    return this.LoginForm.controls;
+    
+
+
+  }
+  Submit(){
+     this.login = true;
+    if (this.LoginForm.invalid) {
+      // this.sent=true;
+      console.log("asdasda");
+      return;
+    }
+      else{
+
+
+        // this.sent=false;
+        console.log("Email ID:" +this.f.email.value);
+      }
+    }
+
 }
+
+

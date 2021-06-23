@@ -1,4 +1,6 @@
-
+<div class="spinner-border text-primary" role="status" [hidden]="loader">
+	<span class="sr-only">Loading...</span>
+  </div>
 <!-- <div class="LoginCardLayout">
 	<div class="signUpCardLayout-card memberShipArea">
 	
@@ -126,12 +128,49 @@
 	</div>
 </div> -->
 
-<div class="LoginCardLayout">
+<div class="LoginCardLayout" >
 	
 	
 	<div class="signUpCardLayout-card memberShipArea">
+
+		
+
+
+
 	<div class="LoginCardLayout-LoginLogoContainer "><a routerLink='/' routerLinkActive="true"><img src="../../../assets/Login_assets/images/logo.png" alt="" class="LoginCardLayout-LogoLogo"/></a></div>
-		<ul class="tabUl nav-tabs">
+	
+	
+	<!-- <div class="alert alert-danger text-center alert-dismissible" [hidden]="alerts">
+		<a href="#" class="close mb-4" data-dismiss="alert" aria-label="close" (click)="close_it()">&times;</a>
+		<strong>Alert!</strong> Passwords are not matching
+	  </div> -->
+
+
+	 
+
+
+
+
+	
+	
+	
+	<ul class="tabUl nav-tabs">
+<!-- 
+        	<div class="alert alert-danger text-center alert-dismissible" [hidden]="alerts">
+		<a  class="close mb-4" data-dismiss="alert" aria-label="close" (click)="close_alert()">&times;</a>
+		<strong>Alert!</strong> Passwords are not matching
+	  </div> -->
+
+        <!-- <div [hidden]="alerts">
+		<div class="alert alert-danger alert-dismissible fade show text-center" role="alert" >
+			<strong>
+			 Alert!!Paswords are not matched
+			</strong>
+			<button type="button" class="close " data-dismiss="alert" aria-label="Close">
+			  <span aria-hidden="true" (click)="close_alert()">&times;</span>
+			</button>
+		  </div>
+		</div> -->
     <!-- <li class="active"><a data-toggle="tab" href="#home">Client Signup</a></li>
     <li><a data-toggle="tab" href="#menu1">Employee Signup</a></li> -->
 
@@ -142,22 +181,35 @@
    <div class="tab-content ">
     <div id="home" class="tab-pane fade in active tabContent " [hidden]="display" >
 	<div class="login_left">
-		
+		<form [formGroup]="LoginForm_client" (ngSubmit)="Submit_client()">	
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Client Code</label>
-         <input type="text" class="form-control" Placeholder="Enter Client Code">
+		<!-- <input type="text" class="form-control" Placeholder="Enter Client Code" 
+		 (change)="sendTheNewValue($event)"> -->
+         <input type="text" class="form-control" Placeholder="Enter Client Code"
+		  form-control="client_code"
+		  [ngClass]="{'is-invalid': login_c && c.client_code.errors}">
+		  <div *ngIf="login_c && c.client_code.errors" class="invalid-feedback text-danger">
+			<div *ngIf="c.client_code.errors.required"><span>*Please supply code</span></div>
+		  </div>
 		</div>
 		<div class="col-sm-6 float-left">
 		<label>Client name</label>
-           <input type="text" class="form-control" value=" " readonly>
+           <input type="text" class="form-control" value=" " readonly
+		   form-control="client_name">
 		</div>
 			
-			</div>
+		</div>
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Email</label>
-         <input type="email" class="form-control" placeholder="Enter Email">
+         <input type="email" class="form-control" placeholder="Enter Email"
+		 form-control="client_email"  [ngClass]="{'is-invalid': login_c && c.client_email.errors}">
+		 <div *ngIf="login_c && c.client_email.errors" class="invalid-feedback text-danger">
+			<div *ngIf="c.client_email.errors.required"><span>*Please supply email</span></div>
+		  </div>
+		
 		</div>
 		
 			
@@ -167,12 +219,22 @@
         <div class="form-row">
             <div class="col-sm-6 float-left">
             <label>Password*</label>
-             <input type="password" class="form-control" placeholder="Enter Password" >
+             <input type="password" class="form-control" placeholder="Enter Password" 
+			 form-control="client_pass"
+			 [ngClass]="{'is-invalid': login_c && c.client_pass.errors}">
+			 <div *ngIf="login_c && c.client_pass.errors" class="invalid-feedback text-danger">
+				<div *ngIf="c.client_pass.errors.required"><span>*Please supply password</span></div>
+			  </div>
             </div>
                 
             <div class="col-sm-6 float-left">
             <label>Confirm Password*</label>
-             <input type="password" class="form-control" placeholder="Enter Confirm Password" >
+             <input type="password" class="form-control" placeholder="Enter Confirm Password" 
+			 form-control="client_conpass"
+			 [ngClass]="{'is-invalid': login_c && c.client_conpass.errors}">
+			 <div *ngIf="login_c && c.client_conpass.errors" class="invalid-feedback text-danger">
+				<div *ngIf="c.client_conpass.errors.required"><span>*Please supply confirm password</span></div>
+			  </div>
             </div>
                 </div>
 		
@@ -183,9 +245,16 @@
 		</label>
 		</div>-->
 		
+		<!-- <div class="col-sm-12 btnBack">
+		<button type="button" >Login</button>
+		</div> -->
 		<div class="col-sm-12 btnBack">
-		<button type="button">Login</button>
-		</div>
+			<!-- <button  >Login</button> -->
+			<button type="submit" >Login</button>
+			<!-- <input type="submit" value="Login" > -->
+			</div>
+
+		</form>
 		
 		
 	</div>
@@ -195,35 +264,61 @@
     </div>
     <div id="menu1" class="tab-pane fade tabContent" [hidden]="display1" >
       <div class="login_left">
-		
+	 <form [formGroup]="LoginForm" (ngSubmit)="Submit()">	
 		<div class="form-row">
+			
 		<div class="col-sm-6 float-left">
 		<label>Employee Code</label>
-         <input type="text" class="form-control" placeholder="Enter Employee Code">
+         <input type="text" class="form-control" placeholder="Enter Employee Code" 
+		 formControlName="code" 
+		 [ngClass]="{'is-invalid': login && f.code.errors}"
+			(change)="sendTheNewValue($event)"  (keypress)="preventNonNumericalInput($event)">
+			<div *ngIf="login && f.code.errors" class="invalid-feedback text-danger">
+				 <div *ngIf="f.code.errors.required"><span>*Please supply code</span></div>
+                
+
+			</div>
+		 
 		</div>
 		<div class="col-sm-6 float-left">
 		<label>Name</label>
-         <input type="text" class="form-control" value="  " readonly >
+         <input type="text" class="form-control"  
+		 formControlName="name" readonly id="emp_name">
 		</div>
 			
 		</div>
-		<div class="form-row">
+	
+		<div class="form-row ">
 		<div class="col-sm-6 float-left">
 		<label>Type</label>
-   
-			
-			
-			<select name="type" >
-            <option value=" "> Select</option>
+            <select name="type"   formControlName="type"
+			[ngClass]="{'is-invalid': login && f.type.errors}" class="form-control">
+		
+            <option value="" selected> Select</option>
 			<option value="E ">Engineer</option>
 			<option value="T ">Telecaller</option>
 			<option value="M ">Manager</option>
 			</select>
+			<div *ngIf="login && f.type.errors" class="invalid-feedback text-danger">
+				<div *ngIf="f.type.errors.required"><span>*Please supply type</span></div>
+			   
+
+		   </div>
 			
 		</div>
         <div class="col-sm-6 float-right">
             <label>Email</label>
-             <input type="email" class="form-control" placeholder="Enter Email">
+             <input type="email" class="form-control" 
+			 formControlName="Email" readonly
+			 id="emp_email">
+			 <!-- [ngClass]="{'is-invalid': login && f.Email.errors,
+			'is-valid': login && f.Email.valid}">
+			<div *ngIf="login && f.Email.errors" class="invalid-feedbackb text-danger">
+				 <div *ngIf="f.Email.errors.required"><small>*Please supply email</small></div>
+                 <div *ngIf="f.Email.errors.pattern"><small>*Please provide valid
+					email</small></div>
+
+			</div> -->
         </div>
 
 		
@@ -234,12 +329,25 @@
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Password*</label>
-        <input type="password" class="form-control" placeholder="Enter Password">
+        <input type="password" class="form-control"   placeholder="Enter Password" 
+		formControlName="pass"
+		[ngClass]="{'is-invalid': login && f.pass.errors}"
+		>
+		<div *ngIf="login && f.pass.errors" class="invalid-feedback text-danger">
+			 <div *ngIf="f.pass.errors.required"><span>*Please supply password</span></div>
+		</div>
 		</div>
 			
 		<div class="col-sm-6 float-left">
 		<label>Confirm Password*</label>
-       <input type="password" class="form-control" placeholder="Enter Confirm Password">
+       <input type="password" class="form-control"   placeholder="Enter Confirm Password" 
+	   formControlName="conpass"
+	 
+	   [ngClass]="{'is-invalid': login && f.conpass.errors}"
+	  >
+	   <div *ngIf="login && f.conpass.errors" class="invalid-feedback text-danger">
+			<div *ngIf="f.conpass.errors.required"><span>*Please supply confirm password</span></div>
+		</div>
 		</div>
 			</div>
 		
@@ -251,8 +359,12 @@
 		</div>-->
 		
 		<div class="col-sm-12 btnBack">
-		<button type="button">Login</button>
+		<!-- <button  >Login</button> -->
+		<button type="submit" [disabled]="button_disabled">Login</button>
+		<!-- <input type="submit" value="Login" > -->
 		</div>
+
+		</form>
 		
 		
 	</div>

@@ -487,11 +487,11 @@ font-weight: 300;}
 .login_left .terms{margin-top: 0; margin-bottom: 13px; height: 22px;}
 .login_left .terms label{margin: 0; color: #686868; text-decoration: underline; font-size:14px;}
 
-.login_left button[type="button"]{background: #796eff; margin-top: 12px;
+.login_left button[type="button"], button[type="submit"]{background: #796eff; margin-top: 12px;
     border:#796eff solid 1px;
     color: #fff;
     width: 100%; padding: 9px; border-radius: 3px;}
-.login_left button[type="button"]:hover{background: #635ac7;
+.login_left button[type="button"]:hover, button[type="submit"]:hover{background: #635ac7;
     border: #635ac7 solid 1px;
     color: #fff;
     width: 100%; padding: 9px; border-radius: 3px;}
