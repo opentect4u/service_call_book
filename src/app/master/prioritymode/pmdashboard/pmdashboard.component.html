@@ -88,21 +88,21 @@
 
 
                   <ng-container matColumnDef="Sl_No">
-                    <th mat-header-cell *matHeaderCellDef>Sl No </th>
-                    <td mat-cell *matCellDef="let row"> {{row.Sl_No}} </td>
+                    <th mat-header-cell *matHeaderCellDef>SL No. </th>
+                    <td mat-cell *matCellDef="let row"> {{row.priority_id}} </td>
                   </ng-container>
 
 
                   <ng-container matColumnDef="Operational_Mode">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="Operational_Mode"> Mode </th>
-                    <td mat-cell *matCellDef="let row">{{row.Operational_Mode}}</td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="priority_mode"> Mode </th>
+                    <td mat-cell *matCellDef="let row">{{row.priority_mode}}</td>
                   </ng-container>
 
 
                   <ng-container matColumnDef="Edit">
                     <th mat-header-cell *matHeaderCellDef> Edit </th>
                     <td mat-cell *matCellDef="let row">
-                        <a (click)="go_to_update(row.sl,row.Operational_Mode)"
+                        <a (click)="go_to_update(row.priority_id,row.priority_mode)"
                         data-toggle="tooltip" data-placement="bottom" title="Edit" class="deletCus">
                         <i class="fa fa-edit menu-icon"></i>
                     </a>

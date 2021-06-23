@@ -26,9 +26,10 @@
                           <label><b>Ticket Status</b></label>
                         </div>
                          <div class="col-sm-6">
-                          <input type="text" class="form-control" placeholder="  Add Ticket Status" name="item_name" id="itemname" #item_name>
+                          <input type="text" class="form-control" placeholder="  Add Ticket Status" name="item_name" id="itemname" #item_name (keyup)="prevent_null($event)">
                          </div>
-
+                         <span class="alert text-danger" *ngIf="error">*{{msg}}</span>
+                         <span class="alert text-success" *ngIf="done">{{msg}}</span>
                          <!-- <span class="alert text-danger" *ngIf="error">*{{msg}}</span> -->
                      </div>
 
@@ -57,11 +58,11 @@
 
                       <div class="form-group row mt-5">
                         <div class="col-sm-12 btnSubmitSec" >
-                          <input type="submit" class="btn btn-info" id="submit" name="submit" value="Submit" (click)="go_to_item(item_name.value)">
+                          <input type="submit" class="btn btn-info" id="submit" name="submit" value="Submit" [disabled]="disable_button" (click)="send_item(item_name.value)">
 
                           <!-- <input type="reset" class="btn btn-danger"  id="Cancel" name="Cancel" value="Reset"> -->
                           <!-- <input type="reset" class="btn btn-danger " id="Cancel" name="Cancel" value="Reset"> -->
-                          <button type="reset" class="btn btn-danger" id="cancel" name="cancel">Reset</button>
+                          <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clear_field()">Reset</button>
                         </div>
                       </div>
                      </form>

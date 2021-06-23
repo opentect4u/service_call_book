@@ -30,8 +30,8 @@
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder="  "
-                                            name="cust_code" id="itemcode" required="" #cust_code readonly>
+                                        <input type="text" class="form-control" placeholder="  " value="{{item1}}"
+                                            name="cust_code" id="itemcode" required="" #ecode readonly>
 
                                         <!-- <span class="text-danger" *ngIf="upload&&!name">*please Enter Name</span> -->
 
@@ -47,9 +47,9 @@
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder="   "
-                                            name="cust_name" id="itemname" required="" #cust_name>
-
+                                        <input type="text" class="form-control" placeholder="   " value="{{item2}}"
+                                            name="cust_name" id="itemname" required="" #ename (keyup)="prevent_null($event)">
+                                            <span class="text-danger" *ngIf="name">*Please Enter Name</span>
                                         <!-- <span class="text-danger" *ngIf="upload&&!name">*please Enter Name</span> -->
 
                                     </div>
@@ -65,10 +65,10 @@
                                         <label>Phone No.</label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder="" name="phone"
-                                            id="itemph" #phone>
+                                        <input type="text" class="form-control" placeholder="" name="phone" value="{{item_phone}}"
+                                            id="itemph" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
                                         <!-- <span class="text-danger" *ngIf="upload&&!gst1">*please Enter GST</span> -->
-
+                                        <span class="text-danger" *ngIf="ph">*Please Enter Phone No.(Only numeric values)</span>
                                     </div>
                                     <div class="col-sm-3"></div>
 
@@ -76,9 +76,11 @@
                                         <label>Email</label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder=""
-                                            name="email" id="itememail" #email>
+                                        <input type="text" class="form-control" placeholder="" value="{{item_email}}"
+                                            name="email" id="itememail" readonly #email (change)="check_email_validity($event)" (keyup)="prevent_null($event)">
+                                            <span class="text-danger" *ngIf="notavalidemail">{{confirm_email}}</span>
 
+                                            <span class="text-danger" *ngIf="email_null">*Please Enter Email</span>
                                         <!-- <span class="text-danger ml-3" *ngIf="upload&&!pan">*please Enter PAN</span> -->
 
                                         <!-- <span [hidden]="pan" >*please Enter PAN number</span> -->
@@ -103,7 +105,7 @@
                                         <label>Designation</label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder=""
+                                        <input type="text" class="form-control" placeholder="" value="{{item_desig}}"
                                             name="designation" id="itemdesignation" #designation>
 
                                         <!-- <span  class="text-danger"
@@ -123,8 +125,8 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <textarea rows="5" type="text" class="form-control" placeholder=" "
-                                            name="remarks" id="itemremarks" 
-                                            ></textarea>
+                                            name="remarks" id="itemremarks" #remarks
+                                            >{{item_remarks}}</textarea>
                                         <!-- <span class="text-danger" *ngIf="upload&&!mobile">*please Enter Mobile -->
                                             <!-- Number</span> -->
 
@@ -140,8 +142,8 @@
                                 
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit"
-                                            value="Update"
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="disable_button"
+                                            value="Update" (click)="send_data(ecode.value,ename.value,phone.value,email.value,designation.value,remarks.value)"
                 >
 
 
@@ -153,6 +155,7 @@
 
                                        
                                     </div>
+                                    <span class="alert text-success" *ngIf="done">{{msg}}</span> 
                                 </div>
 
 

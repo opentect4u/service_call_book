@@ -7,6 +7,7 @@ import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
 import { AdclComponent } from './master/addclient/addclientdashboard/adcl/adcl.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
+import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
 import { AddeComponent } from './master/addemp/adde/adde.component';
 import { AddempdashboardComponent } from './master/addemp/addempdashboard/addempdashboard.component';
@@ -59,7 +60,7 @@ const routes: Routes = [
     component:AddclienttypeComponent
   },
   {
-    path:'clienttype/editctm',
+    path:'clienttype/editctm/:id1/:id2',
     component:EditctmComponent,
   },
   {
@@ -71,7 +72,7 @@ const routes: Routes = [
     component:AddomComponent
   },
   {
-    path:'operationmode/editom',
+    path:'operationmode/editom/:id1/:id2',
     component:EditomComponent
   },
   {
@@ -83,7 +84,7 @@ const routes: Routes = [
     component:AddtsComponent
   },
   {
-    path:'ticketstatus/editts',
+    path:'ticketstatus/editts/:id1/:id2',
     component:EdittsComponent
   },
   {
@@ -95,7 +96,7 @@ const routes: Routes = [
     component:AddpmComponent,
   },
   {
-    path:'prioritymodule/editpm',
+    path:'prioritymodule/editpm/:id1/:id2',
     component:EditpmComponent
   },
   {
@@ -107,7 +108,7 @@ const routes: Routes = [
     component:AddmmComponent
   },
   {
-    path:'mastermodule/editmm',
+    path:'mastermodule/editmm/:id1/:id2',
     component:EditmmComponent
   },
   {
@@ -119,7 +120,7 @@ const routes: Routes = [
     component:AddeComponent
   },
   {
-    path:'addemp/editemp',
+    path:'addemp/editemp/:id1/:id2/:id3',
     component:EditempComponent
   },
   {
@@ -129,6 +130,10 @@ const routes: Routes = [
   {
     path:'addclient/addcl',
     component:AdclComponent
+  },
+  {
+    path:'addclient/editclient/:id1',
+    component:ComponentNameComponent
   },
   {
     path:'operations/assignticket',
