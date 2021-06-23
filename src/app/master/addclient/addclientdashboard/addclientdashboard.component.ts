@@ -48,7 +48,7 @@ query getClient($active: String){
 })
 export class AddclientdashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['Client_Code','Name','Type','Phone','Edit'];
+  displayedColumns: string[] = ['Client_Code','Name','Type','Phone','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -98,7 +98,7 @@ export class AddclientdashboardComponent implements OnInit {
   go_to_update(v1:any){
     this.router.navigate(['/addclient/editclient',v1])
   }
-
+delete(){}
 sendstatus(v:any){
   this.fetch_data(v);
   //this.fetch_data(v);
