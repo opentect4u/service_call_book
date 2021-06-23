@@ -41,6 +41,11 @@ import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { ForgetpassComponent } from './login_reg_emp_client/forgetpass/forgetpass.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RightclickoffDirective } from './Directives/RightClick/rightclickoff.directive';
+import { ControlkeyoffDirective } from './Directives/Ctrlkey/controlkeyoff.directive';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
 import { AssignticketComponent } from './operations/assignticket/assignticket/assignticket.component';
 import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
@@ -82,7 +87,10 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
     AttendanddeliverComponent,
     EditatComponent,
     EditadanddComponent,
-    AddrtComponent
+    AddrtComponent,
+    RightclickoffDirective,
+    ControlkeyoffDirective
+
   ],
   imports: [
     BrowserModule,
@@ -94,6 +102,9 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
     BrowserAnimationsModule,
     MatInputModule,
     MatSelectModule,
+    ReactiveFormsModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],
   bootstrap: [AppComponent]

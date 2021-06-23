@@ -1,32 +1,94 @@
 <div class="LoginCardLayout">
+
+
+
 	<div class="LoginCardLayout-card">
+
+		
+
+
+
 	<div class="LoginCardLayout-backButtonContainer"></div>
 	<div class="LoginCardLayout-LoginLogoContainer "><img src="../../assets/Login_assets/images/logo.png" alt="" class="LoginCardLayout-LogoLogo"/></div>
-		
+	<!-- Alert -->
+
 	<div class="LoginDefaultView-content">
+
+		<div [hidden]="successfull_register">
+			<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			  <strong>
+				  Registration Successfull!!
+			  </strong>
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true" (click)="close_alert()">&times;</span>
+			  </button>
+			</div>
+	  </div>	
+
+
+
 	
-		
-	<form class="LoginEmailPasswordForm">
+	 <small [hidden]="error_log" class="text-danger text-center">*{{error_for_user}}</small>	
+	<form class="LoginEmailPasswordForm" [formGroup]="LoginForm" (ngSubmit)="Submit()">
 		<div class="LoginEmailPasswordForm-emailAndPassword">
 		<span class="Typography Typography--colorDarkGray1 Typography--s">Email address</span>
-			<input type="text" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput LoginEmailPasswordForm-emailInput" name="" value="" autocomplete="username" autofocus="">
+			<!-- <input type="text" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput LoginEmailPasswordForm-emailInput"  -->
+			 <input type="email" class="form-control LoginEmailPasswordForm-emailInput" 
+			placeholder="Enter Email Address" id="address"
+			formControlName="username" 
+			[ngClass]="{'is-invalid': login && f.username.errors}
+			"
+			autocomplete="off">
+			<div *ngIf="login && f.username.errors" class="invalid-feedbackb text-danger">
+				 <div *ngIf="f.username.errors.required"><small>*Please supply email</small></div>
+                 <div *ngIf="f.username.errors.pattern"><small>*Please provide valid
+					email</small></div>
+
+			</div>
 			
 		<span class="Typography Typography--colorDarkGray1 Typography--s">Password</span>
-			<input type="password" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput ValidatedTextInput-input OnBlurValidatedTextInput-input LoginEmailPasswordForm-passwordInput" name="" value="" autocomplete="username" autofocus="">
+			<input type="password" class="form-control LoginEmailPasswordForm-passwordInput" formControlName="password"
+			[ngClass]="{'is-invalid': login && f.password.errors}" placeholder="Enter Password" 
+			autocomplete="off">
+
+            <div *ngIf="login && f.password.errors " class="invalid-feedbackb text-danger">
+				<div *ngIf="f.password.errors.required"><small>*Please supply password</small></div>
+			</div>
 			
-		
-		</div>
+       </div>
 		
 		<span class="Typography Typography--colorDarkGray1 Typography--s"><a routerLink='/forgetpassword' routerLinkActive="true">Forgot your password?</a></span>
 		
 		<div class="captureSec">
 			<span class="Typography Typography--colorDarkGray1 Typography--s"><strong>Enter the text as shown in the image</strong> </span>
-			<input type="text" class="TextInputBase SizedTextInput SizedTextInput--medium TextInput ValidatedTextInput-input OnBlurValidatedTextInput-input LoginEmailPasswordForm-passwordInput" name="" value="" autocomplete="username" autofocus="">
-			<span class="captureImg"><img src="../../assets/Login_assets/images/capture.jpg" alt=""/></span>
+			<input type="text" class="form-control LoginEmailPasswordForm-passwordInput" 
+			formControlName="captcha"
+			[ngClass]="{'is-invalid': login && f.captcha.errors }"
+			appRightclickoff  ondrop="return false" onpaste="return false">
+			
+			<div *ngIf="login && f.captcha.errors  " class="invalid-feedbackb text-danger">
+				<div *ngIf="f.captcha.errors.required "><small>*Please Enter captcha</small></div>
+				
+			</div>
+			
+		
+				
+          
+			<input type="text" class="form-control float-left" id="capt" oncopy="return false"  disabled 
+			
+			>
+			<a (click)="refresh_captcha()"><i class="fa fa-refresh ml-2 mt-3" aria-hidden="true" ></i></a>
+
+			<small *ngIf="captch" class="text-danger ml-2">*{{this.errormsg}}</small>
+
+			
+	        <!-- <input class="captureImg form-control float-left" value=" " readonly> -->
+			
 		</div>
 		
 		
-		<input type="button" value="Log in" class="loginBtn" (click)="goto_home()">
+		<input type="submit" value="Log in" class="loginBtn" >
+		<!-- <button type="submit" class="loginBtn" [disabled]="LoginForm.invalid">Log in</button> -->
 		
 		
 		
