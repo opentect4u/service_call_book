@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -13,7 +13,7 @@ import { PmdashboardComponent } from './master/prioritymode/pmdashboard/pmdashbo
 import { MmdashboardComponent } from './master/modulemaster/mmdashboard/mmdashboard.component';
 import { AddempdashboardComponent } from './master/addemp/addempdashboard/addempdashboard.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
-
+import { DatePipe } from '@angular/common'
 
 
 import {MatTableModule} from '@angular/material/table';
@@ -47,6 +47,9 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +85,8 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
     AttendanddeliverComponent,
     EditatComponent,
     EditadanddComponent,
-    AddrtComponent
+    AddrtComponent,
+    ComponentNameComponent
   ],
   imports: [
     BrowserModule,
@@ -94,8 +98,11 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
     BrowserAnimationsModule,
     MatInputModule,
     MatSelectModule,
+    FormsModule,
+    GraphQLModule,
+    HttpClientModule
   ],
-  providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],
+  providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

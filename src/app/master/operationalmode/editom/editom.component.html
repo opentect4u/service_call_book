@@ -80,7 +80,7 @@
                           <label><b>SL No.</b></label>
                         </div>
                          <div class="col-sm-6">
-                          <input type="text" class="form-control" placeholder=" "   id="itemsl"  #item_sl readonly>
+                          <input type="text" class="form-control" placeholder=" " value="{{item1}}"  id="itemsl"  #item_sl readonly>
                            <!-- <input type="text"  class="form-control" placeholder=""   id="id1"  #item_id [hidden]="true">  -->
                         
                         </div>
@@ -93,17 +93,18 @@
                           <label><b>Operational Mode</b></label>
                         </div>
                          <div class="col-sm-6">
-                          <input type="text" class="form-control" placeholder=" "   id="itemsl"  #item_type>
+                          <input type="text" class="form-control" placeholder=" "  value="{{item2}}"  id="itemtype"  #item_type (keyup)="prevent_null($event)">
                            <!-- <input type="text"  class="form-control" placeholder=""   id="id1"  #item_id [hidden]="true">  -->
                         
                         </div>
-
+                        <span class="alert text-danger" *ngIf="error">*{{msg}}</span>
+                        <!-- <span class="alert text-success" *ngIf="done">{{msg}}</span> -->
                         <!-- <span class="alert text-danger" *ngIf="error">*{{msg}}</span> -->
                      </div>
                      
                       <div class="form-group row mt-5">
                         <div class="col-sm-12 btnSubmitSec" >
-                          <input type="submit" class="btn btn-info" id="submit" name="submit" value="Update" (click)="go_to_Item(item_sl.value,item_type.value)">
+                          <input type="submit" class="btn btn-info"  value="Update" [disabled]="disable_button" (click)="send_item(item_sl.value,item_type.value)">
 
                           <!-- <input type="reset" class="btn btn-danger " id="Cancel" name="Cancel" value="Reset"> -->
                   

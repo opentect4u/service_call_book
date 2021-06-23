@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
+const ADD_CLIENT_TYPE=gql`
+mutation insertMaster($client_type: String,$user_id: String) {
+  insertMaster(name: $client_type, user_id: $user_id, db_type: 1) {
+   message
+  }
+}`;
+
+
 
 @Component({
   selector: 'app-addclienttype',
@@ -11,9 +20,72 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddclienttypeComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private apollo: Apollo) { }
+  input_tag:any;
+  msg='';
+  error=false;
+  userdata:any;
+  done=false;
+  disable_button=true;
   ngOnInit(): void {
+    this.input_tag=document.getElementById('itemname');
   }
-  go_to_item(v:any){}
+  prevent_null(e:any){
+    if(e.target.value==''){
+      this.done=false;
+      this.error=true;
+      this.disable_button=true;
+      this.msg="Please provide client type!"
+      this.input_tag.style.border="solid red 1px"
+    }
+    else
+    {
+      //console.log(e.target.value);
+      this.error=false
+      this.done=false
+      this.disable_button=false
+      this.input_tag.style.border="1px solid lightgrey";
+    }
+  }
+  send_item(v:any){
+    if(v=='')
+    {
+      this.done=false;
+      this.error=true;
+      this.msg="Please provide client type!"
+      this.input_tag.style.border="solid red 1px"
+
+    }
+    else
+     {
+       this.apollo.mutate({
+        mutation:ADD_CLIENT_TYPE,
+        variables:{
+          client_type:v,
+          user_id:'123'
+        }
+      }).subscribe(({data})=>{this.userdata=data;console.log(data);
+        console.log("data:" +JSON.stringify(data))
+        console.log(this.userdata.insertMaster.message)
+        if(this.userdata.insertMaster.message=='Inserted Successfully !!')
+        this.msg="Client type added successfully!!"
+      });
+      // alert(v);
+
+      this.done=true;
+      // console.log(this.userdata.message)
+      
+     this.input_tag.value='';
+     this.disable_button=true;
+     this.input_tag.style.border="1px solid lightgrey";
+    }
+  }
+  clear_field(){
+    this.input_tag.value='';
+    this.error=false;
+    this.done=false;
+    this.disable_button=true;
+    this.input_tag.style.border="1px solid lightgrey";
+      
+  }
 }

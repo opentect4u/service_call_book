@@ -88,25 +88,25 @@
 
 
                   <ng-container matColumnDef="Sl_No">
-                    <th mat-header-cell *matHeaderCellDef>Sl No </th>
-                    <td mat-cell *matCellDef="let row"> {{row.Sl_No}} </td>
+                    <th mat-header-cell *matHeaderCellDef>SL No. </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="Employee_Code">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="Employee_Code"> Employee Code </th>
-                    <td mat-cell *matCellDef="let row">{{row.Employee_Code}}</td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="emp_code">  Code </th>
+                    <td mat-cell *matCellDef="let row">{{row.emp_code}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="Name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="Name"> Name </th>
-                    <td mat-cell *matCellDef="let row">{{row.Name}}</td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="emp_name"> Name </th>
+                    <td mat-cell *matCellDef="let row">{{row.emp_name}}</td>
                   </ng-container>
 
-
+                 
                   <ng-container matColumnDef="Edit">
                     <th mat-header-cell *matHeaderCellDef> Edit </th>
                     <td mat-cell *matCellDef="let row">
-                        <a (click)="go_to_update(row.sl,row.Operational_Mode)"
+                        <a (click)="go_to_update(row.id,row.emp_code,row.emp_name)"
                         data-toggle="tooltip" data-placement="bottom" title="Edit" class="deletCus">
                         <i class="fa fa-edit menu-icon"></i>
                     </a>
