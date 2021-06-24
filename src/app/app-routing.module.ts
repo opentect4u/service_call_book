@@ -46,11 +46,13 @@ const routes: Routes = [
   },
   {
     path:'signup',
+    canActivate:[LoginGuard],
    
     component:SignupComponent
   },
   {
     path:'forgetpassword',
+    canActivate:[LoginGuard],
     
     component:ForgetpassComponent
   },
