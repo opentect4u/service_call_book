@@ -41,14 +41,19 @@ import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { ForgetpassComponent } from './login_reg_emp_client/forgetpass/forgetpass.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RightclickoffDirective } from './Directives/RightClick/rightclickoff.directive';
+import { ControlkeyoffDirective } from './Directives/Ctrlkey/controlkeyoff.directive';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
 import { AssignticketComponent } from './operations/assignticket/assignticket/assignticket.component';
 import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
-import { GraphQLModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http';
+//import { GraphQLModule } from './graphql.module';
+// import { HttpClientModule } from '@angular/common/http';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 @NgModule({
   declarations: [
@@ -86,7 +91,11 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
     EditatComponent,
     EditadanddComponent,
     AddrtComponent,
-    ComponentNameComponent
+    ComponentNameComponent,
+    RightclickoffDirective,
+    ControlkeyoffDirective
+
+
   ],
   imports: [
     BrowserModule,
@@ -100,6 +109,9 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
     MatInputModule,
     MatSelectModule,
     FormsModule,
+
+    ReactiveFormsModule,
+
     GraphQLModule,
     HttpClientModule
   ],

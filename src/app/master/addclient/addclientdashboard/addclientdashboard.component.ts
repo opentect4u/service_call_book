@@ -48,7 +48,11 @@ query getClient($active: String){
 })
 export class AddclientdashboardComponent implements OnInit {
 
+
   displayedColumns: string[] = ['Client_Code','Name','Type','Phone','District','Edit','Delete'];
+
+  
+
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -70,9 +70,11 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
     if(this.updatectm=='0')
     {
        this.updt=true;
+       console.log("A="+this.updatectm);
     }
     else
        {
+         console.log("B="+this.updatectm);
          this.updt=false;
          localStorage.setItem('updatectm','0')
 

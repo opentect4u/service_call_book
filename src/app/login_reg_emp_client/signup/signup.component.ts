@@ -1,5 +1,42 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
+
+const GET_POST = gql`
+mutation CreateUser($postId:String!,$userType:String!,$userId:String!,$Password:String!) {
+  createUser(code_no: $postId, user_type: $userType, user_id: $userId, password: $Password ) {
+    
+    success
+    message
+  }
+}`
+;
+
+const GET_SIGNUP = gql`
+query checkUser($code_no: String!){
+  checkUser(code_no: $code_no){
+    success,
+    message
+  }
+}
+`;
+
+
+
+// createUser(code_no: $postId, user_type: $userType, user_id: $userId, password: $Password ) {
+    
+//   success
+//   message
+// }
+
+// {
+// 	createUser(code_no: 132, user_type: "C", user_id: "sumanmitra0096@gmail.com", password: "1234" ){
+//     success,
+//     message
+//   }
+// }
 
 
 
@@ -17,19 +54,68 @@ import { Component, OnInit } from '@angular/core';
 
 })
 export class SignupComponent implements OnInit {
+  confirm:any;
+  button_disabled:boolean=false;
+  det:any;
+  Name:any;
+  Email:any;
+  alerts:boolean=true;
+  button:boolean=false;
   display:boolean=false;
   display1:boolean=true;
   val:any;
   show = true;
-  constructor() { }
+  LoginForm!: FormGroup;
+  LoginForm_client!: FormGroup;
+  login:boolean=false;
+  login_c:boolean=false;
+  inputValue:any='';
+  details:any=[];
+ 
+  loader:boolean=true;
+  constructor(private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
+    localStorage.setItem("Employee_signup",'0')
+
+
     this.val=document.getElementById('home');
     this.val.className='active'
+
+    this.LoginForm = this.fb.group({
+      code:['',Validators.required],
+      name:[''],
+      type:['',Validators.required],
+      Email:[''],
+      pass:['',Validators.required],
+      conpass:['',Validators.required]
+    }
+    );
+
+    this.LoginForm_client = this.fb.group({
+      client_code:['',Validators.required],
+      client_name:[''],
+      client_email:['',[Validators.required,Validators.email]],
+      client_pass:['',Validators.required],
+      client_conpass:['',Validators.required]
+  
+    }
+    );
   }
 
+  get c(){
+    return this.LoginForm_client.controls;
+
+  }
+
+
+  get f(){
+
+    return this.LoginForm.controls;
+  }
+  
   open_employee(){
-   
+    this.login_c=false;
     this.display=true;
     this.val=document.getElementById('menu1');
      this.val.className='active'
@@ -39,6 +125,7 @@ export class SignupComponent implements OnInit {
    
   }
   open_client(){
+    this.login=false;
     this.display=false;
     this.val=document.getElementById('home');
     this.val.className='active'
@@ -47,4 +134,182 @@ export class SignupComponent implements OnInit {
     
   }
 
-}
+  Submit_client(){
+    this.login_c=true;
+    if(this.LoginForm_client.invalid)
+     return;
+  
+
+  }
+  Submit(){
+   this.login=true;
+    if(this.LoginForm.invalid){
+     console.log("validation");
+     return;
+    }
+    else{
+      // console.log("alerts:" +this.alerts);
+      if(this.f.pass.value == this.f.conpass.value)
+      {
+        this.Email=document.getElementById("emp_email");
+        console.log("Email3:" +this.Email.value);
+        // console.log("alerts:" +this.alerts);
+       this.apollo
+      .mutate({
+        mutation: GET_POST,
+        variables:{
+          postId:this.f.code.value, 
+           userType:this.f.type.value,
+            userId:this.Email.value,
+            Password:this.f.pass.value
+          
+
+        }
+      }).subscribe(({data})=>{
+         this.det= data;
+         if(this.det.createUser.success == 2 || this.det.createUser.success == 0){
+           alert(this.det.createUser.message);
+            // this.router.navigate(['/']);
+         }else if(this.det.createUser.success == 1 ){
+           localStorage.setItem("Employee_signup",'1');
+           console.log("Successfully Inserted");
+           this.router.navigate(['/']);
+         }
+        
+       });
+  
+     
+    
+    }
+    else{
+   
+      alert("Passwords are not matched,please check passwords");
+
+       
+    }
+    }
+   }
+
+
+
+
+  sendTheNewValue(event: any) {
+  
+     if( event.target.value==''){
+      this.Name=document.getElementById("emp_name");
+      this.Email=document.getElementById("emp_email");
+      this.Name.value= '';
+      this.Email.value=''
+
+
+     }
+     else{
+    // this.inputValue1 = '';
+    this.button_disabled=false;
+    this.inputValue = event.target.value;
+    this.apollo.watchQuery<any>({
+      query: GET_SIGNUP,
+      variables:{
+        code_no:this.f.code.value
+        
+      }
+      
+    })
+      .valueChanges
+      .subscribe(({ data, loading}) => {
+        if(data.checkUser.success==1){
+      
+   
+
+        // alert("Data already exists")
+      
+        
+        console.log("data:" +JSON.stringify(data.checkUser.message));
+        this.details=JSON.parse(data.checkUser.message);
+       console.log("dta2:" +this.details[0].name);
+       console.log("dta2:" +this.details[0].email);
+       this.Name=document.getElementById("emp_name");
+        this.Email=document.getElementById("emp_email");
+       this.Name.value=this.details[0].name;
+       this.Email.value=this.details[0].email;
+       console.log("Email:" +this.Email.value);
+       console.log("Email");
+        // this.button_disabled=true;
+        }
+      else if(data.checkUser.success==0 || data.checkUser.success==2){
+        
+          this.details=JSON.parse(JSON.stringify(data.checkUser.message));
+          var log_msg = data.checkUser.success==2 ? (JSON.parse(data.checkUser.message)[0].log_done>0 ? 'Alrady Signed In' : 'Warning') :  data.checkUser.message;
+          this.Name=document.getElementById("emp_name");
+          this.Email=document.getElementById("emp_email");
+          this.Name.value=data.checkUser.success==2 ? JSON.parse(data.checkUser.message)[0].name : '';
+          this.Email.value=data.checkUser.success==2 ? JSON.parse(data.checkUser.message)[0].email : '';
+          // alert(this.details);
+          console.log("Email:" +this.Email.value)
+          alert(log_msg);
+          this.button_disabled=true;
+        }
+    
+     
+      })
+    }
+  
+
+
+
+    // this.isReadonly = false;
+    // this.inputValue1 = '';
+  
+    // this.inputValue = event.target.value;
+
+    // console.log(this.inputValue);
+
+    // this.service.getdata().subscribe(data => {
+    //   this.Shown = data;
+    //   this.inputValue1 = '';
+    //   console.log(this.Shown);
+    //   for (let i = 0; i < this.Shown.data.length; i++) {
+    //     console.log(this.Shown.data[i].name);
+    //     if (this.inputValue == this.Shown.data[i].id) {
+    //       this.inputValue1 = this.Shown.data[i].name;
+    //        alert('Client Already registered')
+       
+    //        console.log(this.inputValue);
+    //        this.isReadonly = true;
+    //        console.log(this.inputValue1);
+    //     }
+    //     else {
+    //       console.log("success")
+    //       console.log(this.inputValue1);
+
+
+    //     }
+      }
+
+
+    // })
+    // this.inputValue = event.target.value;
+    // }
+    
+    // close_alert(){
+    //   this.alerts=true;
+    //  }
+
+
+    preventNonNumericalInput(e: any) {
+      e = e || window.event;
+      var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
+      var charStr = String.fromCharCode(charCode);
+  
+      if (!charStr.match(/^[0-9]+$/))
+        e.preventDefault();
+    }
+    
+    
+
+
+  }
+
+
+
+
