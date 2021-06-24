@@ -77,6 +77,7 @@ export class EditctmComponent implements OnInit {
       if(this.userdata.updateMaster.message=='Updated Successfully !!')
       { // this.done=true;this.msg="Client Type updated successfully!!";
      // this.ctmdash.ngOnInit();
+        localStorage.setItem('updatectm','1')
         this.router.navigate(['/clienttypemaster/dashboard'])
      
         }

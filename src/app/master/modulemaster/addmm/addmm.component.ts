@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
+import { Router } from '@angular/router';
 const ADD_MM=gql`
 mutation insertMaster($mm: String,$user_id: String) {
   insertMaster(name: $mm, user_id: $user_id, db_type: 5) {
@@ -17,7 +18,7 @@ mutation insertMaster($mm: String,$user_id: String) {
 })
 export class AddmmComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,private router:Router) { }
   userdata:any;
   disable_button=true;
   input_tag:any;
@@ -64,7 +65,8 @@ export class AddmmComponent implements OnInit {
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertMaster.message)
       if(this.userdata.insertMaster.message=='Inserted Successfully !!')
-      this.msg="Module added successfully!!"
+      {localStorage.setItem('addmm','1');
+        this.router.navigate(['/mastermodule/dashboard'])}
     });
       this.done=true;
       

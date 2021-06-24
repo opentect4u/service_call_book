@@ -39,19 +39,44 @@ query{
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class PmdashboardComponent implements OnInit,OnDestroy {
-  displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit'];
+  displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
+  updt=true;
+  insrt=true;
+  updatepm:any;
+  insertpm:any;
   loading: boolean=false;
   posts_pm: any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+    this.updatepm=localStorage.getItem('updatepm')
+    this.insertpm=localStorage.getItem('addpm')
+    if(this.updatepm=='0')
+    {
+       this.updt=true;
+    }
+    else
+       {
+         this.updt=false;
+         localStorage.setItem('updatepm','0')
+
+       }
+       if(this.insertpm=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('addpm','0')
+   
+          }
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -93,4 +118,5 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
+  delete(){}
 }

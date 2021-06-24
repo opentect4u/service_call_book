@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
+import { Router } from '@angular/router'
 const ADD_CLIENT_TYPE=gql`
 mutation insertMaster($client_type: String,$user_id: String) {
   insertMaster(name: $client_type, user_id: $user_id, db_type: 1) {
@@ -20,7 +21,7 @@ mutation insertMaster($client_type: String,$user_id: String) {
 })
 export class AddclienttypeComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,private router:Router) { }
   input_tag:any;
   msg='';
   error=false;
@@ -68,7 +69,9 @@ export class AddclienttypeComponent implements OnInit {
         console.log("data:" +JSON.stringify(data))
         console.log(this.userdata.insertMaster.message)
         if(this.userdata.insertMaster.message=='Inserted Successfully !!')
-        this.msg="Client type added successfully!!"
+        {  localStorage.setItem('addctm','1');
+          this.router.navigate(['/clienttypemaster/dashboard'])
+          this.msg="Client type added successfully!!"}
       });
       // alert(v);
 

@@ -26,12 +26,12 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label> Employee Code</label>
+                                        <label> <b>Employee Code</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder="  Enter Code "
-                                            name="cust_code" id="itemcode" required #ecode (keyup)="prevent_null($event)">
+                                        <input type="text" class="form-control" 
+                                            name="cust_code" id="itemcode" required #ecode (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
 
                                         <span class="text-danger" *ngIf="code">*Please Enter Code</span>
 
@@ -43,11 +43,11 @@
                                 </div><br>
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label> Name</label>
+                                        <label> <b>Name</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder="  Enter Name "
+                                        <input type="text" class="form-control" 
                                             name="cust_name" id="itemname" required="" #ename (keyup)="prevent_null($event)">
 
                                         <span class="text-danger" *ngIf="name">*Please Enter Name</span>
@@ -62,10 +62,10 @@
                                 <br>
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label>Phone No.</label>
+                                        <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder="  Enter Phone Number" name="phone"
+                                        <input type="text" class="form-control"  name="phone"
                                             id="itemph" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
                                         <span class="text-danger" *ngIf="ph">*Please Enter Phone No.(Only numeric values)</span>
 
@@ -73,10 +73,10 @@
                                     <div class="col-sm-3"></div>
 
                                     <div class="col-sm-1">
-                                        <label>Email</label>
+                                        <label><b>Email</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder="  Enter Email" (keyup)="prevent_null($event)"
+                                        <input type="text" class="form-control" (keyup)="prevent_null($event)"
                                             name="email" id="itememail" #email (change)="check_email_validity($event)">
 
                                         <span class="text-danger" *ngIf="notavalidemail">{{confirm_email}}</span>
@@ -103,7 +103,7 @@
                                         <label>Designation</label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder="  Enter Designation"
+                                        <input type="text" class="form-control" 
                                             name="designation" id="itemdesignation" #designation>
 
                                         <!-- <span  class="text-danger"
@@ -122,7 +122,7 @@
                                         <label>Remarks</label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control" placeholder="  Add Remarks..."
+                                        <textarea rows="5" type="text" class="form-control"
                                             name="remarks" id="itemremarks" #remarks
                                             ></textarea>
                                         <!-- <span class="text-danger" *ngIf="upload&&!mobile">*please Enter Mobile -->

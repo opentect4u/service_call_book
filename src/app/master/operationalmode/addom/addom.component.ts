@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
+import { Router } from '@angular/router'
 const ADD_OP=gql`
 mutation insertMaster($op: String,$user_id: String) {
   insertMaster(name: $op, user_id: $user_id, db_type: 2) {
@@ -17,7 +18,7 @@ mutation insertMaster($op: String,$user_id: String) {
 })
 export class AddomComponent implements OnInit {
 
-  constructor(private apollo:Apollo) { }
+  constructor(private apollo:Apollo,private router:Router) { }
 
   input_tag:any;
   disable_button=true;
@@ -66,7 +67,11 @@ export class AddomComponent implements OnInit {
         console.log("data:" +JSON.stringify(data))
         console.log(this.userdata.insertMaster.message)
         if(this.userdata.insertMaster.message=='Inserted Successfully !!')
-        this.msg="Operational mode added successfully!!"
+        {
+          localStorage.setItem('addom','1');
+          this.router.navigate(['/operationmode/dashboard'])
+          // this.msg="Operational mode added successfully!!"
+        }
       });
       this.done=true;
      // this.msg="Operational mode added successfully!!"
