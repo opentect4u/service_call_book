@@ -9,9 +9,9 @@ query getClient($active: String){
   getClient(id:"", active: $active){
     id
     client_name
-    client_type_id
+    client_type
     phone_no
-    
+    district_name
   }
 }`
 // export interface PeriodicElement {
@@ -48,16 +48,42 @@ query getClient($active: String){
 })
 export class AddclientdashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['Client_Code','Name','Type','Phone','Edit'];
+  displayedColumns: string[] = ['Client_Code','Name','Type','Phone','District','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  updt=true;
+  insrt=true;
+  updatec:any;
+  insertc:any;
 
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
+    this.updatec=localStorage.getItem('updatec')
+    this.insertc=localStorage.getItem('addc')
+    console.log(this.updatec)
+    if(this.updatec=='0')
+    {
+       this.updt=true;
+    }
+    else
+       {
+         this.updt=false;
+         localStorage.setItem('updatec','0')
+
+       }
+       if(this.insertc=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('addc','0')
+   
+          }
     this.fetch_data(1);
     //this.fetch_data(1);
     this.dataSource.paginator = this.paginator;
@@ -98,7 +124,7 @@ export class AddclientdashboardComponent implements OnInit {
   go_to_update(v1:any){
     this.router.navigate(['/addclient/editclient',v1])
   }
-
+delete(){}
 sendstatus(v:any){
   this.fetch_data(v);
   //this.fetch_data(v);

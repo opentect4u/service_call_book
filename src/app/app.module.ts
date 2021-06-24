@@ -90,6 +90,7 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
   ],
   imports: [
     BrowserModule,
+    
     AppRoutingModule,
     MatTableModule,
     MatPaginatorModule,

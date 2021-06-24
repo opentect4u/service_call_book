@@ -99,7 +99,7 @@
                                 <br>
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label><b>Client Name</b></label>
+                                        <label><b>Client Name</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
 
                                     <div class="col-sm-10">
@@ -159,7 +159,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label><b>District</b></label>
+                                        <label><b>District</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <select class="form-control" name="district" id="district" #dist (click)="select_district(dist.value)">
@@ -177,7 +177,7 @@
                                     <div class="col-sm-3"></div>
 
                                     <div class="col-sm-1">
-                                        <label><b>Client Type</b></label>
+                                        <label><b>Client Type</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <select class="form-control" name="ctm" id="ctm" #ctm (click)="select_client_type(ctm.value)">
@@ -197,7 +197,7 @@
                                 <br>
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label><b>Operational Mode</b></label>
+                                        <label><b>Operational Mode</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <select class="form-control" name="op" id="op" #comp (click)="select_operation(comp.value)">
@@ -222,7 +222,7 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Address</b></label>
+                                        <label><b>Address</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-10">
                                         <textarea rows="5" type="text" class="form-control" placeholder=""
@@ -323,7 +323,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="email" class="form-control" placeholder="" name="email" value="{{mail}}"
-                                            id="itememail" #em (change)="check_email_validity($event)" readonly>
+                                            id="itememail" #em (change)="check_email_validity($event)" >
                                         <!-- <span  class="text-danger ml-3"
                                         *ngIf="upload&&!email">*please Enter Email</span> -->
                                         <!-- <span class="text-danger" *ngIf="email_null">*Please Enter Email</span> 
@@ -349,7 +349,7 @@
                                 </div><br>
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label><b>Support Mode</b></label>
+                                        <label><b>Support Mode</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-10">
                                         <input type="radio" id="AMC" name="Support" value="A" #amcrentalradio (click)="select_mode()">
@@ -361,7 +361,7 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>AMC upto</b></label>
+                                        <label><b>AMC upto</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="date" class="form-control" placeholder="" value="{{amcdate}}"
@@ -375,7 +375,7 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Rental upto</b></label>
+                                        <label><b>Rental upto</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="date" class="form-control" placeholder="" value="{{rentaldate}}"
@@ -390,7 +390,7 @@
                                 </div><br>
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label><b>Status</b></label>
+                                        <label><b>Status</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-10">
                                         <!-- <input type="radio" id="a" name="Status" value="A" #activeinactiveradio (click)="select_status()">

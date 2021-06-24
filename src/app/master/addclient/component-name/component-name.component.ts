@@ -357,6 +357,7 @@ export class ComponentNameComponent implements OnInit {
       if(this.userdata.updateClient.success==1)
       { 
         //this.done=true;
+        localStorage.setItem('updatec','1');
         this.router.navigate(['/addclient/dashboard'])
       }
       

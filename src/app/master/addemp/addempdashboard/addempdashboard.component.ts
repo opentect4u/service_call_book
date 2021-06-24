@@ -42,12 +42,15 @@ query{
 })
 export class AddempdashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['Sl_No', 'Employee_Code','Name','Edit'];
+  displayedColumns: string[] = ['Sl_No', 'Employee_Code','Name','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  updt=true;
+  insrt=true;
+  updatee:any;
+  inserte:any;
 
   loading: boolean=false;
   posts_emp: any;
@@ -56,6 +59,30 @@ export class AddempdashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.updt);
+    this.updatee=localStorage.getItem('updatee');
+    this.inserte=localStorage.getItem('adde');
+    console.log(this.updatee);
+    if(this.updatee=='0')
+    {
+       this.updt=true;
+    }
+    else
+       {
+         this.updt=false;
+         localStorage.setItem('updatee','0')
+
+       }
+       if(this.inserte=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('adde','0')
+   
+          }
     this.fetch_data();
     //this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -92,4 +119,5 @@ export class AddempdashboardComponent implements OnInit {
     //console.log(v1+" "+v2+" "+" "+v3);
     this.router.navigate(['/addemp/editemp',v1,v2,v3])
   }
+  delete(){}
 }

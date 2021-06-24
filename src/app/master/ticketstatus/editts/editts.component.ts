@@ -74,7 +74,8 @@ export class EdittsComponent implements OnInit {
       console.log(this.userdata.updateMaster.message)
       if(this.userdata.updateMaster.message=='Updated Successfully !!')
       // this.msg="Ticket status updated successfully!!"
-      this.router.navigate(['/ticketstatus/dashboard'])
+      {localStorage.setItem('updatets','1')
+      this.router.navigate(['/ticketstatus/dashboard'])}
     });
       this.done=true;
       

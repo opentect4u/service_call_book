@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
+import { Router } from '@angular/router';
 const ADD_EMP=gql`
 mutation insertEmpMaster($emp_code: Int,$emp_name: String,$phone_no:String,$email: String
   $emp_designation: String,
@@ -19,7 +20,7 @@ mutation insertEmpMaster($emp_code: Int,$emp_name: String,$phone_no:String,$emai
 })
 export class AddeComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,private router:Router) { }
   userdata:any;
   notavalidemail=true;
    confirm_email='';
@@ -128,7 +129,8 @@ export class AddeComponent implements OnInit {
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertEmpMaster.message)
       if(this.userdata.insertEmpMaster.message=='Data Inserted Successfully')
-     {this.done=true; this.msg="Employee added successfully!!"}
+     { localStorage.setItem('adde','1');
+       this.router.navigate(['/addemp/dashboard'])}
     });
     this.clear_all()
   }
