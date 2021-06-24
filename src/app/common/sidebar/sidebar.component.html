@@ -45,7 +45,7 @@
     
   
   <li>
-  <div class="link log" (click)="logout()"><i class="fa fa-sign-out" ></i>Log out</div>
+  <div class="link log" data-toggle="modal" data-target="#myModal"><i class="fa fa-sign-out" ></i>Log out</div>
   </li>
           
           
@@ -80,36 +80,35 @@
   
   
   
-  <!-- <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      
-       
-        <div class="modal-header">
-  
-  
-         <h5>Alert</h5>
-  
-          
-          
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-     
-        <div class="modal-body">
-          <p class="text-center">Are you sure you want to log out?</p>
-        </div>
-        
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning text-white" data-dismiss="modal" (click)="go_to_login_page()">Ok</button>
-          <button type="button" class="btn btn-warning text-white " data-dismiss="modal" >Cancel</button>
-        </div>
-        
+ <!-- The Modal -->
+ <div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h6 class="modal-title w-100 text-center">Alert!!</h6>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body text-center ">
+       <p>Are you sure you want to log out?</p>
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="logout()">Ok</button>
+        <!-- <button type="button" class="btn text-white" style="background-color:#2c2e3e" data-dismiss="modal">Close</button>
+        <button type="button" class="btn text-white" style="background-color:#2c2e3e" data-dismiss="modal" (click)="logout()">Ok</button> -->
+      </div>
+      
     </div>
-  </div> -->
-  
+  </div>
+</div>
+
+
   
   
   
