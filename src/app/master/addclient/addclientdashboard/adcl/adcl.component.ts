@@ -124,8 +124,8 @@ export class AdclComponent implements OnInit,OnDestroy {
     this.mode_select=true;
     this.oprnvalid=false;
     this.status=true
-    this.amcvalid=true;
-    this.rentalvalid=true;
+    // this.amcvalid=true;
+    // this.rentalvalid=true;
     this.notavalidemail=true;
     this.select_d=document.getElementById('district');
     this.select_c=document.getElementById('ctm');
@@ -168,20 +168,20 @@ export class AdclComponent implements OnInit,OnDestroy {
   select_status(){
     this.status=false;
   }
-  change_amcupto(v:any){
-    if(v=='')
-    this.amcvalid=true;
-    else
-    this.amcvalid=false;
-  }
+  // change_amcupto(v:any){
+  //   if(v=='')
+  //   this.amcvalid=true;
+  //   else
+  //   this.amcvalid=false;
+  // }
   
-  change_rentalupto(v:any){
-   // alert(v);
-    if(v=='')
-    this.rentalvalid=true;
-    else
-    this.rentalvalid=false;
-  }
+  // change_rentalupto(v:any){
+  //  // alert(v);
+  //   if(v=='')
+  //   this.rentalvalid=true;
+  //   else
+  //   this.rentalvalid=false;
+  // }
   select_district(v:any){
     if(v=='')
     this.distvalid=true;
@@ -238,18 +238,7 @@ this.mode_select=false;
       else
        {this.addressvalid=false;this.input_address.style.border="solid lightgrey 1px";}
     }
-    else if(e.target.id=='itememail')
-    {
-      if(e.target.value=='')
-      {
-        this.email_null=true;
-        this.confirm_email='';
-        this.input_email.style.border="solid red 1px"
-       // this.hide_val=true;
-      }
-      else
-       {this.email_null=false; this.input_email.style.border="solid lightgrey 1px"}
-    }
+    
     else{}
 
   }
