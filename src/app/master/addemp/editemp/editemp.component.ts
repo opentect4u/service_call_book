@@ -178,6 +178,7 @@ export class EditempComponent implements OnInit {
     console.log(this.userdata.updateEmp.message)
     if(this.userdata.updateEmp.message=='Updated Successfully !!')
     {
+      localStorage.setItem('updatee','1');
       // this.done=true;this.msg="Employee updated successfully!!";
       this.router.navigate(['/addemp/dashboard'])
     }

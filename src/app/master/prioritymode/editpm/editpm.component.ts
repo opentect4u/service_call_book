@@ -75,7 +75,8 @@ export class EditpmComponent implements OnInit {
       console.log(this.userdata.updateMaster.message)
       if(this.userdata.updateMaster.message=='Updated Successfully !!')
       //this.msg="Priority updated successfully!!"
-      this.router.navigate(['/prioritymode/dashboard'])
+      { localStorage.setItem('updatepm','1');
+      this.router.navigate(['/prioritymode/dashboard'])}
     });
       this.done=true;
       this.msg="Priority updated successfully!!"

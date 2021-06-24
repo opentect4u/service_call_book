@@ -39,12 +39,15 @@ query{
 })
 export class MmdashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['Sl_No', 'Module','Edit'];
+  displayedColumns: string[] = ['Sl_No', 'Module','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  updt=true;
+  insrt=true;
+  updatemm:any;
+  insertmm:any;
 
   loading: boolean=false;
   posts_mm: any;
@@ -53,7 +56,33 @@ export class MmdashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     localStorage.setItem('address','/mastermodule/dashboard'); 
+
+    this.updatemm=localStorage.getItem('updatemm')
+    this.insertmm=localStorage.getItem('addmm')
+    console.log(this.updatemm)
+    if(this.updatemm=='0')
+    {
+       this.updt=true;
+    }
+    else
+       {
+         this.updt=false;
+         localStorage.setItem('updatemm','0')
+
+       }
+       if(this.insertmm=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('addmm','0')
+   
+          }
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -95,4 +124,5 @@ export class MmdashboardComponent implements OnInit {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
+  delete(){}
 }
