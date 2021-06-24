@@ -54,6 +54,8 @@ query checkUser($code_no: String!){
 
 })
 export class SignupComponent implements OnInit {
+  show_Password:any;
+  show_ConPassword:any;
   confirm:any;
   button_disabled:boolean=false;
   det:any;
@@ -87,7 +89,7 @@ export class SignupComponent implements OnInit {
       code:['',Validators.required],
       name:[''],
       type:['',Validators.required],
-      Email:[''],
+      Email:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       pass:['',Validators.required],
       conpass:['',Validators.required]
     }
@@ -240,7 +242,7 @@ export class SignupComponent implements OnInit {
       else if(data.checkUser.success==0 || data.checkUser.success==2){
         
           this.details=JSON.parse(JSON.stringify(data.checkUser.message));
-          var log_msg = data.checkUser.success==2 ? (JSON.parse(data.checkUser.message)[0].log_done>0 ? 'Alrady Signed In' : 'Warning') :  data.checkUser.message;
+          var log_msg = data.checkUser.success==2 ? (JSON.parse(data.checkUser.message)[0].log_done>0 ? 'Already Registered' : 'Warning') :  data.checkUser.message;
           this.Name=document.getElementById("emp_name");
           this.Email=document.getElementById("emp_email");
           this.Name.value=data.checkUser.success==2 ? JSON.parse(data.checkUser.message)[0].name : '';
@@ -306,6 +308,25 @@ export class SignupComponent implements OnInit {
         e.preventDefault();
     }
     
+    mypassword(){
+      this.show_Password=document.getElementById('Passwd');
+      if (this.show_Password.type === "password") {
+        this.show_Password.type = "text";
+      } else {
+        this.show_Password.type = "password";
+      } 
+
+    }
+    myconfirm(){
+      this.show_ConPassword=document.getElementById('conpasswd');
+      if (this.show_ConPassword.type === "password") {
+        this.show_ConPassword.type = "text";
+      } else {
+        this.show_ConPassword.type = "password";
+      }
+
+
+    }
     
 
 

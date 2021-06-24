@@ -32,7 +32,7 @@ query userLogin($user_id: String!, $password: String!){
               '../../../assets/Login_assets/css/res.css']
 })
 export class LoginComponent implements OnInit {
- 
+   show_eye: boolean = false;
    error_for_user:any="Please Check Your User ID Or Password";
    error_log:boolean=true;
    Success:any;
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
   userid:any;
   user:any;
   successfull_register:boolean=true;
+  show_password:any;
 
  
   
@@ -229,6 +230,15 @@ export class LoginComponent implements OnInit {
     this.successfull_register=true;
   }
 
+  myFunction(){
+    this.show_password=document.getElementById('passwd');
+    if (this.show_password.type === "password") {
+      this.show_password.type = "text";
+    } else {
+      this.show_password.type = "password";
+    }
+     
+  }
  
 
 }

@@ -18,3 +18,10 @@
     border: 1px solid transparent;
     border-radius: .35rem;
   }
+
+input [type="checkbox"]
+{
+    vertical-align:middle;
+}
+    
+  
