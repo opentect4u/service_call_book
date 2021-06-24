@@ -44,8 +44,12 @@ query{
 export class CtmdashboardComponent implements OnInit, OnDestroy {
 
   userdata:any;
+  updt=true;
+  insrt=true;
+  updatectm:any;
+  insertctm:any;
   private querySubscription: Subscription = new Subscription;
-  displayedColumns: string[] = ['Sl_No', 'Client_Type','Edit'];
+  displayedColumns: string[] = ['Sl_No', 'Client_Type','Edit','Delete'];
   dataSource = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -61,9 +65,31 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
     localStorage.setItem('address','/clienttypemaster/dashboard');
     this.posts_ctm.length=0;
     this.fetch_data();
-  
+    this.updatectm=localStorage.getItem('updatectm')
+    this.insertctm=localStorage.getItem('addctm')
+    console.log(this.updatectm)
+    if(this.updatectm=='0')
+    {
+       this.updt=true;
+       console.log("A="+this.updatectm);
+    }
+    else
+       {
+         console.log("B="+this.updatectm);
+         this.updt=false;
+         localStorage.setItem('updatectm','0')
 
-  
+       }
+       if(this.insertctm=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('addctm','0')
+   
+          }
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
   }
@@ -142,4 +168,5 @@ applyFilter(event: Event) {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
+  delete(){}
 }

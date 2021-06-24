@@ -40,12 +40,15 @@ query{
 ]
 })
 export class TsdashboardComponent implements OnInit,OnDestroy {
-  displayedColumns: string[] = ['Sl_No', 'Status','Edit'];
+  displayedColumns: string[] = ['Sl_No', 'Status','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  updt=true;
+  insrt=true;
+  updatets:any;
+  insertts:any;
   loading: boolean=false;
   posts_ts: any=[];
   private querySubscription: Subscription = new Subscription;
@@ -53,7 +56,32 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
  
 
   ngOnInit(): void {
+
     localStorage.setItem('address','/ticketstatus/dashboard');  
+
+    this.updatets=localStorage.getItem('updatets')
+    this.insertts=localStorage.getItem('addts')
+    if(this.updatets=='0')
+    {
+       this.updt=true;
+    }
+    else
+       {
+         this.updt=false;
+         localStorage.setItem('updatets','0')
+
+       }
+       if(this.insertts=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('addts','0')
+   
+          }
+
     this.posts_ts.length=0;
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -97,4 +125,5 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
+  delete(){}
 }

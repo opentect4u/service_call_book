@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
+import {Apollo, gql} from 'apollo-angular'; 
+import { Router } from '@angular/router'
 const ADD_TS=gql`
 mutation insertMaster($ts: String,$user_id: String) {
   insertMaster(name: $ts, user_id: $user_id, db_type: 3) {
@@ -17,7 +18,7 @@ mutation insertMaster($ts: String,$user_id: String) {
 })
 export class AddtsComponent implements OnInit {
 
-  constructor(private apollo:Apollo) { }
+  constructor(private apollo:Apollo,private router:Router) { }
   userdata:any;
   input_tag:any;
   msg='';
@@ -67,7 +68,10 @@ export class AddtsComponent implements OnInit {
           console.log("data:" +JSON.stringify(data))
           console.log(this.userdata.insertMaster.message)
           if(this.userdata.insertMaster.message=='Inserted Successfully !!')
-          this.msg="Ticket status added successfully!!"
+          // this.msg="Ticket status added successfully!!"
+          { localStorage.setItem('addts','1');
+            this.router.navigate(['/ticketstatus/dashboard'])
+          }
         });
       this.done=true;
      // this.msg="Ticket status added successfully!!"

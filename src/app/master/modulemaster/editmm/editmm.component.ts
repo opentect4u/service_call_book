@@ -76,7 +76,8 @@ export class EditmmComponent implements OnInit {
       console.log(this.userdata.updateMaster.message)
       if(this.userdata.updateMaster.message=='Updated Successfully !!')
       //this.msg="Module updated successfully!!"
-      this.router.navigate(['/mastermodule/dashboard'])
+      { localStorage.setItem('updatemm','1')
+      this.router.navigate(['/mastermodule/dashboard'])}
     });
       this.done=true;
       

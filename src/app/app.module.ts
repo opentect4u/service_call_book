@@ -51,6 +51,8 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+
+
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 @NgModule({
   declarations: [
@@ -96,6 +98,7 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
   ],
   imports: [
     BrowserModule,
+    
     AppRoutingModule,
     MatTableModule,
     MatPaginatorModule,

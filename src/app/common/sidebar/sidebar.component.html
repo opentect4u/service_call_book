@@ -33,7 +33,7 @@
       </li>
     
       <li>
-        <div class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
+        <div hidden class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
           <li><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
           <li><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
@@ -45,7 +45,7 @@
     
   
   <li>
-  <div class="link log" data-toggle="modal" data-target="#myModal"><i class="fa fa-sign-out" ></i>Log out</div>
+  <div class="link log" (click)="logout()"><i class="fa fa-sign-out" ></i>Log out</div>
   </li>
           
           
@@ -79,34 +79,31 @@
   
   
   
-  
- <!-- The Modal -->
+<!-- 
  <div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
     
-      <!-- Modal Header -->
+      
       <div class="modal-header">
         <h6 class="modal-title w-100 text-center">Alert!!</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       
-      <!-- Modal body -->
+
       <div class="modal-body text-center ">
        <p>Are you sure you want to log out?</p>
       </div>
-      
-      <!-- Modal footer -->
+
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="logout()">Ok</button>
-        <!-- <button type="button" class="btn text-white" style="background-color:#2c2e3e" data-dismiss="modal">Close</button>
-        <button type="button" class="btn text-white" style="background-color:#2c2e3e" data-dismiss="modal" (click)="logout()">Ok</button> -->
+       
       </div>
       
     </div>
   </div>
-</div>
+</div> -->
 
 
   

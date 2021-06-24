@@ -73,7 +73,8 @@ export class EditomComponent implements OnInit {
       console.log(this.userdata.updateMaster.message)
       if(this.userdata.updateMaster.message=='Updated Successfully !!')
       //this.msg="Operational mode updated successfully!!"
-      this.router.navigate(['/operationmode/dashboard'])
+      {localStorage.setItem('updateom','1');
+      this.router.navigate(['/operationmode/dashboard'])}
     });
       this.done=true;
       this.msg="Operational mode updated successfully!!"

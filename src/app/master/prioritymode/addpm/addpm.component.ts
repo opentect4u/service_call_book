@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
+import { Router } from '@angular/router';
 const ADD_PM=gql`
 mutation insertMaster($pm: String,$user_id: String) {
   insertMaster(name: $pm, user_id: $user_id, db_type: 4) {
@@ -17,7 +18,7 @@ mutation insertMaster($pm: String,$user_id: String) {
 })
 export class AddpmComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,private router:Router ) { }
  userdata:any;
   input_tag:any;
   msg='';
@@ -65,7 +66,8 @@ export class AddpmComponent implements OnInit {
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertMaster.message)
       if(this.userdata.insertMaster.message=='Inserted Successfully !!')
-      this.msg="Priority added successfully!!"
+      { localStorage.setItem('addpm','1')
+        this.router.navigate(['/prioritymode/dashboard'])}
     });
       this.done=true;
       

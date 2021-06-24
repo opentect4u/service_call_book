@@ -41,18 +41,46 @@ query{
 })
 
 export class OmdashboardComponent implements OnInit,OnDestroy{
-  displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit'];
+  displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit','Delete'];
   dataSource = new MatTableDataSource;
   private querySubscription: Subscription = new Subscription;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   loading: boolean=false;
   posts_om: any=[];
-
+  updt=true;
+  insrt=true;
+  updateom:any;
+  insertom:any;
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+
     localStorage.setItem('address','/operationmode/dashboard'); 
+
+    this.updateom=localStorage.getItem('updateom')
+    this.insertom=localStorage.getItem('addom')
+    if(this.updateom=='0')
+    {
+       this.updt=true;
+    }
+    else
+       {
+         this.updt=false;
+         localStorage.setItem('updateom','0')
+
+       }
+       if(this.insertom=='0')
+       {
+          this.insrt=true;
+       }
+       else
+          {
+            this.insrt=false;
+            localStorage.setItem('addom','0')
+   
+          }
+
     this.posts_om.length=0;
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -96,5 +124,8 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   }
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
+  }
+  delete(){
+    
   }
 }
