@@ -33,15 +33,27 @@
       </li>
     
       <li>
-        <div hidden class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
+        <div  class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
           <li><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
           <li><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
           <li><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
          
 
+          
+         
+
         </ul>
       </li>
+      
+    <li>
+      <div  class="link" (click)="opencloseadminsubmenu()"><i class="fa fa-user" aria-hidden="true"></i>Admin<i class="fa fa-chevron-down"></i></div>
+      <ul class="submenu" id="openclose_admin">
+        <li><a   routerLinkActive="true" routerLink="/operations/Admin/usermaintanance">User Maintainance</a></li>
+        <li><a  routerLinkActive="true" routerLink="/operations/Admin/notifications">Notification</a></li>
+      </ul>
+
+    </li>
     
   
   <li>

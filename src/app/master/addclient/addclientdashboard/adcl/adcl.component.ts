@@ -320,7 +320,7 @@ this.mode_select=false;
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertClient.message)
       if(this.userdata.insertClient.message=='Inserted Successfully !!!')
-      { localStorage.setItem('updatec','1');
+      { localStorage.setItem('addc','1');
         this.router.navigate(['/addclient/dashboard'])
         this.done=true; this.email_null=false;
         this.namevalid=false;

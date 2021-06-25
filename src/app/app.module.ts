@@ -54,6 +54,10 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
 
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
+import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
+import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
+import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,7 +96,11 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
     AddrtComponent,
     ComponentNameComponent,
     RightclickoffDirective,
-    ControlkeyoffDirective
+    ControlkeyoffDirective,
+    UsermaintananceComponent,
+    NotificationsComponent,
+    AddnotifyComponent,
+    EditnotifyComponent
 
 
   ],
@@ -111,6 +119,8 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
     ReactiveFormsModule,
     GraphQLModule,
     HttpClientModule
+
+    
    
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],

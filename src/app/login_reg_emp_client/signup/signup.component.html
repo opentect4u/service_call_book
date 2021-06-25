@@ -208,7 +208,7 @@
          <input type="email" class="form-control" 
 		 formControlName="client_email"  [ngClass]="{'is-invalid': login_c && c.client_email.errors}">
 		 <div *ngIf="login_c && c.client_email.errors" class="invalid-feedback text-danger">
-			<div *ngIf="c.client_email.errors.required"><span>*Please supply email</span></div>
+			<div *ngIf="c.client_email.errors.required"><small>*Please supply email</small></div>
 			<div *ngIf="c.client_email.errors.pattern"><small>*Please provide valid
 				email</small></div>
 		
