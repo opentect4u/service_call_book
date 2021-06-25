@@ -188,7 +188,7 @@
 		<!-- <input type="text" class="form-control" Placeholder="Enter Client Code" 
 		 (change)="sendTheNewValue($event)"> -->
          <input type="text" class="form-control" 
-		  form-control="client_code"
+		 formControlName="client_code"
 		  [ngClass]="{'is-invalid': login_c && c.client_code.errors}"
 		  >
 		  <div *ngIf="login_c && c.client_code.errors" class="invalid-feedback text-danger">
@@ -198,7 +198,7 @@
 		<div class="col-sm-6 float-left">
 		<label>Client name</label>
            <input type="text" class="form-control" value=" " readonly
-		   form-control="client_name">
+		   formControlName="client_name">
 		</div>
 			
 		</div>
@@ -206,10 +206,13 @@
 		<div class="col-sm-6 float-left">
 		<label>Email</label>
          <input type="email" class="form-control" 
-		 form-control="client_email"  [ngClass]="{'is-invalid': login_c && c.client_email.errors}">
+		 formControlName="client_email"  [ngClass]="{'is-invalid': login_c && c.client_email.errors}">
 		 <div *ngIf="login_c && c.client_email.errors" class="invalid-feedback text-danger">
 			<div *ngIf="c.client_email.errors.required"><span>*Please supply email</span></div>
-		  </div>
+			<div *ngIf="c.client_email.errors.pattern"><small>*Please provide valid
+				email</small></div>
+		
+		</div>
 		
 		</div>
 		
@@ -221,23 +224,73 @@
             <div class="col-sm-6 float-left">
             <label>Password*</label>
              <input type="password" class="form-control"  
-			 form-control="client_pass"
-			 [ngClass]="{'is-invalid': login_c && c.client_pass.errors}">
+			 formControlName="client_pass"
+			 [ngClass]="{'is-invalid': login_c && c.client_pass.errors}"
+			 id="client">
 			 <div *ngIf="login_c && c.client_pass.errors" class="invalid-feedback text-danger">
 				<div *ngIf="c.client_pass.errors.required"><span>*Please supply password</span></div>
 			  </div>
-            </div>
+
+			  <span  style="word-wrap:break-word">
+				<input id="checkid1"  type="checkbox" (click)="myconfirm_client_password()" class="mt-3 mb-1"/><span class="ml-2">Show Password</span>
+				</span>
+			</div>
+
+          
                 
             <div class="col-sm-6 float-left">
             <label>Confirm Password*</label>
              <input type="password" class="form-control" 
-			 form-control="client_conpass"
-			 [ngClass]="{'is-invalid': login_c && c.client_conpass.errors}">
+			 formControlName="client_conpass"
+			 [ngClass]="{'is-invalid': login_c && c.client_conpass.errors}"
+			 id="client_confirm">
 			 <div *ngIf="login_c && c.client_conpass.errors" class="invalid-feedback text-danger">
 				<div *ngIf="c.client_conpass.errors.required"><span>*Please supply confirm password</span></div>
 			  </div>
+
+
+			  <span  style="word-wrap:break-word">
+				<input id="checkid2"  type="checkbox" (click)="client_password()" class="mt-3 mb-1"/><span class="ml-2">Show Password</span>
+				</span>
             </div>
                 </div>
+            
+			
+			
+				<div class="form-row">
+					<div class="col-sm-6 float-left">
+					<label><strong>Enter the text as shown in the image</strong> </label>
+					<input type="text" class="form-control"  
+					formControlName="captcha_client"
+					[ngClass]="{'is-invalid': login_c && c.captcha_client.errors}"
+					id="Passwd"
+					ondrop="return false" onpaste="return false">
+					<div *ngIf="login_c && c.captcha_client.errors" class="invalid-feedback text-danger">
+						 <div *ngIf="c.captcha_client.errors.required"><span>*Please supply captcha</span></div>
+					</div>
+					
+					
+					</div>
+						
+					<div class="col-sm-6 ">
+						
+						
+						<input type="text" class="form-control float-left " id="capt_client" oncopy="return false"  disabled 
+					
+						>
+						<a (click)="refresh_captcha_client()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a>
+		
+						<small *ngIf="captch_cli" class="text-danger ml-2">*captcha mismatch</small>
+						
+				  
+					</div>
+				
+				</div>
+		
+ 
+
+
+
 		
 		<!--<div class="col-sm-12 float-left terms">
 		<label class="containerCK">Terms &amp; Condition Apply
@@ -332,12 +385,12 @@
         <input type="password" class="form-control"  
 		formControlName="pass"
 		[ngClass]="{'is-invalid': login && f.pass.errors}"
-		id="Passwd">
+		id="Passd_emp">
 		<div *ngIf="login && f.pass.errors" class="invalid-feedback text-danger">
 			 <div *ngIf="f.pass.errors.required"><span>*Please supply password</span></div>
 		</div>
 		<span  style="word-wrap:break-word">
-			<input id="checkid"  type="checkbox" (click)="mypassword()" class="mt-3 mb-4"/>Show Password
+			<input id="checkid3"  type="checkbox" (click)="mypassword()" class="mt-3 mb-1"/><span class="ml-2">Show Password</span>
 			</span>
 		
 		</div>
@@ -354,11 +407,66 @@
 		</div>
 
 		<span  style="word-wrap:break-word">
-			<input id="checkid"  type="checkbox" (click)="myconfirm()" class="mt-3 mb-4"/>Show Password
+			<input id="checkid4"  type="checkbox" (click)="myconfirm()" class="mt-3 mb-1"/><span class="ml-2">Show Password</span>
 			</span>
 		</div>
 		
 		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="form-row">
+			<div class="col-sm-6 float-left">
+			<label><strong>Enter the text as shown in the image</strong> </label>
+			<input type="text" class="form-control"  
+			formControlName="captcha_emp"
+			[ngClass]="{'is-invalid': login && f.captcha_emp.errors}"
+			ondrop="return false" onpaste="return false">
+			<div *ngIf="login && f.captcha_emp.errors" class="invalid-feedback text-danger">
+				 <div *ngIf="f.captcha_emp.errors.required"><span>*Please supply captcha</span></div>
+			</div>
+			
+			
+			</div>
+				
+			<div class="col-sm-6 ">
+				
+				
+				<input type="text" class="form-control float-left " id="capt" oncopy="return false"  disabled 
+			
+				>
+				<a (click)="refresh_captcha_emp()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a>
+
+				<small *ngIf="captch_employee" class="text-danger ml-2">*captcha mismatch</small>
+				
+		  
+			</div>
+		
+			</div>
+
+
+
+
+
+
+
+
+
+		
 		
 		<!--<div class="col-sm-12 float-left terms">
 		<label class="containerCK">Terms &amp; Condition Apply

@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
     var f=alpha[Math.floor(Math.random()*62)]
     var g=alpha[Math.floor(Math.random()*62)]
     var sum=a+b+c+d+e+f+g;
-    this.recaptcha=document.getElementById("capt");
+    this.recaptcha=document.getElementById("capt_login");
     this.recaptcha.value=sum;
 
 
@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit {
 
   Submit(){
     this.error_log=true;
-    this.recaptcha=document.getElementById("capt");
+    this.recaptcha=document.getElementById("capt_login");
     console.log("dashboard1")
     this.login=true;
     if(this.LoginForm.invalid){
@@ -220,7 +220,7 @@ export class LoginComponent implements OnInit {
       var f=alpha[Math.floor(Math.random()*62)]
       var g=alpha[Math.floor(Math.random()*62)]
       var sum=a+ b+c+d+e+f+g;
-      this.recaptcha=document.getElementById("capt");
+      this.recaptcha=document.getElementById("capt_login");
       this.recaptcha.value=sum;
   } 
 
