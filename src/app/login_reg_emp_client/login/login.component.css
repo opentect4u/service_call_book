@@ -1,4 +1,4 @@
-#capt{
+#capt_login{
     text-align: center;
     height:50px;
     width: 100px;
@@ -18,3 +18,10 @@
     border: 1px solid transparent;
     border-radius: .35rem;
   }
+
+input [type="checkbox"]
+{
+    vertical-align:middle;
+}
+    
+  

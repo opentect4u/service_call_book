@@ -26,6 +26,7 @@ export class AddtsComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
+    localStorage.setItem('address','/ticketstatus/addts');  
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -61,7 +62,7 @@ export class AddtsComponent implements OnInit {
           mutation:ADD_TS,
           variables:{
             ts:v,
-            user_id:'123'
+            user_id:localStorage.getItem("UserId")
           }
         }).subscribe(({data})=>{this.userdata=data;console.log(data);
           console.log("data:" +JSON.stringify(data))

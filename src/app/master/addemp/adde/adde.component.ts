@@ -37,6 +37,7 @@ export class AddeComponent implements OnInit {
    msg='';
    done=false;
   ngOnInit(): void {
+    localStorage.setItem('address', '/addemp/adde');
     this.input_code=document.getElementById('itemcode');
     this.input_name=document.getElementById('itemname');
     this.input_phone=document.getElementById('itemph');

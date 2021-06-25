@@ -14,6 +14,7 @@ export class AddrtComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('address','/operations/addraiseticket');
   }
 
 }

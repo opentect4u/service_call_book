@@ -50,6 +50,9 @@ export class AssignticketComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+    localStorage.setItem('address', '/operations/assignticket');
+
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

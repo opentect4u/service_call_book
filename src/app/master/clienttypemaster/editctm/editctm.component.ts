@@ -28,7 +28,8 @@ export class EditctmComponent implements OnInit {
   msg='';
   item1:any;
   item2:any;
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    localStorage.setItem('address','/clienttype/editctm'); 
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
@@ -69,7 +70,8 @@ export class EditctmComponent implements OnInit {
       variables:{
         id:v1,
         name:v2,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
+        
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))

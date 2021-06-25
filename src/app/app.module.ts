@@ -23,7 +23,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-//import { AddctmComponent } from './master/addclient/addclientdashboard/addctm/addctm.component';
 import { AddclienttypeComponent } from './master/clienttypemaster/ctmdashboard/addclienttype/addclienttype.component';
 import { AddomComponent } from './master/operationalmode/addom/addom.component';
 import { AddtsComponent } from './master/ticketstatus/addts/addts.component';
@@ -52,8 +51,8 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
-//import { GraphQLModule } from './graphql.module';
-// import { HttpClientModule } from '@angular/common/http';
+
+
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 @NgModule({
   declarations: [
@@ -109,11 +108,10 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
     MatInputModule,
     MatSelectModule,
     FormsModule,
-
     ReactiveFormsModule,
-
     GraphQLModule,
     HttpClientModule
+   
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
   bootstrap: [AppComponent]

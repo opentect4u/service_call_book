@@ -27,6 +27,7 @@ export class AddomComponent implements OnInit {
   error=false;
   done=false;
   ngOnInit(): void {
+    localStorage.setItem('address','/operationmode/addom'); 
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -61,7 +62,7 @@ export class AddomComponent implements OnInit {
         mutation:ADD_OP,
         variables:{
           op:v,
-          user_id:'123'
+          user_id:localStorage.getItem("UserId")
         }
       }).subscribe(({data})=>{this.userdata=data;console.log(data);
         console.log("data:" +JSON.stringify(data))

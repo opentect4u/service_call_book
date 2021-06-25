@@ -154,6 +154,7 @@ export class ComponentNameComponent implements OnInit {
   active2:boolean=false;
 
   ngOnInit(): void {
+    localStorage.setItem('address', '/addclient/editclient');
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
       variables:{
@@ -348,7 +349,7 @@ export class ComponentNameComponent implements OnInit {
         rental_upto: rentalupto,
         support_status:activeinactiveradio,
         remarks: remarks,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
         
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);

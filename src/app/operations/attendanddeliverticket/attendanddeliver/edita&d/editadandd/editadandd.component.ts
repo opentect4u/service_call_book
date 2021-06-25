@@ -14,6 +14,7 @@ export class EditadanddComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('address', '/operations/editattendanddeliver');
   }
   preventNonNumericalInput(e:any){}
 }

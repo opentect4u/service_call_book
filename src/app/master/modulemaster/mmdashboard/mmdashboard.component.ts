@@ -56,6 +56,9 @@ export class MmdashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    localStorage.setItem('address','/mastermodule/dashboard'); 
+
     this.updatemm=localStorage.getItem('updatemm')
     this.insertmm=localStorage.getItem('addmm')
     console.log(this.updatemm)
@@ -79,6 +82,7 @@ export class MmdashboardComponent implements OnInit {
             localStorage.setItem('addmm','0')
    
           }
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

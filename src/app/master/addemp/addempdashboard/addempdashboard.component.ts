@@ -59,6 +59,9 @@ export class AddempdashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    localStorage.setItem('address', '/addemp/dashboard');
+
     console.log(this.updt);
     this.updatee=localStorage.getItem('updatee');
     this.inserte=localStorage.getItem('adde');
@@ -83,6 +86,7 @@ export class AddempdashboardComponent implements OnInit {
             localStorage.setItem('adde','0')
    
           }
+
     this.fetch_data();
     //this.fetch_data();
     this.dataSource.paginator = this.paginator;

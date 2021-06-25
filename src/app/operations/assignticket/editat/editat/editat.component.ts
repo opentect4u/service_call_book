@@ -14,5 +14,6 @@ export class EditatComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('address', '/operations/editassignticket');
   }  preventNonNumericalInput(e:any){}
 }

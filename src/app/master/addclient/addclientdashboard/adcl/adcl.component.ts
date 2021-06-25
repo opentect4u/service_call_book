@@ -115,6 +115,7 @@ export class AdclComponent implements OnInit,OnDestroy {
   private querySubscription: Subscription = new Subscription;
   private querySubscription1: Subscription = new Subscription;
   ngOnInit(): void {
+    localStorage.setItem('address', '/addclient/addcl');
     this.email_null=false;
     this.namevalid=false;
     this.addressvalid=false;
@@ -244,7 +245,7 @@ this.mode_select=false;
   }
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
-    if (!em.test(event.target.value)) { this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid red 1px"}}
+    if (!em.test(event.target.value)) { this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid lightgrey 1px";}}
     else { this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
   }
   fetch_ctm(){
