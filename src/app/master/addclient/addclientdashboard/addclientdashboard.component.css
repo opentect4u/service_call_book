@@ -1,5 +1,10 @@
 /* input[type="radio"]{float:left;width:20px;margin-right:10px;}
 label{float:left;width:100px;} */
-td, th {
+/* td, th {
     width: 18%;
+  } */
+
+  table {
+    table-layout: fixed;
   }
+  

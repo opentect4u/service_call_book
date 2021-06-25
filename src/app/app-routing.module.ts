@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AfterloginGuard } from './Gaurds/AfterLoginGaurds/afterlogin.guard';
+import { LoginGuard } from './Gaurds/LoginGaurds/login.guard';
 // import { AfterloginGuard } from './Gaurds/AfterLoginGaurds/afterlogin.guard';
 // import { LoginGuard } from './Gaurds/LoginGaurds/login.guard';
 
@@ -30,6 +32,10 @@ import { PmdashboardComponent } from './master/prioritymode/pmdashboard/pmdashbo
 import { AddtsComponent } from './master/ticketstatus/addts/addts.component';
 import { EdittsComponent } from './master/ticketstatus/editts/editts.component';
 import { TsdashboardComponent } from './master/ticketstatus/tsdashboard/tsdashboard.component';
+import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
+import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
+import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
+import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { AssignticketComponent } from './operations/assignticket/assignticket/assignticket.component';
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
@@ -40,163 +46,186 @@ import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raise
 const routes: Routes = [
   {
     path:'',
-    //  canActivate:[LoginGuard],
+     canActivate:[LoginGuard],
     component:LoginComponent
    
   },
   {
     path:'signup',
+    canActivate:[LoginGuard],
    
     component:SignupComponent
   },
   {
     path:'forgetpassword',
+    canActivate:[LoginGuard],
     
     component:ForgetpassComponent
   },
   {
     path:'dashboard',
   
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:DashboardComponent
   },
   {
     path:'clienttypemaster/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component: CtmdashboardComponent
   },
   {
     path:'clienttype/addctm',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
 
     component:AddclienttypeComponent
   },
   {
     path:'clienttype/editctm/:id1/:id2',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditctmComponent,
   },
   {
     path:'operationmode/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:OmdashboardComponent
   },
   {
     path:'operationmode/addom',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddomComponent
   },
   {
     path:'operationmode/editom/:id1/:id2',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditomComponent
   },
   {
     path:'ticketstatus/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:TsdashboardComponent
   },
   {
     path:'ticketstatus/addts',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddtsComponent
   },
   {
     path:'ticketstatus/editts/:id1/:id2',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EdittsComponent
   },
   {
     path:'prioritymode/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:PmdashboardComponent
   },
   {
     path:'prioritymode/addpm',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddpmComponent,
   },
   {
     path:'prioritymodule/editpm/:id1/:id2',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditpmComponent
   },
   {
     path:'mastermodule/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:MmdashboardComponent
   },
   {
     path:'mastermodule/addmm',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddmmComponent
   },
   {
     path:'mastermodule/editmm/:id1/:id2',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditmmComponent
   },
   {
     path:'addemp/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddempdashboardComponent
   },
   {
     path:'addemp/adde',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddeComponent
   },
   {
     path:'addemp/editemp/:id1/:id2/:id3',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditempComponent
   },
   {
     path:'addclient/dashboard',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddclientdashboardComponent
   },
   {
     path:'addclient/addcl',
   
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AdclComponent
   },
   {
     path:'addclient/editclient/:id1',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:ComponentNameComponent
   },
   {
     path:'operations/assignticket',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     
     component:AssignticketComponent
   },
   {
     path:'operations/editassignticket',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditatComponent
   },
   {
     path:'operations/raiseticket',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:RaiseticketComponent
   },
   {
     path:'operations/addraiseticket',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AddrtComponent
   },
   {
     path:'operations/attendanddeliver',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:AttendanddeliverComponent
   },
   {
     path:'operations/editattendanddeliver',
-    // canActivate:[AfterloginGuard],
+    canActivate:[AfterloginGuard],
     component:EditadanddComponent
+  },
+  {
+     path:'operations/Admin/usermaintanance',
+     canActivate:[AfterloginGuard],
+     component:UsermaintananceComponent
+  },
+  {
+    path:'operations/Admin/notifications',
+    canActivate:[AfterloginGuard],
+    component:NotificationsComponent
+  },
+  {
+    path:'Admin/Edit/editnotify',
+    canActivate:[AfterloginGuard],
+    component:EditnotifyComponent
+  },
+  {
+    path:'Admin/Addnotification/addnotify',
+    canActivate:[AfterloginGuard],
+    component:AddnotifyComponent
+
   }
 
 

@@ -245,7 +245,7 @@ this.mode_select=false;
   }
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
-    if (!em.test(event.target.value)) { this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid red 1px"}}
+    if (!em.test(event.target.value)) { this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid lightgrey 1px";}}
     else { this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
   }
   fetch_ctm(){
@@ -320,7 +320,7 @@ this.mode_select=false;
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertClient.message)
       if(this.userdata.insertClient.message=='Inserted Successfully !!!')
-      { localStorage.setItem('updatec','1');
+      { localStorage.setItem('addc','1');
         this.router.navigate(['/addclient/dashboard'])
         this.done=true; this.email_null=false;
         this.namevalid=false;
