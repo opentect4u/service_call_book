@@ -54,6 +54,7 @@ query checkUser($code_no: String!){
 
 })
 export class SignupComponent implements OnInit {
+  x:any;
    recaptcha:any;
   show_Password:any;
   show_ConPassword:any;
@@ -260,7 +261,10 @@ export class SignupComponent implements OnInit {
            this.router.navigate(['/']);
          }
         
-       });
+         else
+         this.showsnackbar();
+     },error=>{ this.showsnackbar()
+     });
       }
       else{
         this.captch_employee=true;
@@ -277,6 +281,13 @@ export class SignupComponent implements OnInit {
        
     }
     }
+   }
+
+   showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
 
 

@@ -62,8 +62,14 @@ export class EditempComponent implements OnInit {
   disable_button=false;
   msg=''
   done=false;
+  x:any;
+  pathname:any;
  ngOnInit(): void {
-  localStorage.setItem('address', '/addemp/editemp');
+  this.pathname=window.location.href.split('#').pop();
+  console.log("path:" +window.location.href.split('#').pop())
+ 
+ console.log("pathname:" +decodeURIComponent(this.pathname));
+ localStorage.setItem('address', decodeURIComponent(this.pathname));
   this.route.params.forEach((params: any) => {
     this.item0=params['id1']
     this.item1 = params['id2'];
@@ -182,8 +188,20 @@ export class EditempComponent implements OnInit {
       // this.done=true;this.msg="Employee updated successfully!!";
       this.router.navigate(['/addemp/dashboard'])
     }
-  });
+    else
+    this.showsnackbar();
+    },error=>{ this.showsnackbar()
+} );
  }
+
+ showsnackbar() {
+  // alert("error");
+   this.x = document.getElementById("snackbar");
+   this.x.className = "show";
+   setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+ }
+
+
  clear_all(){
    this.input_code.value=''
    this.input_name.value=''

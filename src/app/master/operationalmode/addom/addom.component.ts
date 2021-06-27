@@ -19,7 +19,7 @@ mutation insertMaster($op: String,$user_id: String) {
 export class AddomComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
-
+  x:any;
   input_tag:any;
   disable_button=true;
   msg='';
@@ -70,17 +70,27 @@ export class AddomComponent implements OnInit {
         if(this.userdata.insertMaster.message=='Inserted Successfully !!')
         {
           localStorage.setItem('addom','1');
+          this.clear_field();
           this.router.navigate(['/operationmode/dashboard'])
           // this.msg="Operational mode added successfully!!"
         }
-      });
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
+    });
       this.done=true;
      // this.msg="Operational mode added successfully!!"
-     this.input_tag.value='';
+    // this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
     this.input_tag.value='';
     this.error=false;

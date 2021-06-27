@@ -20,6 +20,7 @@ export class EditmmComponent implements OnInit {
 
   item1: any;
   item2: any;
+  x:any;
 
   constructor(private route:ActivatedRoute,private apollo: Apollo,private router:Router) { }
   userdata:any;
@@ -30,13 +31,23 @@ export class EditmmComponent implements OnInit {
   done=false;
   input_tag:any;
   msg='';
+  pathname:any;
   ngOnInit(): void {
-    localStorage.setItem('address','/mastermodule/editmm'); 
+    this.pathname=window.location.href.split('#').pop();
+    console.log("path:" +window.location.href.split('#').pop())
+    localStorage.setItem('address', decodeURIComponent(this.pathname));
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
     this.input_tag=document.getElementById('itemtype');
   }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   prevent_null(e:any){
     if(e.target.value==''){
       this.done=false;
@@ -78,6 +89,10 @@ export class EditmmComponent implements OnInit {
       //this.msg="Module updated successfully!!"
       { localStorage.setItem('updatemm','1')
       this.router.navigate(['/mastermodule/dashboard'])}
+
+     else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
     });
       this.done=true;
       
