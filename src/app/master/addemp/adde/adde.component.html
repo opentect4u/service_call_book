@@ -30,7 +30,7 @@
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" 
+                                        <input type="text" class="form-control p-2" 
                                             name="cust_code" id="itemcode" required #ecode (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
 
                                         <span class="text-danger" *ngIf="code">*Please Enter Code</span>
@@ -47,7 +47,7 @@
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" 
+                                        <input type="text" class="form-control p-2" 
                                             name="cust_name" id="itemname" required="" #ename (keyup)="prevent_null($event)">
 
                                         <span class="text-danger" *ngIf="name">*Please Enter Name</span>
@@ -65,7 +65,7 @@
                                         <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control"  name="phone"
+                                        <input type="text" class="form-control p-2"  name="phone"
                                             id="itemph" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
                                         <span class="text-danger" *ngIf="ph">*Please Enter Phone No.(Only numeric values)</span>
 
@@ -76,7 +76,7 @@
                                         <label><b>Email</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" (keyup)="prevent_null($event)"
+                                        <input type="text" class="form-control p-2" (keyup)="prevent_null($event)"
                                             name="email" id="itememail" #email (change)="check_email_validity($event)">
 
                                         <span class="text-danger" *ngIf="notavalidemail">{{confirm_email}}</span>
@@ -103,7 +103,7 @@
                                         <label>Designation</label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" 
+                                        <input type="text" class="form-control p-2" 
                                             name="designation" id="itemdesignation" #designation>
 
                                         <!-- <span  class="text-danger"
@@ -122,7 +122,7 @@
                                         <label>Remarks</label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control"
+                                        <textarea rows="5" type="text" class="form-control p-2"
                                             name="remarks" id="itemremarks" #remarks
                                             ></textarea>
                                         <!-- <span class="text-danger" *ngIf="upload&&!mobile">*please Enter Mobile -->
@@ -153,6 +153,8 @@
                                         <button type="reset" class="btn btn-danger " id="Cancel" name="Cancel"
                                          (click)="clear_all()"   >Reset</button>
                                          <span class="alert text-success" *ngIf="done">{{msg}}</span> 
+
+                                         <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Insertion failed...</div>
                                     </div>
                                 </div>
 

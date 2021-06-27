@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 //import {MatDialog} from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -13,6 +15,7 @@ import { Router } from '@angular/router';
 ]
 })
 export class SidebarComponent implements OnInit {
+ 
   store:any;
   marker:any;
   marker1:any;
@@ -53,6 +56,7 @@ export class SidebarComponent implements OnInit {
        this.store=document.getElementById('openclose1');
        this.admindropdown=document.getElementById('openclose_admin');
     if(this.store.style.display=='block'){
+    
         this.store.style.display='none';
         // this.admindropdown.style.dispaly='none'
 

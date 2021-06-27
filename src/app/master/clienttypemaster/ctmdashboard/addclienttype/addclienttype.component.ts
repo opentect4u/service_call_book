@@ -24,7 +24,7 @@ export class AddclienttypeComponent implements OnInit {
 
  
   User:any;
-
+  x:any;
   constructor(private apollo: Apollo,private router:Router) { }
 
   input_tag:any;
@@ -79,19 +79,32 @@ export class AddclienttypeComponent implements OnInit {
         console.log(this.userdata.insertMaster.message)
         if(this.userdata.insertMaster.message=='Inserted Successfully !!')
         {  localStorage.setItem('addctm','1');
+          this.clear_field();
           this.router.navigate(['/clienttypemaster/dashboard'])
           this.msg="Client type added successfully!!"}
-      });
+          else
+          this.showsnackbar();
+      },error=>{ this.showsnackbar()
+     } );
       // alert(v);
 
       this.done=true;
       // console.log(this.userdata.message)
       
-     this.input_tag.value='';
+     //this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+
+ 
+ 
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
     this.input_tag.value='';
     this.error=false;

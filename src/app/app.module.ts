@@ -52,7 +52,7 @@ import { EditatComponent } from './operations/assignticket/editat/editat/editat.
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
-
+import {MatButtonModule} from '@angular/material/button';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
@@ -118,7 +118,8 @@ import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnoti
     FormsModule,
     ReactiveFormsModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
 
     
    

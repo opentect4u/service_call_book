@@ -8,3 +8,6 @@ label{float:left;width:100px;} */
     table-layout: fixed;
   }
   
+  .modal{
+    margin:0 0 0 35%;
+  }
