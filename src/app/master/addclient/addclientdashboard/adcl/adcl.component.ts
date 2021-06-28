@@ -112,21 +112,27 @@ export class AdclComponent implements OnInit,OnDestroy {
   mode_select:any;
   select_c:any;
   select_o:any;
+  prevent_init_name=false;
+  prevent_init_dist=false;
+  prevent_init_ctm=false;
+  prevent_init_oprn=false;
+  prevent_init_phone=false;
+  prevent_init_email=false;
   private querySubscription: Subscription = new Subscription;
   private querySubscription1: Subscription = new Subscription;
   ngOnInit(): void {
     this.email_null=false;
-    this.namevalid=false;
+    this.namevalid=true;
     this.addressvalid=false;
-    this.phonevalid=false;
-    this.distvalid=false;
-    this.ctmvalid=false;
+    this.phonevalid=true;
+    this.distvalid=true;
+    this.ctmvalid=true;
     this.mode_select=true;
-    this.oprnvalid=false;
-    this.status=true
+    this.oprnvalid=true;
+    this.status=true;
     // this.amcvalid=true;
     // this.rentalvalid=true;
-    this.notavalidemail=true;
+    this.notavalidemail=false;
     this.select_d=document.getElementById('district');
     this.select_c=document.getElementById('ctm');
     this.select_o=document.getElementById('op');
@@ -184,21 +190,21 @@ export class AdclComponent implements OnInit,OnDestroy {
   // }
   select_district(v:any){
     if(v=='')
-    this.distvalid=true;
+    { this.distvalid=true; this.prevent_init_dist=true;}
     else
-    this.distvalid=false;
+    {this.distvalid=false; this.prevent_init_dist=false;}
   }
   select_client_type(v:any){
     if(v=='')
-    this.ctmvalid=true;
+    { this.ctmvalid=true; this.prevent_init_ctm=true;}
     else
-    this.ctmvalid=false;
+    { this.ctmvalid=false; this.prevent_init_ctm=false;}
   }
   select_operation(v:any){
     if(v=='')
-    this.oprnvalid=true;
+    { this.oprnvalid=true; this.prevent_init_oprn=true;}
     else
-    this.oprnvalid=false;
+    { this.oprnvalid=false; this.prevent_init_oprn=false;}
   }
   select_mode(){
 this.mode_select=false;
@@ -209,23 +215,24 @@ this.mode_select=false;
     {
       if(e.target.value=='')
       {
-        this.namevalid=true;
+        this.namevalid=true; this.prevent_init_name=true;
         this.input_name.style.border="solid red 1px"
        // this.hide_val=true;
       }
       else
-       {this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"}
+       {this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"; this.prevent_init_name=false;}
     }
     else if(e.target.id=='itemphone')
     {
       if(e.target.value=='')
       {
         this.phonevalid=true;
+        this.prevent_init_phone=true;
         this.input_phone.style.border="solid red 1px"
         //this.hide_val=true;
       }
       else
-       {this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"}
+       {this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"; this.prevent_init_phone=false;}
     }
     else if(e.target.id=='itemaddress')
     {
@@ -244,8 +251,8 @@ this.mode_select=false;
   }
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
-    if (!em.test(event.target.value)) { this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid red 1px"}}
-    else { this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
+    if (!em.test(event.target.value)) {this.prevent_init_email=true; this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid red 1px"}}
+    else {this.prevent_init_email=false; this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
   }
   fetch_ctm(){
     this.apollo.watchQuery<any>({
@@ -319,7 +326,7 @@ this.mode_select=false;
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertClient.message)
       if(this.userdata.insertClient.message=='Inserted Successfully !!!')
-      { localStorage.setItem('updatec','1');
+      { localStorage.setItem('addc','1');
         this.router.navigate(['/addclient/dashboard'])
         this.done=true; this.email_null=false;
         this.namevalid=false;
@@ -353,6 +360,7 @@ this.mode_select=false;
         this.select_c.value='';
         this.select_d.value='';
         this.select_o.value='';}
+      
       
     });
     //console.log(name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)

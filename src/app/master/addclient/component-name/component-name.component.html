@@ -105,8 +105,8 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" placeholder=" " value="{{client_name}}"
                                             name="cust_name" id="itemname" required="" #name11 (keyup)="prevent_null($event)">
-                                         <!-- <span class="text-danger"
-                                        *ngIf="namevalid">*Please Enter Name</span> -->
+                                         <span class="text-danger"
+                                        *ngIf="namevalid&&prevent_init_name">*Please Enter Name</span>
                                         
 
                                     </div>
@@ -222,7 +222,7 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Address</b>&nbsp;<span class="text-danger">*</span></label>
+                                        <label><b>Address</b></label>
                                     </div>
                                     <div class="col-sm-10">
                                         <textarea rows="5" type="text" class="form-control" placeholder=""
@@ -306,14 +306,14 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Mobile Number</b></label>
+                                        <label><b>Mobile Number</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control" placeholder=" " value="{{phone_no}}"
                                             name="mobile_no" id="itemphone" #phone pattern="[0-9]*"
                                             (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
-                                         <!-- <span  class="text-danger"
-                                        *ngIf="phonevalid">*Please Enter Mobile Number</span>  -->
+                                         <span  class="text-danger"
+                                        *ngIf="phonevalid&&prevent_init_phone">*Please Enter Mobile Number</span> 
 
                                     </div>
 
@@ -323,7 +323,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="email" class="form-control" placeholder="" name="email" value="{{mail}}"
-                                            id="itememail" #em (change)="check_email_validity($event)" >
+                                            id="itememail" #em >
                                         <!-- <span  class="text-danger ml-3"
                                         *ngIf="upload&&!email">*please Enter Email</span> -->
                                         <!-- <span class="text-danger" *ngIf="email_null">*Please Enter Email</span> 
@@ -361,7 +361,7 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>AMC upto</b>&nbsp;<span class="text-danger">*</span></label>
+                                        <label><b>AMC upto</b></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="date" class="form-control" placeholder="" value="{{amcdate}}"
@@ -375,7 +375,7 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Rental upto</b>&nbsp;<span class="text-danger">*</span></label>
+                                        <label><b>Rental upto</b></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="date" class="form-control" placeholder="" value="{{rentaldate}}"
@@ -495,15 +495,15 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit" (click)="send_data(code11.value,name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
+                                        <input type="submit" class="btn btn-info" id="submit" [disabled]="done" name="submit" (click)="send_data(code11.value,name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
                                             value="Update">
                                             <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset</button> -->
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
-                                        <span *ngIf="done" class="text-success">Client Data updated successfully!!</span>  
+                                        <!-- <span *ngIf="done" class="text-success">Client Data updated successfully!!</span>   -->
                                     </div>
                                    
                                 </div>
-
+                                <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Updation failed...</div>
 
 
                             </form>
