@@ -57,7 +57,7 @@ export class AddclienttypeComponent implements OnInit {
     }
   }
   send_item(v:any){
-    
+    this.msg='';
     if(v=='')
     {
       this.done=false;
@@ -109,6 +109,7 @@ export class AddclienttypeComponent implements OnInit {
     this.input_tag.value='';
     this.error=false;
     this.done=false;
+    this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
       
