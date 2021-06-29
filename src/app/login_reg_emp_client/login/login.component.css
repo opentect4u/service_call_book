@@ -23,5 +23,30 @@ input [type="checkbox"]
 {
     vertical-align:middle;
 }
+
+#refresh{
+  color:rgb(7, 25, 32);
+  cursor: pointer;
+ 
+}
+#refresh:active {
+  -webkit-animation: spin 1 0.4s linear;
+  -moz-animation: spin 1 0.4s linear;
+  animation:spin 1 0.4s linear;
+}
+@-webkit-keyframes spin {
+   0%{-webkit-transform: rotate(0deg);}
+   100%{-webkit-transform: rotate(3600deg);}
+}
+@-moz-keyframes spin {
+  0%{-webkit-transform: rotate(0deg);}
+  100%{-webkit-transform: rotate(3600deg);}
+}
+@keyframes spin {
+  0%{-webkit-transform: rotate(0deg);}
+  100%{-webkit-transform: rotate(360deg);}
+
+}
+
     
   

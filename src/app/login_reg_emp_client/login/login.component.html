@@ -1,4 +1,15 @@
+
+
+
 <div class="LoginCardLayout">
+                      
+
+	
+
+
+
+
+
 
 
 
@@ -13,6 +24,12 @@
 	<!-- Alert -->
 
 	<div class="LoginDefaultView-content">
+
+
+
+
+ 
+
 
 		<!-- <div [hidden]="successfull_register">
 			<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
@@ -37,6 +54,10 @@
 
 
 
+
+
+
+
 	
 	 <small [hidden]="error_log" class="text-danger text-center">*{{error_for_user}}</small>	
 	<form class="LoginEmailPasswordForm" [formGroup]="LoginForm" (ngSubmit)="Submit()">
@@ -57,10 +78,15 @@
 			</div>
 			
 		<span class="Typography Typography--colorDarkGray1 Typography--s">Password</span>
-			
-		 
-
-		<input type="password" class="form-control LoginEmailPasswordForm-passwordInput p-2" formControlName="password"
+		<!-- Spinner -->
+		   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" 
+		  type = "ball-clip-rotate" [fullScreen] = "true">
+			  <p style="color: white" >Please Wait... </p>
+			</ngx-spinner>
+		
+          <!--End of spinner  -->
+			  
+		  <input type="password" class="form-control LoginEmailPasswordForm-passwordInput p-2" formControlName="password"
 			[ngClass]="{'is-invalid': login && f.password.errors}" placeholder="Enter Password" 
 			autocomplete="off" id="passwd">
 			<!-- <i id="eye" class="fa fa-eye-slash" aria-hidden="true" (click)="show_hide_pass()"></i> -->
@@ -99,7 +125,7 @@
 			<input type="text" class="form-control float-left " id="capt_login" oncopy="return false"  disabled 
 			
 			>
-			<a (click)="refresh_captcha()"><i class="fa fa-refresh ml-2 mt-3" aria-hidden="true" ></i></a>
+		   <i class="fa fa-refresh  ml-2 mt-3 " aria-hidden="true" (click)="refresh_captcha()" id="refresh"></i>
 
 			<small *ngIf="captch" class="text-danger ml-2">*{{this.errormsg}}</small>
 
@@ -112,10 +138,13 @@
 		<input type="submit" value="Log in" class="loginBtn" >
 		<!-- <button type="submit" class="loginBtn" [disabled]="LoginForm.invalid">Log in</button> -->
 		
+		<div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
+			&nbsp; Login failed...</div>	
 		
 		
 		
 	</form>
+	
 	
 	<div class="LoginDefaultView-signUp">
 		<span class="Typography Typography--colorDarkGray1 Typography--m">Don't have an account?</span>

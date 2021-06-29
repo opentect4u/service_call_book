@@ -4,12 +4,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-
+export const stat: Array<string> = ['Active', 'Inactive'];
 
 export interface PeriodicElement {
   UserId: number;
   Username: string;
   UserType: any[];
+ 
 
 }
 
@@ -37,6 +38,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class UsermaintananceComponent implements OnInit {
+  public Sttt = stat;
   support:any='A';
   collect:any;
    data:any;
@@ -58,7 +60,7 @@ export class UsermaintananceComponent implements OnInit {
     this.data=this.dataSource.filteredData.length;
    console.log(this.dataSource.filteredData.length);
  
- 
+  
    
      
   }

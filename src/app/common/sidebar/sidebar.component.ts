@@ -15,12 +15,15 @@ import { Router } from '@angular/router';
 ]
 })
 export class SidebarComponent implements OnInit {
- 
+
   store:any;
   marker:any;
   marker1:any;
   admindropdown:any;
-  constructor(private router:Router) { }
+  constructor(private router:Router) {
+   
+ 
+   }
 
   ngOnInit(): void {
   }
