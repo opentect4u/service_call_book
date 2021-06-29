@@ -14,7 +14,7 @@ import { MmdashboardComponent } from './master/modulemaster/mmdashboard/mmdashbo
 import { AddempdashboardComponent } from './master/addemp/addempdashboard/addempdashboard.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
 import { DatePipe } from '@angular/common'
-
+import {MatButtonModule} from '@angular/material/button';
 
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from'@angular/material/paginator'
@@ -53,11 +53,22 @@ import { EditadanddComponent } from './operations/attendanddeliverticket/attenda
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
 
+
+// import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
+
+
+// import {MatButtonModule} from '@angular/material/button';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
 import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
 import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
+
+import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,16 +108,20 @@ import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnoti
     ComponentNameComponent,
     RightclickoffDirective,
     ControlkeyoffDirective,
+
+
+    TemplateComponent,
+
+
     UsermaintananceComponent,
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent
 
-
   ],
   imports: [
     BrowserModule,
-    
+    MatButtonModule,
     AppRoutingModule,
     MatTableModule,
     MatPaginatorModule,
@@ -118,7 +133,8 @@ import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnoti
     FormsModule,
     ReactiveFormsModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
 
     
    

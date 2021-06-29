@@ -19,6 +19,7 @@ mutation updateMaster($id:String, $name: String,$user_id: String) {
 export class EditomComponent implements OnInit {
   item1: any;
   item2: any;
+  x:any;
 
   constructor(private route:ActivatedRoute,private router:Router,private apollo: Apollo) { }
   userdata:any;
@@ -27,8 +28,11 @@ export class EditomComponent implements OnInit {
   input_tag:any;
   msg='';
   disable_button=false;
+  pathname:any
   ngOnInit(): void {
-    localStorage.setItem('address','/operationmode/editom'); 
+    this.pathname=window.location.href.split('#').pop();
+    console.log("path:" +window.location.href.split('#').pop())
+    localStorage.setItem('address', decodeURIComponent(this.pathname));
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
@@ -75,7 +79,10 @@ export class EditomComponent implements OnInit {
       //this.msg="Operational mode updated successfully!!"
       {localStorage.setItem('updateom','1');
       this.router.navigate(['/operationmode/dashboard'])}
-    });
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });
       this.done=true;
       this.msg="Operational mode updated successfully!!"
      //this.input_tag.value='';
@@ -83,6 +90,12 @@ export class EditomComponent implements OnInit {
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
     this.input_tag.value='';
     this.error=false;

@@ -13,6 +13,7 @@ query{
     client_type
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Client_Type: any;
@@ -51,13 +52,13 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
   private querySubscription: Subscription = new Subscription;
   displayedColumns: string[] = ['Sl_No', 'Client_Type','Edit','Delete'];
   dataSource = new MatTableDataSource([]);
-
+ dlt=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   loading: boolean=false;
   posts_ctm: any=[];
-  
-
+  ctmid:any;
+  x:any;
 
   constructor(private router:Router,private apollo:Apollo) { }
 
@@ -168,5 +169,15 @@ applyFilter(event: Event) {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){
+    this.ctmid=v;
+    console.log(this.ctmid);
+  }
+  delete_item(){alert(this.ctmid);}
 }

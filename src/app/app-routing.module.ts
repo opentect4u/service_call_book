@@ -10,6 +10,7 @@ import { LoginGuard } from './Gaurds/LoginGaurds/login.guard';
 import { ForgetpassComponent } from './login_reg_emp_client/forgetpass/forgetpass.component';
 import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
+import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { AdclComponent } from './master/addclient/addclientdashboard/adcl/adcl.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
@@ -207,6 +208,16 @@ const routes: Routes = [
     component:EditadanddComponent
   },
   {
+
+
+    path:'template',
+    canActivate:[LoginGuard],
+    component:TemplateComponent
+  },
+
+{
+
+
      path:'operations/Admin/usermaintanance',
      canActivate:[AfterloginGuard],
      component:UsermaintananceComponent
@@ -225,6 +236,7 @@ const routes: Routes = [
     path:'Admin/Addnotification/addnotify',
     canActivate:[AfterloginGuard],
     component:AddnotifyComponent
+
 
   }
 

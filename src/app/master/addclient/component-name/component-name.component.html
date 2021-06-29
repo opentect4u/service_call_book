@@ -86,7 +86,7 @@
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder=" " value="{{item}}"
+                                        <input type="text" class="form-control p-2" placeholder=" " value="{{item}}"
                                             name="cust_name" id="itemcode" required="" #code11 readonly>
                                          <!-- <span class="text-danger"
                                         *ngIf="namevalid">*Please Enter Name</span> -->
@@ -103,10 +103,12 @@
                                     </div>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder=" " value="{{client_name}}"
+                                        <input type="text" class="form-control p-2" placeholder=" " value="{{client_name}}"
                                             name="cust_name" id="itemname" required="" #name11 (keyup)="prevent_null($event)">
-                                         <!-- <span class="text-danger"
-                                        *ngIf="namevalid">*Please Enter Name</span> -->
+
+                                          <span class="text-danger"
+                                        *ngIf="namevalid&&prevent_init_name">*Please Enter Name</span> 
+
                                         
 
                                     </div>
@@ -200,7 +202,7 @@
                                         <label><b>Operational Mode</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="op" id="op" #comp (click)="select_operation(comp.value)">
+                                        <select class="form-control " name="op" id="op" #comp (click)="select_operation(comp.value)">
 
                                             <option value="{{opselect}}">{{op_data}}</option>
                                             <option *ngFor="let o of opdata" value="{{o.oprn_id}}">{{o.oprn_mode}}</option>
@@ -225,7 +227,7 @@
                                         <label><b>Address</b></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control" placeholder=""
+                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=""
                                           #address  name="remarks" id="itemaddress" (keyup)="prevent_null($event)">{{client_addr}}</textarea>
                                           <!-- <span class="text-danger"
                                           *ngIf="addressvalid">*Please Enter Address</span>-->
@@ -281,7 +283,7 @@
                                         <label><b>Technical Contact</b></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder="" value="{{tech_person}}"
+                                        <input type="text" class="form-control p-2" placeholder="" value="{{tech_person}}"
                                             name="contact" id="itemcontact" #contact
                                             >
                                         <!-- <span  class="text-danger"
@@ -295,7 +297,7 @@
                                         <label><b>Designation</b></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder=" "
+                                        <input type="text" class="form-control p-2" placeholder=" "
                                             name="designation" id="itemdesig" #designation value="{{tech_designation}}"
                                             >
                                         <!-- <span  class="text-danger"
@@ -306,24 +308,28 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Mobile Number</b></label>
+                                        <label><b>Mobile Number</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder=" " value="{{phone_no}}"
+                                        <input type="text" class="form-control p-2"  placeholder=" " value="{{phone_no}}"
                                             name="mobile_no" id="itemphone" #phone pattern="[0-9]*"
                                             (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
-                                         <!-- <span  class="text-danger"
-                                        *ngIf="phonevalid">*Please Enter Mobile Number</span>  -->
+
+                                          <span  class="text-danger"
+                                        *ngIf="phonevalid&&prevent_init_phone">*Please Enter Mobile Number</span>  
+
 
                                     </div>
 
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-1">
-                                        <label><b>Email</b></label>
+                                        <label><b>Email</b></label> 
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="email" class="form-control" placeholder="" name="email" value="{{mail}}"
+
+                                        <input type="email" class="form-control p-2" placeholder="" name="email" value="{{mail}}"
                                             id="itememail" #em (change)="check_email_validity($event)" >
+
                                         <!-- <span  class="text-danger ml-3"
                                         *ngIf="upload&&!email">*please Enter Email</span> -->
                                         <!-- <span class="text-danger" *ngIf="email_null">*Please Enter Email</span> 
@@ -339,7 +345,7 @@
                                         <label><b>Working Hours</b></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder=""
+                                        <input type="text" class="form-control p-2" placeholder=""
                                             name="workinghours" id="itemhours" #workinghours value="{{working_hrs}}"
                                             >
                                         <!-- <span  class="text-danger"
@@ -353,8 +359,8 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <input type="radio" id="AMC" name="Support" value="A" #amcrentalradio (click)="select_mode()">
-                                        <label for="AMC"> AMC</label><br>
-                                        <input type="radio" id="Rental" name="Support" value="R" #amcrentalradio (click)="select_mode()">
+                                        <label for="AMC"> AMC</label>
+                                        <input type="radio" id="Rental" name="Support" value="R" #amcrentalradio (click)="select_mode()" class="ml-3">
                                         <label for="Rental"> Rental</label><br>
                                     </div>
                                 </div><br>
@@ -364,7 +370,7 @@
                                         <label><b>AMC upto</b></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="date" class="form-control" placeholder="" value="{{amcdate}}"
+                                        <input type="date" class="form-control p-2" placeholder="" value="{{amcdate}}"
                                             name="amcupto" id="itemamc" #amcupto (change)="change_amcupto(amcupto.value)"
                                             >
                                         <!-- <span  class="text-danger"
@@ -378,7 +384,7 @@
                                         <label><b>Rental upto</b></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="date" class="form-control" placeholder="" value="{{rentaldate}}"
+                                        <input type="date" class="form-control p-2" placeholder="" value="{{rentaldate}}"
                                             name="rentalupto" id="itemrental" #rentalupto (change)="change_rentalupto(rentalupto.value)"
                                             >
                                             <!-- <span  class="text-danger"
@@ -400,8 +406,8 @@
 
 
                                         <input type="radio" id="a" name="Status" value="A" #activeinactiveradio (click)="select_status()" [checked]="active1">
-                                        <label for="a"> Active</label><br>
-                                        <input type="radio" id="i" name="Status" value="D" #activeinactiveradio (click)="select_status()" [checked]="active2">
+                                        <label for="a"> Active</label> 
+                                        <input type="radio" id="i" name="Status" value="D" #activeinactiveradio (click)="select_status()" [checked]="active2" class="ml-3">
                                         <label for="i"> Inactive</label><br>
 
 
@@ -416,7 +422,7 @@
                                         <label><b>Remarks</b></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control" placeholder=""
+                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=""
                                         #remarks    name="remarks" id="itemremarks">{{remarks1}}</textarea>
                                     </div>
                                     <div class="col-sm-3"></div>
@@ -495,15 +501,15 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit" (click)="send_data(code11.value,name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
+                                        <input type="submit" class="btn btn-info" id="submit" [disabled]="done" name="submit" (click)="send_data(code11.value,name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
                                             value="Update">
                                             <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset</button> -->
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
-                                        <span *ngIf="done" class="text-success">Client Data updated successfully!!</span>  
+                                        <!-- <span *ngIf="done" class="text-success">Client Data updated successfully!!</span>   -->
                                     </div>
-                                   
+                                    <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Updation failed...</div>
                                 </div>
-
+                                <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Updation failed...</div>
 
 
                             </form>

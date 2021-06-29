@@ -71,6 +71,10 @@
 
 
               <input id="getit" [hidden]="true" value="0">
+              <div class="alert alert-success alert-dismissible fade in" style="text-align: center;" [hidden]="dlt">
+                <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
+                Deletion Successful!! <a style="float:right;" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
               <div class="alert alert-success alert-dismissible fade in" style="text-align: center;" [hidden]="updt">
                 <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
                 Updation Successful!! <a style="float:right;" data-dismiss="alert" aria-label="close">&times;</a>
@@ -119,8 +123,10 @@
 
                   <ng-container matColumnDef="Delete">
                     <th mat-header-cell *matHeaderCellDef> Delete </th>
-                    <td mat-cell *matCellDef="let row"><a (click)="delete()" class="delete editeCus"
-                        title="Delete" data-toggle="modal" data-target="#MyModal"><i class="fa fa-trash-o menu-icon"
+
+                    <td mat-cell *matCellDef="let row"><a (click)="delete(row.priority_id)" class="delete editeCus"
+
+                        title="Delete" data-toggle="modal" data-target="#MYmodal"><i class="fa fa-trash-o menu-icon"
                           style="color: #bd2130"></i></a></td>
                   </ng-container>
 
@@ -168,6 +174,40 @@
 
 
 </div>
+
+
+
+
+
+<div class="modal fade in" id="MYmodal" >
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center w-100 p-2">Warning!!</h4>
+        <button type="button" class="close mr-2 mb-3" data-dismiss="modal">&times;</button>
+        
+      </div>
+      <div class="modal-body">
+        <p class="text-center p-4 h5"><strong>Are you sure you want to delete? </strong></p>
+      </div>
+      <div class="modal-footer p-3">
+        <!-- <button type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>-->
+
+        <button mat-raised-button data-dismiss="modal" class="color mr-2" (click)="delete_item()">Ok</button>
+
+        <button mat-raised-button data-dismiss="modal"  class="color ">Cancel</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+<div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Deletion failed...</div>
+
 
 
 

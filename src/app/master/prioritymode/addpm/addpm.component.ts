@@ -19,12 +19,14 @@ mutation insertMaster($pm: String,$user_id: String) {
 export class AddpmComponent implements OnInit {
 
   constructor(private apollo: Apollo,private router:Router ) { }
+  x:any;
  userdata:any;
   input_tag:any;
   msg='';
   error=false;
   done=false;
   disable_button=true;
+  spinshow=false;
   ngOnInit(): void {
     localStorage.setItem('address','/prioritymode/addpm'); 
     this.input_tag=document.getElementById('itemname');
@@ -47,6 +49,7 @@ export class AddpmComponent implements OnInit {
     }
   }
   send_item(v:any){
+    this.msg='';
     if(v=='')
     {
       this.done=false;
@@ -66,20 +69,33 @@ export class AddpmComponent implements OnInit {
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.insertMaster.message)
       if(this.userdata.insertMaster.message=='Inserted Successfully !!')
-      { localStorage.setItem('addpm','1')
+      { localStorage.setItem('addpm','1');
+      this.clear_field();
         this.router.navigate(['/prioritymode/dashboard'])}
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
     });
       this.done=true;
       
-     this.input_tag.value='';
+    // this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_tag.value='';
     this.error=false;
     this.done=false;
+    this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
       

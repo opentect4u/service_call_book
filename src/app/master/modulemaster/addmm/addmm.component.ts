@@ -21,14 +21,24 @@ export class AddmmComponent implements OnInit {
   constructor(private apollo: Apollo,private router:Router) { }
   userdata:any;
   disable_button=true;
+  spinshow=false;
   input_tag:any;
   msg='';
   error=false;
   done=false;
+  x:any;
   ngOnInit(): void {
     localStorage.setItem('address','/mastermodule/addmm'); 
     this.input_tag=document.getElementById('itemname');
   }
+
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   prevent_null(e:any){
     if(e.target.value==''){
       this.done=false;
@@ -47,6 +57,7 @@ export class AddmmComponent implements OnInit {
     }
   }
   send_item(v:any){
+    this.msg='';
     if(v=='')
     {
       this.done=false;
@@ -67,19 +78,26 @@ export class AddmmComponent implements OnInit {
       console.log(this.userdata.insertMaster.message)
       if(this.userdata.insertMaster.message=='Inserted Successfully !!')
       {localStorage.setItem('addmm','1');
+       this.clear_field();
         this.router.navigate(['/mastermodule/dashboard'])}
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
     });
       this.done=true;
       
-     this.input_tag.value='';
+    // this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_tag.value='';
     this.error=false;
     this.done=false;
+    this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
       
