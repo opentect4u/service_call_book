@@ -20,7 +20,9 @@ export class AddomComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
   x:any;
+
   spinshow=false;
+
   input_tag:any;
   disable_button=true;
   msg='';

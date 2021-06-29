@@ -53,14 +53,21 @@ import { EditadanddComponent } from './operations/attendanddeliverticket/attenda
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
 
-import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
+// import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
+
+
+// import {MatButtonModule} from '@angular/material/button';
+import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
 import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
 import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
+
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
+
 
 @NgModule({
   declarations: [
@@ -102,14 +109,14 @@ import { TemplateComponent } from './mail_template_reg_verification/template/tem
     RightclickoffDirective,
     ControlkeyoffDirective,
 
+
     TemplateComponent,
+
 
     UsermaintananceComponent,
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent
-
-
 
   ],
   imports: [

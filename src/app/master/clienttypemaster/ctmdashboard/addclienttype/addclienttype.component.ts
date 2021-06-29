@@ -26,7 +26,9 @@ export class AddclienttypeComponent implements OnInit {
   User:any;
   x:any;
   constructor(private apollo: Apollo,private router:Router) { }
+
  spinshow=false;
+
   input_tag:any;
   msg='';
   error=false;

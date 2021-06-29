@@ -20,7 +20,9 @@ export class AddtsComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
   x:any;
+
   spinshow=false;
+
   userdata:any;
   input_tag:any;
   msg='';

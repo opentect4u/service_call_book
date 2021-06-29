@@ -209,12 +209,14 @@ const routes: Routes = [
   },
   {
 
+
     path:'template',
     canActivate:[LoginGuard],
     component:TemplateComponent
   },
 
 {
+
 
      path:'operations/Admin/usermaintanance',
      canActivate:[AfterloginGuard],

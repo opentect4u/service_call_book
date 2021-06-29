@@ -161,9 +161,6 @@ export class ComponentNameComponent implements OnInit {
   input_name:any;
   input_phone:any;
 
-  
- 
-
   pathname:any;
   ngOnInit(): void {
     this.input_name=document.getElementById('itemname');
@@ -378,7 +375,8 @@ export class ComponentNameComponent implements OnInit {
         localStorage.setItem('updatec','1');
         this.router.navigate(['/addclient/dashboard'])
       }
-       else
+
+      else
         this.showsnackbar();
     },error=>{ this.showsnackbar()
    } );
@@ -388,13 +386,12 @@ export class ComponentNameComponent implements OnInit {
   }
   showsnackbar() {
 
-   // alert("error");
-    this.x = document.getElementById("snackbar");
-    this.x.className = "show";
-    setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
-  }
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
 
-   
 prevent_null(e:any){this.done=false;
 
   if(e.target.id=='itemname')
@@ -429,7 +426,6 @@ change_amcupto(v:any){}
 select_district(v:any){}
 select_client_type(v:any){}
 select_operation(v:any){}
-
 
 preventNonNumericalInput(e:any){e = e || window.event;
 

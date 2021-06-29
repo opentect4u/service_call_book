@@ -20,6 +20,7 @@ export class EditatComponent implements OnInit {
       this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
       // this.dateitem.value=this.todaysDataTime;
      },1000);
+
     localStorage.setItem('address', '/operations/editassignticket');
   }  preventNonNumericalInput(e:any){}
 }

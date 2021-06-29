@@ -121,7 +121,9 @@ export class AdclComponent implements OnInit,OnDestroy {
   private querySubscription: Subscription = new Subscription;
   private querySubscription1: Subscription = new Subscription;
   x:any;
+
   spinshow=false;
+
   ngOnInit(): void {
     localStorage.setItem('address', '/addclient/addcl');
     this.email_null=false;
@@ -192,7 +194,6 @@ export class AdclComponent implements OnInit,OnDestroy {
   //   this.rentalvalid=false;
   // }
   select_district(v:any){
-
     if(v==''){
     this.distvalid=true;
     this.prevent_init_dist=true;

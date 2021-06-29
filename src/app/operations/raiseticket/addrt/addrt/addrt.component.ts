@@ -58,6 +58,7 @@ export class AddrtComponent implements OnInit {
   input_issue:any;
   spinshow=false;
   ngOnInit(): void {
+
     this.input_phone=document.getElementById('itemphone');
     this.input_issue=document.getElementById('itemissue');
 
@@ -187,6 +188,8 @@ export class AddrtComponent implements OnInit {
   clearfield(){this.spinshow=true;
     setTimeout(()=>{this.spinshow=false;;},1000);
     // this.spinshow=false;
+
+   
   }
 
 }

@@ -28,6 +28,7 @@ export class EditadanddComponent implements OnInit {
   dateitem:any;
   constructor(private apollo:Apollo) {}
   ngOnInit(): void {
+<<<<<<< HEAD
     this.dateitem=document.getElementById('itemdate');
     localStorage.setItem('address', '/operations/editattendanddeliver');
     setInterval(()=>{
@@ -47,6 +48,9 @@ export class EditadanddComponent implements OnInit {
         console.log(this.posts_ts);
        //this.putdata(this.posts_ts);
       });
+=======
+    localStorage.setItem('address', '/operations/editattendanddeliver');
+>>>>>>> 8547a9e9d0a8a7853df745fe8815809e31f326de
   }
   preventNonNumericalInput(e:any){}
 }
