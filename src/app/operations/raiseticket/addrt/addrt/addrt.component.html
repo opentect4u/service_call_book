@@ -85,7 +85,7 @@
                                         <label><b>Date</b></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder=""
+                                        <input type="text" class="form-control p-2" placeholder=""
                                             name="date" id="itemdate" #date readonly
                                             >
                                         <!-- <span  class="text-danger"
@@ -100,22 +100,17 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-2">
-                                        <label><b>Client</b></label>
+                                        <label><b>Client</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="client" #client>
+                                        <select class="form-control" name="client" #client (click)="select_client(client.value)">
 
                                             <option value="">Select</option>
-                                            <option value="P">Private Ltd</option>
-                                            <option value="R">Partnership</option>
-                                            <option value="I">Individual</option>
-                                            <option value="L">Public Ltd</option>
-                                            <option value="G">Govt.Organisation</option>
-                                            <option value="O">Others</option>
+                                            <option *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
 
                                         </select>
-                                        <!-- <span  class="text-danger"
-                                    *ngIf="upload&&!company">*please Enter Company type</span> -->
+                                     <span  class="text-danger"
+                                    *ngIf="cl_val&&prevent_init_client">*Please select a client</span> 
 
 
                                     </div>
@@ -170,7 +165,7 @@
                                     <label><b>District</b></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder=""
+                                    <input type="text" class="form-control p-2" placeholder=""
                                         name="district" id="itemdistrict" #district readonly
                                         >
                                     <!-- <span  class="text-danger"
@@ -183,7 +178,7 @@
                                     <label><b>Client Type</b></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder="" name="clienttype"
+                                    <input type="text" class="form-control p-2" placeholder="" name="clienttype"
                                         id="itemclienttype" #clienttype readonly>
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
@@ -199,7 +194,7 @@
                                     <label><b>Operational Mode</b></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder=""
+                                    <input type="text" class="form-control p-2" placeholder=""
                                         name="text" id="itemoperationalmode" #operationalmode readonly
                                         >
                                     <!-- <span  class="text-danger"
@@ -212,7 +207,7 @@
                                     <label><b>Working Hours</b></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder="" name="workinghours"
+                                    <input type="text" class="form-control p-2" placeholder="" name="workinghours"
                                         id="itemworkinghours" #workinghours readonly>
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
@@ -228,7 +223,7 @@
                                     <label><b>AMC Upto</b></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder=""
+                                    <input type="text" class="form-control p-2" placeholder=""
                                         name="amcupto" id="itemamcupto" #amcupto readonly
                                         >
                                     <!-- <span  class="text-danger"
@@ -241,7 +236,7 @@
                                     <label><b>Rental Upto</b></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder="" name=""
+                                    <input type="text" class="form-control p-2" placeholder="" name=""
                                         id="itemrentalupto" #rentalupto readonly>
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
@@ -254,35 +249,30 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-2">
-                                    <label><b>Phone Number</b></label>
+                                    <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" placeholder="  Enter Phone Number"
-                                        name="phone" id="itemphone" #phone
+                                    <input type="text" class="form-control p-2" placeholder=""
+                                        name="phone" id="itemphone" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)"
                                         >
-                                    <!-- <span  class="text-danger"
-                                    *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
+                                    <span  class="text-danger"
+                                    *ngIf="phone_val&&prevent_init_phone">*Please enter a phone number</span> 
 
                                 </div>
 
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-1">
-                                    <label><b>Priority Status</b></label>
+                                    <label><b>Priority Status</b>&nbsp;<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <select class="form-control" name="module" #module>
+                                    <select class="form-control" name="module" #priority (click)="select_priority(priority.value)">
 
                                         <option value="">Select</option>
-                                        <option value="P">Private Ltd</option>
-                                        <option value="R">Partnership</option>
-                                        <option value="I">Individual</option>
-                                        <option value="L">Public Ltd</option>
-                                        <option value="G">Govt.Organisation</option>
-                                        <option value="O">Others</option>
+                                        <option *ngFor="let p of pmdata" value="{{p.priority_id}}">{{p.priority_mode}}</option> 
 
                                     </select>
-                                    <!-- <span  class="text-danger"
-                                *ngIf="upload&&!company">*please Enter Company type</span> -->
+                                    <span  class="text-danger"
+                                *ngIf="prior_val&&prevent_init_priority">*Please select priority</span>
 
 
                                 </div>
@@ -340,22 +330,18 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Module</b></label>
+                                        <label><b>Module</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="module" #module>
+                                        <select class="form-control" name="module" #module (click)="select_mm(module.value)">
     
                                             <option value="">Select</option>
-                                            <option value="P">Private Ltd</option>
-                                            <option value="R">Partnership</option>
-                                            <option value="I">Individual</option>
-                                            <option value="L">Public Ltd</option>
-                                            <option value="G">Govt.Organisation</option>
-                                            <option value="O">Others</option>
+                                            <option *ngFor="let m of moddata" value="{{m.module_id}}">{{m.module_type}}</option>
+                                            
     
                                         </select>
-                                        <!-- <span  class="text-danger"
-                                    *ngIf="upload&&!company">*please Enter Company type</span> -->
+                                        <span  class="text-danger"
+                                    *ngIf="mm_val&&prevent_init_module">*Please select module</span> 
     
     
                                     </div>
@@ -363,14 +349,14 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Issue</b></label>
+                                        <label><b>Issue</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control" placeholder="  Raise issue here..."
-                                            name="issue" id="itemissue" #issue
+                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
+                                            name="issue" id="itemissue" #issue (keyup)="prevent_null($event)"
                                             ></textarea>
-                                        <!-- <span  class="text-danger"
-            *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
+                                         <span  class="text-danger"
+            *ngIf="issue_val&&prevent_init_issue">*Please provide the issue</span> 
 
                                     </div>
                                 </div><br>
@@ -383,7 +369,7 @@
                                         <label><b>Remarks</b></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control" placeholder="  Remarks..."
+                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
                                             name="remarks" id="itemremarks"></textarea>
                                     </div>
                                     <div class="col-sm-3"></div>
@@ -462,9 +448,9 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit"
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="cl_val||mm_val||prior_val||phone_val||issue_val"
                                             value="Submit">
-                                            <button type="reset" class="btn btn-danger" id="cancel" name="cancel">Reset</button>
+                                            <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button>
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
                                     </div>
                                     

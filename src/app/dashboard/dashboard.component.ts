@@ -14,6 +14,9 @@ export class DashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    localStorage.setItem('address','/dashboard')
+
     localStorage.setItem('updatectm','0');
     localStorage.setItem('addctm','0');
     localStorage.setItem('updateom','0');
@@ -29,6 +32,7 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('updatec','0');
     localStorage.setItem('addc','0');
     
+
   }
 
 }

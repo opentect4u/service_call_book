@@ -20,7 +20,7 @@
 
     <li>
         <div class="link" (click)="openclosedropdown()"><i class="fa fa-bars"></i>Masters<i class="fa fa-chevron-down" id="down1" ></i></div>
-        <ul class="submenu" id="openclose1">
+        <ul class="submenu" id="openclose1" >
           <li><a  routerLinkActive="true" routerLink="/clienttypemaster/dashboard" >Client Type</a></li>
           <li><a  routerLinkActive="true" routerLink="/operationmode/dashboard">Operational Mode</a></li>
           <li><a  routerLinkActive="true" routerLink="/ticketstatus/dashboard">Ticket Status</a></li>
@@ -33,19 +33,31 @@
       </li>
     
       <li>
-        <div hidden class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
+        <div  class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
           <li><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
           <li><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
           <li><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
          
 
+          
+         
+
         </ul>
       </li>
+      
+    <li>
+      <div  class="link" (click)="opencloseadminsubmenu()"><i class="fa fa-user" aria-hidden="true"></i>Admin<i class="fa fa-chevron-down"></i></div>
+      <ul class="submenu" id="openclose_admin">
+        <li><a   routerLinkActive="true" routerLink="/operations/Admin/usermaintanance">User Maintainance</a></li>
+        <li><a  routerLinkActive="true" routerLink="/operations/Admin/notifications">Notification</a></li>
+      </ul>
+
+    </li>
     
   
   <li>
-  <div class="link log" (click)="logout()"><i class="fa fa-sign-out" ></i>Log out</div>
+  <div class="link log" data-toggle="modal" data-target="#mymodal" ><i class="fa fa-sign-out" ></i>Log out</div>
   </li>
           
           
@@ -76,40 +88,72 @@
   
   
   </nav>
-  
-  
-  
-  
-  <!-- <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      
-       
-        <div class="modal-header">
-  
-  
-         <h5>Alert</h5>
-  
-          
-          
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-     
-        <div class="modal-body">
-          <p class="text-center">Are you sure you want to log out?</p>
-        </div>
-        
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning text-white" data-dismiss="modal" (click)="go_to_login_page()">Ok</button>
-          <button type="button" class="btn btn-warning text-white " data-dismiss="modal" >Cancel</button>
-        </div>
-        
+
+
+
+
+
+  
+<div class="modal fade in" id="mymodal" >
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center w-100 ">Alert!!</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+         
+        <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center p-4 h4"><strong>Are you sure you want to log out? </strong></p>
+      </div>
+      <div class="modal-footer p-3">
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="logout()">Ok</button>
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
+        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
+        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
       </div>
     </div>
-  </div> -->
+    
+  </div>
+</div>
+
+
+
   
+  
+  
+<!-- 
+ <div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    
+      
+      <div class="modal-header">
+        <h6 class="modal-title w-100 text-center">Alert!!</h6>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+
+      <div class="modal-body text-center ">
+       <p>Are you sure you want to log out?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="logout()">Ok</button>
+       
+      </div>
+      
+    </div>
+  </div>
+</div> -->
+
+
   
   
   

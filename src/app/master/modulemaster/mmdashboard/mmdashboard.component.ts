@@ -12,6 +12,7 @@ query{
     module_type
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Module: any;
@@ -48,14 +49,18 @@ export class MmdashboardComponent implements OnInit {
   insrt=true;
   updatemm:any;
   insertmm:any;
-
+  dlt=true;
   loading: boolean=false;
   posts_mm: any;
+  mmid:any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
-
+  x:any;
 
   ngOnInit(): void {
+
+    localStorage.setItem('address','/mastermodule/dashboard'); 
+
     this.updatemm=localStorage.getItem('updatemm')
     this.insertmm=localStorage.getItem('addmm')
     console.log(this.updatemm)
@@ -79,6 +84,7 @@ export class MmdashboardComponent implements OnInit {
             localStorage.setItem('addmm','0')
    
           }
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -120,5 +126,12 @@ export class MmdashboardComponent implements OnInit {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.mmid=v}
+  delete_item(){alert(this.mmid)}
 }

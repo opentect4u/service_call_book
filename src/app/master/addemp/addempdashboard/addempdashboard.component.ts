@@ -13,6 +13,7 @@ query{
     emp_name
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Employee_Code: any;
@@ -41,7 +42,7 @@ query{
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class AddempdashboardComponent implements OnInit {
-
+  dlt=true;
   displayedColumns: string[] = ['Sl_No', 'Employee_Code','Name','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
@@ -51,14 +52,17 @@ export class AddempdashboardComponent implements OnInit {
   insrt=true;
   updatee:any;
   inserte:any;
-
+empid:any;
   loading: boolean=false;
   posts_emp: any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
-
+ x:any;
 
   ngOnInit(): void {
+
+    localStorage.setItem('address', '/addemp/dashboard');
+
     console.log(this.updt);
     this.updatee=localStorage.getItem('updatee');
     this.inserte=localStorage.getItem('adde');
@@ -83,6 +87,7 @@ export class AddempdashboardComponent implements OnInit {
             localStorage.setItem('adde','0')
    
           }
+
     this.fetch_data();
     //this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -119,5 +124,12 @@ export class AddempdashboardComponent implements OnInit {
     //console.log(v1+" "+v2+" "+" "+v3);
     this.router.navigate(['/addemp/editemp',v1,v2,v3])
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.empid=v}
+  delete_item(){alert(this.empid)}
 }

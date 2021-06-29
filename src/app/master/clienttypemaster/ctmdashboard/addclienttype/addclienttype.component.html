@@ -26,7 +26,7 @@
                           <label><b>Client Type</b>&nbsp;<span class="text-danger">*</span></label>
                         </div>
                          <div class="col-sm-6">
-                          <input type="text" class="form-control" name="item_name" id="itemname" #item_name (keyup)="prevent_null($event)">
+                          <input type="text" class="form-control p-2" name="item_name" id="itemname" #item_name (keyup)="prevent_null($event)">
                           
                          </div>
                          <span class="alert text-danger" *ngIf="error">*{{msg}}</span>
@@ -63,7 +63,8 @@
 
                           <!-- <input type="reset" class="btn btn-danger"  id="Cancel" name="Cancel" value="Reset"> -->
                           <!-- <input type="reset" class="btn btn-danger " id="Cancel" name="Cancel" value="Reset"> -->
-                          <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clear_field()">Reset</button>
+                          <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clear_field()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button>
+                          <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Insertion failed...</div>
                         </div>
                       </div>
                      </form>

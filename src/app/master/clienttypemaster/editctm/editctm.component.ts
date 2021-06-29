@@ -18,7 +18,7 @@ mutation updateMaster($id:String, $name: String,$user_id: String) {
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class EditctmComponent implements OnInit {
- 
+  x:any;
   constructor(private ctmdash:CtmdashboardComponent, private route:ActivatedRoute,private apollo: Apollo,private router:Router) { }
   userdata:any;
   error=false;
@@ -28,7 +28,11 @@ export class EditctmComponent implements OnInit {
   msg='';
   item1:any;
   item2:any;
-  ngOnInit(): void { 
+  pathname:any;
+  ngOnInit(): void {
+    this.pathname=window.location.href.split('#').pop();
+    console.log("path:" +window.location.href.split('#').pop())
+    localStorage.setItem('address', decodeURIComponent(this.pathname));
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
@@ -37,6 +41,13 @@ export class EditctmComponent implements OnInit {
     this.input_tag=document.getElementById('itemtype');
     
   }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   prevent_null(e:any){
     if(e.target.value==''){
       this.done=false;
@@ -69,7 +80,8 @@ export class EditctmComponent implements OnInit {
       variables:{
         id:v1,
         name:v2,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
+        
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -81,6 +93,9 @@ export class EditctmComponent implements OnInit {
         this.router.navigate(['/clienttypemaster/dashboard'])
      
         }
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
     });
       this.done=true;
       //this.msg="Client type updated successfully!!"

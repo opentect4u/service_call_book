@@ -36,6 +36,7 @@ export class TemplateComponent implements OnInit {
   constructor(private router:Router) { }
   divwelcome = false;
   ngOnInit(): void {
+    localStorage.setItem('address','/template');
 
   }
   confirm() {

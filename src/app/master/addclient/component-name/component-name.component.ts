@@ -135,13 +135,14 @@ export class ComponentNameComponent implements OnInit {
   supportstatus:any;
   supportmode:any;
   districts:any;
+  x:any;
   distdata:any=[];
   client_data:any;
   clientid:any;
   clidselect:any;
   amcdate:any;
   rentaldate:any;
-  x:any;
+
   constructor(private datepipe:DatePipe,private router:Router,private apollo:Apollo,private route:ActivatedRoute){ }
   item:any;
   posts:any;
@@ -159,10 +160,18 @@ export class ComponentNameComponent implements OnInit {
   prevent_init_phone=false;
   input_name:any;
   input_phone:any;
+
   
+ 
+
+  pathname:any;
   ngOnInit(): void {
     this.input_name=document.getElementById('itemname');
     this.input_phone=document.getElementById('itemphone');
+    this.pathname=window.location.href.split('#').pop();
+    console.log("path:" +window.location.href.split('#').pop())
+    localStorage.setItem('address', decodeURIComponent(this.pathname));
+
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
       variables:{
@@ -357,7 +366,7 @@ export class ComponentNameComponent implements OnInit {
         rental_upto: rentalupto,
         support_status:activeinactiveradio,
         remarks: remarks,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
         
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
@@ -369,21 +378,23 @@ export class ComponentNameComponent implements OnInit {
         localStorage.setItem('updatec','1');
         this.router.navigate(['/addclient/dashboard'])
       }
-      else{
+       else
         this.showsnackbar();
-      }
-      
-      
-    }, error=>{ this.showsnackbar()});
+    },error=>{ this.showsnackbar()
+   } );
+
     // console.log(cd+" "+name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
 
   }
   showsnackbar() {
+
    // alert("error");
     this.x = document.getElementById("snackbar");
     this.x.className = "show";
     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
   }
+
+   
 prevent_null(e:any){this.done=false;
 
   if(e.target.id=='itemname')
@@ -408,10 +419,9 @@ prevent_null(e:any){this.done=false;
       //this.hide_val=true;
     }
     else
-     {this.done=false; this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"; this.prevent_init_phone=false;}
-  }
 
-}
+     {this.done=false; this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"; this.prevent_init_phone=false;}}}
+
 change_rentalupto(v:any){}
 select_status(){}
 select_mode(){}
@@ -419,7 +429,10 @@ change_amcupto(v:any){}
 select_district(v:any){}
 select_client_type(v:any){}
 select_operation(v:any){}
-preventNonNumericalInput(e:any){ e = e || window.event;
+
+
+preventNonNumericalInput(e:any){e = e || window.event;
+
     
   var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
   var charStr = String.fromCharCode(charCode);

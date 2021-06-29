@@ -12,6 +12,7 @@ query{
     priority_mode
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Operational_Mode: any;
@@ -41,20 +42,24 @@ query{
 export class PmdashboardComponent implements OnInit,OnDestroy {
   displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit','Delete'];
   dataSource = new MatTableDataSource; 
-
+  x:any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  dlt=true;
   updt=true;
   insrt=true;
   updatepm:any;
   insertpm:any;
   loading: boolean=false;
   posts_pm: any;
+  pmid:any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+
+    localStorage.setItem('address','/prioritymode/dashboard'); 
+
     this.updatepm=localStorage.getItem('updatepm')
     this.insertpm=localStorage.getItem('addpm')
     if(this.updatepm=='0')
@@ -77,6 +82,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
             localStorage.setItem('addpm','0')
    
           }
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -118,5 +124,12 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.pmid=v;}
+  delete_item(){alert(this.pmid)}
 }

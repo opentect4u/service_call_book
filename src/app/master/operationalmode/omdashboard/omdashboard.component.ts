@@ -11,7 +11,8 @@ query{
     oprn_id
     oprn_mode
   }
-}`;
+}`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Operational_Mode: any;
@@ -48,6 +49,9 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   @ViewChild(MatSort) sort!: MatSort;
   loading: boolean=false;
   posts_om: any=[];
+  oprnid:any;
+  dlt=true;
+  x:any;
   updt=true;
   insrt=true;
   updateom:any;
@@ -55,6 +59,9 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+
+    localStorage.setItem('address','/operationmode/dashboard'); 
+
     this.updateom=localStorage.getItem('updateom')
     this.insertom=localStorage.getItem('addom')
     if(this.updateom=='0')
@@ -77,6 +84,7 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
             localStorage.setItem('addom','0')
    
           }
+
     this.posts_om.length=0;
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -121,7 +129,15 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){
+    this.oprnid=v;
     
   }
+  delete_item(){alert(this.oprnid)}
 }

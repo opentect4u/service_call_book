@@ -20,6 +20,7 @@ export class EdittsComponent implements OnInit {
 
   item1: any;
   item2: any;
+  x:any;
 
   constructor(private route:ActivatedRoute,private apollo: Apollo,private router:Router) { }
   userdata:any;
@@ -29,11 +30,18 @@ export class EdittsComponent implements OnInit {
   done=false;
   input_tag:any;
   msg='';
+  pathname:any;
   ngOnInit(): void {
+     this.pathname=window.location.href.split('#').pop();
+     console.log("path:" +window.location.href.split('#').pop())
+     localStorage.setItem('address', decodeURIComponent(this.pathname));
+    // console.log("pathname:",window.location.href);
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
     this.input_tag=document.getElementById('itemtype');
+    
+
   }
   prevent_null(e:any){
     if(e.target.value==''){
@@ -67,7 +75,7 @@ export class EdittsComponent implements OnInit {
       variables:{
         id:v1,
         name:v2,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -76,7 +84,10 @@ export class EdittsComponent implements OnInit {
       // this.msg="Ticket status updated successfully!!"
       {localStorage.setItem('updatets','1')
       this.router.navigate(['/ticketstatus/dashboard'])}
-    });
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });
       this.done=true;
       
      //this.input_tag.value='';
@@ -84,6 +95,13 @@ export class EdittsComponent implements OnInit {
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
     this.input_tag.value='';
     this.error=false;

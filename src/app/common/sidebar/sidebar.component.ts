@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 //import {MatDialog} from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -13,9 +15,11 @@ import { Router } from '@angular/router';
 ]
 })
 export class SidebarComponent implements OnInit {
+ 
   store:any;
   marker:any;
   marker1:any;
+  admindropdown:any;
   constructor(private router:Router) { }
 
   ngOnInit(): void {
@@ -26,8 +30,11 @@ export class SidebarComponent implements OnInit {
   openclosedropdown1(){
     this.store=document.getElementById('openclose');
     this.marker1=document.getElementById('openclose1');
+    this.admindropdown=document.getElementById('openclose_admin');
     if(this.store.style.display=='block'){
         this.store.style.display='none';
+      
+        
       this.marker=document.getElementById('down');
 
     
@@ -36,6 +43,7 @@ export class SidebarComponent implements OnInit {
      else{
       this.marker1.style.display='none';
       this.store.style.display='block';
+      this.admindropdown.style.display='none';
    
       console.log("none");
 
@@ -46,15 +54,23 @@ export class SidebarComponent implements OnInit {
     openclosedropdown(){
       this.marker1=document.getElementById('openclose');
        this.store=document.getElementById('openclose1');
+       this.admindropdown=document.getElementById('openclose_admin');
     if(this.store.style.display=='block'){
+    
         this.store.style.display='none';
+        // this.admindropdown.style.dispaly='none'
+
       this.marker=document.getElementById('down1');
     
       console.log("block");
      }
      else{
       this.marker1.style.display='none';
+      this.admindropdown.style.display='none';
+    
+
       this.store.style.display='block';
+      
    
       console.log("none");
 
@@ -64,9 +80,34 @@ export class SidebarComponent implements OnInit {
 
 
     }
+    opencloseadminsubmenu(){
+      this.marker1=document.getElementById('openclose');
+      this.store=document.getElementById('openclose1');
+      this.admindropdown=document.getElementById('openclose_admin');
+      if(this.admindropdown.style.display == 'block'){
+        this.admindropdown.style.display='none';
+        
+
+
+      }
+      else{
+        this.store.style.display='none';
+        this.marker1.style.display='none';
+        this.admindropdown.style.display='block';
+
+      }
+
+
+    }
+
+   
+
+
+    
     logout(){
       localStorage.clear();
-      this.router.navigate(['/'])
+      localStorage.setItem('isLoggedIn',"false");
+      this.router.navigate(['/']);
     }
 
 }

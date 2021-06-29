@@ -52,19 +52,23 @@ export class AddclientdashboardComponent implements OnInit {
   displayedColumns: string[] = ['Client_Code','Name','Type','Phone','District','Edit','Delete'];
 
   
-
+ x:any;
   dataSource = new MatTableDataSource; 
-
+cl:any;
+dlt=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   updt=true;
   insrt=true;
   updatec:any;
   insertc:any;
-
+ 
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
+
+    localStorage.setItem('address', '/addclient/dashboard');
+
     this.updatec=localStorage.getItem('updatec')
     this.insertc=localStorage.getItem('addc')
     console.log(this.updatec)
@@ -88,6 +92,7 @@ export class AddclientdashboardComponent implements OnInit {
             localStorage.setItem('addc','0')
    
           }
+
     this.fetch_data(1);
     //this.fetch_data(1);
     this.dataSource.paginator = this.paginator;
@@ -123,12 +128,19 @@ export class AddclientdashboardComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/addclient/addcl'])   ; 
+    this.router.navigate(['/addclient/addcl']); 
   }
   go_to_update(v1:any){
     this.router.navigate(['/addclient/editclient',v1])
   }
-delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+delete(v:any){this.cl=v;}
+delete_item(){alert(this.cl)}
 sendstatus(v:any){
   this.fetch_data(v);
   //this.fetch_data(v);

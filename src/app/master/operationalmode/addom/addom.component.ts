@@ -19,7 +19,8 @@ mutation insertMaster($op: String,$user_id: String) {
 export class AddomComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
-
+  x:any;
+  spinshow=false;
   input_tag:any;
   disable_button=true;
   msg='';
@@ -27,6 +28,7 @@ export class AddomComponent implements OnInit {
   error=false;
   done=false;
   ngOnInit(): void {
+    localStorage.setItem('address','/operationmode/addom'); 
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -47,6 +49,7 @@ export class AddomComponent implements OnInit {
     }
   }
   send_item(v:any){
+    this.msg='';
     if(v=='')
     {
       this.done=false;
@@ -61,7 +64,7 @@ export class AddomComponent implements OnInit {
         mutation:ADD_OP,
         variables:{
           op:v,
-          user_id:'123'
+          user_id:localStorage.getItem("UserId")
         }
       }).subscribe(({data})=>{this.userdata=data;console.log(data);
         console.log("data:" +JSON.stringify(data))
@@ -69,21 +72,35 @@ export class AddomComponent implements OnInit {
         if(this.userdata.insertMaster.message=='Inserted Successfully !!')
         {
           localStorage.setItem('addom','1');
+          this.clear_field();
           this.router.navigate(['/operationmode/dashboard'])
           // this.msg="Operational mode added successfully!!"
         }
-      });
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
+    });
       this.done=true;
      // this.msg="Operational mode added successfully!!"
-     this.input_tag.value='';
+    // this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
+    // this.spinshow=false;
     this.input_tag.value='';
     this.error=false;
     this.done=false;
+    this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
       
