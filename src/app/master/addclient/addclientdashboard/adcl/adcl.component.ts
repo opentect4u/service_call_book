@@ -121,6 +121,9 @@ export class AdclComponent implements OnInit,OnDestroy {
   private querySubscription: Subscription = new Subscription;
   private querySubscription1: Subscription = new Subscription;
   x:any;
+
+  spinshow=false;
+
   ngOnInit(): void {
     localStorage.setItem('address', '/addclient/addcl');
     this.email_null=false;
@@ -219,6 +222,7 @@ export class AdclComponent implements OnInit,OnDestroy {
     this.oprnvalid=false;
     this.prevent_init_oprn=false;
   }
+
   }
   select_mode(){
    this.mode_select=false;
@@ -231,12 +235,15 @@ export class AdclComponent implements OnInit,OnDestroy {
       {
         this.namevalid=true;
         this.prevent_init_name=true;
+
         this.input_name.style.border="solid red 1px"
        // this.hide_val=true;
       }
       else
+
        {
         this.prevent_init_name=false;this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"}
+
     }
     else if(e.target.id=='itemphone')
     {
@@ -248,8 +255,10 @@ export class AdclComponent implements OnInit,OnDestroy {
         //this.hide_val=true;
       }
       else
+
        {
         this.prevent_init_phone=false;this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"}
+
     }
     else if(e.target.id=='itemaddress')
     {
@@ -268,7 +277,9 @@ export class AdclComponent implements OnInit,OnDestroy {
   }
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
+
     if (!em.test(event.target.value)) {this.prevent_init_email=true; this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid lightgrey 1px";}}
+
     else {this.prevent_init_email=false; this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
   }
   fetch_ctm(){
@@ -378,10 +389,12 @@ export class AdclComponent implements OnInit,OnDestroy {
         this.select_d.value='';
         this.select_o.value='';}
       
+
         else
         this.showsnackbar();
     },error=>{ this.showsnackbar()
    } );
+
     //console.log(name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
   }
 
@@ -409,6 +422,8 @@ export class AdclComponent implements OnInit,OnDestroy {
   }
   clearfield(){
     console.log(this.radio_amc);
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.email_null=false;
     this.namevalid=false;
     this.addressvalid=false;

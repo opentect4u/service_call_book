@@ -468,9 +468,10 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
+
                                         <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="namevalid||phonevalid||status||ctmvalid||oprnvalid||distvalid||mode_select||notavalidemail" (click)="send_data(name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
                                             value="Submit">
-                                            <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset</button>
+                                            <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button>
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
                                        &nbsp; <span *ngIf="done" class="text-success">Client Data inserted successfully!!</span> 
 

@@ -22,6 +22,7 @@ export class AddeComponent implements OnInit {
 
   constructor(private apollo: Apollo,private router:Router) { }
   userdata:any;
+  spinshow=false;
   notavalidemail=true;
    confirm_email='';
    input_code:any;
@@ -147,6 +148,8 @@ export class AddeComponent implements OnInit {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   clear_all(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_code.value=''
     this.input_name.value=''
     this.input_email.value=''

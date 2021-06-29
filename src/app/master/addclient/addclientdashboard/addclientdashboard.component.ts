@@ -52,16 +52,17 @@ export class AddclientdashboardComponent implements OnInit {
   displayedColumns: string[] = ['Client_Code','Name','Type','Phone','District','Edit','Delete'];
 
   
-
+ x:any;
   dataSource = new MatTableDataSource; 
-
+cl:any;
+dlt=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   updt=true;
   insrt=true;
   updatec:any;
   insertc:any;
-
+ 
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
@@ -132,7 +133,14 @@ export class AddclientdashboardComponent implements OnInit {
   go_to_update(v1:any){
     this.router.navigate(['/addclient/editclient',v1])
   }
-delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+delete(v:any){this.cl=v;}
+delete_item(){alert(this.cl)}
 sendstatus(v:any){
   this.fetch_data(v);
   //this.fetch_data(v);

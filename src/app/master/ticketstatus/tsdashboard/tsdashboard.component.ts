@@ -12,6 +12,7 @@ query{
     tkt_status
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Status: any;
@@ -47,14 +48,15 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
   updt=true;
   insrt=true;
+  dlt=true;
   updatets:any;
   insertts:any;
   loading: boolean=false;
   posts_ts: any=[];
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
- 
-
+  tsid:any;
+ x:any;
   ngOnInit(): void {
 
     localStorage.setItem('address','/ticketstatus/dashboard');  
@@ -125,5 +127,12 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.tsid=v;}
+  delete_item(){alert(this.tsid);}
 }

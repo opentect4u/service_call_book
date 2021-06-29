@@ -72,6 +72,10 @@
 
 
               <input id="getit" [hidden]="true" value="0">
+              <div class="alert alert-success alert-dismissible fade in" style="text-align: center;" [hidden]="dlt">
+                <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
+                Deletion Successful!! <a style="float:right;" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
               <div class="alert alert-success alert-dismissible fade in" style="text-align: center;" [hidden]="updt">
                 <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
                 Updation Successful!! <a style="float:right;" data-dismiss="alert" aria-label="close">&times;</a>
@@ -162,7 +166,11 @@
                   <ng-container matColumnDef="Delete">
                     <th mat-header-cell *matHeaderCellDef> Delete</th>
 
+<<<<<<< HEAD
+                    <td mat-cell *matCellDef="let row" class="pl-3"><a (click)="delete(row.id)" class="delete editeCus"
+=======
                     <td mat-cell *matCellDef="let row" class="pl-3"><a (click)="delete()" class="delete editeCus"
+>>>>>>> 8547a9e9d0a8a7853df745fe8815809e31f326de
                       title="Delete"
                       data-toggle="modal" data-target="#clientmodal"><i class="fa fa-trash-o menu-icon"
                         style="color: #bd2130"></i></a></td>
@@ -247,7 +255,11 @@
         <div class="modal-footer p-3">
           <!-- <button type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
           <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>-->
+<<<<<<< HEAD
+          <button mat-raised-button data-dismiss="modal" class="color mr-2" (click)="delete_item()">Ok</button>
+=======
           <button mat-raised-button data-dismiss="modal" class="color mr-2">Ok</button>
+>>>>>>> 8547a9e9d0a8a7853df745fe8815809e31f326de
           <button mat-raised-button data-dismiss="modal"  class="color ">Cancel</button>
         </div>
       </div>
@@ -255,7 +267,11 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+  <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Deletion failed...</div>
+=======
 
+>>>>>>> 8547a9e9d0a8a7853df745fe8815809e31f326de
 <!-- </div> -->
 
 
