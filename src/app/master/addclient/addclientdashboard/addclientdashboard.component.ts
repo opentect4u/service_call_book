@@ -14,6 +14,13 @@ query getClient($active: String){
     district_name
   }
 }`
+const DEL_CLI=gql`
+mutation deleteClient($id: String){
+  deleteClient(id: $id){
+    success
+    message
+  }
+}`;
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Client_Code: any;
@@ -55,6 +62,7 @@ export class AddclientdashboardComponent implements OnInit {
  x:any;
   dataSource = new MatTableDataSource; 
 cl:any;
+userdel:any;
 dlt=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -140,7 +148,28 @@ dlt=true;
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
 delete(v:any){this.cl=v;}
-delete_item(){alert(this.cl)}
+delete_item(){this.apollo.mutate({
+  mutation:DEL_CLI,
+  variables:{
+    id:this.cl,
+    // name:v2,
+    // user_id:localStorage.getItem("UserId")
+    
+  }
+}).subscribe(({data})=>{this.userdel=data;console.log(data);
+  console.log("data:" +JSON.stringify(data))
+  console.log(this.userdel.deleteClient.message)
+  if(this.userdel.deleteClient.success==1)
+  { // this.done=true;this.msg="Client Type updated successfully!!";
+ // this.ctmdash.ngOnInit();
+    // localStorage.setItem('updatectm','1')
+    // this.router.navigate(['/clienttypemaster/dashboard'])
+ this.dlt=false;
+    }
+    else
+    this.showsnackbar();
+},error=>{ this.showsnackbar()
+});}
 sendstatus(v:any){
   this.fetch_data(v);
   //this.fetch_data(v);

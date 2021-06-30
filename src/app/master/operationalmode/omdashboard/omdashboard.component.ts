@@ -5,6 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router'
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 2){
+    success
+    message
+  }
+}
+`;
 const SHOW_OP=gql`
 query{
   getOprnModeData(id:"", db_type: 2){
@@ -56,6 +64,7 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   insrt=true;
   updateom:any;
   insertom:any;
+  userdel:any;
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
@@ -139,5 +148,28 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
     this.oprnid=v;
     
   }
-  delete_item(){alert(this.oprnid)}
+  delete_item(){// alert(this.ctmid);
+  
+    this.apollo.mutate({
+      mutation:DEL_MAS,
+      variables:{
+        id:this.oprnid,
+        // name:v2,
+        // user_id:localStorage.getItem("UserId")
+        
+      }
+    }).subscribe(({data})=>{this.userdel=data;console.log(data);
+      console.log("data:" +JSON.stringify(data))
+      console.log(this.userdel.deleteMaster.message)
+      if(this.userdel.deleteMaster.success==1)
+      { // this.done=true;this.msg="Client Type updated successfully!!";
+     // this.ctmdash.ngOnInit();
+        // localStorage.setItem('updatectm','1')
+        // this.router.navigate(['/clienttypemaster/dashboard'])
+     this.dlt=false;
+        }
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
+    });}
 }
