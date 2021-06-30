@@ -14,7 +14,7 @@ import { MmdashboardComponent } from './master/modulemaster/mmdashboard/mmdashbo
 import { AddempdashboardComponent } from './master/addemp/addempdashboard/addempdashboard.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
 import { DatePipe } from '@angular/common'
-
+import {MatButtonModule} from '@angular/material/button';
 
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from'@angular/material/paginator'
@@ -51,14 +51,32 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+
 import { NgxSpinnerModule } from "ngx-spinner";  
-import {MatButtonModule} from '@angular/material/button';
+
+
+
+
+// import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
+
+
+// import {MatButtonModule} from '@angular/material/button';
+
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
 import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
 import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
+
 import {MatRadioModule} from '@angular/material/radio';
+
+import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
+import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,16 +116,21 @@ import {MatRadioModule} from '@angular/material/radio';
     ComponentNameComponent,
     RightclickoffDirective,
     ControlkeyoffDirective,
+
+
+    TemplateComponent,
+
+
     UsermaintananceComponent,
     NotificationsComponent,
     AddnotifyComponent,
-    EditnotifyComponent
-
+    EditnotifyComponent,
+    EdittktComponent
 
   ],
   imports: [
     BrowserModule,
-    
+    MatButtonModule,
     AppRoutingModule,
     MatTableModule,
     MatPaginatorModule,

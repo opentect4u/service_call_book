@@ -27,6 +27,8 @@ export class AddclienttypeComponent implements OnInit {
   x:any;
   constructor(private apollo: Apollo,private router:Router) { }
 
+ spinshow=false;
+
   input_tag:any;
   msg='';
   error=false;
@@ -106,6 +108,10 @@ export class AddclienttypeComponent implements OnInit {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
+    // this.spinshow=false;
+    
     this.input_tag.value='';
     this.error=false;
     this.done=false;

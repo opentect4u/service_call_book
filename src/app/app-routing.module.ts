@@ -10,6 +10,7 @@ import { LoginGuard } from './Gaurds/LoginGaurds/login.guard';
 import { ForgetpassComponent } from './login_reg_emp_client/forgetpass/forgetpass.component';
 import { LoginComponent } from './login_reg_emp_client/login/login.component';
 import { SignupComponent } from './login_reg_emp_client/signup/signup.component';
+import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { AdclComponent } from './master/addclient/addclientdashboard/adcl/adcl.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
@@ -41,6 +42,7 @@ import { EditatComponent } from './operations/assignticket/editat/editat/editat.
 import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
 
 const routes: Routes = [
@@ -182,7 +184,7 @@ const routes: Routes = [
     component:AssignticketComponent
   },
   {
-    path:'operations/editassignticket',
+    path:'operations/editassignticket/:id',
     canActivate:[AfterloginGuard],
     component:EditatComponent
   },
@@ -197,16 +199,31 @@ const routes: Routes = [
     component:AddrtComponent
   },
   {
+    path:'operations/editeraiseticket/:id',
+    canActivate:[AfterloginGuard],
+    component:EdittktComponent
+  },
+  {
     path:'operations/attendanddeliver',
     canActivate:[AfterloginGuard],
     component:AttendanddeliverComponent
   },
   {
-    path:'operations/editattendanddeliver',
+    path:'operations/editattendanddeliver/:id1',
     canActivate:[AfterloginGuard],
     component:EditadanddComponent
   },
   {
+
+
+    path:'template',
+    canActivate:[LoginGuard],
+    component:TemplateComponent
+  },
+
+{
+
+
      path:'operations/Admin/usermaintanance',
      canActivate:[AfterloginGuard],
      component:UsermaintananceComponent
@@ -225,6 +242,7 @@ const routes: Routes = [
     path:'Admin/Addnotification/addnotify',
     canActivate:[AfterloginGuard],
     component:AddnotifyComponent
+
 
   }
 

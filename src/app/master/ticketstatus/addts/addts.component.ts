@@ -20,6 +20,9 @@ export class AddtsComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
   x:any;
+
+  spinshow=false;
+
   userdata:any;
   input_tag:any;
   msg='';
@@ -93,6 +96,8 @@ export class AddtsComponent implements OnInit {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_tag.value='';
     this.error=false;
     this.done=false;

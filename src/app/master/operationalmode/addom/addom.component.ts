@@ -20,6 +20,9 @@ export class AddomComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
   x:any;
+
+  spinshow=false;
+
   input_tag:any;
   disable_button=true;
   msg='';
@@ -93,6 +96,9 @@ export class AddomComponent implements OnInit {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
+    // this.spinshow=false;
     this.input_tag.value='';
     this.error=false;
     this.done=false;

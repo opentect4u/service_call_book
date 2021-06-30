@@ -21,6 +21,7 @@ export class AddmmComponent implements OnInit {
   constructor(private apollo: Apollo,private router:Router) { }
   userdata:any;
   disable_button=true;
+  spinshow=false;
   input_tag:any;
   msg='';
   error=false;
@@ -91,6 +92,8 @@ export class AddmmComponent implements OnInit {
     }
   }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_tag.value='';
     this.error=false;
     this.done=false;

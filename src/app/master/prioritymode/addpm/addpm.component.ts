@@ -26,6 +26,7 @@ export class AddpmComponent implements OnInit {
   error=false;
   done=false;
   disable_button=true;
+  spinshow=false;
   ngOnInit(): void {
     localStorage.setItem('address','/prioritymode/addpm'); 
     this.input_tag=document.getElementById('itemname');
@@ -89,6 +90,8 @@ export class AddpmComponent implements OnInit {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_tag.value='';
     this.error=false;
     this.done=false;

@@ -105,8 +105,10 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control p-2" placeholder=" " value="{{client_name}}"
                                             name="cust_name" id="itemname" required="" #name11 (keyup)="prevent_null($event)">
+
                                           <span class="text-danger"
                                         *ngIf="namevalid&&prevent_init_name">*Please Enter Name</span> 
+
                                         
 
                                     </div>
@@ -306,14 +308,16 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Mobile Number</b></label>
+                                        <label><b>Mobile Number</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2"  placeholder=" " value="{{phone_no}}"
                                             name="mobile_no" id="itemphone" #phone pattern="[0-9]*"
                                             (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
+
                                           <span  class="text-danger"
                                         *ngIf="phonevalid&&prevent_init_phone">*Please Enter Mobile Number</span>  
+
 
                                     </div>
 
@@ -322,8 +326,10 @@
                                         <label><b>Email</b></label> 
                                     </div>
                                     <div class="col-sm-3">
+
                                         <input type="email" class="form-control p-2" placeholder="" name="email" value="{{mail}}"
                                             id="itememail" #em (change)="check_email_validity($event)" >
+
                                         <!-- <span  class="text-danger ml-3"
                                         *ngIf="upload&&!email">*please Enter Email</span> -->
                                         <!-- <span class="text-danger" *ngIf="email_null">*Please Enter Email</span> 
@@ -353,8 +359,8 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <input type="radio" id="AMC" name="Support" value="A" #amcrentalradio (click)="select_mode()">
-                                        <label for="AMC"> AMC</label><br>
-                                        <input type="radio" id="Rental" name="Support" value="R" #amcrentalradio (click)="select_mode()">
+                                        <label for="AMC"> AMC</label>
+                                        <input type="radio" id="Rental" name="Support" value="R" #amcrentalradio (click)="select_mode()" class="ml-3">
                                         <label for="Rental"> Rental</label><br>
                                     </div>
                                 </div><br>
@@ -400,8 +406,8 @@
 
 
                                         <input type="radio" id="a" name="Status" value="A" #activeinactiveradio (click)="select_status()" [checked]="active1">
-                                        <label for="a"> Active</label><br>
-                                        <input type="radio" id="i" name="Status" value="D" #activeinactiveradio (click)="select_status()" [checked]="active2">
+                                        <label for="a"> Active</label> 
+                                        <input type="radio" id="i" name="Status" value="D" #activeinactiveradio (click)="select_status()" [checked]="active2" class="ml-3">
                                         <label for="i"> Inactive</label><br>
 
 
@@ -503,7 +509,7 @@
                                     </div>
                                     <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Updation failed...</div>
                                 </div>
-
+                                <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Updation failed...</div>
 
 
                             </form>
