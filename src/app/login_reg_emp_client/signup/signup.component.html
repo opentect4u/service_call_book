@@ -278,7 +278,8 @@
 						<input type="text" class="form-control float-left " id="capt_client" oncopy="return false"  disabled 
 					
 						>
-						<a (click)="refresh_captcha_client()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a>
+						<!-- <a (click)="refresh_captcha_client()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a> -->
+						<i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" (click)="refresh_captcha_client()" id="refresh_client"></i>
 		
 						<small *ngIf="captch_cli" class="text-danger ml-2">*captcha mismatch</small>
 						
@@ -449,7 +450,8 @@
 				<input type="text" class="form-control float-left " id="capt" oncopy="return false"  disabled 
 			
 				>
-				<a (click)="refresh_captcha_emp()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a>
+				<!-- <a (click)="refresh_captcha_emp()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a> -->
+			<i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" (click)="refresh_captcha_emp()" id="refresh"></i>
 
 				<small *ngIf="captch_employee" class="text-danger ml-2">*captcha mismatch</small>
 				

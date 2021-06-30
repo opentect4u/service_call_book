@@ -1,7 +1,11 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Apollo, gql, Subscription} from 'apollo-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
 
 const GET_POST_LOGIN = gql`
 query userLogin($user_id: String!, $password: String!){
@@ -30,6 +34,7 @@ query userLogin($user_id: String!, $password: String!){
               '../../../assets/Login_assets/css/apps.css',
                '../../../assets/Login_assets/css/apps_inner.css',
               '../../../assets/Login_assets/css/res.css']
+            
 })
 export class LoginComponent implements OnInit {
    show_eye: boolean = false;
@@ -41,7 +46,7 @@ export class LoginComponent implements OnInit {
   clone:any;
   captch:boolean=false;
   errormsg:any="Captcha mismatch";
- constructor(private router:Router,private fb:FormBuilder,private apollo: Apollo) { }
+ constructor(private router:Router,private fb:FormBuilder,private apollo: Apollo,private spinner: NgxSpinnerService) { }
   LoginForm!: FormGroup;
   login:boolean=false;
   loading!: boolean;
@@ -49,7 +54,14 @@ export class LoginComponent implements OnInit {
   user:any;
   successfull_register:boolean=true;
   show_password:any;
+  x:any;
+  load:any;
 
+  
+  
+ 
+ 
+  
  
   
   ngOnInit(): void {
@@ -133,8 +145,8 @@ export class LoginComponent implements OnInit {
       // localStorage.setItem('username',this.f.username.value);
       // localStorage.setItem('password',this.f.password.value);
 
-      console.log("UserName:" +this.f.username.value)
-      console.log("PassWord:" +this.f.password.value)
+      // console.log("UserName:" +this.f.username.value)
+      // console.log("PassWord:" +this.f.password.value)
       console.log("Captcha;" +this.f.captcha.value);
       console.log(this.recaptcha.value);
      
@@ -146,6 +158,8 @@ export class LoginComponent implements OnInit {
         this.error_log=true;
         this.captch=false;
           console.log("dashboard")
+          
+          this.spinner.show();
          this.apollo.watchQuery<any>({
             query: GET_POST_LOGIN,
             variables:{
@@ -155,8 +169,8 @@ export class LoginComponent implements OnInit {
             
           })
             .valueChanges
-            .subscribe(({ data, loading}) => {
-               this.loading=loading;
+            .subscribe(({ data}) => {
+              //  this.loading=loading;
               //  console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)));
               //  console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message.user_id)));
               //  this.userid=JSON.stringify(data);
@@ -166,10 +180,17 @@ export class LoginComponent implements OnInit {
               //  this.user=JSON.parse(data.userLogin.message)[0];
               //  console.log(this.user);
               //  console.log(this.user.user_id);
+            
              localStorage.setItem("UserId",this.f.username.value);
                this.Success= data.userLogin.success;
+               this.spinner.hide();
+               console.log( this.Success);
                
                if( this.Success == 1){
+                
+             
+               
+                 
                 localStorage.setItem('isLoggedIn',"true");
 
                 this.user=JSON.parse(data.userLogin.message)[0];
@@ -177,13 +198,15 @@ export class LoginComponent implements OnInit {
                  console.log("userid:" + this.user)
                 
                 //  alert("Success");
+              
                  
                 this.router.navigate(['/dashboard'])
  
 
                }
-               else{
-               
+               else if(this.Success == 0){
+                
+    
                
               //  this.clone=document.getElementById("address")
                 // this.clone.style="border:1px solid red";
@@ -194,20 +217,31 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('isLoggedIn',"false");
 
                }
-              
+               
                
             
                
-            });
+               else
+                  this.showsnackbar();
+          },error=>{ this.showsnackbar()
+           });
        
          
       }
     }
 
   }
-  refresh_captcha(){
 
-      var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+
+  refresh_captcha(){
+      
+       var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
       'O','P','Q','R','S','T','U','V','W','X','Y','Z',
       '1','2','3','4','5','6','7','8','9','0',
       'a','b','c','d','e','f','g','h','i','j','k','l','m','n',
@@ -222,7 +256,17 @@ export class LoginComponent implements OnInit {
       var sum=a+ b+c+d+e+f+g;
       this.recaptcha=document.getElementById("capt_login");
       this.recaptcha.value=sum;
-  } 
+      // this.load=document.getElementById("refresh")?.setAttribute("class",'fa fa-refresh');
+     
+  }
+   
+
+    
+
+      
+ 
+      
+  
 
 
   close_alert(){

@@ -25,9 +25,9 @@
     width: 100%;
   }
   
-  /* td, th {
+  td, th {
     width: 20%;
-  } */
+  }
   a:hover{
     cursor: pointer;
   }

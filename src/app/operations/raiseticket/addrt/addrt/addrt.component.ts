@@ -26,6 +26,42 @@ query getClient($active: String){
       priority_mode
     }
   }`
+
+
+// For adding Raise tickit in api
+
+const GET_POST_update = gql`
+mutation createTkt($client_id:String!,$tkt_module:String!,$phone_no:String!,$priority_status:String!,
+                    $prob_reported:String!,$remarks:String!,$user_id:String!) {
+  createTkt(client_id: $client_id, tkt_module: $tkt_module, phone_no: $phone_no, priority_status: $priority_status ,
+            prob_reported:$prob_reported,remarks:$remarks,user_id:$user_id ) {
+    
+    success
+    message
+  }
+}`
+;
+
+
+// For Filling  the readonly field  by using client type 
+ const GET_POST_DATA_USING_CLIENTTYPE=gql`
+ 
+ query getClient($id:String!,$active:String!){  
+    getClient(id:$id, active:$active){
+     district_name
+     client_type
+     oprn_mode
+      working_hrs
+    amc_upto
+    rental_upto
+    phone_no
+
+  }
+}`
+;
+
+
+
 @Component({
   selector: 'app-addrt',
   templateUrl: './addrt.component.html',
@@ -37,7 +73,12 @@ query getClient($active: String){
 })
 export class AddrtComponent implements OnInit {
 
-  constructor(private apollo:Apollo) { }
+  constructor(private apollo:Apollo,private route:Router) {
+    setInterval(() => {
+      this.now = new Date();
+    }, 1);
+   }
+  user:any;
   mod:any;
   moddata:any;
   posts_pm:any;
@@ -57,7 +98,19 @@ export class AddrtComponent implements OnInit {
   input_phone:any;
   input_issue:any;
   spinshow=false;
+  district_name:any;
+  client_type:any;
+  oprn_mode_id:any;
+  working_hrs:any;
+  amc_upto:any;
+  rental_upto:any;
+  phone_no:any;
+  public now: Date = new Date();
+  success:any;
+  successmsg:any;
+
   ngOnInit(): void {
+    localStorage.setItem('insertickit','0');
 
     this.input_phone=document.getElementById('itemphone');
     this.input_issue=document.getElementById('itemissue');
@@ -120,6 +173,30 @@ export class AddrtComponent implements OnInit {
     {
       this.cl_val=false;
       this.prevent_init_client=false;
+      console.log("id:" +v);
+      this.apollo.watchQuery<any>({
+        query: GET_POST_DATA_USING_CLIENTTYPE,
+        //pollInterval:100,
+        variables:{
+          id:v,
+          active:''
+        }
+      }).valueChanges
+      .subscribe(({ data, loading }) => {
+        console.log(data);
+        // For getting the readonly field automatically by choosing client type on raise ticket edit page
+           
+           this.district_name=data.getClient[0].district_name;
+           this.client_type=data.getClient[0].client_type;
+           this.oprn_mode_id=data.getClient[0].oprn_mode;
+           this.working_hrs=data.getClient[0].working_hrs;
+           this.amc_upto=data.getClient[0].amc_upto;
+           this.rental_upto=data.getClient[0].rental_upto;
+           this.phone_no=data.getClient[0].phone_no;
+
+          })
+
+
     }
   }
   select_mm(v:any){
@@ -176,6 +253,7 @@ export class AddrtComponent implements OnInit {
         this.issue_val=true;
         this.prevent_init_issue=true;
         this.input_issue.style.border="solid red 1px"
+        console.log("phone")
         //this.hide_val=true;
       }
       else
@@ -184,12 +262,62 @@ export class AddrtComponent implements OnInit {
         this.prevent_init_issue=false;this.issue_val=false;this.input_issue.style.border="solid lightgrey 1px"}
 
     }
+  
   }
   clearfield(){this.spinshow=true;
     setTimeout(()=>{this.spinshow=false;;},1000);
     // this.spinshow=false;
 
    
+  }
+
+  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
+
+    // console.log("Date:" +v1);
+    // console.log("Client:" +v2);
+    // console.log("District:" +v3);
+    // console.log("Clienttype:" +v4);
+    // console.log("operationalmode:" +v5);
+    // console.log("workinghours:" +v6);
+    // console.log("amcupto:" +v7);
+    // console.log("rentalupto:" +v8);
+    // console.log("phone:" +v9);
+    // console.log("priority:" +v10);
+    // console.log("module:" +v11);
+    // console.log("issue:" +v12);
+    // console.log("remarks:" +v13);
+    this.user=localStorage.getItem("UserId")
+   
+    this.apollo.mutate({
+      mutation: GET_POST_update,
+      variables:{
+         client_id: v2,
+         tkt_module:v11,
+         phone_no: v9,
+         priority_status:v10, 
+        prob_reported: v12,
+        remarks:v13, 
+        user_id:this.user
+
+      }
+    }).subscribe(({data})=>{
+      console.log(data);
+     this.success=data
+     console.log("success:" +this.success.createTkt.success);
+     if(this.success.createTkt.success==1){
+      localStorage.setItem('insertickit','1');
+           
+          this.successmsg=this.success.createTkt.message;
+          this.route.navigate(['/operations/raiseticket']);
+     }
+     else{
+        localStorage.setItem('insertickit','1');
+        this.successmsg="Insertion Failed";
+     }
+      
+    });
+   
+
   }
 
 }

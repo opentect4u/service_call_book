@@ -21,7 +21,7 @@
              
             <div class="row">
                <div class="col-sm-12"> 
-                   <form>
+                   <form [formGroup]="Addnotificationform" (ngSubmit)="Add_notification()">
                             
                     <div class="form-group row">
                     
@@ -32,26 +32,46 @@
                             </div>
                             <div class="col-sm-3">
                                 <input type="date" class="form-control p-2" 
-                                    name="date" id="date" 
-                                   >
-              
+                                    name="date" 
+                                     id="picker"
+                                    formControlName="date_value"
+                                    [ngClass]="{'is-invalid': submit && f.date_value.errors}">
+                                 
+
+                                    <div *ngIf="submit && f.date_value.errors" class="invalid-feedback ">
+                                         <div *ngIf="f.date_value.errors.required">*Please supply date
+                                        </div>
+
+                                          <div *ngIf="f.date_value.errors.pattern"> Invalid format </div>
+
+
+                                      </div>
 
                             </div>
 
                             <div class="col-sm-2"></div>
                             <div class="col-sm-1">
-                                <label><b>Subject</b></label>
+                                <label for="validationDefault01"><b>Subject</b></label>
                             </div>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control p-2" name="sub"
-                                    id="subject">
+                                    id="validationDefault01" 
+                                    formControlName="subject"
+                                    [ngClass]="{'is-invalid': submit && f.subject.errors}">
+
                                 <!-- <span  class="text-danger ml-3"
                                 *ngIf="upload&&!email">*please Enter Email</span> -->
                                 <!-- <span class="text-danger" *ngIf="email_null">*Please Enter Email</span>  -->
                                
+                                <div *ngIf="submit && f.subject.errors" class="invalid-feedback ">
+                                  <div *ngIf="f.subject.errors.required">*Please supply subject
+                                  </div>
+                                  </div>
+                             
 
 
                             </div>
+
                    
                         
 
@@ -67,7 +87,14 @@
                          <div class="col-sm-10">
                          
                             <textarea rows="5" type="text" class="form-control p-2"
-                             name="msg" id="Message"></textarea>
+                             name="msg" id="Message"
+                             formControlName="message"
+                             [ngClass]="{'is-invalid': submit && f.message.errors}"></textarea>
+
+                             <div *ngIf="submit && f.message.errors" class="invalid-feedback ">
+                              <div *ngIf="f.message.errors.required">*Please supply message
+                              </div>
+                              </div>
                           
                           </div>
                       </div>

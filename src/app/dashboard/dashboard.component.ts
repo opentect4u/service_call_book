@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,14 +11,18 @@ import { Component, OnInit } from '@angular/core';
    '../../assets/css/res.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+ 
+  
+  formattedDate : any;
+  constructor() {
+  
+   
+   }
 
   ngOnInit(): void {
-
-    localStorage.setItem('address','/dashboard')
-
-    localStorage.setItem('updatectm','0');
+    
+     localStorage.setItem('address','/dashboard')
+     localStorage.setItem('updatectm','0');
     localStorage.setItem('addctm','0');
     localStorage.setItem('updateom','0');
     localStorage.setItem('addom','0');
@@ -36,3 +41,4 @@ export class DashboardComponent implements OnInit {
   }
 
 }
+
