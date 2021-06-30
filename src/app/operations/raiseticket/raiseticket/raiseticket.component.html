@@ -37,15 +37,7 @@
           </div>
         </div> -->
         
-        <div class="alert alert-success alert-dismissible fade in mb-3" style="text-align: center;" [hidden]="insertitckit">
-          <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
-         <b> Insertion Successful!!</b> <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="localstorage()">&times;</a>
-        </div>
-      
-        <div class="alert alert-success alert-dismissible fade in mb-3" style="text-align: center;" [hidden]="edittickite">
-          <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
-         <b> Updation Successful!!</b> <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="go_to()">&times;</a>
-        </div>
+        
 
 
 
@@ -71,7 +63,15 @@
 
 
 
-
+          <div class="alert alert-success alert-dismissible fade in mb-3" style="text-align: center;" [hidden]="insertitckit">
+            <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
+           <b> Insertion Successful!!</b> <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="localstorage()">&times;</a>
+          </div>
+        
+          <div class="alert alert-success alert-dismissible fade in mb-3" style="text-align: center;" [hidden]="edittickite">
+            <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
+           <b> Updation Successful!!</b> <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="go_to()">&times;</a>
+          </div>
           <div class="row">
 
             <!-- <div class="alert  ml-5" role="alert" [hidden]="alert_show">
