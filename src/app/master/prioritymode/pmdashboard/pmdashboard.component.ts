@@ -5,6 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 4){
+    success
+    message
+  }
+}
+`;
 const SHOW_PM=gql`
 query{
   getPriorityModeData(id:"", db_type: 4){
@@ -53,6 +61,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   loading: boolean=false;
   posts_pm: any;
   pmid:any;
+  userdel:any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
 
@@ -131,5 +140,26 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   delete(v:any){this.pmid=v;}
-  delete_item(){alert(this.pmid)}
+  delete_item(){this.apollo.mutate({
+    mutation:DEL_MAS,
+    variables:{
+      id:this.pmid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteMaster.message)
+    if(this.userdel.deleteMaster.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }
