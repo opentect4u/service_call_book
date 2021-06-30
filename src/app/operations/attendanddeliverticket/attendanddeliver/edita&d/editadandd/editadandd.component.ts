@@ -98,6 +98,7 @@ export class EditadanddComponent implements OnInit {
   constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
 
+
     localStorage.setItem('attendent','0');
     this.input_delivery=document.getElementById('itemdeliveryat')
     this.input_attended=document.getElementById('itemattendedat')
@@ -105,6 +106,7 @@ export class EditadanddComponent implements OnInit {
     console.log("path:" +window.location.href.split('#').pop())
     console.log("pathname:" +decodeURIComponent(this.pathname));
     localStorage.setItem('address', decodeURIComponent(this.pathname));
+
 
 
     this.dateitem=document.getElementById('itemdate');
@@ -169,6 +171,7 @@ export class EditadanddComponent implements OnInit {
           })
         
       })
+
 
 
 

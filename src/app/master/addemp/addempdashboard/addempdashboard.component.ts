@@ -12,8 +12,14 @@ query{
     emp_code
     emp_name
   }
-}`
-
+}`;
+const DEL_EMP=gql`
+mutation deleteEmp($id: String){
+  deleteEmp(id:$id){
+    success
+    message
+  }
+}`;
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Employee_Code: any;
@@ -52,6 +58,7 @@ export class AddempdashboardComponent implements OnInit {
   insrt=true;
   updatee:any;
   inserte:any;
+  userdel:any;
 empid:any;
   loading: boolean=false;
   posts_emp: any;
@@ -131,5 +138,26 @@ empid:any;
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   delete(v:any){this.empid=v}
-  delete_item(){alert(this.empid)}
+  delete_item(){ this.apollo.mutate({
+    mutation:DEL_EMP,
+    variables:{
+      id:this.empid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteEmp.message)
+    if(this.userdel.deleteEmp.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }

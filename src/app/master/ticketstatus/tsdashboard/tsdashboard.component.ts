@@ -5,6 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router'
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 3){
+    success
+    message
+  }
+}
+`;
 const SHOW_TS=gql`
 query{
   getTktStatusData(id:"", db_type: 3){
@@ -57,6 +65,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   constructor(private router:Router,private apollo:Apollo) { }
   tsid:any;
  x:any;
+ userdel:any;
   ngOnInit(): void {
 
     localStorage.setItem('address','/ticketstatus/dashboard');  
@@ -134,5 +143,26 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
   delete(v:any){this.tsid=v;}
-  delete_item(){alert(this.tsid);}
+  delete_item(){this.apollo.mutate({
+    mutation:DEL_MAS,
+    variables:{
+      id:this.tsid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteMaster.message)
+    if(this.userdel.deleteMaster.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }

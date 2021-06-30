@@ -13,7 +13,14 @@ query{
     client_type
   }
 }`
-
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 1){
+    success
+    message
+  }
+}
+`;
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Client_Type: any;
@@ -45,6 +52,7 @@ query{
 export class CtmdashboardComponent implements OnInit, OnDestroy {
 
   userdata:any;
+  userdel:any;
   updt=true;
   insrt=true;
   updatectm:any;
@@ -179,5 +187,31 @@ applyFilter(event: Event) {
     this.ctmid=v;
     console.log(this.ctmid);
   }
-  delete_item(){alert(this.ctmid);}
+  delete_item(){
+    // alert(this.ctmid);
+  
+    this.apollo.mutate({
+      mutation:DEL_MAS,
+      variables:{
+        id:this.ctmid,
+        // name:v2,
+        // user_id:localStorage.getItem("UserId")
+        
+      }
+    }).subscribe(({data})=>{this.userdel=data;console.log(data);
+      console.log("data:" +JSON.stringify(data))
+      console.log(this.userdel.deleteMaster.message)
+      if(this.userdel.deleteMaster.success==1)
+      { // this.done=true;this.msg="Client Type updated successfully!!";
+     // this.ctmdash.ngOnInit();
+        // localStorage.setItem('updatectm','1')
+        // this.router.navigate(['/clienttypemaster/dashboard'])
+     this.dlt=false;
+        }
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
+    });
+  
+  }
 }
