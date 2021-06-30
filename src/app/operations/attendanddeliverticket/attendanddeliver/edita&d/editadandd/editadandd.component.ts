@@ -97,8 +97,7 @@ export class EditadanddComponent implements OnInit {
   Remarks:any;
   constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
-<<<<<<< HEAD
-=======
+
     localStorage.setItem('attendent','0');
     this.input_delivery=document.getElementById('itemdeliveryat')
     this.input_attended=document.getElementById('itemattendedat')
@@ -106,7 +105,7 @@ export class EditadanddComponent implements OnInit {
     console.log("path:" +window.location.href.split('#').pop())
     console.log("pathname:" +decodeURIComponent(this.pathname));
     localStorage.setItem('address', decodeURIComponent(this.pathname));
->>>>>>> Suman
+
 
     this.dateitem=document.getElementById('itemdate');
    
@@ -128,9 +127,6 @@ export class EditadanddComponent implements OnInit {
        //this.putdata(this.posts_ts);
       });
 
-<<<<<<< HEAD
-   
-=======
 
       this.route.params.forEach((params: any) => {
         this.id = params['id1'];
@@ -181,7 +177,7 @@ export class EditadanddComponent implements OnInit {
 
 
 
->>>>>>> Suman
+
 
   }
   preventNonNumericalInput(e:any){}
