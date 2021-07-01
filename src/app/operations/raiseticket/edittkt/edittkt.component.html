@@ -66,7 +66,7 @@
 
                     <div class="titleSec">
                         <!-- <button type="button" class="btn btn-primary">Add</button> -->
-                        <h2>Edit Attend & Deliver</h2>
+                        <h2>Edit Raise Ticket</h2>
                     </div>
 
 
@@ -84,11 +84,9 @@
                                     <div class="col-sm-2">
                                         <label><b>Date</b></label>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-10">
                                         <input type="text" class="form-control p-2" placeholder=""
-
-                                            name="date" id="itemdate" #date readonly value="{{todaysDataTime}}"
-
+                                            name="date" id="itemdate" #date readonly value="{{this.now | date:'dd-MM-YYYY h:mm:ss a'}}"
                                             >
                                         <!-- <span  class="text-danger"
                                         *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
@@ -96,19 +94,7 @@
                                     </div>
 
                                     <div class="col-sm-3"></div>
-                                    <div class="col-sm-1">
-                                        <label><b>Ticket No.</b></label>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control p-2" placeholder="" name="ticket_no"
-                                            id="itemticketno" #ticketno readonly
-                                            value="{{this.tkt_no}}">
-                                        <!-- <span  class="text-danger ml-3"
-                                        *ngIf="upload&&!email">*please Enter Email</span> -->
-
-
-
-                                    </div>
+                                    
                                 </div>
                                 <br>
 
@@ -116,17 +102,21 @@
                                     <div class="col-sm-2">
                                         <label><b>Client</b></label>
                                     </div>
-
                                     <div class="col-sm-10">
+                                        <!-- <select class="form-control" name="client" #client value="{{this.client_name}}" readonly>
+
+                                            <option value="">Select</option>
+                                            <option *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
+
+                                        </select> -->
                                         <input type="text" class="form-control p-2" placeholder=""
-                                            name="client" id="itemclient" required="" #client readonly
-                                            value="{{this.client_name}}">
-                                        <!-- <span  class="text-danger ml-5"
-                                        *ngIf="upload&&!name">*please Enter Name</span>
-                                        -->
+                                        name="client" id="itemclient" required="" #client readonly value="{{this.client_name}}">
+                                    
+                                        <!-- <span  class="text-danger"
+                                    *ngIf="cl_val&&prevent_init_client">*Please select a client</span>  -->
+
 
                                     </div>
-
 
                                 </div>
                                 <br>
@@ -179,8 +169,8 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder=""
-                                        name="district" id="itemdistrict" #district readonly
-                                        value="{{this.district_name}}">
+                                        name="district" id="itemdistrict" #district readonly value="{{this.district_name}}"
+                                        >
                                     <!-- <span  class="text-danger"
                                     *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
@@ -192,8 +182,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder="" name="clienttype"
-                                        id="itemclienttype" #clienttype readonly
-                                        value="{{this.client_type}}">
+                                        id="itemclienttype" #clienttype readonly value="{{this.client_type}}">
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
 
@@ -222,8 +211,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder="" name="workinghours"
-                                        id="itemworkinghours" #workinghours readonly
-                                        value="{{this.working_hrs}}">
+                                        id="itemworkinghours" #workinghours readonly value="{{this.working_hrs}}">
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
 
@@ -252,8 +240,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder="" name=""
-                                        id="itemrentalupto" #rentalupto readonly
-                                        value="{{this.rental_upto}}">
+                                        id="itemrentalupto" #rentalupto readonly value="{{this.rental_upto}}">
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
 
@@ -265,31 +252,38 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-2">
-                                    <label><b>Phone Number</b></label>
+                                    <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder=""
-                                        name="phone" id="itemphone" #phone readonly
-                                        value="{{this.phone_no}}">
-                                    <!-- <span  class="text-danger"
-                                    *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
+
+                                        name="phone" id="itemphone" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)"
+
+                                        
+                                      value="{{this.phone_no}}">
+                                    <span  class="text-danger"
+                                    *ngIf="phone_val&&prevent_init_phone">*Please enter a phone number</span> 
 
                                 </div>
 
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-1">
-                                    <label><b>Priority Status</b></label>
+                                    <label><b>Priority Status</b>&nbsp;<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control p-2" placeholder="" name=""
-                                        id="itemprioritystatus" #prioritystatus readonly
-                                        value="{{this.priority_status}}">
-                                    <!-- <span  class="text-danger ml-3"
-                                    *ngIf="upload&&!email">*please Enter Email</span> -->
+                                    <select class="form-control" name="module" #priority (click)="select_priority(priority.value)"
+                                   >
 
+                                        <option value="{{this.prio}}">{{this.Priority}}</option>
+                                        <option *ngFor="let p of pmdata" value="{{p.priority_id}}">{{p.priority_mode}}</option> 
+
+                                    </select>
+                                    <span  class="text-danger"
+                                *ngIf="prior_val&&prevent_init_priority">*Please select priority</span>
 
 
                                 </div>
+
                             </div>
                             <br>
                                 <!-- <div class="form-group row">
@@ -343,115 +337,52 @@
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
-                                        <label><b>Module</b></label>
+                                        <label><b>Module</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control p-2" placeholder=""
-                                            name="module" id="module" #module readonly
-                                            value="{{this.tkt_module}}">
-                                        <!-- <span  class="text-danger"
-            *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
-
-                                    </div>
-                                </div><br>
-                                <div class="form-group row">
-
-                                    <div class="col-sm-2">
-                                        <label><b>Issue</b></label>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control p-2" placeholder=""
-                                            name="issue" id="itemissue" #issue
-                                            readonly
-                                            value="{{this.prob_reported}}">
-                                        <!-- <span  class="text-danger"
-            *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
-
-                                    </div>
-                                </div><br>
-                                <div class="form-group row">
-                                    <div class="col-sm-2">
-                                        <label><b>Assigned To</b></label>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control p-2" placeholder="" readonly
-                                           value="{{this.assign_engg}}" #assignedto>
-                                        <!-- <span  class="text-danger"
-            *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
-
-                                    </div>
-                                    <div class="col-sm-3"></div>
-
-
-                                </div>
-                                <br>
-                            
-                                <div class="form-group row">
-
-                                    <div class="col-sm-2">
-                                        <label><b>Attended At</b>&nbsp;<span class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="datetime-local" class="form-control p-2" placeholder=""
-                                         
-                                        (change)="prevent_null($event)"
-                                            name="attendedat" id="itemattendedat" #attendedat
-                                            >
-                                        <span  class="text-danger"
-                                   *ngIf="mobile">*please Enter Attended Date And Time</span> 
-
-                                    </div>
-                                </div><br><div class="form-group row">
-
-                                    <div class="col-sm-2">
-                                        <label><b>Delivery At</b>&nbsp;<span class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="col-sm-3">
-
-                                        <input type="datetime-local" class="form-control p-2" placeholder=""
-                                        (change)="prevent_null($event)"
-                                      
-                                            name="deliveryat" id="itemdeliveryat" #deliveryat
-                                            >
-                                        <span  class="text-danger"
-                                         *ngIf="phonmobile">*please Enter Delivery Date And Time</span> 
-
-                                    </div>
-                                </div><br>
-                                <div class="form-group row">
-                                    <div class="col-sm-2">
-                                        <label><b>Ticket Status</b>&nbsp;<span class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" id="tktstatus" name="ticketstatus" #ticketstatus (click)="tkt_select(ticketstatus.value)">
-
-                                            <option value="">Select</option>
-                                            <option *ngFor="let t of tsdata" value="{{t.tkt_id}}">{{t.tkt_status}}</option>
+                                        <select class="form-control" name="module" #module (click)="select_mm(module.value)"
+                                       >
+    
+                                            <option value="{{this.modul}}">{{this.Module}}</option>
+                                            <option *ngFor="let m of moddata" value="{{m.module_id}}">{{m.module_type}}</option>
                                             
-
+    
                                         </select>
                                         <span  class="text-danger"
-                                    *ngIf="tkt">*please Enter Ticket Status</span>
+                                    *ngIf="mm_val&&prevent_init_module">*Please select module</span> 
+    
+    
+                                    </div>
+                                </div><br>
+                                <div class="form-group row">
 
+                                    <div class="col-sm-2">
+                                        <label><b>Issue</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
+
+                                            name="issue" id="itemissue" #issue (keyup)="prevent_null($event)"
+
+                                            
+                                        value="{{this.prob_reported}}"></textarea>
+                                         <span  class="text-danger"
+            *ngIf="issue_val&&prevent_init_issue">*Please provide the issue</span> 
 
                                     </div>
-                                    <div class="col-sm-3"></div>
-
-
-                                </div>
-                                <br>
+                                </div><br>
+                                
+                            
+                                
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
                                         <label><b>Remarks</b></label>
                                     </div>
                                     <div class="col-sm-10">
-
-                                        <textarea rows="5" type="text" class="form-control p-2" 
-
-                                        
-                                            name="remarks" id="itemremarks" #remarks
-                                            value="{{this.Remarks}}"></textarea>
+                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
+                                          #remarks  name="remarks" id="itemremarks"
+                                          value="{{this.Remarks}}"></textarea>
                                     </div>
                                     <div class="col-sm-3"></div>
 
@@ -529,17 +460,19 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || valid_init_de || valid_init_at"
-                                            value="Update" 
+                                        <!-- <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="mm_val||prior_val||phone_val||issue_val"
+                                            value="Submit" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)"> -->
                                             
-                                            (click)="go_to_dashboard(date.value,ticketno.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,prioritystatus.value,module.value,issue.value,assignedto.value,attendedat.value,deliveryat.value,ticketstatus.value,remarks.value)">
-                                           
-                                           
-                                           
+                                            
+                                            
+                                            <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init"
+                                            value="Update" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
+                                            
+                                            
+                                            
                                             <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
                                                 &nbsp; Updation failed...</div>
-                                           
-                                            <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel">Reset</button> -->
+                                            <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button> -->
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
                                     </div>
                                     

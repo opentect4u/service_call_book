@@ -166,7 +166,7 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
      // this.ctmdash.ngOnInit();
         // localStorage.setItem('updatectm','1')
         // this.router.navigate(['/clienttypemaster/dashboard'])
-     this.dlt=false;
+         this.dlt=false;
         }
         else
         this.showsnackbar();

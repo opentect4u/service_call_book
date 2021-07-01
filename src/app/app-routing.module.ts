@@ -42,6 +42,7 @@ import { EditatComponent } from './operations/assignticket/editat/editat/editat.
 import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
 
 const routes: Routes = [
@@ -183,7 +184,7 @@ const routes: Routes = [
     component:AssignticketComponent
   },
   {
-    path:'operations/editassignticket',
+    path:'operations/editassignticket/:id',
     canActivate:[AfterloginGuard],
     component:EditatComponent
   },
@@ -198,12 +199,17 @@ const routes: Routes = [
     component:AddrtComponent
   },
   {
+    path:'operations/editeraiseticket/:id',
+    canActivate:[AfterloginGuard],
+    component:EdittktComponent
+  },
+  {
     path:'operations/attendanddeliver',
     canActivate:[AfterloginGuard],
     component:AttendanddeliverComponent
   },
   {
-    path:'operations/editattendanddeliver',
+    path:'operations/editattendanddeliver/:id1',
     canActivate:[AfterloginGuard],
     component:EditadanddComponent
   },

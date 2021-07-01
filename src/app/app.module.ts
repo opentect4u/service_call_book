@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +52,9 @@ import { EditatComponent } from './operations/assignticket/editat/editat/editat.
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
+import { NgxSpinnerModule } from "ngx-spinner";  
+
+
 
 
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
@@ -59,6 +62,7 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
 
 
 // import {MatButtonModule} from '@angular/material/button';
+
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
@@ -66,7 +70,11 @@ import { NotificationsComponent } from './operations/Admin/notifications/notific
 import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
 import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
 
+import {MatRadioModule} from '@angular/material/radio';
+
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
+import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
+
 
 
 @NgModule({
@@ -116,7 +124,8 @@ import { TemplateComponent } from './mail_template_reg_verification/template/tem
     UsermaintananceComponent,
     NotificationsComponent,
     AddnotifyComponent,
-    EditnotifyComponent
+    EditnotifyComponent,
+    EdittktComponent
 
   ],
   imports: [
@@ -134,12 +143,15 @@ import { TemplateComponent } from './mail_template_reg_verification/template/tem
     ReactiveFormsModule,
     GraphQLModule,
     HttpClientModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxSpinnerModule,
+    MatRadioModule
 
     
    
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
