@@ -131,7 +131,7 @@ export class EdittktComponent implements OnInit {
   prio:any;
   modul:any;
   Module:any;
- 
+  x:any;
   Priority:any;
   pathname:any;
   constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) { 
@@ -379,9 +379,18 @@ export class EdittktComponent implements OnInit {
         this.router.navigate(['/operations/raiseticket']);
       }
        
-    });
+      else
+      this.showsnackbar();
+      },error=>{ this.showsnackbar()
+      });
 
 
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
 
 }

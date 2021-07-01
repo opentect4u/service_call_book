@@ -481,6 +481,12 @@
                                     <div class="col-sm-12 btnSubmitSec">
                                         <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init"
                                             value="Update" (click)="go_to_dashboard(date.value,ticketno.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,prioritystatus.value,module.value,issue.value,assignedto.value,remarks.value)">
+                                            
+                                            
+                                            <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
+                                                &nbsp; Updation failed...</div>
+                                            
+                                            
                                             <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel">Reset</button> -->
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
                                     </div>

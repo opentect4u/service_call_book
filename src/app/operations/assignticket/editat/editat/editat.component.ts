@@ -88,14 +88,14 @@ export class EditatComponent implements OnInit {
     assss_id:any;
     emp_name:any;
     Remarks:any;
+    x:any;
   constructor(private route:ActivatedRoute,private apollo:Apollo,private router:Router) { }
   today= new Date();
   todaysDataTime = '';
   valid_init=true;
   input_assigned:any;
   ngOnInit(): void {
-    this.input_assigned=document.getElementById('assign1');
-    console.log("value="+this.input_assigned.value)
+   
   
     localStorage.setItem('edittickit','0');
     this.pathname=window.location.href.split('#').pop();
@@ -227,13 +227,22 @@ export class EditatComponent implements OnInit {
         this.router.navigate(['/operations/assignticket']);
       }
        
-    });
+      else
+      this.showsnackbar();
+      },error=>{ this.showsnackbar()
+      });
 
 
 
 
     
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
 
 
 

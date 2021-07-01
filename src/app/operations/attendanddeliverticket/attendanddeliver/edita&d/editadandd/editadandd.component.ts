@@ -95,6 +95,7 @@ export class EditadanddComponent implements OnInit {
   input_attended:any;
   input_delivery:any;
   Remarks:any;
+  x:any;
   constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
 
@@ -225,10 +226,21 @@ export class EditadanddComponent implements OnInit {
         this.router.navigate(['/operations/attendanddeliver']);
       }
 
-    });
+      else
+      this.showsnackbar();
+      },error=>{ this.showsnackbar()
+      });
 
     
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+
+
   prevent_null(e:any){
      console.log(e.target.value);
     if(e.target.id=="itemattendedat")

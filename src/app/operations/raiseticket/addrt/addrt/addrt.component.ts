@@ -108,6 +108,7 @@ export class AddrtComponent implements OnInit {
   public now: Date = new Date();
   success:any;
   successmsg:any;
+  x:any;
 
   ngOnInit(): void {
     localStorage.setItem('insertickit','0');
@@ -310,14 +311,19 @@ export class AddrtComponent implements OnInit {
           this.successmsg=this.success.createTkt.message;
           this.route.navigate(['/operations/raiseticket']);
      }
-     else{
-        localStorage.setItem('insertickit','1');
-        this.successmsg="Insertion Failed";
-     }
-      
-    });
+     else
+     this.showsnackbar();
+     },error=>{ this.showsnackbar()
+     });
    
 
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+
 
 }

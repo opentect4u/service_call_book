@@ -458,6 +458,9 @@
                                             value="Submit" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
                                             <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button>
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
+                                        
+                                        <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
+                                            &nbsp; Insertion failed...</div>
                                     </div>
                                     
                                 </div>
