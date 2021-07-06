@@ -87,10 +87,10 @@
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2" placeholder=""
 
-                                            name="date" id="itemdate" #date readonly  value="{{todaysDataTime}}"
+                                            name="date" id="itemdate" #date readonly  value="{{this.LogDate | date:'medium'}}"
 
                                     
-                                            value="20/6/2021">
+                                            >
                                         <!-- <span  class="text-danger"
                                         *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder=""
-                                        name="phone" id="itemphone" #phone readonly
+                                        name="phone" id="itemphone" #phone 
                                         value="{{this.phone_no}}">
                                     <!-- <span  class="text-danger"
                                     *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
@@ -356,13 +356,15 @@
                                     <div class="col-sm-2">
                                         <label><b>Issue</b></label>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control p-2" placeholder=""
-                                            name="issue" id="itemissue" #issue
-                                            readonly 
-                                            value="{{this.prob_reported}}">
-                                        <!-- <span  class="text-danger"
-            *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
+                                    <div class="col-sm-10">
+                                        <textarea type="text" class="form-control p-2" placeholder=""
+                                            name="itemissue" id="itemissue" #issue
+                                             
+                                            value="{{this.prob_reported}}" rows="5"
+                                            (keyup)="prevent_null_issue($event)"></textarea>
+                                        
+                                            <span  class="text-danger"
+                                    *ngIf="for_issue">*please Enter Issue</span> 
 
                                     </div>
                                 </div><br>
@@ -373,12 +375,12 @@
                                     <div class="col-sm-3">
                                         <select class="form-control"  name="assigned_to" id="assign" (click)="select_assigned(assignedto.value)" #assignedto>
 
-                                            <option value="{{assss_id}}">{{emp_name}}</option>
-                                            <option *ngFor="let m of emplist" value="{{m.id}}">{{m.emp_name}}</option>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let m of emplist" value="{{m.emp_code}}" [selected]="assss_id==m.emp_code">{{m.emp_name}}</option>
 
                                      </select>
-                                        <!-- <span  class="text-danger"
-                                    *ngIf="upload&&!company">*please Enter Company type</span> -->
+                                        <span  class="text-danger"
+                                    *ngIf="company">*please fill out this field</span>
 
 
                                     </div>
@@ -479,12 +481,12 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init"
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || valid_issue"
                                             value="Update" (click)="go_to_dashboard(date.value,ticketno.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,prioritystatus.value,module.value,issue.value,assignedto.value,remarks.value)">
                                             
                                             
                                             <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
-                                                &nbsp; Updation failed...</div>
+                                                &nbsp; Updation failed.Please try again after some time</div>
                                             
                                             
                                             <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel">Reset</button> -->

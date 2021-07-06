@@ -67,7 +67,7 @@ empid:any;
  x:any;
 
   ngOnInit(): void {
-
+    localStorage.setItem('Active', '1');
     localStorage.setItem('address', '/addemp/dashboard');
 
     console.log(this.updt);

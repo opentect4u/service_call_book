@@ -59,7 +59,7 @@
 
 
 	
-	 <small [hidden]="error_log" class="text-danger text-center">*{{error_for_user}}</small>	
+	 <small [hidden]="error_log" class="text-danger text-center">{{error_for_user}}</small>	
 	<form class="LoginEmailPasswordForm" [formGroup]="LoginForm" (ngSubmit)="Submit()">
 		<div class="LoginEmailPasswordForm-emailAndPassword">
 		<span class="Typography Typography--colorDarkGray1 Typography--s">Email address</span>
@@ -139,7 +139,7 @@
 		<!-- <button type="submit" class="loginBtn" [disabled]="LoginForm.invalid">Log in</button> -->
 		
 		<div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
-			&nbsp; Login failed...</div>	
+			&nbsp; Login failed.Please try again after some time</div>	
 		
 		
 		

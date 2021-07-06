@@ -53,15 +53,12 @@ import { EditadanddComponent } from './operations/attendanddeliverticket/attenda
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
 import { NgxSpinnerModule } from "ngx-spinner";  
-
-
-
-
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
-
-
-
 // import {MatButtonModule} from '@angular/material/button';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { NgSelectModule } from '@ng-select/ng-select'; 
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
@@ -74,6 +71,7 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
+
 
 
 
@@ -129,6 +127,9 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
 
   ],
   imports: [
+    NgMultiSelectDropDownModule.forRoot(),
+    AngularMultiSelectModule,
+    NgSelectModule,
     BrowserModule,
     MatButtonModule,
     AppRoutingModule,
@@ -145,7 +146,8 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     HttpClientModule,
     MatButtonModule,
     NgxSpinnerModule,
-    MatRadioModule
+    MatRadioModule,
+    AutocompleteLibModule
 
     
    
@@ -154,4 +156,6 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
   bootstrap: [AppComponent],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

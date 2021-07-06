@@ -125,6 +125,7 @@ export class AdclComponent implements OnInit,OnDestroy {
   spinshow=false;
 
   ngOnInit(): void {
+    
     localStorage.setItem('address', '/addclient/addcl');
     this.email_null=false;
     this.namevalid=true;

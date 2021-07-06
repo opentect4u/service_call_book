@@ -36,20 +36,30 @@ query{
 
 // For Filling  the readonly field  by using client type 
 const GET_EDITABLE=gql`
-query getSupportLogDtls($id:String!){
-  getSupportLogDtls(id:$id){
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
+    id
+    tkt_no
     client_name
-    district_name
-   client_type
-   oprn_mode
-   working_hrs
-   amc_upto
-   rental_upto
-   phone_no
-   priority_status
-   tkt_module
-   prob_reported
-   remarks
+     district_name
+    client_type
+    oprn_mode
+    working_hrs
+    amc_upto
+    rental_upto
+    phone_no
+    priority
+    module
+    prob_reported
+    assign_engg
+    remarks
+    tktStatus
+    tkt_status
+    emp_name,
+    log_in,
+    work_status
+    call_attend
+    delivery
   }
 }` 
 ;
@@ -104,6 +114,13 @@ export class EdittktComponent implements OnInit {
   prevent_init_phone=false;
   id:any;
   // cl_val=true;
+  assign_to:any;
+  tktstatus:any;
+  attendedat:any;
+  deliveryat:any;
+  work_status:any;
+ 
+  logDate:any;
   valid_init=false;
   mm_val=true;
   prior_val=true;
@@ -199,7 +216,9 @@ export class EdittktComponent implements OnInit {
           this.apollo.watchQuery<any>({
             query: GET_EDITABLE,
             variables:{
-               id:this.id
+               id:this.id,
+               user_type:localStorage.getItem('user_Type'),
+               user_id:localStorage.getItem('UserId')
             },
              pollInterval:500
           
@@ -209,7 +228,13 @@ export class EdittktComponent implements OnInit {
             .subscribe(({ data}) => {
     
               console.log(data);
-    
+
+              this.assign_to=data.getSupportLogDtls[0].emp_name;
+              this.tktstatus=data.getSupportLogDtls[0].tktStatus;
+              this.attendedat=data.getSupportLogDtls[0].call_attend;
+              this.deliveryat=data.getSupportLogDtls[0].delivery;
+              this.work_status=data.getSupportLogDtls[0].work_status > 0 ? 'Done' : 'Pending';
+             
               this.client_name=data.getSupportLogDtls[0].client_name;
                this.district_name=data.getSupportLogDtls[0].district_name;
               this.client_type=data.getSupportLogDtls[0].client_type;
@@ -222,6 +247,7 @@ export class EdittktComponent implements OnInit {
               this.tkt_module=data.getSupportLogDtls[0].tkt_module;
               this.prob_reported=data.getSupportLogDtls[0].prob_reported;
               this.Remarks=data.getSupportLogDtls[0].remarks;
+              this.logDate=data.getSupportLogDtls[0].log_in;
               console.log(this.priority_status)
 
                    
@@ -245,14 +271,8 @@ export class EdittktComponent implements OnInit {
                         }
                   }
                        
-
-
-                   
- 
-
-
-
-                //  this.putdata(this.posts_pm);
+                 console.log(this.assign_to);
+                  
               
              })
             

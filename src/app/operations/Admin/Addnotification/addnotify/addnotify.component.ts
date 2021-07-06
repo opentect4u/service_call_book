@@ -16,6 +16,7 @@ export class AddnotifyComponent implements OnInit {
   constructor(private fb:FormBuilder) { }
  
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
     this.Addnotificationform= this.fb.group({
       date_value:['',[Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
       subject:['',Validators.required],

@@ -8,8 +8,9 @@ import { Apollo, gql } from 'apollo-angular';
 
 // For getting the details in dashboard page
 const GET_RAISETICKITE=gql`
-query getSupportLogDtls($id:String!){
-  getSupportLogDtls(id:$id){
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
+    assign_engg
     id
     client_name
     phone_no
@@ -17,7 +18,21 @@ query getSupportLogDtls($id:String!){
     emp_name
     priority
     tktStatus
+    
+    log_in
   }
+}`
+;
+
+const DELETED=gql`
+mutation deleteTkt($id:String!) {
+  
+  deleteTkt(id:$id)  {
+
+       success
+       message
+
+}
 }`
 ;
 
@@ -32,7 +47,14 @@ query getSupportLogDtls($id:String!){
 })
 export class RaiseticketComponent implements OnInit {
   insertitckit:boolean=true;
-  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Phone_no','Assigned_to','Priority','Ticket_Status','Edit'];
+  deleteticket:boolean=true;
+  deleted:any;
+  cl:any;
+  x:any;
+  d_icon:any;
+  // assign_eng:any;
+ 
+  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Phone_no','Priority','ticket_log_date','Edit','Delete'];
   dataSource = new MatTableDataSource<any> (); 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,6 +65,12 @@ export class RaiseticketComponent implements OnInit {
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+    // if(localStorage.getItem('editraisetickit')=='1'){
+    //   this.deleteticket=false;
+    //   this.edittickite=false; 
+    //   this.insertitckit=true;
+    //   localStorage.setItem('deletetickit','0');
+    // }
     if(localStorage.getItem('editraisetickit')=='1'){
        this.edittickite=false; 
        this.insertitckit=true;
@@ -56,7 +84,7 @@ export class RaiseticketComponent implements OnInit {
     }
     
     localStorage.setItem('address','/operations/raiseticket');
-
+    localStorage.setItem('Active', '1');
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -73,10 +101,15 @@ export class RaiseticketComponent implements OnInit {
     this.router.navigate(['/operations/editeraiseticket',v1]);
   }
   private fetch_data(){
+    console.log({user_type:localStorage.getItem('user_Type'), user_id:localStorage.getItem('UserId')});
+    
     this.apollo.watchQuery<any>({
       query: GET_RAISETICKITE,
       variables:{
          id:"",
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+
          
       },
       pollInterval: 500
@@ -87,11 +120,26 @@ export class RaiseticketComponent implements OnInit {
       .subscribe(({ data}) => {
 
          this.Tickite=data;
+        //  console.log(this.Tickite.getSupportLogDtls[0].assign_engg)
+        //  for(let i=0;i<this.Tickite.getSupportLogDtls.length;i++){
+        //      if(this.Tickite.getSupportLogDtls[i].assign_engg>0 &&this.Tickite.getSupportLogDtls[i].assign_engg!=null){
+        //            this.d_icon=document.getElementsByClassName('deleted') ;
+        //            this.d_icon.style.color='grey';  
+        //      }
+        //  }
+      
          this.putdata(this.Tickite);
       })
 
     
   }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   private putdata(posts:any){
     this.dataSource=new MatTableDataSource(posts.getSupportLogDtls);
     console.log(this.dataSource);
@@ -107,6 +155,31 @@ export class RaiseticketComponent implements OnInit {
     this.edittickite=true;
     localStorage.setItem('editraisetickit','0');
   }
-
+  //  For delete the raise ticket
+  delete(v:any){
+    this.cl=v;
+  }
+  delete_item(){
+      console.log("modal:" +this.cl);
+      this.apollo
+      .mutate({
+        mutation: DELETED,
+        variables:{
+           id:this.cl
+        }
+      }).subscribe(({data})=>{console.log(data);
+        this.deleted=data;
+        if(this.deleted.deleteTkt.success==1){
+            this.deleteticket=false;
+          }
+        else
+      this.showsnackbar();
+      },error=>{ this.showsnackbar()
+      });
+      
+    }
+    deletestorage(){
+      this.deleteticket=true;
+    }
 
 }

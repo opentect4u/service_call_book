@@ -1,6 +1,10 @@
 td, th {
     width: 20%;
   }
+  .modal{
+    margin:0 0 0 35%;
+  }
+
   .alert {
     position: relative;
     padding: .75rem 1.25rem;
@@ -8,3 +12,4 @@ td, th {
     border: 1px solid transparent;
     border-radius: .35rem;
   }
+ 

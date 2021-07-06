@@ -30,6 +30,7 @@ export class AddomComponent implements OnInit {
   error=false;
   done=false;
   ngOnInit(): void {
+ 
     localStorage.setItem('address','/operationmode/addom'); 
     this.input_tag=document.getElementById('itemname');
   }

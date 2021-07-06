@@ -8,14 +8,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 const EDITABLE=gql`
 mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
- $tkt_status:String!,$remarks:String!,$user_id:String!) {
+ $tkt_status:String!,$remarks:String!,$user_id:String!,$work_status:String!) {
   
   updateDeliverTkt(id:$id
       call_attend:$call_attend
       delivery:$delivery
       tkt_status:$tkt_status
       remarks:$remarks
-      user_id:$user_id)  {
+      user_id:$user_id,
+      work_status:$work_status)  {
 
        success
        message
@@ -23,6 +24,14 @@ mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
 }
 }`
 ;
+
+
+
+
+
+
+
+
 
 const SHOW_TS=gql`
 query{
@@ -35,8 +44,8 @@ query{
 
 
 const GET_EDITABLE=gql`
-query getSupportLogDtls($id:String!){
-  getSupportLogDtls(id:$id){
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
     id
     tkt_no
     client_name
@@ -52,6 +61,10 @@ query getSupportLogDtls($id:String!){
     prob_reported
     assign_engg
     remarks
+    tktStatus
+    tkt_status
+    emp_name,
+    log_in
   }
 }` 
 @Component({
@@ -66,6 +79,9 @@ query getSupportLogDtls($id:String!){
 export class EditadanddComponent implements OnInit {
   id:any;
   tkt_no:any
+  TktStatus:any;
+  logDate:any;
+  tktid:any;
   client_name:any
    district_name:any
   client_type:any;
@@ -86,8 +102,9 @@ export class EditadanddComponent implements OnInit {
   pathname:any;
   posts_ts:any;
   tsdata:any;
-  today= new Date();
-  todaysDataTime = '';
+  deliver:any;
+
+  attended:any;
   dateitem:any;
   valid_init=true;
   valid_init_at=true;
@@ -96,13 +113,39 @@ export class EditadanddComponent implements OnInit {
   input_delivery:any;
   Remarks:any;
   x:any;
+  for_issue_error:boolean=false;
+  valid_issue:boolean=true;
+  // valid_init_work:boolean=true;
+  issue:any;
+  work:any;
+  wrork_stat:boolean=false;
   constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
-
-
-    localStorage.setItem('attendent','0');
-    this.input_delivery=document.getElementById('itemdeliveryat')
+    this.issue=document.getElementById("itemissue");
+   console.log("empty:" +this.issue.value)
+   
+   
+    this.work=document.getElementById("wrkstatus")
+    localStorage.setItem('Active', '1');
     this.input_attended=document.getElementById('itemattendedat')
+    var iso = new Date().toISOString();
+    var minDate = iso.substring(0,iso.length-1);
+          // this.input_attended.value=minDate;
+    this.input_attended.min=minDate;
+
+    this.input_delivery=document.getElementById('itemdeliveryat')
+          
+    var iso1 = new Date().toISOString();
+    var minDate1 = iso1.substring(0,iso1.length-1);
+          // this.input_delivery.value=minDate1;
+    this.input_delivery.min=minDate1;
+   
+    
+
+    //  elem.value=minDate;
+    //   elem.min=minDate
+    localStorage.setItem('attendent','0');
+   
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
     console.log("pathname:" +decodeURIComponent(this.pathname));
@@ -112,11 +155,7 @@ export class EditadanddComponent implements OnInit {
 
     this.dateitem=document.getElementById('itemdate');
    
-    setInterval(()=>{
-      this.today= new Date();
-     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
-     this.dateitem.value=this.todaysDataTime;
-    },1000);
+    
     this.apollo.watchQuery<any>({
       query: SHOW_TS,
       //pollInterval:100
@@ -137,7 +176,10 @@ export class EditadanddComponent implements OnInit {
         this.apollo.watchQuery<any>({
           query: GET_EDITABLE,
           variables:{
-             id: this.id
+             id: this.id,
+              user_type:localStorage.getItem('user_Type'),
+              user_id:localStorage.getItem('UserId')
+             
           },
           pollInterval:500
           
@@ -159,13 +201,25 @@ export class EditadanddComponent implements OnInit {
             this.priority_status=data.getSupportLogDtls[0].priority;
             this.tkt_module=data.getSupportLogDtls[0].module;
             this.prob_reported=data.getSupportLogDtls[0].prob_reported;
-            this.assign_engg=data.getSupportLogDtls[0].assign_engg;
+            this.assign_engg=data.getSupportLogDtls[0].emp_name;
             this.Remarks=data.getSupportLogDtls[0].remarks;
+            this.TktStatus=data.getSupportLogDtls[0].tktStatus;
+            this.tktid=data.getSupportLogDtls[0].tkt_status;
+            this.logDate=data.getSupportLogDtls[0].log_in;
             console.log( this.tkt_no)
            console.log(this.client_name);
            console.log( this.district_name);
            console.log(this.client_type);
            console.log(this.oprn_mode);
+
+           if(this.prob_reported==''){
+                        this.for_issue_error=true;
+                        this.valid_issue=true;
+           }
+           else{
+                this.for_issue_error=false;
+                this.valid_issue=false;
+           }
           
             
   
@@ -173,20 +227,12 @@ export class EditadanddComponent implements OnInit {
         
       })
 
+ }
 
-
-
-
-
-
-
-
-
-
-  }
+ 
   preventNonNumericalInput(e:any){}
 
-  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any,v14:any,v15:any,v16:any,v17:any,v18:any){
+  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any,v14:any,v15:any,v16:any,v17:any,v18:any,v19:any){
     // console.log("Date:" +v1);
     // console.log("Tickitno:" +v2);
     // console.log("Client:" +v3);
@@ -201,11 +247,18 @@ export class EditadanddComponent implements OnInit {
     // console.log("module:" +v12);
     // console.log("issue:" +v13);
     // console.log("assignedto:" +v14);
-    // console.log("Attendantat:" +v15);
-    // console.log("Delivaryat:" +v16);
-    // console.log("tickitstatus:" +v17);
+    console.log("Attendantat:" +v15);
+    console.log("Delivaryat:" +v16);
+    console.log("tickitstatus:" +v17);
     // console.log("remarks:" +v18);
+    console.log("workingstatus:" +v19);
     console.log(this.id);
+    // if(v15<v16){
+    //   console.log("Its Ok");
+    // }
+    // else{
+    //   console.log("not Ok");
+    // }
 
     this.apollo.mutate({
       mutation: EDITABLE,
@@ -215,7 +268,8 @@ export class EditadanddComponent implements OnInit {
         delivery:v16.toString(),
         tkt_status:v17,
         remarks:v18,
-        user_id:localStorage.getItem("UserId")
+        user_id:localStorage.getItem("UserId"),
+        work_status:v19
 
       }
     }).subscribe(({data})=>{
@@ -239,9 +293,28 @@ export class EditadanddComponent implements OnInit {
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
+   wrk_select(v:any){
+     console.log(v);
+   
+    if(v==''){
+      this.wrork_stat=true;
+      // this.valid_init_work=true;
+      this.valid_init=true;
+      this.work.style.border="solid red 1px";
+    }
+    else{
+      this.work.style.border="solid lightgrey 1px";
+      this.wrork_stat=false;
+      // this.valid_init_work=false;
+      this.valid_init=false;
+    }
+
+   }
 
 
   prevent_null(e:any){
+    
+
      console.log(e.target.value);
     if(e.target.id=="itemattendedat")
     {
@@ -256,8 +329,9 @@ export class EditadanddComponent implements OnInit {
       }
       else
 
-       {  
-         this.mobile=false;
+       {   
+        
+       this.mobile=false;
          this.valid_init_at=false;
        this.input_attended.style.border="solid lightgrey 1px"}
 
@@ -276,6 +350,13 @@ export class EditadanddComponent implements OnInit {
       else
 
        { 
+        console.log(e.target.value)
+        // this.input_delivery=document.getElementById('itemdeliveryat')
+          
+        // var iso1 = new Date().toISOString();
+        // var minDate1 = iso1.substring(0,iso1.length-1);
+        // this.input_delivery.value=minDate1;
+        // this.input_delivery.min=minDate1;
          this.phonmobile=false; 
          this.valid_init_de=false;
        this.input_delivery.style.border="solid lightgrey 1px"}
@@ -295,6 +376,18 @@ export class EditadanddComponent implements OnInit {
       this.tkt=false;
     this.valid_init=false;
     }
+  }
+  prevent_null_issue(e:any){
+        if(e.target.value==''){
+             this.issue.style.border="solid red 1px";
+            this.for_issue_error=true;
+            this.valid_issue=true;
+          }
+        else{
+          this.issue.style.border="solid lightgrey 1px";
+            this.for_issue_error=false;
+            this.valid_issue=false;
+          }
   }
 
 }

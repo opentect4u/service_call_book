@@ -87,7 +87,7 @@
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2" placeholder=""
 
-                                            name="date" id="itemdate" #date readonly value="{{todaysDataTime}}"
+                                            name="date" id="itemdate" #date readonly value="{{this.logDate | date:'medium'}}"
 
                                             >
                                         <!-- <span  class="text-danger"
@@ -359,13 +359,14 @@
                                     <div class="col-sm-2">
                                         <label><b>Issue</b></label>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control p-2" placeholder=""
-                                            name="issue" id="itemissue" #issue
-                                            readonly
-                                            value="{{this.prob_reported}}">
-                                        <!-- <span  class="text-danger"
-            *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
+                                    <div class="col-sm-10">
+                                        <textarea type="text" rows="5" class="form-control p-2" placeholder=""
+                                            name="itemissue" id="itemissue" #issue
+                                            
+                                            value="{{this.prob_reported}}"
+                                            (keyup)="prevent_null_issue($event)"></textarea>
+                                        <span  class="text-danger"
+                                         *ngIf="for_issue_error">*please Enter Issue</span> 
 
                                     </div>
                                 </div><br>
@@ -401,7 +402,7 @@
                                    *ngIf="mobile">*please Enter Attended Date And Time</span> 
 
                                     </div>
-                                </div><br><div class="form-group row">
+                                    <div class="col-sm-2"></div>
 
                                     <div class="col-sm-2">
                                         <label><b>Delivery At</b>&nbsp;<span class="text-danger">*</span></label>
@@ -425,8 +426,8 @@
                                     <div class="col-sm-3">
                                         <select class="form-control" id="tktstatus" name="ticketstatus" #ticketstatus (click)="tkt_select(ticketstatus.value)">
 
-                                            <option value="">Select</option>
-                                            <option *ngFor="let t of tsdata" value="{{t.tkt_id}}">{{t.tkt_status}}</option>
+                                            <!-- <option value="{{this.tktid}}">{{this.TktStatus}}</option> -->
+                                            <option *ngFor="let t of tsdata" value="{{t.tkt_id}}" [selected]="this.tktid==t.tkt_id">{{t.tkt_status}}</option>
                                             
 
                                         </select>
@@ -435,7 +436,27 @@
 
 
                                     </div>
-                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-2"></div>
+                                   
+                                        <div class="col-sm-2">
+                                            <label><b>Work Status</b>&nbsp;<span class="text-danger">*</span></label>
+                                        </div>
+
+                                  
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="wrkstatus" name="Wrkstatus" #wrkingstatus (click)="wrk_select(wrkingstatus.value)">
+
+                                            <option value="">Select</option>
+                                            <option  value="0">Pending</option>
+                                            <option  value="1">Done</option>
+                                            
+
+                                        </select>
+                                        <span  class="text-danger"
+                                    *ngIf="wrork_stat">*please Enter Working Status</span>
+
+                                    </div>
+                                    
 
 
                                 </div>
@@ -529,15 +550,15 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || valid_init_de || valid_init_at"
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || valid_init_de || valid_init_at ||valid_issue"
                                             value="Update" 
                                             
-                                            (click)="go_to_dashboard(date.value,ticketno.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,prioritystatus.value,module.value,issue.value,assignedto.value,attendedat.value,deliveryat.value,ticketstatus.value,remarks.value)">
+                                            (click)="go_to_dashboard(date.value,ticketno.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,prioritystatus.value,module.value,issue.value,assignedto.value,attendedat.value,deliveryat.value,ticketstatus.value,remarks.value,wrkingstatus.value)">
                                            
                                            
                                            
                                             <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
-                                                &nbsp; Updation failed...</div>
+                                                &nbsp; Updation failed.Please try again after some time</div>
                                            
                                             <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel">Reset</button> -->
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->

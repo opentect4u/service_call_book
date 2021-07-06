@@ -74,7 +74,7 @@ dlt=true;
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
-
+    localStorage.setItem('Active', '1');
     localStorage.setItem('address', '/addclient/dashboard');
 
     this.updatec=localStorage.getItem('updatec')

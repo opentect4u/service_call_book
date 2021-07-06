@@ -38,7 +38,8 @@ query userLogin($user_id: String!, $password: String!){
 })
 export class LoginComponent implements OnInit {
    show_eye: boolean = false;
-   error_for_user:any="Please Check Your User ID Or Password";
+  //  error_for_user:any="Please Check Your User ID Or Password";
+  error_for_user:any;
    error_log:boolean=true;
    Success:any;
   recaptcha:any='';
@@ -65,6 +66,7 @@ export class LoginComponent implements OnInit {
  
   
   ngOnInit(): void {
+   
    
 
      localStorage.setItem('address', '/')
@@ -168,25 +170,22 @@ export class LoginComponent implements OnInit {
             }
             
           })
+          
             .valueChanges
             .subscribe(({ data}) => {
-              //  this.loading=loading;
-              //  console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)));
-              //  console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message.user_id)));
-              //  this.userid=JSON.stringify(data);
-              //  console.log(this.userid);
-           
-            
-              //  this.user=JSON.parse(data.userLogin.message)[0];
-              //  console.log(this.user);
-              //  console.log(this.user.user_id);
-            
-             localStorage.setItem("UserId",this.f.username.value);
+              console.log(data);
+             
+            //  localStorage.setItem("UserId",this.f.username.value);
                this.Success= data.userLogin.success;
                this.spinner.hide();
                console.log( this.Success);
                
                if( this.Success == 1){
+                localStorage.setItem('Active','1');
+                console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
+                localStorage.setItem("UserId",JSON.parse(data.userLogin.message)[0].code_no);
+                localStorage.setItem("user_Type",JSON.parse(data.userLogin.message)[0].user_type);
+                console.log("user_type:" +localStorage.getItem('user_Type'));
                 
              
                
@@ -194,10 +193,11 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('isLoggedIn',"true");
 
                 this.user=JSON.parse(data.userLogin.message)[0];
+
                  console.log("success");
                  console.log("userid:" + this.user)
                 
-                //  alert("Success");
+           
               
                  
                 this.router.navigate(['/dashboard'])
@@ -208,11 +208,10 @@ export class LoginComponent implements OnInit {
                 
     
                
-              //  this.clone=document.getElementById("address")
-                // this.clone.style="border:1px solid red";
-                console.log(JSON.stringify(data.userLogin.message));
+                this.error_for_user=JSON.parse(JSON.stringify(data.userLogin.message));
+                console.log("unsuccess:" +this.error_for_user);
                 console.log("Failure");
-                // alert("failure");
+                
                 this.error_log=false;
                 localStorage.setItem('isLoggedIn',"false");
 

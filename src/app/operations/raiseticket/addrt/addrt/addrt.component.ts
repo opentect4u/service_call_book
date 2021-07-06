@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
-import {Router} from '@angular/router'
+import {Router} from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
+declare const $: any;
 const SHOW_CLIENT=gql`
 query getClient($active: String){
   getClient(id:"", active: $active){
@@ -72,12 +75,17 @@ mutation createTkt($client_id:String!,$tkt_module:String!,$phone_no:String!,$pri
   '../../../../../assets/masters_css_js/css/res.css']
 })
 export class AddrtComponent implements OnInit {
+  
+  // idfield:any=[{item_id:'',item_name:''}];
+   
+
 
   constructor(private apollo:Apollo,private route:Router) {
     setInterval(() => {
       this.now = new Date();
     }, 1);
    }
+   keyword:any;
   user:any;
   mod:any;
   moddata:any;
@@ -109,11 +117,17 @@ export class AddrtComponent implements OnInit {
   success:any;
   successmsg:any;
   x:any;
+  dropdown:any=[];
+  cl_id:any;
+  cl_name:any;
+  sel:any;
 
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
     localStorage.setItem('insertickit','0');
 
     this.input_phone=document.getElementById('itemphone');
+    
     this.input_issue=document.getElementById('itemissue');
 
     localStorage.setItem('address','/operations/addraiseticket');
@@ -158,13 +172,29 @@ export class AddrtComponent implements OnInit {
             this.posts = data;
            console.log(data)
            this.ctmdata=this.posts.getClient;
-            console.log(this.posts);
-          // this.putdata(this.posts);
-          });
-  
+            
+           });
+          
+           $('.select2').select2({})
+           .on("select2:select",  (e:any) => {
+            // have to fire our own change event because value set in JS
+            // TODO capture ahead of time instead of using default
+            //$(this).trigger('change');
+            console.log("select2:select",e.params.data.id);
+            console.log("select2:select",e.params.data.text);
+             this.select_client(e.params.data.id);
+         });
+         
+          
   }
 
-  select_client(v:any){
+ 
+  
+  
+
+
+  public select_client(v:any){
+    console.log("value:" +v);
     if(v=='')
     {
       this.cl_val=true;
@@ -177,7 +207,7 @@ export class AddrtComponent implements OnInit {
       console.log("id:" +v);
       this.apollo.watchQuery<any>({
         query: GET_POST_DATA_USING_CLIENTTYPE,
-        //pollInterval:100,
+        pollInterval:100,
         variables:{
           id:v,
           active:''
@@ -185,7 +215,7 @@ export class AddrtComponent implements OnInit {
       }).valueChanges
       .subscribe(({ data, loading }) => {
         console.log(data);
-        // For getting the readonly field automatically by choosing client type on raise ticket edit page
+       
            
            this.district_name=data.getClient[0].district_name;
            this.client_type=data.getClient[0].client_type;
@@ -194,6 +224,7 @@ export class AddrtComponent implements OnInit {
            this.amc_upto=data.getClient[0].amc_upto;
            this.rental_upto=data.getClient[0].rental_upto;
            this.phone_no=data.getClient[0].phone_no;
+          
 
           })
 
@@ -265,17 +296,20 @@ export class AddrtComponent implements OnInit {
     }
   
   }
-  clearfield(){this.spinshow=true;
+  clearfield(){
+    this.spinshow=true;
     setTimeout(()=>{this.spinshow=false;;},1000);
+    location.reload();
+   
     // this.spinshow=false;
 
    
   }
 
   go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
-
-    // console.log("Date:" +v1);
-    // console.log("Client:" +v2);
+    // console.log("Date:" +this.cl_id); 
+    console.log("Date:" +v1);
+    console.log("Client:" +v2);
     // console.log("District:" +v3);
     // console.log("Clienttype:" +v4);
     // console.log("operationalmode:" +v5);
@@ -287,12 +321,12 @@ export class AddrtComponent implements OnInit {
     // console.log("module:" +v11);
     // console.log("issue:" +v12);
     // console.log("remarks:" +v13);
-    this.user=localStorage.getItem("UserId")
+    // this.user=localStorage.getItem("UserId")
    
     this.apollo.mutate({
       mutation: GET_POST_update,
       variables:{
-         client_id: v2,
+         client_id:v2,
          tkt_module:v11,
          phone_no: v9,
          priority_status:v10, 
@@ -324,6 +358,22 @@ export class AddrtComponent implements OnInit {
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 
 }

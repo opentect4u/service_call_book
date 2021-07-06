@@ -17,8 +17,8 @@
     </li> -->
   
 
-
-    <li>
+   
+    <li *ngIf="u_type=='A' || u_type=='M' || u_type=='T'">
         <div class="link" (click)="openclosedropdown()"><i class="fa fa-bars"></i>Masters<i class="fa fa-chevron-down " id="down1" ></i></div>
         <ul class="submenu" id="openclose1" >
           <li><a  routerLinkActive="true" routerLink="/clienttypemaster/dashboard" >Client Type</a></li>
@@ -30,14 +30,14 @@
           <li><a  routerLinkActive="true" routerLink="/addclient/dashboard">Clients</a></li>
 
         </ul>
-      </li>
+    </li>
     
       <li>
         <div  class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
-          <li><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
-          <li><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
-          <li><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
+          <li [hidden]="Etype"><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
+          <li [hidden]="utype || Etype"><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
+          <li [hidden]="utype"><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
          
 
           
@@ -45,8 +45,25 @@
 
         </ul>
       </li>
+
+
+
+
+      <li>
+        <div  class="link" (click)="openclosesearchticket()"><i class="fa fa-search" aria-hidden="true"></i>Search Ticket<i class="fa fa-chevron-down "></i></div>
+        <ul class="submenu" id="openclose_searchtkt">
+          <li><a>Search by dates </a></li>
+          <li><a>search by Tickect no</a></li>
+        </ul>
+  
+      </li>
+
+
+
+
+
       
-    <li>
+    <li *ngIf="u_type=='A' || u_type=='M'">
       <div  class="link" (click)="opencloseadminsubmenu()"><i class="fa fa-user" aria-hidden="true"></i>Admin<i class="fa fa-chevron-down "></i></div>
       <ul class="submenu" id="openclose_admin">
         <li><a   routerLinkActive="true" routerLink="/operations/Admin/usermaintanance">User Maintainance</a></li>
