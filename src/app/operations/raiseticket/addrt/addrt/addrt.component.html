@@ -103,12 +103,36 @@
                                         <label><b>Client</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="client" #client (click)="select_client(client.value)">
+                                       
+                                        <!-- <select class="form-control select2" name="client" (click)="select_client(Client.value)" #Client>
 
                                             <option value="">Select</option>
-                                            <option *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
+                                            <option   *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
+
+                                        </select> -->
+
+                                        <select class="form-control select2" name="client" #Client >
+
+                                            <option value="">Select</option>
+                                            <option   *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
 
                                         </select>
+                                       
+
+                                       <!-- <input list="browsers" name="browser" id="browser" class="form-control" #client placeholder="Select" (change)="select_client(client.value)">
+                                        <datalist id="browsers" >
+                                            <option *ngFor="let c of ctmdata">{{c.client_name}}</option>
+                                           
+                                        </datalist> -->
+                                        
+                                       
+
+                                   
+                                                                                
+
+
+
+
                                      <span  class="text-danger"
                                     *ngIf="cl_val&&prevent_init_client">*Please select a client</span> 
 
@@ -116,6 +140,7 @@
                                     </div>
 
                                 </div>
+                               
                                 <br>
                                 <!-- <div class="form-group row">
                                 <div class="col-sm-1" >
@@ -366,10 +391,12 @@
 
                                     </div>
                                 </div><br>
-                                
+ 
+
+
                             
-                                
-                                <div class="form-group row">
+
+                              <div class="form-group row">
 
                                     <div class="col-sm-2">
                                         <label><b>Remarks</b></label>
@@ -455,12 +482,12 @@
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
                                         <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="cl_val||mm_val||prior_val||phone_val||issue_val"
-                                            value="Submit" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
+                                            value="Submit" (click)="go_to_dashboard(date.value,Client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
                                             <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button>
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
                                         
                                         <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
-                                            &nbsp; Insertion failed...</div>
+                                            &nbsp; Insertion failed.Please try again after some time</div>
                                     </div>
                                     
                                 </div>

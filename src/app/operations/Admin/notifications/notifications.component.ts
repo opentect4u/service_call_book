@@ -49,6 +49,7 @@ export class NotificationsComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
     localStorage.setItem('address','/operations/Admin/notifications')
     this.dataSource=new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
     

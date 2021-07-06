@@ -67,6 +67,7 @@ export class MmdashboardComponent implements OnInit {
   x:any;
 
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
 
     localStorage.setItem('address','/mastermodule/dashboard'); 
 

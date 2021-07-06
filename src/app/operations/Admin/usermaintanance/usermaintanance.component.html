@@ -159,10 +159,10 @@
                 <div class="col-md-4 p-4 ">
                   
 
-                    <input type="radio" id="a" value="1"  checked="true" (click)="sendstatus(1)">
-                    <label for="a"> Active</label>
-                    <input type="radio" id="i" value="0" class="ml-4" (click)="sendstatus(0)">
-                    <label for="i"> Inactive</label>
+                    <input type="radio" id="a" value="1"  checked="true" (click)="sendstatus('1')" name="status">
+                    <label for="a" class="ml-1"> Active</label>
+                    <input type="radio" id="i" value="0" class="ml-4" (click)="sendstatus('0')" name="status">
+                    <label for="i" class="ml-1"> Inactive</label>
                 </div>
                 <div class="col-sm-3"></div>
                 
@@ -192,43 +192,41 @@
 
                   <ng-container matColumnDef="Username">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="Username">User Name </th>
-                    <td mat-cell *matCellDef="let row"> {{row.Username}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.user_name}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="UserId">
+                  <!-- <ng-container matColumnDef="UserId">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="UserId"> User ID </th>
                     <td mat-cell *matCellDef="let row">{{row.UserId}}</td>
-                  </ng-container>
+                  </ng-container> -->
 
-                  <ng-container matColumnDef="UserType">
+                  <ng-container matColumnDef="UserType" >
                     <th mat-header-cell *matHeaderCellDef > User Type </th>
                     <td mat-cell *matCellDef="let row"> 
-                        
-                      
-                       <mat-select placeholder="Select" >
-
-                            <!-- <mat-option value="">Select</mat-option> -->
-                                <mat-option value="A">Admin</mat-option>
-                                    <mat-option value="T">Telecaller</mat-option>
-                                        <mat-option value="M">Manager</mat-option>
-                                            <mat-option value="C">Client</mat-option>
-                            
-                            
-                        </mat-select>
+                        <select class="form-control"  name="module" #module (change)="select_none(module.value,row.id)">
+                          <option  value="A" [selected]="row.user_type=='A'">Admin</option>
+                          <option  value="T" [selected]="row.user_type=='T'">Telecaller</option>
+                          <option  value="E" [selected]="row.user_type=='E'">Engineer</option>
+                          <option  value="V" [selected]="row.user_type=='V'">Viewer</option>
+                          <option  value="M" [selected]="row.user_type=='M'">Manager</option>             
+                        </select>
+                         
+                  
+     
                        
                     </td>
                   </ng-container>
                   
 
                   <ng-container matColumnDef="Status" >
-                    <th mat-header-cell *matHeaderCellDef class="pl-5"> Status </th>
-                    <td mat-cell *matCellDef="let row" > 
-                       <label class="radio-inline ml-2">
-                        <input type="radio"  name="support" id="active" value="A">
-                        Active</label>
-                        <label class="radio-inline"> 
-                        <input type="radio"  id= "deactive" name="support"  value="D">
-                        Inactive</label>
+                    <th mat-header-cell *matHeaderCellDef class="pl-5 ml-5"> Status </th>
+                    <td mat-cell *matCellDef="let row ; index as i" > 
+                      
+                        <input type="radio"  name="stat_{{i+1}}" id={{i+1}} value="A" [checked]="row.user_status=='A'" (click)="checkstat('A',row.id)">
+                        <label class="radio-inline " for={{i+1}} class="mr-5"> Active</label>
+                        
+                        <input type="radio"  id= "{{i+2}}" name="stat_{{i+1}}"  value="D" [checked]="row.user_status=='D'" (click)="checkstat('D',row.id)">
+                        <label class="radio-inline" for="{{i+2}}"  class="mr-5"> Inactive</label>
                         
 
                          <!-- <mat-radio-group  [(ngModel)]="row.status" class="ml-1">
@@ -300,7 +298,8 @@
     </div>
   </div>
 
-
+  <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
+    &nbsp; Updation failed,please try again after some time...</div>
 
 </div>
 

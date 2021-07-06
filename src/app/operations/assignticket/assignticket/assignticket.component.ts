@@ -7,15 +7,16 @@ import { Apollo, gql } from 'apollo-angular';
 
 
 const GET_RAISETICKITE=gql`
-query getSupportLogDtls($id:String!){
-  getSupportLogDtls(id:$id){
-    id
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,tag:"2",user_type:$user_type,user_id:$user_id){
+     id
     client_name
     phone_no
     tkt_no
     emp_name
     priority
     tktStatus
+    log_in
   }
 }`
 ;
@@ -34,7 +35,7 @@ query getSupportLogDtls($id:String!){
 })
 export class AssignticketComponent implements OnInit {
 
-  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Phone_no','Assigned_to','Priority','Ticket_Status','Edit'];
+  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Assigned_to','Priority','Ticket_Status','ticket_log_date','Edit'];
   dataSource = new MatTableDataSource<any> (); 
   Tickite:any;
   edittickit:boolean=true;
@@ -50,6 +51,7 @@ export class AssignticketComponent implements OnInit {
        }
      
     localStorage.setItem('address', '/operations/assignticket');
+    localStorage.setItem('Active', '1');
 
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -71,7 +73,9 @@ export class AssignticketComponent implements OnInit {
     this.apollo.watchQuery<any>({
       query: GET_RAISETICKITE,
       variables:{
-         id:""
+         id:"",
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
       },
       pollInterval:500
       

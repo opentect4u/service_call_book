@@ -36,6 +36,7 @@ export class AddclienttypeComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
+    
     localStorage.setItem('address','/clienttype/addctm');
     this.User=localStorage.getItem("UserId");
     console.log("type:" +typeof(this.User));

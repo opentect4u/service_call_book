@@ -68,7 +68,7 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
-
+    localStorage.setItem('Active', '1');
     localStorage.setItem('address','/operationmode/dashboard'); 
 
     this.updateom=localStorage.getItem('updateom')

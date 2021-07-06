@@ -67,7 +67,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
  x:any;
  userdel:any;
   ngOnInit(): void {
-
+    localStorage.setItem('Active', '1');
     localStorage.setItem('address','/ticketstatus/dashboard');  
 
     this.updatets=localStorage.getItem('updatets')

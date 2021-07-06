@@ -7,8 +7,8 @@ import { Apollo, gql } from 'apollo-angular';
 
 
 const GET_RAISETICKITE=gql`
-query getSupportLogDtls($id:String!){
-  getSupportLogDtls(id:$id){
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,tag:"0",user_type:$user_type,user_id:$user_id){
     id
     client_name
     phone_no
@@ -16,6 +16,8 @@ query getSupportLogDtls($id:String!){
     emp_name
     priority
     tktStatus
+    log_in
+    work_status
   }
 }`
 ;
@@ -32,7 +34,7 @@ query getSupportLogDtls($id:String!){
 export class AttendanddeliverComponent implements OnInit {
   Tickite:any;
   attendtickite:boolean=true;
-  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Phone_no','Assigned_to','Priority','Ticket_Status','Edit'];
+  displayedColumns: string[] = ['Ticket_No', 'Client_Name','ticket_log_date','Assigned_to','Priority','Ticket_Status','Edit'];
   dataSource = new MatTableDataSource<any> (); 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -46,6 +48,7 @@ export class AttendanddeliverComponent implements OnInit {
       this.attendtickite=false;
      }
     localStorage.setItem('address', '/operations/attendanddeliver');
+    localStorage.setItem('Active', '1');
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -65,7 +68,10 @@ export class AttendanddeliverComponent implements OnInit {
     this.apollo.watchQuery<any>({
       query: GET_RAISETICKITE,
       variables:{
-         id:""
+         id:"",
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+         
       },
       pollInterval:500
       
