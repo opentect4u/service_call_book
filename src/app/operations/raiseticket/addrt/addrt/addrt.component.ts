@@ -321,7 +321,7 @@ export class AddrtComponent implements OnInit {
     // console.log("module:" +v11);
     // console.log("issue:" +v12);
     // console.log("remarks:" +v13);
-    // this.user=localStorage.getItem("UserId")
+    this.user=localStorage.getItem("UserId")
    
     this.apollo.mutate({
       mutation: GET_POST_update,
