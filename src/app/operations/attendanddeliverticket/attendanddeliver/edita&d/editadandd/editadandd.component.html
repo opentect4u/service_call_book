@@ -402,6 +402,9 @@
                                    *ngIf="mobile">*please Enter Attended Date And Time</span> 
 
                                     </div>
+
+                                    
+
                                     <div class="col-sm-2"></div>
 
                                     <div class="col-sm-2">
@@ -413,7 +416,7 @@
                                         (change)="prevent_null($event)"
                                       
                                             name="deliveryat" id="itemdeliveryat" #deliveryat
-                                            >
+                                           (click)="setcalender()">
                                         <span  class="text-danger"
                                          *ngIf="phonmobile">*please Enter Delivery Date And Time</span> 
 
@@ -548,6 +551,20 @@
                                       
                                 </div>
                             </div>  -->
+
+
+
+
+
+                           
+
+
+
+
+
+
+
+
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
                                         <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || valid_init_de || valid_init_at ||valid_issue"

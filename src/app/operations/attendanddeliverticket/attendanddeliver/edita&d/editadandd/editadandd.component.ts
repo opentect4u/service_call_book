@@ -3,7 +3,7 @@ import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import {formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-
+declare const $: any;
 // For update Deliver&Attendent Tickite
 
 const EDITABLE=gql`
@@ -113,6 +113,8 @@ export class EditadanddComponent implements OnInit {
   input_delivery:any;
   Remarks:any;
   x:any;
+   input:any;
+  // delive:boolean=true;
   for_issue_error:boolean=false;
   valid_issue:boolean=true;
   // valid_init_work:boolean=true;
@@ -121,29 +123,24 @@ export class EditadanddComponent implements OnInit {
   wrork_stat:boolean=false;
   constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
-    this.issue=document.getElementById("itemissue");
+   
+   this.issue=document.getElementById("itemissue");
    console.log("empty:" +this.issue.value)
    
    
     this.work=document.getElementById("wrkstatus")
     localStorage.setItem('Active', '1');
+    this.input_delivery=document.getElementById('itemdeliveryat')
     this.input_attended=document.getElementById('itemattendedat')
     var iso = new Date().toISOString();
     var minDate = iso.substring(0,iso.length-1);
-          // this.input_attended.value=minDate;
+        
+         
     this.input_attended.min=minDate;
-
-    this.input_delivery=document.getElementById('itemdeliveryat')
-          
-    var iso1 = new Date().toISOString();
-    var minDate1 = iso1.substring(0,iso1.length-1);
-          // this.input_delivery.value=minDate1;
-    this.input_delivery.min=minDate1;
-   
+    // this.input_delivery.min=minDate;
     
-
-    //  elem.value=minDate;
-    //   elem.min=minDate
+    
+          
     localStorage.setItem('attendent','0');
    
     this.pathname=window.location.href.split('#').pop();
@@ -229,6 +226,22 @@ export class EditadanddComponent implements OnInit {
 
  }
 
+
+ setcalender(){
+ console.log(this.input_attended.value)
+ if(this.input_attended.value==''){
+  this.input_delivery=document.getElementById('itemdeliveryat')
+  var iso = new Date().toISOString();
+  var minDate = iso.substring(0,iso.length-1);
+  this.input_delivery.min=minDate;
+}
+else{
+  this.input_delivery=document.getElementById('itemdeliveryat')
+  this.input_delivery.min=this.input_attended.value;
+} 
+ }
+ 
+
  
   preventNonNumericalInput(e:any){}
 
@@ -288,7 +301,7 @@ export class EditadanddComponent implements OnInit {
     
   }
   showsnackbar() {
-    // alert("error");
+    
      this.x = document.getElementById("snackbar");
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
@@ -321,6 +334,7 @@ export class EditadanddComponent implements OnInit {
       if(e.target.value=='')
       {
         this.valid_init_at=true;
+        // this.delive=true;
         // this.phone_val=true;
         // this.prevent_init_phone=true;
          this.mobile=true;
@@ -330,7 +344,7 @@ export class EditadanddComponent implements OnInit {
       else
 
        {   
-        
+        // this.delive=false;
        this.mobile=false;
          this.valid_init_at=false;
        this.input_attended.style.border="solid lightgrey 1px"}
@@ -350,14 +364,9 @@ export class EditadanddComponent implements OnInit {
       else
 
        { 
+        this.input=e.target.valuel
         console.log(e.target.value)
-        // this.input_delivery=document.getElementById('itemdeliveryat')
-          
-        // var iso1 = new Date().toISOString();
-        // var minDate1 = iso1.substring(0,iso1.length-1);
-        // this.input_delivery.value=minDate1;
-        // this.input_delivery.min=minDate1;
-         this.phonmobile=false; 
+       this.phonmobile=false; 
          this.valid_init_de=false;
        this.input_delivery.style.border="solid lightgrey 1px"}
 

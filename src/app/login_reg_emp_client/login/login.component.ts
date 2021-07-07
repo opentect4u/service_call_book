@@ -16,6 +16,14 @@ query userLogin($user_id: String!, $password: String!){
 }
 `;
 
+const GET_USER_TYPE=gql`
+query  getUserDetailsById($user_id:String!){
+  getUserDetailsById(user_id:$user_id){
+    user_type,
+    user_status
+  }
+}
+`
 
 
 
@@ -67,7 +75,7 @@ export class LoginComponent implements OnInit {
   
   ngOnInit(): void {
    
-   
+    
 
      localStorage.setItem('address', '/')
   
@@ -161,46 +169,49 @@ export class LoginComponent implements OnInit {
         this.captch=false;
           console.log("dashboard")
           
+        
           this.spinner.show();
+           
          this.apollo.watchQuery<any>({
             query: GET_POST_LOGIN,
+            fetchPolicy: 'network-only',
             variables:{
               user_id:this.f.username.value,
               password:this.f.password.value
             }
+           
+    
             
-          })
-          
-            .valueChanges
+          }).valueChanges
             .subscribe(({ data}) => {
               console.log(data);
-             
-            //  localStorage.setItem("UserId",this.f.username.value);
+        //  localStorage.setItem("UserId",this.f.username.value);
+                  
+
+
                this.Success= data.userLogin.success;
                this.spinner.hide();
-               console.log( this.Success);
+              //  console.log("Success:" +this.Success.user_status);
                
                if( this.Success == 1){
                 localStorage.setItem('Active','1');
                 console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
                 localStorage.setItem("UserId",JSON.parse(data.userLogin.message)[0].code_no);
                 localStorage.setItem("user_Type",JSON.parse(data.userLogin.message)[0].user_type);
-                console.log("user_type:" +localStorage.getItem('user_Type'));
+                localStorage.setItem("user_name",JSON.parse(data.userLogin.message)[0].emp_name)
+                console.log("user_type:" +JSON.parse(data.userLogin.message)[0].user_type);
                 
              
                
                  
                 localStorage.setItem('isLoggedIn',"true");
 
-                this.user=JSON.parse(data.userLogin.message)[0];
+                this.user=JSON.parse(data.userLogin.message);
 
                  console.log("success");
                  console.log("userid:" + this.user)
-                
-           
-              
+                 this.router.navigate(['/dashboard']);
                  
-                this.router.navigate(['/dashboard'])
  
 
                }
@@ -221,16 +232,21 @@ export class LoginComponent implements OnInit {
             
                
                else
+                  this.spinner.hide();
                   this.showsnackbar();
-          },error=>{ this.showsnackbar()
-           });
+          },error=>{ 
+            this.spinner.hide();
+            this.showsnackbar()
+           }
+          );
+         
        
          
       }
     }
 
   }
-
+ 
   showsnackbar() {
     // alert("error");
      this.x = document.getElementById("snackbar");

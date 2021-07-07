@@ -11,10 +11,19 @@ import { Component, OnInit } from '@angular/core';
   '../../../assets/css/res.css']
 })
 export class HeaderComponent implements OnInit {
-
+   emp_name:any;
+   type:any;
+   name:any;
   constructor() { }
 
   ngOnInit(): void {
+    setInterval(()=>{
+      this.name = localStorage.getItem('user_name');
+    this.emp_name= this.name=='null' ? this.name ='Admin' : this.name =localStorage.getItem('user_name');
+    console.log(this.emp_name);
+    var user_type = localStorage.getItem('user_Type');
+    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' : 'Viewer')));
+  },500);
   }
 
 }
