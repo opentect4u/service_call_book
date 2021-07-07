@@ -1,7 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
+import { interval } from 'rxjs';
 //import {MatDialog} from '@angular/material/dialog';
 
+
+const GET_USER_TYPE=gql`
+query  getUserDetailsById($user_id:String!){
+  getUserDetailsById(user_id:$user_id){
+    user_type,
+    user_status
+  }
+}
+`
 
 @Component({
   selector: 'app-sidebar',
@@ -23,27 +34,64 @@ export class SidebarComponent implements OnInit {
   searchtkt:any;
   utype:boolean=true;
   Etype:boolean=true;
-  constructor(private router:Router) {
+  user:any;
+  old_u_type:any;
+  constructor(private router:Router,private apollo:Apollo) {
    
  
    }
 
   ngOnInit(): void {
-    this.u_type=localStorage.getItem('user_Type');
-    if(this.u_type=='T'){
-          this.utype=true;
-    }
-    else{
-         this.utype=false;
-    }
-    if(this.u_type=='E'){
-        this.Etype=true;
-    }
-    else{
-      this.Etype=false;
-    }
-  }
+      this.old_u_type=localStorage.getItem('user_Type');
+       this.apollo.watchQuery<any>({
+      query: GET_USER_TYPE,
+      variables:{
+        user_id:localStorage.getItem('UserId')
+      },
+      pollInterval:500
 
+      
+    }).valueChanges
+    .subscribe(({ data}) => {
+      console.log(data);
+     localStorage.setItem('user_Type',data.getUserDetailsById[0].user_type) ;
+      this.u_type=localStorage.getItem('user_Type');
+      // if(data.getUserDetailsById[0].user_status=='D'){
+      //   this.router.navigate(['/']);
+      // }
+      // else{
+
+        if(this.u_type=='T'){
+        this.utype=true;
+        }
+        else{
+            this.utype=false;
+        }
+        if(this.u_type=='E'){
+            this.Etype=true;
+        }
+        else{
+          this.Etype=false;
+        }
+        if(this.old_u_type!=this.u_type)
+        {
+          this.old_u_type=this.u_type;
+          this.router.navigate(['/dashboard'])
+        }
+//  }  
+    })
+ 
+
+
+   
+    
+    // setInterval(()=>{alert(localStorage.getItem('user_Type'));},6000)
+   
+  }
+    
+
+ 
+  
 
 
   openclosedropdown1(){
@@ -239,7 +287,9 @@ export class SidebarComponent implements OnInit {
     logout(){
       localStorage.clear();
       localStorage.setItem('isLoggedIn',"false");
-      this.router.navigate(['/']);
+      this.router.navigate(['/']).then(() => {
+        window.location.reload();
+      });;
     }
 
 }

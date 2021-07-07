@@ -121,7 +121,7 @@ export class EditatComponent implements OnInit {
         console.log(data);
         this.emplist=data.getEngList;
         console.log(this.emplist);
-      })
+     
     
     this.route.params.forEach((params: any) => {
       this.id = params['id'];
@@ -174,7 +174,7 @@ export class EditatComponent implements OnInit {
           console.log("empty",this.prob_reported)
           this.for_issue=false;
          }
-
+           console.log(this.emplist.length)
          for(let i=0;i<this.emplist.length;i++){
 
                if(this.assss_id== this.emplist[i].id)
@@ -194,6 +194,7 @@ export class EditatComponent implements OnInit {
         })
       
     })
+  })
   }  
   select_assigned(v:any){
     if(v==''){

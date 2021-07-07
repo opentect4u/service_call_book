@@ -88,3 +88,10 @@ ul li a{
         100%{-webkit-transform: rotate(360deg);}
       }
 
+
+.modal{
+  margin:0 0 0 35%;
+}
+.but{
+  background-color: #2c2e3e;
+}

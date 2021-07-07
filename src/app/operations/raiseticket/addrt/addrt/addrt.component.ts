@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 import {Router} from '@angular/router';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 
 declare const $: any;
 const SHOW_CLIENT=gql`

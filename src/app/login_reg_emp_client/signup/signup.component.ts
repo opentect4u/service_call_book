@@ -79,6 +79,9 @@ export class SignupComponent implements OnInit {
   captch_cli:boolean=false;
   pass:any;
   conspass:any;
+  // messageSuccess:boolean=true;
+  log_msg:any;
+  modal:any;
  
   loader:boolean=true;
   constructor(private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
@@ -151,6 +154,10 @@ export class SignupComponent implements OnInit {
     }
     );
   }
+
+
+
+  
 
   get c(){
     return this.LoginForm_client.controls;
@@ -294,6 +301,7 @@ export class SignupComponent implements OnInit {
 
 
   sendTheNewValue(event: any) {
+    // this.messageSuccess=true; 
   
      if( event.target.value==''){
       this.Name=document.getElementById("emp_name");
@@ -339,15 +347,21 @@ export class SignupComponent implements OnInit {
       else if(data.checkUser.success==0 || data.checkUser.success==2){
         
           this.details=JSON.parse(JSON.stringify(data.checkUser.message));
-          var log_msg = data.checkUser.success==2 ? (JSON.parse(data.checkUser.message)[0].log_done>0 ? 'Already Registered' : 'Warning') :  data.checkUser.message;
+          this.log_msg = data.checkUser.success==2 ? (JSON.parse(data.checkUser.message)[0].log_done>0 ? 'Already Registered' : 'Warning') :  data.checkUser.message;
           this.Name=document.getElementById("emp_name");
           this.Email=document.getElementById("emp_email");
           this.Name.value=data.checkUser.success==2 ? JSON.parse(data.checkUser.message)[0].name : '';
           this.Email.value=data.checkUser.success==2 ? JSON.parse(data.checkUser.message)[0].email : '';
           // alert(this.details);
           console.log("Email:" +this.Email.value)
-          alert(log_msg);
+          // alert(this.log_msg);
+          this.modal=document.getElementById("openModalButton")
+          this.modal.click();
+          // this.messageSuccess=false; 
+          // console.log("success:"+this.messageSuccess);
           this.button_disabled=true;
+          
+          
         }
     
      
@@ -385,6 +399,7 @@ export class SignupComponent implements OnInit {
 
     //     }
       }
+     
 
 
     // })
