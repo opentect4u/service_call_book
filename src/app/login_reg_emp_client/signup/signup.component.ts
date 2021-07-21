@@ -235,6 +235,7 @@ export class SignupComponent implements OnInit {
     this.recaptcha=document.getElementById("capt");
     this.login=true;
     this.Email=document.getElementById("emp_email");
+
      this.Name=document.getElementById("emp_name");
     console.log("Email:" +this.Email.value);
 
@@ -244,6 +245,9 @@ export class SignupComponent implements OnInit {
     this.f.Email.setValue(this.LoginForm.value.Email);
     this.f.name.setValue(this.LoginForm.value.name);
     console.log(this.f);
+
+   
+
     if(this.LoginForm.invalid){
      console.log("validation");
      return;
