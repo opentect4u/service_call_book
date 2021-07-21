@@ -7,7 +7,7 @@ import { Apollo, gql } from 'apollo-angular';
 const GET_POST = gql`
 mutation CreateUser($postId:String!,$userType:String!,$userId:String!,$Password:String!) {
   createUser(code_no: $postId, user_type: $userType, user_id: $userId, password: $Password ) {
-    
+
     success
     message
   }
@@ -26,7 +26,7 @@ query checkUser($code_no: String!){
 
 
 // createUser(code_no: $postId, user_type: $userType, user_id: $userId, password: $Password ) {
-    
+
 //   success
 //   message
 // }
@@ -49,8 +49,8 @@ query checkUser($code_no: String!){
   '../../../assets/Login_assets/css/apps_inner.css',
  '../../../assets/Login_assets/css/res.css'],
 
- 
- 
+
+
 
 })
 export class SignupComponent implements OnInit {
@@ -79,10 +79,11 @@ export class SignupComponent implements OnInit {
   captch_cli:boolean=false;
   pass:any;
   conspass:any;
+  // successfull_register:boolean=true;
   // messageSuccess:boolean=true;
   log_msg:any;
   modal:any;
- 
+
   loader:boolean=true;
   constructor(private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
 
@@ -122,7 +123,7 @@ export class SignupComponent implements OnInit {
     var sum=a+b+c+d+e+f+g;
     this.recaptcha=document.getElementById("capt");
     this.recaptcha.value=sum;
-    
+
 
 
     localStorage.setItem('address','/signup')
@@ -150,14 +151,14 @@ export class SignupComponent implements OnInit {
       client_pass:['',Validators.required],
       client_conpass:['',Validators.required],
       captcha_client:['',Validators.required]
-  
+
     }
     );
   }
 
 
 
-  
+
 
   get c(){
     return this.LoginForm_client.controls;
@@ -169,49 +170,49 @@ export class SignupComponent implements OnInit {
 
     return this.LoginForm.controls;
   }
-  
+
   open_employee(){
 
 
- 
 
-    
+
+
     this.login_c=false;
     this.display=true;
     this.val=document.getElementById('menu1');
      this.val.className='active'
     this.display1=false;
-  
 
 
 
-   
+
+
   }
   open_client(){
 
-   
+
     this.login=false;
     this.display=false;
     this.val=document.getElementById('home');
     this.val.className='active'
     this.display1=true;
-  
-    
+
+
   }
 
   Submit_client(){
     this.recaptcha=document.getElementById("capt_client");
-    
+
     this.login_c=true;
     if(this.LoginForm_client.invalid){
     console.log("fire");
      return ;
       }
      else{
-       
-  
-   
-     
+
+
+
+
        if(this.c.client_pass.value == this.c.client_conpass.value){
            if(this.c.captcha_client.value == this.recaptcha.value){
             console.log("right captcha");
@@ -226,13 +227,16 @@ export class SignupComponent implements OnInit {
            console.log("wrong password");
           }
        }
-    
-  
+
+
 
   }
   Submit(){
     this.recaptcha=document.getElementById("capt");
-   this.login=true;
+    this.login=true;
+    this.Email=document.getElementById("emp_email");
+    console.log("Email3:" +this.f.Email.value);
+    console.log("Email:" +this.Email.value);
     if(this.LoginForm.invalid){
      console.log("validation");
      return;
@@ -242,7 +246,7 @@ export class SignupComponent implements OnInit {
       if(this.f.pass.value == this.f.conpass.value)
       {
         if(this.recaptcha.value == this.f.captcha_emp.value){
-      
+
         this.Email=document.getElementById("emp_email");
         console.log("Email3:" +this.Email.value);
         // console.log("alerts:" +this.alerts);
@@ -250,11 +254,11 @@ export class SignupComponent implements OnInit {
       .mutate({
         mutation: GET_POST,
         variables:{
-          postId:this.f.code.value, 
+          postId:this.f.code.value,
            userType:this.f.type.value,
             userId:this.Email.value,
             Password:this.f.pass.value
-          
+
 
         }
       }).subscribe(({data})=>{
@@ -265,9 +269,10 @@ export class SignupComponent implements OnInit {
          }else if(this.det.createUser.success == 1 ){
            localStorage.setItem("Employee_signup",'1');
            console.log("Successfully Inserted");
+          //  this.successfull_register=false;
            this.router.navigate(['/']);
          }
-        
+
          else
          this.showsnackbar();
      },error=>{ this.showsnackbar()
@@ -275,17 +280,17 @@ export class SignupComponent implements OnInit {
       }
       else{
         this.captch_employee=true;
-        
+
       }
-  
-     
-    
+
+
+
     }
     else{
-   
+
       alert("Passwords are not matched,please check passwords");
 
-       
+
     }
     }
    }
@@ -301,8 +306,8 @@ export class SignupComponent implements OnInit {
 
 
   sendTheNewValue(event: any) {
-    // this.messageSuccess=true; 
-  
+    // this.messageSuccess=true;
+
      if( event.target.value==''){
       this.Name=document.getElementById("emp_name");
       this.Email=document.getElementById("emp_email");
@@ -319,19 +324,19 @@ export class SignupComponent implements OnInit {
       query: GET_SIGNUP,
       variables:{
         code_no:this.f.code.value
-        
+
       }
-      
+
     })
       .valueChanges
       .subscribe(({ data, loading}) => {
         if(data.checkUser.success==1){
-      
-   
+
+
 
         // alert("Data already exists")
-      
-        
+
+
         console.log("data:" +JSON.stringify(data.checkUser.message));
         this.details=JSON.parse(data.checkUser.message);
        console.log("dta2:" +this.details[0].name);
@@ -345,7 +350,7 @@ export class SignupComponent implements OnInit {
         // this.button_disabled=true;
         }
       else if(data.checkUser.success==0 || data.checkUser.success==2){
-        
+
           this.details=JSON.parse(JSON.stringify(data.checkUser.message));
           this.log_msg = data.checkUser.success==2 ? (JSON.parse(data.checkUser.message)[0].log_done>0 ? 'Already Registered' : 'Warning') :  data.checkUser.message;
           this.Name=document.getElementById("emp_name");
@@ -357,23 +362,23 @@ export class SignupComponent implements OnInit {
           // alert(this.log_msg);
           this.modal=document.getElementById("openModalButton")
           this.modal.click();
-          // this.messageSuccess=false; 
+          // this.messageSuccess=false;
           // console.log("success:"+this.messageSuccess);
           this.button_disabled=true;
-          
-          
+
+
         }
-    
-     
+
+
       })
     }
-  
+
 
 
 
     // this.isReadonly = false;
     // this.inputValue1 = '';
-  
+
     // this.inputValue = event.target.value;
 
     // console.log(this.inputValue);
@@ -387,7 +392,7 @@ export class SignupComponent implements OnInit {
     //     if (this.inputValue == this.Shown.data[i].id) {
     //       this.inputValue1 = this.Shown.data[i].name;
     //        alert('Client Already registered')
-       
+
     //        console.log(this.inputValue);
     //        this.isReadonly = true;
     //        console.log(this.inputValue1);
@@ -399,13 +404,13 @@ export class SignupComponent implements OnInit {
 
     //     }
       }
-     
+
 
 
     // })
     // this.inputValue = event.target.value;
     // }
-    
+
     // close_alert(){
     //   this.alerts=true;
     //  }
@@ -415,18 +420,18 @@ export class SignupComponent implements OnInit {
       e = e || window.event;
       var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
       var charStr = String.fromCharCode(charCode);
-  
+
       if (!charStr.match(/^[0-9]+$/))
         e.preventDefault();
     }
-    
+
     mypassword(){
       this.show_Password=document.getElementById('Passd_emp');
       if (this.show_Password.type === "password") {
         this.show_Password.type = "text";
       } else {
         this.show_Password.type = "password";
-      } 
+      }
 
     }
     myconfirm(){
@@ -477,7 +482,7 @@ export class SignupComponent implements OnInit {
       var sum=a+b+c+d+e+f+g;
       this.recaptcha=document.getElementById("capt_client");
       this.recaptcha.value=sum;
-  
+
 
     }
 
@@ -489,7 +494,7 @@ export class SignupComponent implements OnInit {
         this.show_Password.type = "text";
       } else {
         this.show_Password.type = "password";
-      } 
+      }
 
     }
     myconfirm_client_password(){
@@ -500,9 +505,12 @@ export class SignupComponent implements OnInit {
         this.show_ConPassword.type = "password";
       }
 
-  
+
     }
-    
+    // close_alert(){
+    //  this.successfull_register=true;
+    // }
+
 
 
   }

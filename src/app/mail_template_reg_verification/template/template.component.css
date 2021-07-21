@@ -3,7 +3,7 @@ div#mydiv {
     width:450px;
     height:450px;
     border-radius: 10px;
-    box-shadow:20px 20px 10px grey;  
+    box-shadow:20px 20px 10px grey;
     padding-top: 5%;
     padding:3%;
   }
@@ -12,7 +12,7 @@ div#mydiv {
     width:450px;
     height:450px;
     border-radius: 10px;
-    box-shadow:20px 20px 10px grey;  
+    box-shadow:20px 20px 10px grey;
     padding-top: 5%;
     padding:30%;
 }
@@ -32,9 +32,9 @@ div#mydiv {
 .confirmbutton{
     border-radius: 18px;width:60%;
 }
-.confirmmessage{
-    
-}
+/* .confirmmessage{
+
+} */
 @-webkit-keyframes checkmark {
     0% {
         stroke-dashoffset: 50px
@@ -134,28 +134,31 @@ div#mydiv {
     -o-animation: fadeIn linear 1s;
     -ms-animation: fadeIn linear 1s;
   }
-  
+
   @keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
   }
-  
+
   @-moz-keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
   }
-  
+
   @-webkit-keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
   }
-  
+
   @-o-keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
   }
-  
+
   @-ms-keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
   }
+
+
+
