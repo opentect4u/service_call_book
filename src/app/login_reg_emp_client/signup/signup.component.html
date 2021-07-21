@@ -383,10 +383,14 @@
 		</div>
         <div class="col-sm-6 float-right">
             <label>Email</label>
-             <input type="email" class="form-control"
-			 formControlName="Email"
+
+             <input type="email"
+             class="form-control p-2"
+             formControlName="Email"
+
 			 id="emp_email"
-			  [ngClass]="{'is-invalid': login && f.Email.errors}">
+			[ngClass]="{'is-invalid': login && f.Email.errors}"
+       >
 			<div *ngIf="login && f.Email.errors" class="invalid-feedbackb text-danger">
 				 <div *ngIf="f.Email.errors.required"><small>*Please supply email</small></div>
                  <div *ngIf="f.Email.errors.pattern"><small>*Please provide valid

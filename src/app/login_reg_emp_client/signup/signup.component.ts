@@ -235,8 +235,19 @@ export class SignupComponent implements OnInit {
     this.recaptcha=document.getElementById("capt");
     this.login=true;
     this.Email=document.getElementById("emp_email");
-    console.log("Email3:" +this.f.Email.value);
+
+     this.Name=document.getElementById("emp_name");
     console.log("Email:" +this.Email.value);
+
+    //  this.f.Email.value=this.Email.value;
+    this.LoginForm.value.name=  this.Name.value;
+    this.LoginForm.value.Email=  this.Email.value;
+    this.f.Email.setValue(this.LoginForm.value.Email);
+    this.f.name.setValue(this.LoginForm.value.name);
+    console.log(this.f);
+
+   
+
     if(this.LoginForm.invalid){
      console.log("validation");
      return;
@@ -347,6 +358,13 @@ export class SignupComponent implements OnInit {
        this.Email.value=this.details[0].email;
        console.log("Email:" +this.Email.value);
        console.log("Email");
+        this.LoginForm.value.name=this.Name.value;
+        this.LoginForm.value.Email=this.details[0].email;
+        this.f.Email.setValue(this.LoginForm.value.Email);
+        console.log(this.LoginForm.value);
+            console.log(this.f.Email.value)
+      //  console.log(this.f.Email.value);
+
         // this.button_disabled=true;
         }
       else if(data.checkUser.success==0 || data.checkUser.success==2){
