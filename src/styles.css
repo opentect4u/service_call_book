@@ -2,7 +2,7 @@
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~@ng-select/ng-select/themes/default.theme.css";
-/* 
+/*
 .modal-open[style]{
   padding-right: 0px !important;
 }
@@ -17,7 +17,7 @@ body { padding-right: 0 !important }
     background: #2c2e3e;
     padding: 12px 12px 24px 12px;
   }
-  
+
   .card .card-body .titleSec h2 {
     color: #fff;
     font-weight: 400;
@@ -28,12 +28,12 @@ body { padding-right: 0 !important }
   table {
     width: 100%;
   }
-  
+
   .mat-form-field {
     font-size: 14px;
     width: 100%;
   }
-  
+
   td, th {
     width: 20%;
   }
@@ -65,30 +65,30 @@ body { padding-right: 0 !important }
     bottom: 30px;
     font-size: 17px;
   }
-  
+
   #snackbar.show {
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
   }
-  
+
 
 
   @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
+    from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
   }
-  
+
   @keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
   }
-  
+
   @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
+    from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
   }
-  
+
   @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
@@ -99,7 +99,7 @@ body { padding-right: 0 !important }
     background-color: #282a3c;
     color:white;
     border-radius: 5px;
-     
+
   }
   .color:hover{
     color: #282a3c;
@@ -113,8 +113,8 @@ body { padding-right: 0 !important }
     color:white;
     border-radius: 5px;
   }
-  
- 
 
- 
+
+
+
 

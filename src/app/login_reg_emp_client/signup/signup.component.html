@@ -3,9 +3,9 @@
   </div>
 <!-- <div class="LoginCardLayout">
 	<div class="signUpCardLayout-card memberShipArea">
-	
+
 	<ul class="tabUl nav-tabs">
-   
+
     <li class="active"><a data-toggle="tab" (click)="open_client()">Client Signup</a></li>
     <li><a data-toggle="tab"(click)="open_employee()">Employee Signup</a></li>
 
@@ -14,7 +14,7 @@
   <div class="tab-content ">
     <div id="home" class="tab-pane fade in active tabContent " [hidden]="display" >
 	<div class="login_left">
-		
+
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Client Code</label>
@@ -24,45 +24,45 @@
 		<label>Client name</label>
            <input type="text" class="form-control" value="Suman mitra" readonly>
 		</div>
-			
+
 			</div>
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Email</label>
          <input type="email" class="form-control" placeholder="Enter Email">
 		</div>
-		
-			
+
+
 		</div>
-		
-		
+
+
         <div class="form-row">
             <div class="col-sm-6 float-left">
             <label>Password*</label>
              <input type="password" class="form-control" placeholder="Enter Password" >
             </div>
-                
+
             <div class="col-sm-6 float-left">
             <label>Confirm Password*</label>
              <input type="password" class="form-control" placeholder="Enter Confirm Password" >
             </div>
                 </div>
-		
-	
-		
+
+
+
 		<div class="col-sm-12 btnBack">
 		<button type="button">Login</button>
 		</div>
-		
-		
+
+
 	</div>
-	
+
 		<br clear="all">
 
     </div>
     <div id="menu1" class="tab-pane fade tabContent" [hidden]="display1" >
       <div class="login_left">
-		
+
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Employee Code</label>
@@ -72,85 +72,85 @@
 		<label>Name</label>
          <input type="text" class="form-control" value="Suman Mitra" readonly >
 		</div>
-			
+
 		</div>
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Type</label>
-   
-			
-			
+
+
+
 			<select name="type" >
             <option value=" "> Select</option>
 			<option value="E ">Engineer</option>
 			<option value="T ">Telecaller</option>
 			<option value="M ">Manager</option>
 			</select>
-			
+
 		</div>
         <div class="col-sm-6 float-right">
             <label>Email</label>
              <input type="email" class="form-control" placeholder="Enter Email">
         </div>
 
-		
-			
+
+
 		</div>
-		
-		
+
+
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Password*</label>
         <input type="password" class="form-control" placeholder="Enter Password">
 		</div>
-			
+
 		<div class="col-sm-6 float-left">
 		<label>Confirm Password*</label>
        <input type="password" class="form-control" placeholder="Enter Confirm Password">
 		</div>
 			</div>
-		
-	
-		
+
+
+
 		<div class="col-sm-12 btnBack">
 		<button type="button">Login</button>
 		</div>
-		
-		
+
+
 	</div>
-		
+
 		<br clear="all">
     </div>
   </div>
-		
-		
-		
+
+
+
 	</div>
 </div> -->
 
 <div class="LoginCardLayout" >
-	
-	
+
+
 	<div class="signUpCardLayout-card memberShipArea">
 
 
 
-		
 
-		
+
+
 
 
 
 	<div class="LoginCardLayout-LoginLogoContainer "><a routerLink='/' routerLinkActive="true"><img src="../../../assets/Login_assets/images/logo.png" alt="" class="LoginCardLayout-LogoLogo"/></a></div>
-	
-	
+
+
 	<!-- <div class="alert alert-danger text-center alert-dismissible" [hidden]="alerts">
 		<a href="#" class="close mb-4" data-dismiss="alert" aria-label="close" (click)="close_it()">&times;</a>
 		<strong>Alert!</strong> Passwords are not matching
 	  </div> -->
 
 
-	 
+
 
 	  <!-- <div class="alert alert-danger alert-dismissible fade in text-center" [hidden]="messageSuccess">
 
@@ -163,11 +163,19 @@
 	  </div> -->
 
 
-	
-	
-	
+	  <!-- <div class="alert alert-success alert-dismissible fade in text-center" [hidden]="successfull_register">
+
+		<small class="pt-1">
+			An email has been sent for verification
+		</small>
+		<button type="button" class="close pt-1" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true" (click)="close_alert()">&times;</span>
+		  </button>
+	  </div> -->
+
+
 	<ul class="tabUl nav-tabs">
-<!-- 
+<!--
         	<div class="alert alert-danger text-center alert-dismissible" [hidden]="alerts">
 		<a  class="close mb-4" data-dismiss="alert" aria-label="close" (click)="close_alert()">&times;</a>
 		<strong>Alert!</strong> Passwords are not matching
@@ -193,13 +201,13 @@
    <div class="tab-content ">
     <div id="home" class="tab-pane fade in active tabContent " [hidden]="display" >
 	<div class="login_left">
-		<form [formGroup]="LoginForm_client" (ngSubmit)="Submit_client()">	
+		<form [formGroup]="LoginForm_client" (ngSubmit)="Submit_client()">
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Client Code</label>
-		<!-- <input type="text" class="form-control" Placeholder="Enter Client Code" 
+		<!-- <input type="text" class="form-control" Placeholder="Enter Client Code"
 		 (change)="sendTheNewValue($event)"> -->
-         <input type="text" class="form-control" 
+         <input type="text" class="form-control"
 		 formControlName="client_code"
 		  [ngClass]="{'is-invalid': login_c && c.client_code.errors}"
 		  >
@@ -212,30 +220,30 @@
            <input type="text" class="form-control" value=" " readonly
 		   formControlName="client_name">
 		</div>
-			
+
 		</div>
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Email</label>
-         <input type="email" class="form-control" 
+         <input type="email" class="form-control"
 		 formControlName="client_email"  [ngClass]="{'is-invalid': login_c && c.client_email.errors}">
 		 <div *ngIf="login_c && c.client_email.errors" class="invalid-feedback text-danger">
 			<div *ngIf="c.client_email.errors.required"><small>*Please supply email</small></div>
 			<div *ngIf="c.client_email.errors.pattern"><small>*Please provide valid
 				email</small></div>
-		
+
 		</div>
-		
+
 		</div>
-		
-			
+
+
 		</div>
-		
-		
+
+
         <div class="form-row">
             <div class="col-sm-6 float-left">
             <label>Password*</label>
-             <input type="password" class="form-control"  
+             <input type="password" class="form-control"
 			 formControlName="client_pass"
 			 [ngClass]="{'is-invalid': login_c && c.client_pass.errors}"
 			 id="client">
@@ -248,11 +256,11 @@
 				</span>
 			</div>
 
-          
-                
+
+
             <div class="col-sm-6 float-left">
             <label>Confirm Password*</label>
-             <input type="password" class="form-control" 
+             <input type="password" class="form-control"
 			 formControlName="client_conpass"
 			 [ngClass]="{'is-invalid': login_c && c.client_conpass.errors}"
 			 id="client_confirm">
@@ -266,13 +274,13 @@
 				</span>
             </div>
                 </div>
-            
-			
-			
+
+
+
 				<div class="form-row">
 					<div class="col-sm-6 float-left">
 					<label><strong>Enter the text as shown in the image</strong> </label>
-					<input type="text" class="form-control"  
+					<input type="text" class="form-control"
 					formControlName="captcha_client"
 					[ngClass]="{'is-invalid': login_c && c.captcha_client.errors}"
 					id="Passwd"
@@ -280,38 +288,38 @@
 					<div *ngIf="login_c && c.captcha_client.errors" class="invalid-feedback text-danger">
 						 <div *ngIf="c.captcha_client.errors.required"><span>*Please supply captcha</span></div>
 					</div>
-					
-					
+
+
 					</div>
-						
+
 					<div class="col-sm-6 ">
-						
-						
-						<input type="text" class="form-control float-left " id="capt_client" oncopy="return false"  disabled 
-					
+
+
+						<input type="text" class="form-control float-left " id="capt_client" oncopy="return false"  disabled
+
 						>
 						<!-- <a (click)="refresh_captcha_client()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a> -->
 						<i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" (click)="refresh_captcha_client()" id="refresh_client"></i>
-		
+
 						<small *ngIf="captch_cli" class="text-danger ml-2">*captcha mismatch</small>
-						
-				  
+
+
 					</div>
-				
+
 				</div>
-		
- 
 
 
 
-		
+
+
+
 		<!--<div class="col-sm-12 float-left terms">
 		<label class="containerCK">Terms &amp; Condition Apply
 		<input type="checkbox" checked="checked">
 		<span class="checkmark"></span>
 		</label>
 		</div>-->
-		
+
 		<!-- <div class="col-sm-12 btnBack">
 		<button type="button" >Login</button>
 		</div> -->
@@ -322,45 +330,45 @@
 			</div>
 
 		</form>
-		
-		
+
+
 	</div>
-	
+
 		<br clear="all">
 
     </div>
     <div id="menu1" class="tab-pane fade tabContent" [hidden]="display1" >
       <div class="login_left">
-	 <form [formGroup]="LoginForm" (ngSubmit)="Submit()">	
+	 <form [formGroup]="LoginForm" (ngSubmit)="Submit()">
 		<div class="form-row">
-			
+
 		<div class="col-sm-6 float-left">
 		<label>Employee Code</label>
-         <input type="text" class="form-control" 
-		 formControlName="code" 
+         <input type="text" class="form-control"
+		 formControlName="code"
 		 [ngClass]="{'is-invalid': login && f.code.errors}"
 			(change)="sendTheNewValue($event)"  (keypress)="preventNonNumericalInput($event)">
 			<div *ngIf="login && f.code.errors" class="invalid-feedback text-danger">
 				 <div *ngIf="f.code.errors.required"><span>*Please supply code</span></div>
-                
+
 
 			</div>
-		 
+
 		</div>
 		<div class="col-sm-6 float-left">
 		<label>Name</label>
-         <input type="text" class="form-control"  
+         <input type="text" class="form-control"
 		 formControlName="name" readonly id="emp_name">
 		</div>
-			
+
 		</div>
-	
+
 		<div class="form-row ">
 		<div class="col-sm-6 float-left">
 		<label>Type</label>
             <select name="type"   formControlName="type"
 			[ngClass]="{'is-invalid': login && f.type.errors}" class="form-control">
-		
+
             <option value="" selected> Select</option>
 			<option value="E ">Engineer</option>
 			<option value="T ">Telecaller</option>
@@ -368,15 +376,15 @@
 			</select>
 			<div *ngIf="login && f.type.errors" class="invalid-feedback text-danger">
 				<div *ngIf="f.type.errors.required"><span>*Please supply type</span></div>
-			   
+
 
 		   </div>
-			
+
 		</div>
         <div class="col-sm-6 float-right">
             <label>Email</label>
-             <input type="email" class="form-control" 
-			 formControlName="Email" 
+             <input type="email" class="form-control"
+			 formControlName="Email"
 			 id="emp_email"
 			  [ngClass]="{'is-invalid': login && f.Email.errors}">
 			<div *ngIf="login && f.Email.errors" class="invalid-feedbackb text-danger">
@@ -387,15 +395,15 @@
 			</div>
         </div>
 
-		
-			
+
+
 		</div>
-		
-		
+
+
 		<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Password*</label>
-        <input type="password" class="form-control"  
+        <input type="password" class="form-control"
 		formControlName="pass"
 		[ngClass]="{'is-invalid': login && f.pass.errors}"
 		id="Passd_emp">
@@ -405,12 +413,12 @@
 		<span  style="word-wrap:break-word">
 			<input id="checkid3"  type="checkbox" (click)="mypassword()" class="mt-3 mb-1"/><span class="ml-2">Show Password</span>
 			</span>
-		
+
 		</div>
-			
+
 		<div class="col-sm-6 float-left">
 		<label>Confirm Password*</label>
-       <input type="password" class="form-control"  
+       <input type="password" class="form-control"
 	   formControlName="conpass"
 	   id="conpasswd"
 	   [ngClass]="{'is-invalid': login && f.conpass.errors}"
@@ -423,7 +431,7 @@
 			<input id="checkid4"  type="checkbox" (click)="myconfirm()" class="mt-3 mb-1"/><span class="ml-2">Show Password</span>
 			</span>
 		</div>
-		
+
 		</div>
 
 
@@ -445,33 +453,32 @@
 		<div class="form-row">
 			<div class="col-sm-6 float-left">
 			<label><strong>Enter the text as shown in the image</strong> </label>
-			<input type="text" class="form-control"  
+			<input type="text" class="form-control"
 			formControlName="captcha_emp"
 			[ngClass]="{'is-invalid': login && f.captcha_emp.errors}"
 			ondrop="return false" onpaste="return false">
 			<div *ngIf="login && f.captcha_emp.errors" class="invalid-feedback text-danger">
 				 <div *ngIf="f.captcha_emp.errors.required"><span>*Please supply captcha</span></div>
 			</div>
-			
-			
+
+
 			</div>
-				
+
 			<div class="col-sm-6 ">
-				
-				
-				<input type="text" class="form-control float-left " id="capt" oncopy="return false"  disabled 
-			
+
+
+				<input type="text" class="form-control float-left " id="capt" oncopy="return false"  disabled
+
 				>
 				<!-- <a (click)="refresh_captcha_emp()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a> -->
 			<i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" (click)="refresh_captcha_emp()" id="refresh"></i>
 
 				<small *ngIf="captch_employee" class="text-danger ml-2">*captcha mismatch</small>
-				
-		  
-			</div>
-		
+
+
 			</div>
 
+			</div>
 
 
 
@@ -480,39 +487,40 @@
 
 
 
-		
-		
+
+
+
 		<!--<div class="col-sm-12 float-left terms">
 		<label class="containerCK">Terms &amp; Condition Apply
 		<input type="checkbox" checked="checked">
 		<span class="checkmark"></span>
 		</label>
 		</div>-->
-		
+
 		<div class="col-sm-12 btnBack">
 		<!-- <button  >Login</button> -->
 		<button type="submit" [disabled]="button_disabled">Submit</button>
 		<!-- <input type="submit" value="Login" > -->
 		<!-- <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; SignUp failed...</div> -->
 		<div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
-		&nbsp; SignUp failed.Please try again after some time</div>	
+		&nbsp; SignUp failed.Please try again after some time</div>
 
 
-		
-		
+
+
 	</div>
 
 		</form>
-		
-		
+
+
 	</div>
-		
+
 		<br clear="all">
     </div>
   </div>
-		
-		
-		
+
+
+
 	</div>
 </div>
 
@@ -526,7 +534,7 @@
 		  <p>{{this.log_msg}}</p>
 		</div>
 	  </div>
-	 
+
 
 	</div>
 	<div class="modal-content">
@@ -539,13 +547,13 @@
 
   <div class="modal fade in" id="openmodal" >
 	<div class="modal-dialog modal-sm modal-dialog-centered">
-	
+
 	  <!-- Modal content-->
 	  <div class="modal-content">
 		<div class="modal-header p-2">
 		  <h4 class="modal-title text-center w-100 ">Warning!!</h4>
 		  <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-		   
+
 		  <button type="button" class="close pt-1 pr-4" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 			</button>
@@ -560,6 +568,6 @@
 		  <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
 		</div>
 	  </div>
-	  
+
 	</div>
   </div>
