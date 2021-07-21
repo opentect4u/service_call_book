@@ -42,7 +42,7 @@ query  getUserDetailsById($user_id:String!){
               '../../../assets/Login_assets/css/apps.css',
                '../../../assets/Login_assets/css/apps_inner.css',
               '../../../assets/Login_assets/css/res.css']
-            
+
 })
 export class LoginComponent implements OnInit {
    show_eye: boolean = false;
@@ -66,25 +66,25 @@ export class LoginComponent implements OnInit {
   x:any;
   load:any;
 
-  
-  
- 
- 
-  
- 
-  
+
+
+
+
+
+
+
   ngOnInit(): void {
-   
-    
+
+
 
      localStorage.setItem('address', '/')
-  
-    
+
+
     if(localStorage.getItem("Employee_signup")== '1'){
       this.successfull_register=false
 
     }
-      
+
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
     'O','P','Q','R','S','T','U','V','W','X','Y','Z',
     '1','2','3','4','5','6','7','8','9','0',
@@ -159,7 +159,7 @@ export class LoginComponent implements OnInit {
       // console.log("PassWord:" +this.f.password.value)
       console.log("Captcha;" +this.f.captcha.value);
       console.log(this.recaptcha.value);
-     
+
       if(this.f.captcha.value != this.recaptcha.value){
         this.captch=true;
         console.log("false")
@@ -168,10 +168,10 @@ export class LoginComponent implements OnInit {
         this.error_log=true;
         this.captch=false;
           console.log("dashboard")
-          
-        
+
+
           this.spinner.show();
-           
+
          this.apollo.watchQuery<any>({
             query: GET_POST_LOGIN,
             fetchPolicy: 'network-only',
@@ -179,20 +179,20 @@ export class LoginComponent implements OnInit {
               user_id:this.f.username.value,
               password:this.f.password.value
             }
-           
-    
-            
+
+
+
           }).valueChanges
             .subscribe(({ data}) => {
               console.log(data);
         //  localStorage.setItem("UserId",this.f.username.value);
-                  
+
 
 
                this.Success= data.userLogin.success;
                this.spinner.hide();
               //  console.log("Success:" +this.Success.user_status);
-               
+
                if( this.Success == 1){
                 localStorage.setItem('Active','1');
                 console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
@@ -200,10 +200,10 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem("user_Type",JSON.parse(data.userLogin.message)[0].user_type);
                 localStorage.setItem("user_name",JSON.parse(data.userLogin.message)[0].emp_name)
                 console.log("user_type:" +JSON.parse(data.userLogin.message)[0].user_type);
-                
-             
-               
-                 
+
+
+
+
                 localStorage.setItem('isLoggedIn',"true");
 
                 this.user=JSON.parse(data.userLogin.message);
@@ -211,42 +211,42 @@ export class LoginComponent implements OnInit {
                  console.log("success");
                  console.log("userid:" + this.user)
                  this.router.navigate(['/dashboard']);
-                 
- 
+
+
 
                }
                else if(this.Success == 0){
-                
-    
-               
+
+
+
                 this.error_for_user=JSON.parse(JSON.stringify(data.userLogin.message));
                 console.log("unsuccess:" +this.error_for_user);
                 console.log("Failure");
-                
+
                 this.error_log=false;
                 localStorage.setItem('isLoggedIn',"false");
 
                }
-               
-               
-            
-               
+
+
+
+
                else
                   this.spinner.hide();
                   this.showsnackbar();
-          },error=>{ 
+          },error=>{
             this.spinner.hide();
             this.showsnackbar()
            }
           );
-         
-       
-         
+
+
+
       }
     }
 
   }
- 
+
   showsnackbar() {
     // alert("error");
      this.x = document.getElementById("snackbar");
@@ -255,7 +255,7 @@ export class LoginComponent implements OnInit {
    }
 
   refresh_captcha(){
-      
+
        var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
       'O','P','Q','R','S','T','U','V','W','X','Y','Z',
       '1','2','3','4','5','6','7','8','9','0',
@@ -272,16 +272,16 @@ export class LoginComponent implements OnInit {
       this.recaptcha=document.getElementById("capt_login");
       this.recaptcha.value=sum;
       // this.load=document.getElementById("refresh")?.setAttribute("class",'fa fa-refresh');
-     
+
   }
-   
 
-    
 
-      
- 
-      
-  
+
+
+
+
+
+
 
 
   close_alert(){
@@ -296,8 +296,8 @@ export class LoginComponent implements OnInit {
     } else {
       this.show_password.type = "password";
     }
-     
+
   }
- 
+
 
 }
