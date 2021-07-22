@@ -236,14 +236,14 @@ export class SignupComponent implements OnInit {
     this.login=true;
     this.Email=document.getElementById("emp_email");
 
-     this.Name=document.getElementById("emp_name");
+
     console.log("Email:" +this.Email.value);
 
     //  this.f.Email.value=this.Email.value;
-    this.LoginForm.value.name=  this.Name.value;
+    // this.LoginForm.value.name=  this.Name.value;
     this.LoginForm.value.Email=  this.Email.value;
     this.f.Email.setValue(this.LoginForm.value.Email);
-    this.f.name.setValue(this.LoginForm.value.name);
+    // this.f.name.setValue(this.LoginForm.value.name);
     console.log(this.f);
 
    
@@ -358,7 +358,7 @@ export class SignupComponent implements OnInit {
        this.Email.value=this.details[0].email;
        console.log("Email:" +this.Email.value);
        console.log("Email");
-        this.LoginForm.value.name=this.Name.value;
+        // this.LoginForm.value.name=this.Name.value;
         this.LoginForm.value.Email=this.details[0].email;
         this.f.Email.setValue(this.LoginForm.value.Email);
         console.log(this.LoginForm.value);
