@@ -236,6 +236,7 @@ export class SignupComponent implements OnInit {
     this.login=true;
     this.Email=document.getElementById("emp_email");
 
+
     console.log("Email:" +this.Email.value);
 
     //  this.f.Email.value=this.Email.value;
@@ -244,6 +245,9 @@ export class SignupComponent implements OnInit {
     this.f.Email.setValue(this.LoginForm.value.Email);
     // this.f.name.setValue(this.LoginForm.value.name);
     console.log(this.f);
+
+   
+
     if(this.LoginForm.invalid){
      console.log("validation");
      return;
