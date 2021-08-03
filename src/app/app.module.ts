@@ -14,7 +14,7 @@ import { MmdashboardComponent } from './master/modulemaster/mmdashboard/mmdashbo
 import { AddempdashboardComponent } from './master/addemp/addempdashboard/addempdashboard.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
 import { DatePipe } from '@angular/common'
-
+import {MatButtonModule} from '@angular/material/button';
 
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from'@angular/material/paginator'
@@ -55,6 +55,7 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
 //import { GraphQLModule } from './graphql.module';
 // import { HttpClientModule } from '@angular/common/http';
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,13 +94,14 @@ import { ComponentNameComponent } from './master/addclient/component-name/compon
     AddrtComponent,
     ComponentNameComponent,
     RightclickoffDirective,
-    ControlkeyoffDirective
+    ControlkeyoffDirective,
+    TemplateComponent
 
 
   ],
   imports: [
     BrowserModule,
-    
+    MatButtonModule,
     AppRoutingModule,
     MatTableModule,
     MatPaginatorModule,

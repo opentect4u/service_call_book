@@ -90,7 +90,7 @@
                                         <input type="text" class="form-control" 
                                             name="cust_name" id="itemname" required="" #name11 (keyup)="prevent_null($event)">
                                          <span class="text-danger"
-                                        *ngIf="namevalid">*Please Enter Name</span>
+                                        *ngIf="namevalid&&prevent_init_name">*Please Enter Name</span>
                                         
 
                                     </div>
@@ -154,7 +154,7 @@
 
                                         </select>
                                          <span  class="text-danger"
-                                    *ngIf="distvalid">*Please Select District</span>
+                                    *ngIf="distvalid&&prevent_init_dist">*Please Select District</span>
 
 
                                     </div>
@@ -171,7 +171,7 @@
                                             <option value="{{c.client_id}}" *ngFor="let c of ctmdata">{{c.client_type}}</option>
                                         </select>
                                          <span  class="text-danger"
-                                        *ngIf="ctmvalid">*Please Select Client Type</span> 
+                                        *ngIf="ctmvalid&&prevent_init_ctm">*Please Select Client Type</span> 
 
 
                                     </div>
@@ -191,7 +191,7 @@
                                             
                                         </select>
                                         <span  class="text-danger"
-                                    *ngIf="oprnvalid">*Please Select Operational Mode</span>
+                                    *ngIf="oprnvalid&&prevent_init_oprn">*Please Select Operational Mode</span>
 
 
                                     </div>
@@ -297,7 +297,7 @@
                                             name="mobile_no" id="itemphone" #phone pattern="[0-9]*"
                                             (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
                                          <span  class="text-danger"
-                                        *ngIf="phonevalid">*Please Enter Mobile Number</span> 
+                                        *ngIf="phonevalid&&prevent_init_phone">*Please Enter Mobile Number</span> 
 
                                     </div>
 
@@ -311,7 +311,7 @@
                                         <!-- <span  class="text-danger ml-3"
                                         *ngIf="upload&&!email">*please Enter Email</span> -->
                                         <!-- <span class="text-danger" *ngIf="email_null">*Please Enter Email</span>  -->
-                                        <span class="text-danger" *ngIf="notavalidemail">{{confirm_email}}</span> 
+                                        <span class="text-danger" *ngIf="notavalidemail&&prevent_init_email">{{confirm_email}}</span> 
 
 
                                     </div>
@@ -468,7 +468,7 @@
                             </div>  -->
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
-                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="namevalid||phonevalid||status||ctmvalid||oprnvalid||distvalid||mode_select" (click)="send_data(name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="namevalid||phonevalid||status||ctmvalid||oprnvalid||distvalid||mode_select||notavalidemail" (click)="send_data(name11.value,dist.value,comp.value,ctm.value,address.value,contact.value,designation.value,phone.value,em.value,amcupto.value,rentalupto.value,remarks.value,amcrentalradio.value,activeinactiveradio.value,workinghours.value)"
                                             value="Submit">
                                             <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset</button>
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->

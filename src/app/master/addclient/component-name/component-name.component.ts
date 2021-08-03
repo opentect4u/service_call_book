@@ -141,6 +141,7 @@ export class ComponentNameComponent implements OnInit {
   clidselect:any;
   amcdate:any;
   rentaldate:any;
+  x:any;
   constructor(private datepipe:DatePipe,private router:Router,private apollo:Apollo,private route:ActivatedRoute){ }
   item:any;
   posts:any;
@@ -152,8 +153,16 @@ export class ComponentNameComponent implements OnInit {
   userdata:any;
   active1:boolean=false;
   active2:boolean=false;
-
+  namevalid=true;
+  phonevalid=true;
+  prevent_init_name=false;
+  prevent_init_phone=false;
+  input_name:any;
+  input_phone:any;
+  
   ngOnInit(): void {
+    this.input_name=document.getElementById('itemname');
+    this.input_phone=document.getElementById('itemphone');
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
       variables:{
@@ -360,12 +369,49 @@ export class ComponentNameComponent implements OnInit {
         localStorage.setItem('updatec','1');
         this.router.navigate(['/addclient/dashboard'])
       }
+      else{
+        this.showsnackbar();
+      }
       
-    });
+      
+    }, error=>{ this.showsnackbar()});
     // console.log(cd+" "+name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
 
   }
-prevent_null(e:any){this.done=false;}
+  showsnackbar() {
+   // alert("error");
+    this.x = document.getElementById("snackbar");
+    this.x.className = "show";
+    setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+  }
+prevent_null(e:any){this.done=false;
+
+  if(e.target.id=='itemname')
+  {
+    if(e.target.value=='')
+    {
+      this.namevalid=true; this.prevent_init_name=true; this.done=true;
+      this.input_name.style.border="solid red 1px"
+     // this.hide_val=true;
+    }
+    else
+     {this.done=false;this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"; this.prevent_init_name=false;}
+  }
+  else if(e.target.id=='itemphone')
+  {
+    if(e.target.value=='')
+    {
+      this.phonevalid=true;
+      this.prevent_init_phone=true;
+      this.done=true;
+      this.input_phone.style.border="solid red 1px"
+      //this.hide_val=true;
+    }
+    else
+     {this.done=false; this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"; this.prevent_init_phone=false;}
+  }
+
+}
 change_rentalupto(v:any){}
 select_status(){}
 select_mode(){}
@@ -373,6 +419,12 @@ change_amcupto(v:any){}
 select_district(v:any){}
 select_client_type(v:any){}
 select_operation(v:any){}
-preventNonNumericalInput(e:any){}
+preventNonNumericalInput(e:any){ e = e || window.event;
+    
+  var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
+  var charStr = String.fromCharCode(charCode);
+
+  if (!charStr.match(/^[0-9]+$/))
+   { e.preventDefault();}}
 check_email_validity(e:any){}
 }
