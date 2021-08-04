@@ -20,7 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from'@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { AddclienttypeComponent } from './master/clienttypemaster/ctmdashboard/addclienttype/addclienttype.component';
@@ -52,13 +52,13 @@ import { EditatComponent } from './operations/assignticket/editat/editat/editat.
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
-import { NgxSpinnerModule } from "ngx-spinner";  
+import { NgxSpinnerModule } from "ngx-spinner";
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 // import {MatButtonModule} from '@angular/material/button';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-import { NgSelectModule } from '@ng-select/ng-select'; 
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
@@ -72,8 +72,10 @@ import {MatRadioModule} from '@angular/material/radio';
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
 
-
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogmodalComponent } from './login_reg_emp_client/dialogmodal/dialogmodal.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -88,8 +90,7 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     MmdashboardComponent,
     AddempdashboardComponent,
     AddclientdashboardComponent,
-    //AddctmComponent,
-    AddclienttypeComponent,
+   AddclienttypeComponent,
     AddomComponent,
     AddtsComponent,
     AddpmComponent,
@@ -114,16 +115,13 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     ComponentNameComponent,
     RightclickoffDirective,
     ControlkeyoffDirective,
-
-
-    TemplateComponent,
-
-
-    UsermaintananceComponent,
+      TemplateComponent,
+      UsermaintananceComponent,
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent,
-    EdittktComponent
+    EdittktComponent,
+    DialogmodalComponent
 
   ],
   imports: [
@@ -147,15 +145,17 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     MatButtonModule,
     NgxSpinnerModule,
     MatRadioModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    MatDialogModule,
+    MatIconModule,
+    MatMenuModule
 
-    
-   
-  ],
+],
+
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
   bootstrap: [AppComponent],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

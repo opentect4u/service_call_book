@@ -38,7 +38,7 @@ mutation createTkt($client_id:String!,$tkt_module:String!,$phone_no:String!,$pri
                     $prob_reported:String!,$remarks:String!,$user_id:String!) {
   createTkt(client_id: $client_id, tkt_module: $tkt_module, phone_no: $phone_no, priority_status: $priority_status ,
             prob_reported:$prob_reported,remarks:$remarks,user_id:$user_id ) {
-    
+
     success
     message
   }
@@ -46,10 +46,10 @@ mutation createTkt($client_id:String!,$tkt_module:String!,$phone_no:String!,$pri
 ;
 
 
-// For Filling  the readonly field  by using client type 
+// For Filling  the readonly field  by using client type
  const GET_POST_DATA_USING_CLIENTTYPE=gql`
- 
- query getClient($id:String!,$active:String!){  
+
+ query getClient($id:String!,$active:String!){
     getClient(id:$id, active:$active){
      district_name
      client_type
@@ -68,16 +68,16 @@ mutation createTkt($client_id:String!,$tkt_module:String!,$phone_no:String!,$pri
 @Component({
   selector: 'app-addrt',
   templateUrl: './addrt.component.html',
-  styleUrls: ['./addrt.component.css', 
+  styleUrls: ['./addrt.component.css',
   '../../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../../assets/masters_css_js/css/apps.css',
   '../../../../../assets/masters_css_js/css/apps_inner.css',
   '../../../../../assets/masters_css_js/css/res.css']
 })
 export class AddrtComponent implements OnInit {
-  
+
   // idfield:any=[{item_id:'',item_name:''}];
-   
+
 
 
   constructor(private apollo:Apollo,private route:Router) {
@@ -127,13 +127,13 @@ export class AddrtComponent implements OnInit {
     localStorage.setItem('insertickit','0');
 
     this.input_phone=document.getElementById('itemphone');
-    
+
     this.input_issue=document.getElementById('itemissue');
 
     localStorage.setItem('address','/operations/addraiseticket');
     this.apollo.watchQuery<any>({
       query: SHOW_MM
-     
+
     })
       .valueChanges
       .subscribe(({ data }) => {
@@ -142,17 +142,17 @@ export class AddrtComponent implements OnInit {
         console.log(data);
         this.moddata=this.mod.getModuleTypeData
         // console.log(this.ctmdata);
-        
-       
+
+
        //this.putdata(this.posts);
       });
      this.apollo.watchQuery<any>({
         query: SHOW_PM,
-        
+
       })
         .valueChanges
         .subscribe(({ data, loading }) => {
-         
+
           this.posts_pm = data;
           this.pmdata=this.posts_pm.getPriorityModeData
           console.log(this.posts_pm);
@@ -168,13 +168,13 @@ export class AddrtComponent implements OnInit {
         })
           .valueChanges
           .subscribe(({ data, loading }) => {
-            
+
             this.posts = data;
            console.log(data)
            this.ctmdata=this.posts.getClient;
-            
+
            });
-          
+
            $('.select2').select2({})
            .on("select2:select",  (e:any) => {
             // have to fire our own change event because value set in JS
@@ -184,13 +184,13 @@ export class AddrtComponent implements OnInit {
             console.log("select2:select",e.params.data.text);
              this.select_client(e.params.data.id);
          });
-         
-          
+
+
   }
 
- 
-  
-  
+
+
+
 
 
   public select_client(v:any){
@@ -215,8 +215,8 @@ export class AddrtComponent implements OnInit {
       }).valueChanges
       .subscribe(({ data, loading }) => {
         console.log(data);
-       
-           
+
+
            this.district_name=data.getClient[0].district_name;
            this.client_type=data.getClient[0].client_type;
            this.oprn_mode_id=data.getClient[0].oprn_mode;
@@ -224,7 +224,7 @@ export class AddrtComponent implements OnInit {
            this.amc_upto=data.getClient[0].amc_upto;
            this.rental_upto=data.getClient[0].rental_upto;
            this.phone_no=data.getClient[0].phone_no;
-          
+
 
           })
 
@@ -244,6 +244,7 @@ export class AddrtComponent implements OnInit {
     }
   }
   select_priority(v:any){
+    console.log(v);
     if(v=='')
     {
       this.prior_val=true;
@@ -256,7 +257,7 @@ export class AddrtComponent implements OnInit {
     }
   }
   preventNonNumericalInput(e:any){e = e || window.event;
-    
+
     var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
     var charStr = String.fromCharCode(charCode);
 
@@ -294,20 +295,20 @@ export class AddrtComponent implements OnInit {
         this.prevent_init_issue=false;this.issue_val=false;this.input_issue.style.border="solid lightgrey 1px"}
 
     }
-  
+
   }
   clearfield(){
     this.spinshow=true;
     setTimeout(()=>{this.spinshow=false;;},1000);
     location.reload();
-   
+
     // this.spinshow=false;
 
-   
+
   }
 
   go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
-    // console.log("Date:" +this.cl_id); 
+    // console.log("Date:" +this.cl_id);
     console.log("Date:" +v1);
     console.log("Client:" +v2);
     // console.log("District:" +v3);
@@ -322,16 +323,16 @@ export class AddrtComponent implements OnInit {
     // console.log("issue:" +v12);
     // console.log("remarks:" +v13);
     this.user=localStorage.getItem("UserId")
-   
+
     this.apollo.mutate({
       mutation: GET_POST_update,
       variables:{
          client_id:v2,
          tkt_module:v11,
          phone_no: v9,
-         priority_status:v10, 
+         priority_status:v10,
         prob_reported: v12,
-        remarks:v13, 
+        remarks:v13,
         user_id:this.user
 
       }
@@ -341,7 +342,7 @@ export class AddrtComponent implements OnInit {
      console.log("success:" +this.success.createTkt.success);
      if(this.success.createTkt.success==1){
       localStorage.setItem('insertickit','1');
-           
+
           this.successmsg=this.success.createTkt.message;
           this.route.navigate(['/operations/raiseticket']);
      }
@@ -349,7 +350,7 @@ export class AddrtComponent implements OnInit {
      this.showsnackbar();
      },error=>{ this.showsnackbar()
      });
-   
+
 
   }
   showsnackbar() {
@@ -373,7 +374,7 @@ export class AddrtComponent implements OnInit {
 
 
 
-  
+
 
 
 }

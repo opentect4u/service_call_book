@@ -210,7 +210,7 @@
          <input type="text" class="form-control"
 		 formControlName="client_code"
 		  [ngClass]="{'is-invalid': login_c && c.client_code.errors}"
-		  >
+      (change)="preventNonNumericalInput_forClient($event)">
 		  <div *ngIf="login_c && c.client_code.errors" class="invalid-feedback text-danger">
 			<div *ngIf="c.client_code.errors.required"><span>*Please supply code</span></div>
 		  </div>
@@ -218,14 +218,14 @@
 		<div class="col-sm-6 float-left">
 		<label>Client name</label>
            <input type="text" class="form-control" value=" " readonly
-		   formControlName="client_name">
+		   formControlName="client_name" id="name">
 		</div>
 
 		</div>
-		<div class="form-row">
+	<div class="form-row">
 		<div class="col-sm-6 float-left">
 		<label>Email</label>
-         <input type="email" class="form-control"
+         <input type="email" class="form-control" id="c_email"
 		 formControlName="client_email"  [ngClass]="{'is-invalid': login_c && c.client_email.errors}">
 		 <div *ngIf="login_c && c.client_email.errors" class="invalid-feedback text-danger">
 			<div *ngIf="c.client_email.errors.required"><small>*Please supply email</small></div>
@@ -236,8 +236,11 @@
 
 		</div>
 
+    <div class="col-sm-6 float-left">
+      <input type="text" class="form-control"  formControlName="client_type" [hidden]="true">
+    </div>
 
-		</div>
+	</div>
 
 
         <div class="form-row">
@@ -573,3 +576,5 @@
 
 	</div>
   </div>
+
+  <button mat-button [hidden]="true" id="clickdialog">Launch dialog</button>

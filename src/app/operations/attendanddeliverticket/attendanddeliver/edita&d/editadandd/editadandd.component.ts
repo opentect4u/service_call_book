@@ -3,13 +3,14 @@ import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import {formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common'
 declare const $: any;
 // For update Deliver&Attendent Tickite
 
 const EDITABLE=gql`
 mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
  $tkt_status:String!,$remarks:String!,$user_id:String!,$work_status:String!) {
-  
+
   updateDeliverTkt(id:$id
       call_attend:$call_attend
       delivery:$delivery
@@ -64,13 +65,18 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     tktStatus
     tkt_status
     emp_name,
-    log_in
+    log_in,
+    work_status,
+    call_attend,
+    delivery,
+    work_status
+
   }
-}` 
+}`
 @Component({
   selector: 'app-editadandd',
   templateUrl: './editadandd.component.html',
-  styleUrls: ['./editadandd.component.css', 
+  styleUrls: ['./editadandd.component.css',
   '../../../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../../../assets/masters_css_js/css/apps.css',
   '../../../../../../assets/masters_css_js/css/apps_inner.css',
@@ -106,43 +112,48 @@ export class EditadanddComponent implements OnInit {
 
   attended:any;
   dateitem:any;
-  valid_init=true;
-  valid_init_at=true;
-  valid_init_de=true;
+  valid_init=false;
+  valid_init_at=false;
+  valid_init_de=false;
   input_attended:any;
   input_delivery:any;
   Remarks:any;
   x:any;
+  attend:any;
    input:any;
+   c:any;
+   d:any;
+   w:any;
   // delive:boolean=true;
   for_issue_error:boolean=false;
   valid_issue:boolean=true;
+  deliv:any;
   // valid_init_work:boolean=true;
   issue:any;
   work:any;
   wrork_stat:boolean=false;
-  constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
+  constructor(public datepipe: DatePipe,private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
-   
+
    this.issue=document.getElementById("itemissue");
    console.log("empty:" +this.issue.value)
-   
-   
+
+
     this.work=document.getElementById("wrkstatus")
     localStorage.setItem('Active', '1');
     this.input_delivery=document.getElementById('itemdeliveryat')
     this.input_attended=document.getElementById('itemattendedat')
     var iso = new Date().toISOString();
     var minDate = iso.substring(0,iso.length-1);
-        
-         
+
+
     this.input_attended.min=minDate;
     // this.input_delivery.min=minDate;
-    
-    
-          
+
+
+
     localStorage.setItem('attendent','0');
-   
+
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
     console.log("pathname:" +decodeURIComponent(this.pathname));
@@ -151,8 +162,8 @@ export class EditadanddComponent implements OnInit {
 
 
     this.dateitem=document.getElementById('itemdate');
-   
-    
+
+
     this.apollo.watchQuery<any>({
       query: SHOW_TS,
       //pollInterval:100
@@ -176,16 +187,16 @@ export class EditadanddComponent implements OnInit {
              id: this.id,
               user_type:localStorage.getItem('user_Type'),
               user_id:localStorage.getItem('UserId')
-             
+
           },
           pollInterval:500
-          
+
         })
           .valueChanges
           .subscribe(({ data}) => {
-  
+
             console.log(data);
-  
+
             this.tkt_no=data.getSupportLogDtls[0].tkt_no;
             this.client_name=data.getSupportLogDtls[0].client_name;
              this.district_name=data.getSupportLogDtls[0].district_name;
@@ -203,11 +214,38 @@ export class EditadanddComponent implements OnInit {
             this.TktStatus=data.getSupportLogDtls[0].tktStatus;
             this.tktid=data.getSupportLogDtls[0].tkt_status;
             this.logDate=data.getSupportLogDtls[0].log_in;
+            this.c=data.getSupportLogDtls[0].call_attend;
+            this.d=data.getSupportLogDtls[0].delivery;
+            this.w=data.getSupportLogDtls[0].work_status;
+            this.c =this.datepipe.transform(this.c, 'yyyy-MM-ddTHH:mm:ss');
+            this.d=this.datepipe.transform(this.d, 'yyyy-MM-ddTHH:mm:ss');
+
+
             console.log( this.tkt_no)
            console.log(this.client_name);
            console.log( this.district_name);
            console.log(this.client_type);
            console.log(this.oprn_mode);
+           console.log(this.c,this.d,this.w)
+
+           if(this.c==''){
+             console.log("c")
+            this.valid_init_at=true;
+           }
+
+          if(this.d==''){
+            console.log("d")
+           this.valid_init_de=true;
+          }
+
+          if(this.w==''){
+            console.log("d")
+           this.valid_init=true;
+          }
+
+
+
+
 
            if(this.prob_reported==''){
                         this.for_issue_error=true;
@@ -217,11 +255,11 @@ export class EditadanddComponent implements OnInit {
                 this.for_issue_error=false;
                 this.valid_issue=false;
            }
-          
-            
-  
+
+
+
           })
-        
+
       })
 
  }
@@ -238,11 +276,11 @@ export class EditadanddComponent implements OnInit {
 else{
   this.input_delivery=document.getElementById('itemdeliveryat')
   this.input_delivery.min=this.input_attended.value;
-} 
+}
  }
- 
 
- 
+
+
   preventNonNumericalInput(e:any){}
 
   go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any,v14:any,v15:any,v16:any,v17:any,v18:any,v19:any){
@@ -277,7 +315,7 @@ else{
       mutation: EDITABLE,
       variables:{
         id:this.id,
-        call_attend:v15, 
+        call_attend:v15,
         delivery:v16.toString(),
         tkt_status:v17,
         remarks:v18,
@@ -298,17 +336,17 @@ else{
       },error=>{ this.showsnackbar()
       });
 
-    
+
   }
   showsnackbar() {
-    
+
      this.x = document.getElementById("snackbar");
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
    wrk_select(v:any){
      console.log(v);
-   
+
     if(v==''){
       this.wrork_stat=true;
       // this.valid_init_work=true;
@@ -326,7 +364,7 @@ else{
 
 
   prevent_null(e:any){
-    
+
 
      console.log(e.target.value);
     if(e.target.id=="itemattendedat")
@@ -343,7 +381,7 @@ else{
       }
       else
 
-       {   
+       {
         // this.delive=false;
        this.mobile=false;
          this.valid_init_at=false;
@@ -363,15 +401,15 @@ else{
       }
       else
 
-       { 
+       {
         this.input=e.target.valuel
         console.log(e.target.value)
-       this.phonmobile=false; 
+       this.phonmobile=false;
          this.valid_init_de=false;
        this.input_delivery.style.border="solid lightgrey 1px"}
 
     }
-  
+
   }
   tkt_select(v:any){
     this.tickit=document.getElementById("tktstatus")

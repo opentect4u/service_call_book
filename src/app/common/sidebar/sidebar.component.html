@@ -1,13 +1,13 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-		
+
     <ul id="accordion" class="accordion">
   <li>
   <div class="link"><a a routerLinkActive="true" routerLink="/dashboard"><i class="fa fa-tachometer"></i>Dashboard</a></div>
   </li>
-  
-  
- 
-  
+
+
+
+
     <!-- <li>
       <div class="link" (click)="openclosedropdown()"><i class="fa fa-mobile"></i>Admin<i class="fa fa-chevron-down" id="down" ></i></div>
       <ul class="submenu" id="openclose">
@@ -15,9 +15,9 @@
         <li><a  routerLinkActive="true" routerLink="/stackholders">Stakeholder</a></li>
       </ul>
     </li> -->
-  
 
-   
+
+
     <li *ngIf="u_type=='A' || u_type=='M' || u_type=='T'">
         <div class="link" (click)="openclosedropdown()"><i class="fa fa-bars"></i>Masters<i class="fa fa-chevron-down " id="down1" ></i></div>
         <ul class="submenu" id="openclose1" >
@@ -31,17 +31,17 @@
 
         </ul>
     </li>
-    
+
       <li>
         <div  class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
           <li [hidden]="Etype"><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
           <li [hidden]="utype || Etype"><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
           <li [hidden]="utype"><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
-         
 
-          
-         
+
+
+
 
         </ul>
       </li>
@@ -55,14 +55,14 @@
           <li><a>Search by dates </a></li>
           <li><a>search by Tickect no</a></li>
         </ul>
-  
+
       </li>
 
 
 
 
 
-      
+
     <li *ngIf="u_type=='A' || u_type=='M'">
       <div  class="link" (click)="opencloseadminsubmenu()"><i class="fa fa-user" aria-hidden="true"></i>Admin<i class="fa fa-chevron-down "></i></div>
       <ul class="submenu" id="openclose_admin">
@@ -71,39 +71,39 @@
       </ul>
 
     </li>
-    
-  
+
+
   <li>
   <div class="link log" data-toggle="modal" data-target="#mymodal" ><i class="fa fa-sign-out" ></i>Log out</div>
   </li>
-          
-          
-     
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </ul>
-  
-  
-    
-  
-  
-  
-     
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
   </nav>
 
 
@@ -111,16 +111,16 @@
 
 
 
-  
+
 <div class="modal fade in" id="mymodal" >
   <div class="modal-dialog modal-sm modal-dialog-centered">
-  
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-center w-100 ">Alert!!</h4>
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-         
+
         <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
@@ -135,26 +135,26 @@
         <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
       </div>
     </div>
-    
+
   </div>
 </div>
 
 
 
-  
-  
-  
-<!-- 
+
+
+
+<!--
  <div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-    
-      
+
+
       <div class="modal-header">
         <h6 class="modal-title w-100 text-center">Alert!!</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      
+
 
       <div class="modal-body text-center ">
        <p>Are you sure you want to log out?</p>
@@ -163,34 +163,33 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="logout()">Ok</button>
-       
+
       </div>
-      
+
     </div>
   </div>
 </div> -->
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
