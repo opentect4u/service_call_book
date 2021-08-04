@@ -51,7 +51,7 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
-
+import { ToastrModule } from 'ng6-toastr-notifications';
 import { NgxSpinnerModule } from "ngx-spinner";  
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 // import {MatButtonModule} from '@angular/material/button';
@@ -62,6 +62,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
+
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
 import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
@@ -71,6 +72,11 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
+import { SearchByDateComponent } from './search/search-by-date/search-by-date.component';
+import { SearchByTicketComponent } from './search/search-by-ticket/search-by-ticket.component';
+import { ClientHeaderComponent } from './common/client-header/client-header.component';
+import { ViewComponent } from './search/view/view.component';
+
 
 
 
@@ -116,6 +122,7 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     ControlkeyoffDirective,
 
 
+
     TemplateComponent,
 
 
@@ -123,7 +130,11 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent,
-    EdittktComponent
+    EdittktComponent,
+    SearchByDateComponent,
+    SearchByTicketComponent,
+    ClientHeaderComponent,
+    ViewComponent
 
   ],
   imports: [
@@ -147,8 +158,8 @@ import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.compo
     MatButtonModule,
     NgxSpinnerModule,
     MatRadioModule,
-    AutocompleteLibModule
-
+    AutocompleteLibModule,
+    ToastrModule.forRoot()
     
    
   ],

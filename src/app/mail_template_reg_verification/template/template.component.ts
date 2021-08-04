@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, state, transition, animate } from '@angular/animations'
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 
@@ -11,6 +12,7 @@ mutation  approveUser($email_id:String!){
  }
 
 }`
+
 
 
 @Component({
@@ -45,6 +47,7 @@ mutation  approveUser($email_id:String!){
 export class TemplateComponent implements OnInit {
   message = true;
   loginbtn = true;
+
   url:any;
   x:any;
   constructor(private router:Router,private route: ActivatedRoute,private apollo:Apollo) {}
@@ -118,4 +121,5 @@ export class TemplateComponent implements OnInit {
 //   document.getElementById("demo1").innerHTML = d;
 //   document.getElementById("demo").innerHTML = c;
 // }
+
 }

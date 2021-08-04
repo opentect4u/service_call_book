@@ -52,8 +52,8 @@
       <li>
         <div  class="link" (click)="openclosesearchticket()"><i class="fa fa-search" aria-hidden="true"></i>Search Ticket<i class="fa fa-chevron-down "></i></div>
         <ul class="submenu" id="openclose_searchtkt">
-          <li><a>Search by dates </a></li>
-          <li><a>search by Tickect no</a></li>
+          <li><a data-toggle="modal" data-target="#mymodal_dt" (click)="make_date_true()">Search by Date </a></li>
+          <li><a data-toggle="modal" data-target="#mymodal_tkt" (click)="make_true()">Search by Ticket No.</a></li>
         </ul>
   
       </li>
@@ -130,6 +130,80 @@
       </div>
       <div class="modal-footer p-3">
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="logout()">Ok</button>
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
+        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
+        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
+      </div>
+    </div>
+    
+  </div>
+</div>
+<div class="modal fade in" id="mymodal_dt" >
+  <div class="modal-dialog modal-md modal-dialog-centered">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center w-100 "><b>Please enter a date range</b></h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+         
+        <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            
+              <div class="col">
+                <label for="frm">From :</label>
+                <input id="frm" class="form-control" type="date" #from_date (change)="prevent_null_frm()">
+              </div>
+              <div class="col">
+                <label for="t">To :</label>
+                <input id="t" class="form-control" type="date" #to_date (change)="prevent_null_to()">
+              </div>
+          
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer p-3">
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" [disabled]="done_dt" (click)="srch_dt(from_date.value,to_date.value)">Submit</button>
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
+        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
+        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
+      </div>
+    </div>
+    
+  </div>
+</div>
+<div class="modal fade in" id="mymodal_tkt" >
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center w-100 ">Please enter a Ticket Number</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+         
+        <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+              
+                
+                <input id="tkt_no" class="form-control" type="text" placeholder="Ticket No." #tkt_ref (keyup)="prevent_null($event)">
+                <span class="text-danger" *ngIf="done && prevent">Please enter a Ticket No.</span>
+              
+            
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer p-3">
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" [disabled]="done" (click)="srch_tkt(tkt_ref.value)">Submit</button>
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
         <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
         <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->

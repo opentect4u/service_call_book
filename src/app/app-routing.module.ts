@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ViewChild } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -44,6 +44,9 @@ import { EditadanddComponent } from './operations/attendanddeliverticket/attenda
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
+import { SearchByDateComponent } from './search/search-by-date/search-by-date.component';
+import { SearchByTicketComponent } from './search/search-by-ticket/search-by-ticket.component';
+import { ViewComponent } from './search/view/view.component';
 
 const routes: Routes = [
   {
@@ -216,6 +219,7 @@ const routes: Routes = [
   {
 
 
+
     path:'template',
     canActivate:[LoginGuard],
     component:TemplateComponent
@@ -244,6 +248,19 @@ const routes: Routes = [
     component:AddnotifyComponent
 
 
+
+  },
+  {
+    path:'search_ticket/:id',
+    component:SearchByTicketComponent
+  },
+  {
+    path:'search_date/:id1/:id2',
+    component:SearchByDateComponent
+  },
+  {
+    path:'view/:id1/:id2',
+    component:ViewComponent
   }
 
 

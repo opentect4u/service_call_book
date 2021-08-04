@@ -185,7 +185,7 @@ export class LoginComponent implements OnInit {
           }).valueChanges
             .subscribe(({ data}) => {
               console.log(data);
-        //  localStorage.setItem("UserId",this.f.username.value);
+          // localStorage.setItem("user_email",this.f.username.value);
 
 
 
@@ -198,7 +198,8 @@ export class LoginComponent implements OnInit {
                 console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
                 localStorage.setItem("UserId",JSON.parse(data.userLogin.message)[0].code_no);
                 localStorage.setItem("user_Type",JSON.parse(data.userLogin.message)[0].user_type);
-                localStorage.setItem("user_name",JSON.parse(data.userLogin.message)[0].emp_name)
+                localStorage.setItem("user_name",JSON.parse(data.userLogin.message)[0].emp_name);
+                localStorage.setItem("user_email",this.f.username.value)
                 console.log("user_type:" +JSON.parse(data.userLogin.message)[0].user_type);
 
 
