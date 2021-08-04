@@ -53,8 +53,7 @@ import { EditadanddComponent } from './operations/attendanddeliverticket/attenda
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
 import { NgxSpinnerModule } from "ngx-spinner";
-// import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
-// import {MatButtonModule} from '@angular/material/button';
+
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
@@ -76,6 +75,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogmodalComponent } from './login_reg_emp_client/dialogmodal/dialogmodal.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+
+import { ToastrModule } from 'ngx-toastr';
+import { NotificationService } from './service/notification.service';
+import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
+import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +125,9 @@ import {MatMenuModule} from '@angular/material/menu';
     AddnotifyComponent,
     EditnotifyComponent,
     EdittktComponent,
-    DialogmodalComponent
+    DialogmodalComponent,
+    ClientraisetktComponent,
+    AddclientraisetktComponent
 
   ],
   imports: [
@@ -148,11 +154,17 @@ import {MatMenuModule} from '@angular/material/menu';
     AutocompleteLibModule,
     MatDialogModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: false,
+    }),
 
 ],
 
-  providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
+  providers: [NotificationService,
+    {provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
   bootstrap: [AppComponent],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })

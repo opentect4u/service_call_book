@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     this.emp_name= this.name == 'null' ? 'Admin' : localStorage.getItem('user_name');
     console.log(this.emp_name);
     var user_type = localStorage.getItem('user_Type');
-    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' : 'Viewer')));
+    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' : (user_type == 'V' ? 'Viewer' : 'Client'))));
   },500);
   }
 

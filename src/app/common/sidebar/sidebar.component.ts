@@ -34,11 +34,13 @@ export class SidebarComponent implements OnInit {
   searchtkt:any;
   utype:boolean=true;
   Etype:boolean=true;
+  Ctype:boolean=true;
   user:any;
   old_u_type:any;
+
   constructor(private router:Router,private apollo:Apollo) {
-   
- 
+
+
    }
 
   ngOnInit(): void {
@@ -50,16 +52,18 @@ export class SidebarComponent implements OnInit {
       },
       pollInterval:500
 
-      
+
     }).valueChanges
     .subscribe(({ data}) => {
       console.log(data);
      localStorage.setItem('user_Type',data.getUserDetailsById[0].user_type) ;
       this.u_type=localStorage.getItem('user_Type');
-      // if(data.getUserDetailsById[0].user_status=='D'){
-      //   this.router.navigate(['/']);
-      // }
-      // else{
+            if(this.u_type=='C'){
+              this.Ctype=true;
+            }
+            else{
+              this.Ctype=false;
+            }
 
         if(this.u_type=='T'){
         this.utype=true;
@@ -78,26 +82,13 @@ export class SidebarComponent implements OnInit {
           this.old_u_type=this.u_type;
           this.router.navigate(['/dashboard'])
         }
-//  }  
+
     })
- 
+}
+openclosedropdown1(){
 
-
-   
-    
-    // setInterval(()=>{alert(localStorage.getItem('user_Type'));},6000)
-   
-  }
-    
-
- 
-  
-
-
-  openclosedropdown1(){
-    
     this.u_type=localStorage.getItem('user_Type');
-   
+
     this.store=document.getElementById('openclose');
     console.log(this.store.style);
     this.marker1=document.getElementById('openclose1');
@@ -106,19 +97,19 @@ export class SidebarComponent implements OnInit {
     if( this.u_type=='A'||  this.u_type=='M' || this.u_type=='T'){
     if(this.store.style.display=='block'){
         this.store.style.display='none';
-      
-        
+
+
       this.marker=document.getElementById('down');
 
-    
+
       console.log("block");
      }
      else{
-      
+
       this.marker1.style.display='none';
       this.store.style.display='block';
       this.searchtkt.style.display='none';
-      
+
       console.log(this.store);
       console.log("none");
       if( this.u_type=='A'||  this.u_type=='M'){
@@ -135,25 +126,25 @@ export class SidebarComponent implements OnInit {
     this.store=document.getElementById('openclose');
     if(this.store.style.display=='block'){
       this.store.style.display='none';
-    
-      
+
+
       this.marker=document.getElementById('down');
 
-  
+
     console.log("block");
    }
    else{
        this.store.style.display='block';
        this.searchtkt.style.display='none';
       //  this.admindropdown.style.display='none';
-    
+
    }
 
     }
 
-   
-    
-    
+
+
+
     }
 
     openclosedropdown(){
@@ -162,31 +153,31 @@ export class SidebarComponent implements OnInit {
        this.store=document.getElementById('openclose1');
        this.admindropdown=document.getElementById('openclose_admin');
        this.searchtkt=document.getElementById('openclose_searchtkt');
-        
+
        if(this.store.style.display=='block'){
-    
+
         this.store.style.display='none';
         // this.admindropdown.style.dispaly='none'
 
       this.marker=document.getElementById('down1');
-    
+
       console.log("block");
      }
      else{
       this.marker1.style.display='none';
-     
+
       if(this.u_type=='A'||this.u_type=='M')
       this.admindropdown.style.display='none';
-    
+
       this.searchtkt.style.display='none';
 
       this.store.style.display='block';
-      
-   
+
+
       console.log("none");
 
      }
-    
+
 
 
 
@@ -200,7 +191,7 @@ export class SidebarComponent implements OnInit {
       if( this.u_type=='A'||  this.u_type=='M'){
       if(this.admindropdown.style.display == 'block'){
         this.admindropdown.style.display='none';
-        
+
 
 
       }
@@ -219,13 +210,13 @@ export class SidebarComponent implements OnInit {
     //   this.searchtkt=document.getElementById('openclose_searchtkt');
     //   if(this.admindropdown.style.display == 'block'){
     //     this.admindropdown.style.display='none';
-        
+
 
 
     //   }
     //   else{
     //     this.store.style.display='none';
-        
+
     //     this.searchtkt.style.display='none';
     //     this.admindropdown.style.display='block';
 
@@ -256,13 +247,13 @@ export class SidebarComponent implements OnInit {
         if(this.u_type=='A' || this.u_type=='M'){
           this.admindropdown.style.display='none';
         }
-        
+
 
       }
     }
     else{
       this.marker1=document.getElementById('openclose');
-     
+
       this.searchtkt=document.getElementById('openclose_searchtkt');
       if(this.searchtkt.style.display == 'block')
       {
@@ -270,7 +261,7 @@ export class SidebarComponent implements OnInit {
       }
       else{
         this.marker1.style.display='none';
-      
+
         this.searchtkt.style.display='block';
 
       }
@@ -280,10 +271,10 @@ export class SidebarComponent implements OnInit {
 
     }
 
-   
 
 
-    
+
+
     logout(){
       localStorage.clear();
       localStorage.setItem('isLoggedIn',"false");

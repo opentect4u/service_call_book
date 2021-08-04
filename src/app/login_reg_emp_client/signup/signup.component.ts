@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import {MatDialog} from '@angular/material/dialog';
+import { NotificationService } from 'src/app/service/notification.service';
 // import {DialogElementsExampleDialog} from '../dialogmodal/dialogmodal.component'
 
 const GET_POST = gql`
@@ -25,7 +26,7 @@ query checkUser($code_no: String!){
 }
 `;
 
-
+// For getting Client Name using Client_id
 const GET_CLIENT_SIGNUP = gql`
 query getClient($id: String!){
   getClient(id: $id,active:""){
@@ -91,7 +92,7 @@ export class SignupComponent implements OnInit {
   captch_cli:boolean=false;
   pass:any;
   conspass:any;
-
+  disabled_client_submit:any;
   det_c:any;
   c_Email:any;
 
@@ -102,7 +103,7 @@ export class SignupComponent implements OnInit {
   modal:any;
 
   loader:boolean=true;
-  constructor(public Dialog: MatDialog,private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
+  constructor(public notify:NotificationService,public Dialog: MatDialog,private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
@@ -247,7 +248,8 @@ export class SignupComponent implements OnInit {
               this.det_c=data;
                console.log(this.det_c);
               if(this.det_c.createUser.success == 2 || this.det_c.createUser.success == 0){
-                alert(this.det_c.createUser.message);
+                // alert(this.det_c.createUser.message);
+                this.notify.showError(this.det_c.createUser.message,"")
                  // this.router.navigate(['/']);
               }else if(this.det_c.createUser.success == 1 ){
                 localStorage.setItem("Employee_signup",'1');
@@ -361,12 +363,9 @@ export class SignupComponent implements OnInit {
         if(e.target.value==''){
           this.Client_Name=document.getElementById("name");
            this.Client_Name.value= '';
-
-        }
+         }
         else{
-
-
-          this.apollo.watchQuery<any>({
+       this.apollo.watchQuery<any>({
             query: GET_CLIENT_SIGNUP,
             variables:{
               id:this.c.client_code.value
@@ -376,11 +375,18 @@ export class SignupComponent implements OnInit {
           })  .valueChanges
           .subscribe(({ data, loading}) => {
 
+                 if(data.getClient==''){
+                  //  alert("error");
+                  this.notify.showError("No Data Found!!", "")
+                   this.disabled_client_submit=true;
+
+                 }else{
+                  this.disabled_client_submit=false;
                   console.log("data:" +JSON.stringify(data.getClient[0].client_name));
                   this.Client_Name=document.getElementById('name');
                   this.Client_Name.value=data.getClient[0].client_name;
                   console.log(this.Client_Name.value);
-
+                }
            })
         }
 
