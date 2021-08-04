@@ -4,10 +4,14 @@
 
 		<ul class="topDate">
       <li class="text-bold text-dark" style="font-size: 22px; color: #282a3c;">Welcome, {{this.emp_name}} &nbsp;({{this.type}})</li>
-
+<!-- <li>Branch Name: Head Office</li> <li>KMS Year: 2020-21</li> <li>User: synergic</li> <li>Module: Paddy Procurement</li> -->
 </ul>
 
-
+<!--
+		<ul class="topDateRoght">
+ <li>User: synergic</li> <li>Module: Paddy Procurement</li>
+</ul>
+-->
 
 		<ul class="nav topDateRight">
       <li class="nav-item dropdown">
@@ -15,11 +19,10 @@
 
     </li>
 			<li class="nav-item dropdown">
-
-                    <a  class="nav-link mt-3"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                    <!-- <a  class="nav-link mt-3"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a> -->
 
                 </li>
-                <!-- <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                   <div class="dropdown e-caret-hide">
                   <a  class="nav-link" data-toggle="dropdown"><img src="/assets/profile.png" alt="Avatar" class="avatar" ></a>
 
@@ -28,13 +31,19 @@
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a data-toggle="modal" data-target="#mymodal_profile" (click)="profile=false;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-user-o"
                       aria-hidden="true"></i>&nbsp;My Profile</a></li>
-
+                    <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Menu item 3</a></li> -->
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a data-toggle="modal" data-target="#mymodal" role="menuitem" tabindex="-1"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></li>
                   </ul>
                 </div>
+                  <!-- <div id="myDropdown" class="dropdown-content">
+                    <a ><i class="fa fa-user-o"
+                            aria-hidden="true"></i> My Profile</a>
+                    <a><i class="fa fa-unlock-alt" aria-hidden="true"></i> Change Password</a>
 
-              </li> -->
+
+                </div> -->
+              </li>
 			<!-- <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Main Menu 1</a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -52,22 +61,51 @@
                         <a href="#" class="dropdown-item">Dropdown Menu 2</a>
 						<a href="#" class="dropdown-item">Dropdown Menu 3</a>
 						<a href="#" class="dropdown-item">Dropdown Menu 4</a>
->>>>>>> 87df1f939993cdea71727a2897e114cc6a958b79
 
-                </li>
-
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">Logout</a>
 
                     </div>
                 </li> -->
-
 
             </ul>
 
 </div>
 
+<!--
+	<button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="fa fa-bars"></span>
 
+
+      </button>
+-->
+
+<!--
+	<ul class="navbar-nav navbar-nav-right">
+        <li class="nav-item msgNav">
+          <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </a>
+
+        </li>
+        <li class="nav-item notifiNav">
+          <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+            <i class="fa fa-bell" aria-hidden="true"></i>
+          </a>
+
+        </li>
+        <li class="nav-item nav-profile dropdown mr-0 mr-sm-2">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown" aria-expanded="false">
+            <img src="images/40x40.png" alt="profile">
+            <span class="nav-profile-name">Don Richards</span>
+          </a>
+
+        </li>
+      </ul>
+-->
+
+	<!-- </div> -->
 </nav>
-
 
 <div class="modal fade in" id="mymodal_profile" >
   <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -105,11 +143,12 @@
             </div>
             <div class="mt-5 pt-5"> <a style="color:rgb(102, 102, 187)">Change <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </a> | <a style="color:palevioletred"> Remove <i class="fa fa-trash" aria-hidden="true"></i>
-            </a></div>
+            </a>
+          </div>
 
 
           </div>
-          <div class="form-row-lg-6 p-5">
+          <div class="form-group row ">
             <div class="col-lg-6">
               <label for="cd">Code : </label>
               <input class="form-control" type="text" id="cd" value="{{code_no}}" readonly>
@@ -119,7 +158,7 @@
               <input class="form-control" type="text" id="nm" value="{{emp_name}}">
             </div>
           </div>
-          <div class="form-row-lg-6 p-5">
+          <div class="form-group row ">
             <div class="col-lg-6">
               <label for="em">Email : </label>
               <input class="form-control" type="text" id="em" value="{{email_id}}" readonly>
@@ -129,7 +168,7 @@
               <input class="form-control" type="text" id="ph">
             </div>
           </div>
-          <div class="form-row-lg-6 p-5 ml-100 d-flex justify-content-center">
+          <div class="form-group row  ml-5 d-flex justify-content-center">
 
             <div class="col-lg-6">
               <label for="tp">Type : </label>
@@ -195,5 +234,4 @@
 
   </div>
 </div>
-
 

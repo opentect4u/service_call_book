@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { interval } from 'rxjs';
+import { ToastrManager } from 'ng6-toastr-notifications';
 //import {MatDialog} from '@angular/material/dialog';
 
 
@@ -36,14 +37,26 @@ export class SidebarComponent implements OnInit {
   Etype:boolean=true;
   Ctype:boolean=true;
   user:any;
+  done_dt_frm=true;
+  done_dt_to=true;
+  done=true;
+  prevent=false;
   old_u_type:any;
 
-  constructor(private router:Router,private apollo:Apollo) {
+  tkt:any;
+  ct=0;
+  frm:any;
+  done_dt=true;
+  t:any;
+
+  constructor(public toastr: ToastrManager,private router:Router,private apollo:Apollo) {
 
 
    }
 
   ngOnInit(): void {
+    this.frm=document.getElementById('frm');
+    this.t=document.getElementById('t');
       this.old_u_type=localStorage.getItem('user_Type');
        this.apollo.watchQuery<any>({
       query: GET_USER_TYPE,
@@ -83,9 +96,60 @@ export class SidebarComponent implements OnInit {
           this.router.navigate(['/dashboard'])
         }
 
+
+
+//  }
     })
+
+
+
+
+
+    // setInterval(()=>{alert(localStorage.getItem('user_Type'));},6000)
+
+  }
+  make_date_true(){this.done_dt_frm=true;this.done_dt_to=true;this.ct=0; this.done_dt=true;
+  this.frm=document.getElementById('frm');
+  this.frm.value='';
+  this.t=document.getElementById('t');
+  this.t.value='';
+
+  }
+prevent_null_frm(){this.done_dt_frm=false;
+if(this.t.value=='' || (this.frm.value>this.t.value))
+this.done_dt=true;
+else
+this.done_dt=false;
+
 }
-openclosedropdown1(){
+prevent_null_to(){this.done_dt_to=false;
+  if(this.frm.value=='' || (this.frm.value>this.t.value))
+  this.done_dt=true;
+  else
+  this.done_dt=false;
+}
+ prevent_null(e:any){
+   if(e.target.value=='')
+   {this.done=true; this.prevent=true;}
+   else
+  { this.done=false;this.prevent=false;}
+ }
+
+make_true(){
+  this.prevent=false;
+  this.done=true;
+  this.tkt=document.getElementById('tkt_no');
+  this.tkt.value='';
+}
+srch_tkt(v:any){
+//alert(v);
+this.router.navigate(['/search_ticket',btoa(v)]);
+}
+srch_dt(v1:any,v2:any){
+  this.router.navigate(['/search_date',btoa(v1),btoa(v2)])
+}
+  openclosedropdown1(){
+
 
     this.u_type=localStorage.getItem('user_Type');
 

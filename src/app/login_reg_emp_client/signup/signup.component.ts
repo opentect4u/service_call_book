@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import {MatDialog} from '@angular/material/dialog';
-import { NotificationService } from 'src/app/service/notification.service';
+
+import { ToastrManager } from 'ng6-toastr-notifications';
 // import {DialogElementsExampleDialog} from '../dialogmodal/dialogmodal.component'
 
 const GET_POST = gql`
@@ -103,7 +104,7 @@ export class SignupComponent implements OnInit {
   modal:any;
 
   loader:boolean=true;
-  constructor(public notify:NotificationService,public Dialog: MatDialog,private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
+  constructor(public toastr: ToastrManager,public Dialog: MatDialog,private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
@@ -249,8 +250,12 @@ export class SignupComponent implements OnInit {
                console.log(this.det_c);
               if(this.det_c.createUser.success == 2 || this.det_c.createUser.success == 0){
                 // alert(this.det_c.createUser.message);
-                this.notify.showError(this.det_c.createUser.message,"")
+                // this.notify.showError(this.det_c.createUser.message,"")
                  // this.router.navigate(['/']);
+                 this.toastr.errorToastr(this.det_c.createUser.message, 'Error!',{
+                  position: 'top-center',
+                  toastTimeout: (5000)
+              });
               }else if(this.det_c.createUser.success == 1 ){
                 localStorage.setItem("Employee_signup",'1');
                 console.log("Successfully Inserted");
@@ -285,6 +290,7 @@ export class SignupComponent implements OnInit {
     this.login=true;
     this.Email=document.getElementById("emp_email");
 
+
     console.log("Email:" +this.Email.value);
 
     //  this.f.Email.value=this.Email.value;
@@ -293,6 +299,9 @@ export class SignupComponent implements OnInit {
     this.f.Email.setValue(this.LoginForm.value.Email);
     // this.f.name.setValue(this.LoginForm.value.name);
     console.log(this.f);
+
+
+
     if(this.LoginForm.invalid){
      console.log("validation");
      return;
@@ -377,7 +386,11 @@ export class SignupComponent implements OnInit {
 
                  if(data.getClient==''){
                   //  alert("error");
-                  this.notify.showError("No Data Found!!", "")
+                  this.toastr.errorToastr('No Data Found!!', '', {
+                    position: 'top-center',
+                    toastTimeout: (5000)
+                });
+                  // this.notify.showError("No Data Found!!", "")
                    this.disabled_client_submit=true;
 
                  }else{

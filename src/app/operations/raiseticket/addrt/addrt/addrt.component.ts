@@ -78,7 +78,7 @@ export class AddrtComponent implements OnInit {
 
   // idfield:any=[{item_id:'',item_name:''}];
 
-
+  // spinshow:boolean=true;
 
   constructor(private apollo:Apollo,private route:Router) {
     setInterval(() => {

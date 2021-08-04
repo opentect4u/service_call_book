@@ -52,7 +52,10 @@ import { EditatComponent } from './operations/assignticket/editat/editat/editat.
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
+import { ToastrModule } from 'ng6-toastr-notifications';
 import { NgxSpinnerModule } from "ngx-spinner";
+// import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+// import {MatButtonModule} from '@angular/material/button';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
@@ -60,6 +63,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
 
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
@@ -70,13 +74,18 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
+import { SearchByDateComponent } from './search/search-by-date/search-by-date.component';
+import { SearchByTicketComponent } from './search/search-by-ticket/search-by-ticket.component';
+import { ClientHeaderComponent } from './common/client-header/client-header.component';
+import { ViewComponent } from './search/view/view.component';
+
 
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogmodalComponent } from './login_reg_emp_client/dialogmodal/dialogmodal.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 
-import { ToastrModule } from 'ngx-toastr';
+// import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './service/notification.service';
 import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
 import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
@@ -119,15 +128,29 @@ import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addc
     ComponentNameComponent,
     RightclickoffDirective,
     ControlkeyoffDirective,
-      TemplateComponent,
-      UsermaintananceComponent,
+
+
+
+
+    TemplateComponent,
+
+
+    UsermaintananceComponent,
+
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent,
     EdittktComponent,
+
     DialogmodalComponent,
     ClientraisetktComponent,
-    AddclientraisetktComponent
+    AddclientraisetktComponent,
+
+    SearchByDateComponent,
+    SearchByTicketComponent,
+    ClientHeaderComponent,
+    ViewComponent
+
 
   ],
   imports: [
@@ -152,19 +175,25 @@ import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addc
     NgxSpinnerModule,
     MatRadioModule,
     AutocompleteLibModule,
+
     MatDialogModule,
     MatIconModule,
     MatMenuModule,
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-top-center',
-      preventDuplicates: false,
-    }),
+    ToastrModule.forRoot()
+    // ToastrModule.forRoot({
+    //   timeOut: 10000,
+    //   positionClass: 'toast-top-center',
+    //   preventDuplicates: false,
+    // }),
 
 ],
 
   providers: [NotificationService,
-    {provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
+    {provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent,
+
+  ],
+
+
   bootstrap: [AppComponent],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })

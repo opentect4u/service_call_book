@@ -143,6 +143,8 @@ export class ComponentNameComponent implements OnInit {
   amcdate:any;
   rentaldate:any;
 
+  
+
   constructor(private datepipe:DatePipe,private router:Router,private apollo:Apollo,private route:ActivatedRoute){ }
   item:any;
   posts:any;
@@ -160,6 +162,12 @@ export class ComponentNameComponent implements OnInit {
   prevent_init_phone=false;
   input_name:any;
   input_phone:any;
+// <<<<<<< HEAD
+  
+//   ngOnInit(): void {
+//     this.input_name=document.getElementById('itemname');
+//     this.input_phone=document.getElementById('itemphone');
+// =======
 
   pathname:any;
   ngOnInit(): void {
@@ -168,6 +176,7 @@ export class ComponentNameComponent implements OnInit {
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
     localStorage.setItem('address', decodeURIComponent(this.pathname));
+
 
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
@@ -376,21 +385,25 @@ export class ComponentNameComponent implements OnInit {
         this.router.navigate(['/addclient/dashboard'])
       }
 
+
       else
         this.showsnackbar();
     },error=>{ this.showsnackbar()
    } );
+
 
     // console.log(cd+" "+name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
 
   }
   showsnackbar() {
 
+
     // alert("error");
      this.x = document.getElementById("snackbar");
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
+
 
 prevent_null(e:any){this.done=false;
 
@@ -418,6 +431,7 @@ prevent_null(e:any){this.done=false;
     else
 
      {this.done=false; this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"; this.prevent_init_phone=false;}}}
+
 
 change_rentalupto(v:any){}
 select_status(){}

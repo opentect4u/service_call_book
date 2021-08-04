@@ -12,18 +12,18 @@ import { Router } from '@angular/router';
    '../../assets/css/res.css']
 })
 export class DashboardComponent implements OnInit {
- 
-  
+
+   u_type:any;
   formattedDate : any;
   constructor(private router:Router) {
-  
-   
+
+
    }
 
   ngOnInit(): void {
-     
 
-   
+     this.u_type=localStorage.getItem('user_Type');
+
     localStorage.setItem('Active', '1');
      localStorage.setItem('address','/dashboard')
      localStorage.setItem('updatectm','0');
@@ -40,9 +40,9 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('updatee','0');
     localStorage.setItem('updatec','0');
     localStorage.setItem('addc','0');
-  
-  
-  
+
+
+
 }
 
 }

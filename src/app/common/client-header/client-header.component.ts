@@ -2,25 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 
-declare var showprofile: any;
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css',
+  selector: 'app-client-header',
+  templateUrl: './client-header.component.html',
+  styleUrls: ['./client-header.component.css',
   '../../../assets/css/bootstrap.css',
   '../../../assets/css/font-awesome.css',
   '../../../assets/css/apps.css',
   '../../../assets/css/apps_inner.css',
   '../../../assets/css/res.css']
 })
-export class HeaderComponent implements OnInit {
-   emp_name:any;
-   type:any;
-   name:any;
-   code_no:any;
-   email_id:any;
-   profile=false;
-  constructor(private router:Router,public toastr: ToastrManager) { }
+export class ClientHeaderComponent implements OnInit {
+
+  emp_name:any;
+  type:any;
+  name:any;
+  code_no:any;
+  email_id:any;
+  profile=false;
+ constructor(private router:Router,public toastr: ToastrManager) { }
+
 
   ngOnInit(): void {
     setInterval(()=>{
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit {
     this.emp_name= this.name == 'null' ? 'Admin' : localStorage.getItem('user_name');
     console.log(this.emp_name);
     var user_type = localStorage.getItem('user_Type');
-    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' :  'Viewer')));
+    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' : (user_type == 'V' ? 'Viewer' : 'Client'))));
   },500);
   }
   logout(){
@@ -57,5 +58,6 @@ export class HeaderComponent implements OnInit {
  change(){
   this.toastr.successToastr('Password changed successfully!', 'Done!');
  }
+
 
 }

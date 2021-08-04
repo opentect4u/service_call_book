@@ -195,6 +195,24 @@ export class AdclComponent implements OnInit,OnDestroy {
   //   this.rentalvalid=false;
   // }
   select_district(v:any){
+// <<<<<<< HEAD
+//     if(v=='')
+//     { this.distvalid=true; this.prevent_init_dist=true;}
+//     else
+//     {this.distvalid=false; this.prevent_init_dist=false;}
+//   }
+//   select_client_type(v:any){
+//     if(v=='')
+//     { this.ctmvalid=true; this.prevent_init_ctm=true;}
+//     else
+//     { this.ctmvalid=false; this.prevent_init_ctm=false;}
+//   }
+//   select_operation(v:any){
+//     if(v=='')
+//     { this.oprnvalid=true; this.prevent_init_oprn=true;}
+//     else
+//     { this.oprnvalid=false; this.prevent_init_oprn=false;}
+// =======
     if(v==''){
     this.distvalid=true;
     this.prevent_init_dist=true;
@@ -224,6 +242,7 @@ export class AdclComponent implements OnInit,OnDestroy {
     this.prevent_init_oprn=false;
   }
 
+
   }
   select_mode(){
    this.mode_select=false;
@@ -234,16 +253,22 @@ export class AdclComponent implements OnInit,OnDestroy {
     {
       if(e.target.value=='')
       {
+
         this.namevalid=true;
         this.prevent_init_name=true;
+
 
         this.input_name.style.border="solid red 1px"
        // this.hide_val=true;
       }
       else
+// <<<<<<< HEAD
+//        {this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"; this.prevent_init_name=false;}
+// =======
 
        {
         this.prevent_init_name=false;this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"}
+
 
     }
     else if(e.target.id=='itemphone')
@@ -257,8 +282,10 @@ export class AdclComponent implements OnInit,OnDestroy {
       }
       else
 
+
        {
         this.prevent_init_phone=false;this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"}
+
 
     }
     else if(e.target.id=='itemaddress')
@@ -279,7 +306,9 @@ export class AdclComponent implements OnInit,OnDestroy {
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
 
+
     if (!em.test(event.target.value)) {this.prevent_init_email=true; this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid lightgrey 1px";}}
+
 
     else {this.prevent_init_email=false; this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
   }
@@ -391,10 +420,12 @@ export class AdclComponent implements OnInit,OnDestroy {
         this.select_o.value='';}
       
 
+
         else
         this.showsnackbar();
     },error=>{ this.showsnackbar()
    } );
+
 
     //console.log(name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
   }
