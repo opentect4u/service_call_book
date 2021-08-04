@@ -13,7 +13,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     emp_name
     priority
     tktStatus
-    
+
     log_in
   }
 }`;
@@ -54,7 +54,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     call_attend
     delivery
   }
-}` 
+}`
 ;
 
 @Component({
@@ -68,7 +68,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
 })
 export class ViewComponent implements OnInit {
   tktno: any;
-  phone: any;
+  phoneno: any;
   status: any;
   priority: any;
   assign_to: any;
@@ -103,11 +103,11 @@ export class ViewComponent implements OnInit {
          user_type:localStorage.getItem('user_Type'),
          user_id:localStorage.getItem('UserId')
 
-         
+
       },
       pollInterval: 500
-      
-      
+
+
     })
       .valueChanges
       .subscribe(({ data}) => {
@@ -116,7 +116,7 @@ export class ViewComponent implements OnInit {
        this.dt=data.getSupportLogDtls[0].log_in;
        this.client_name=data.getSupportLogDtls[0].client_name;
        this.tktno=data.getSupportLogDtls[0].tkt_no;
-       this.phone=data.getSupportLogDtls[0].phone_no;
+       this.phoneno=data.getSupportLogDtls[0].phone_no;
        this.status=data.getSupportLogDtls[0].tktStatus;
        this.priority=data.getSupportLogDtls[0].priority;
         //  this.Tickite=data;
@@ -124,10 +124,10 @@ export class ViewComponent implements OnInit {
         //  for(let i=0;i<this.Tickite.getSupportLogDtls.length;i++){
         //      if(this.Tickite.getSupportLogDtls[i].assign_engg>0 &&this.Tickite.getSupportLogDtls[i].assign_engg!=null){
         //            this.d_icon=document.getElementsByClassName('deleted') ;
-        //            this.d_icon.style.color='grey';  
+        //            this.d_icon.style.color='grey';
         //      }
         //  }
-      
+
         //  this.putdata(this.Tickite);
       })
       this.apollo.watchQuery<any>({
@@ -138,8 +138,8 @@ export class ViewComponent implements OnInit {
            user_id:localStorage.getItem('UserId')
         },
          pollInterval:500
-      
-        
+
+
       })
         .valueChanges
         .subscribe(({ data}) => {
@@ -151,7 +151,7 @@ export class ViewComponent implements OnInit {
           this.attendedat=data.getSupportLogDtls[0].call_attend;
           this.deliveryat=data.getSupportLogDtls[0].delivery;
           this.work_status=data.getSupportLogDtls[0].work_status > 0 ? 'Done' : 'Pending';
-         
+
           // this.client_name=data.getSupportLogDtls[0].client_name;
            this.district_name=data.getSupportLogDtls[0].district_name;
           this.client_type=data.getSupportLogDtls[0].client_type;
@@ -167,14 +167,14 @@ export class ViewComponent implements OnInit {
           // this.logDate=data.getSupportLogDtls[0].log_in;
           // console.log(this.priority_status)
 
-               
+
               // for(let i=0;i<this.posts_pm.getPriorityModeData.length;i++){
               //   console.log("status:" +this.priority_status);
               //   console.log("status:" +this.posts_pm.getPriorityModeData[i].priority_id)
               //       if(this.posts_pm.getPriorityModeData[i].priority_id== this.priority_status){
               //         this.Priority=this.posts_pm.getPriorityModeData[i].priority_mode;
               //         this.prio=this.posts_pm.getPriorityModeData[i].priority_id;
-                        
+
               //       }
               // }
 
@@ -184,15 +184,15 @@ export class ViewComponent implements OnInit {
             //         if(this.mod.getModuleTypeData[i].module_id== this.tkt_module){
             //           this.modul=this.mod.getModuleTypeData[i].module_id;
             //           this.Module=this.mod.getModuleTypeData[i].module_type;
-                        
+
             //         }
             //   }
-                   
+
             //  console.log(this.assign_to);
-              
-          
+
+
          })
-        
+
 
   }
 }

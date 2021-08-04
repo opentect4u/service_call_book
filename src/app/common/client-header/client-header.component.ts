@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
- 
+
 @Component({
   selector: 'app-client-header',
   templateUrl: './client-header.component.html',
@@ -32,7 +32,7 @@ export class ClientHeaderComponent implements OnInit {
     this.emp_name= this.name == 'null' ? 'Admin' : localStorage.getItem('user_name');
     console.log(this.emp_name);
     var user_type = localStorage.getItem('user_Type');
-    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' : 'Viewer')));
+    this.type= user_type =='A' ? 'Admin' : (user_type == 'M' ? 'Manager' : (user_type == 'T' ? 'Telecaller' : (user_type == 'E' ? 'Engineer' : (user_type == 'V' ? 'Viewer' : 'Client'))));
   },500);
   }
   logout(){
@@ -53,7 +53,7 @@ export class ClientHeaderComponent implements OnInit {
  }
  save(){
   this.toastr.successToastr('Profile updated successfully!', 'Done!');
-  
+
  }
  change(){
   this.toastr.successToastr('Password changed successfully!', 'Done!');

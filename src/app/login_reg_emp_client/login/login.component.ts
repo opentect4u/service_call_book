@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
   show_password:any;
   x:any;
   load:any;
-
+  successfull_password:boolean=true;
 
 
 
@@ -84,6 +84,11 @@ export class LoginComponent implements OnInit {
       this.successfull_register=false
 
     }
+    if(localStorage.getItem("forgetpassword")=='1'){
+      this.successfull_password=false;
+
+    }
+
 
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
     'O','P','Q','R','S','T','U','V','W','X','Y','Z',
@@ -298,6 +303,11 @@ export class LoginComponent implements OnInit {
       this.show_password.type = "password";
     }
 
+  }
+
+  close_alert_pass(){
+    localStorage.setItem("forgetpassword",'0');
+    this.successfull_password=true;
   }
 
 

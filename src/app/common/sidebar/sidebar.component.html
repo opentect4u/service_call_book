@@ -1,13 +1,13 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-		
+
     <ul id="accordion" class="accordion">
   <li>
   <div class="link"><a a routerLinkActive="true" routerLink="/dashboard"><i class="fa fa-tachometer"></i>Dashboard</a></div>
   </li>
-  
-  
- 
-  
+
+
+
+
     <!-- <li>
       <div class="link" (click)="openclosedropdown()"><i class="fa fa-mobile"></i>Admin<i class="fa fa-chevron-down" id="down" ></i></div>
       <ul class="submenu" id="openclose">
@@ -15,9 +15,9 @@
         <li><a  routerLinkActive="true" routerLink="/stackholders">Stakeholder</a></li>
       </ul>
     </li> -->
-  
 
-   
+
+
     <li *ngIf="u_type=='A' || u_type=='M' || u_type=='T'">
         <div class="link" (click)="openclosedropdown()"><i class="fa fa-bars"></i>Masters<i class="fa fa-chevron-down " id="down1" ></i></div>
         <ul class="submenu" id="openclose1" >
@@ -31,17 +31,19 @@
 
         </ul>
     </li>
-    
+
       <li>
         <div  class="link" (click)="openclosedropdown1()"><i class="fa fa-bars"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
-          <li [hidden]="Etype"><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
-          <li [hidden]="utype || Etype"><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
-          <li [hidden]="utype"><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
-         
 
-          
-         
+          <li [hidden]="Etype||utype||u_type=='A'||u_type=='M' || u_type=='T'|| u_type=='V'"><a routerLink="/Clientraisetkt" routerLinkActive="true">Raise Ticket</a></li>
+          <li [hidden]="Etype||Ctype"><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
+          <li [hidden]="utype || Etype||Ctype"><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
+          <li [hidden]="utype||Ctype"><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
+
+
+
+
 
         </ul>
       </li>
@@ -49,20 +51,20 @@
 
 
 
-      <li>
+      <li *ngIf="u_type!='C'">
         <div  class="link" (click)="openclosesearchticket()"><i class="fa fa-search" aria-hidden="true"></i>Search Ticket<i class="fa fa-chevron-down "></i></div>
         <ul class="submenu" id="openclose_searchtkt">
           <li><a data-toggle="modal" data-target="#mymodal_dt" (click)="make_date_true()">Search by Date </a></li>
           <li><a data-toggle="modal" data-target="#mymodal_tkt" (click)="make_true()">Search by Ticket No.</a></li>
         </ul>
-  
+
       </li>
 
 
 
 
 
-      
+
     <li *ngIf="u_type=='A' || u_type=='M'">
       <div  class="link" (click)="opencloseadminsubmenu()"><i class="fa fa-user" aria-hidden="true"></i>Admin<i class="fa fa-chevron-down "></i></div>
       <ul class="submenu" id="openclose_admin">
@@ -71,39 +73,40 @@
       </ul>
 
     </li>
-    
-  
+
+    <li *ngIf="u_type=='C'"> <div class="link log"><i class="fa fa-ticket" aria-hidden="true"></i><a>My Tickets</a></div></li>
+
   <li>
   <div class="link log" data-toggle="modal" data-target="#mymodal" ><i class="fa fa-sign-out" ></i>Log out</div>
   </li>
-          
-          
-     
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </ul>
-  
-  
-    
-  
-  
-  
-     
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
   </nav>
 
 
@@ -111,16 +114,16 @@
 
 
 
-  
+
 <div class="modal fade in" id="mymodal" >
   <div class="modal-dialog modal-sm modal-dialog-centered">
-  
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-center w-100 ">Alert!!</h4>
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-         
+
         <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
@@ -135,18 +138,18 @@
         <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
       </div>
     </div>
-    
+
   </div>
 </div>
 <div class="modal fade in" id="mymodal_dt" >
-  <div class="modal-dialog modal-md modal-dialog-centered">
-  
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-center w-100 "><b>Please enter a date range</b></h4>
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-         
+
         <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
@@ -154,7 +157,7 @@
       <div class="modal-body">
         <form>
           <div class="form-row">
-            
+
               <div class="col">
                 <label for="frm">From :</label>
                 <input id="frm" class="form-control" type="date" #from_date (change)="prevent_null_frm()">
@@ -163,7 +166,7 @@
                 <label for="t">To :</label>
                 <input id="t" class="form-control" type="date" #to_date (change)="prevent_null_to()">
               </div>
-          
+
           </div>
         </form>
       </div>
@@ -174,18 +177,18 @@
         <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
       </div>
     </div>
-    
+
   </div>
 </div>
 <div class="modal fade in" id="mymodal_tkt" >
   <div class="modal-dialog modal-sm modal-dialog-centered">
-  
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-center w-100 ">Please enter a Ticket Number</h4>
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-         
+
         <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
@@ -193,12 +196,12 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-              
-                
+
+
                 <input id="tkt_no" class="form-control" type="text" placeholder="Ticket No." #tkt_ref (keyup)="prevent_null($event)">
                 <span class="text-danger" *ngIf="done && prevent">Please enter a Ticket No.</span>
-              
-            
+
+
           </div>
         </form>
       </div>
@@ -209,26 +212,26 @@
         <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
       </div>
     </div>
-    
+
   </div>
 </div>
 
 
 
-  
-  
-  
-<!-- 
+
+
+
+<!--
  <div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-    
-      
+
+
       <div class="modal-header">
         <h6 class="modal-title w-100 text-center">Alert!!</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      
+
 
       <div class="modal-body text-center ">
        <p>Are you sure you want to log out?</p>
@@ -237,34 +240,33 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="logout()">Ok</button>
-       
+
       </div>
-      
+
     </div>
   </div>
 </div> -->
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -41,6 +41,8 @@ import { AssignticketComponent } from './operations/assignticket/assignticket/as
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { AttendanddeliverComponent } from './operations/attendanddeliverticket/attendanddeliver/attendanddeliver.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
+import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
+import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
@@ -247,9 +249,22 @@ const routes: Routes = [
     canActivate:[AfterloginGuard],
     component:AddnotifyComponent
 
+},
+ {
+   path:'Clientraisetkt',
+  //  canActivate:[AfterloginGuard],
+   component:ClientraisetktComponent
+ },
+ {
+  path:'Add/clientraisetkt',
+  // canActivate:[AfterloginGuard],
+  component:AddclientraisetktComponent
+},
 
 
-  },
+
+
+
   {
     path:'search_ticket/:id',
     component:SearchByTicketComponent
@@ -262,6 +277,7 @@ const routes: Routes = [
     path:'view/:id1/:id2',
     component:ViewComponent
   }
+
 
 
 ];

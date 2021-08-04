@@ -14,6 +14,7 @@ query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!){
     client_name
     tktStatus
     emp_name
+    work_status
   }
  }
 `;
@@ -54,8 +55,8 @@ export class SearchByDateComponent implements OnInit {
   else
   this.type=localStorage.getItem('UserId');
   this.fetch_data();
-  },1000)
-   
+  },1000);
+
   }
   fetch_data(){
      this.apollo.watchQuery<any>({
@@ -69,9 +70,9 @@ export class SearchByDateComponent implements OnInit {
     })
       .valueChanges
       .subscribe(({ data }) => {
-        
+
         this.posts = data;
-       
+
         console.log(this.posts);
        this.putdata(this.posts);
       });
@@ -84,7 +85,7 @@ export class SearchByDateComponent implements OnInit {
   }
   public putdata(posts:any){
     this.dataSource=new MatTableDataSource(posts.searchByDate);
-   
+
     console.log(this.dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -92,8 +93,7 @@ export class SearchByDateComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  
-    if (this.dataSource.paginator) {
+     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }

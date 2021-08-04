@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import {MatDialog} from '@angular/material/dialog';
+
+import { ToastrManager } from 'ng6-toastr-notifications';
+// import {DialogElementsExampleDialog} from '../dialogmodal/dialogmodal.component'
 
 const GET_POST = gql`
 mutation CreateUser($postId:String!,$userType:String!,$userId:String!,$Password:String!) {
@@ -19,6 +23,15 @@ query checkUser($code_no: String!){
   checkUser(code_no: $code_no){
     success,
     message
+  }
+}
+`;
+
+// For getting Client Name using Client_id
+const GET_CLIENT_SIGNUP = gql`
+query getClient($id: String!){
+  getClient(id: $id,active:""){
+    client_name
   }
 }
 `;
@@ -55,6 +68,7 @@ query checkUser($code_no: String!){
 })
 export class SignupComponent implements OnInit {
   x:any;
+  dialog:any;
    recaptcha:any;
   show_Password:any;
   show_ConPassword:any;
@@ -79,13 +93,18 @@ export class SignupComponent implements OnInit {
   captch_cli:boolean=false;
   pass:any;
   conspass:any;
+  disabled_client_submit:any;
+  det_c:any;
+  c_Email:any;
+
+   Client_Name:any;
   // successfull_register:boolean=true;
   // messageSuccess:boolean=true;
   log_msg:any;
   modal:any;
 
   loader:boolean=true;
-  constructor(private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
+  constructor(public toastr: ToastrManager,public Dialog: MatDialog,private apollo: Apollo,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
@@ -147,7 +166,9 @@ export class SignupComponent implements OnInit {
     this.LoginForm_client = this.fb.group({
       client_code:['',Validators.required],
       client_name:[''],
+
       client_email:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      client_type:['c'],
       client_pass:['',Validators.required],
       client_conpass:['',Validators.required],
       captcha_client:['',Validators.required]
@@ -182,12 +203,7 @@ export class SignupComponent implements OnInit {
     this.val=document.getElementById('menu1');
      this.val.className='active'
     this.display1=false;
-
-
-
-
-
-  }
+}
   open_client(){
 
 
@@ -200,23 +216,56 @@ export class SignupComponent implements OnInit {
 
   }
 
+  // For Client SignUp
   Submit_client(){
+    console.log("Client_type:" ,this.c.client_type.value)
     this.recaptcha=document.getElementById("capt_client");
-
+     this.c_Email=document.getElementById('c_email')
+     this.LoginForm_client.value.client_email= this.c_Email.value
+      this.c.client_email.setValue(this.LoginForm_client.value.client_email);
     this.login_c=true;
     if(this.LoginForm_client.invalid){
     console.log("fire");
      return ;
       }
      else{
-
-
-
-
        if(this.c.client_pass.value == this.c.client_conpass.value){
            if(this.c.captcha_client.value == this.recaptcha.value){
             console.log("right captcha");
             console.log("water");
+
+            this.apollo
+            .mutate({
+              mutation: GET_POST,
+              variables:{
+                postId:this.c.client_code.value,
+                 userType:this.c.client_type.value,
+                  userId:this.c.client_email.value,
+                  Password:this.c.client_pass.value
+
+
+              }
+            }).subscribe(({data})=>{
+              this.det_c=data;
+               console.log(this.det_c);
+              if(this.det_c.createUser.success == 2 || this.det_c.createUser.success == 0){
+                // alert(this.det_c.createUser.message);
+                // this.notify.showError(this.det_c.createUser.message,"")
+                 // this.router.navigate(['/']);
+                 this.toastr.errorToastr(this.det_c.createUser.message, 'Error!',{
+                  position: 'top-center',
+                  toastTimeout: (5000)
+              });
+              }else if(this.det_c.createUser.success == 1 ){
+                localStorage.setItem("Employee_signup",'1');
+                console.log("Successfully Inserted");
+               //  this.successfull_register=false;
+                this.router.navigate(['/']);
+              }
+
+
+            })
+
           }
            else{
             console.log("wrong captcha");
@@ -224,6 +273,9 @@ export class SignupComponent implements OnInit {
            }
         }
         else{
+          //  this.dialog=document.getElementById('clickdialog');
+          //  this.dialog.click();
+          this.Dialog.open(DialogElementsExampleDialog);
            console.log("wrong password");
           }
        }
@@ -231,6 +283,8 @@ export class SignupComponent implements OnInit {
 
 
   }
+
+  // For Employee SignUp
   Submit(){
     this.recaptcha=document.getElementById("capt");
     this.login=true;
@@ -246,7 +300,7 @@ export class SignupComponent implements OnInit {
     // this.f.name.setValue(this.LoginForm.value.name);
     console.log(this.f);
 
-   
+
 
     if(this.LoginForm.invalid){
      console.log("validation");
@@ -311,6 +365,44 @@ export class SignupComponent implements OnInit {
      this.x = document.getElementById("snackbar");
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+
+
+   preventNonNumericalInput_forClient(e:any){
+        if(e.target.value==''){
+          this.Client_Name=document.getElementById("name");
+           this.Client_Name.value= '';
+         }
+        else{
+       this.apollo.watchQuery<any>({
+            query: GET_CLIENT_SIGNUP,
+            variables:{
+              id:this.c.client_code.value
+
+            }
+
+          })  .valueChanges
+          .subscribe(({ data, loading}) => {
+
+                 if(data.getClient==''){
+                  //  alert("error");
+                  this.toastr.errorToastr('No Data Found!!', '', {
+                    position: 'top-center',
+                    toastTimeout: (5000)
+                });
+                  // this.notify.showError("No Data Found!!", "")
+                   this.disabled_client_submit=true;
+
+                 }else{
+                  this.disabled_client_submit=false;
+                  console.log("data:" +JSON.stringify(data.getClient[0].client_name));
+                  this.Client_Name=document.getElementById('name');
+                  this.Client_Name.value=data.getClient[0].client_name;
+                  console.log(this.Client_Name.value);
+                }
+           })
+        }
+
    }
 
 
@@ -531,6 +623,17 @@ export class SignupComponent implements OnInit {
 
 
 
+  }
+
+@Component({
+    selector: 'app-dialogmodal',
+    templateUrl: '../dialogmodal/dialogmodal.component.html',
+  })
+  export class DialogElementsExampleDialog {
+    constructor(public Dialog: MatDialog){}
+    closemodal(){
+      this.Dialog.closeAll();
+    }
   }
 
 
