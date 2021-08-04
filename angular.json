@@ -30,10 +30,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/select2/dist/css/select2.min.css"
             ],
             "scripts": [
-              "src/assets/js/bootstrap.min.js", 
+              "node_modules/jquery/dist/jquery.min.js",
+       "node_modules/select2/dist/js/select2.min.js",
+              "src/assets/js/bootstrap.min.js",
               "src/assets/js/main_javascript.js",
               "src/assets/js/main_jquery.js"
             ]
@@ -43,12 +46,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "3mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
+                  "maximumWarning": "30kB",
                   "maximumError": "137kb"
                 }
               ],
@@ -99,14 +102,16 @@
             "assets": [
               "src/favicon.ico",
               "src/_favicon.ico",
-              
+
               "src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/main.js"
+            ]
           }
         }
       }

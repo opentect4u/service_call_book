@@ -3,6 +3,7 @@
 	<div class="float-left navRightSec">
 		
 		<ul class="topDate">
+      <li class="text-bold text-dark" style="font-size: 22px; color: #282a3c;">Welcome, {{this.emp_name}} &nbsp;({{this.type}})</li>
 <!-- <li>Branch Name: Head Office</li> <li>KMS Year: 2020-21</li> <li>User: synergic</li> <li>Module: Paddy Procurement</li> -->
 </ul>
 		
@@ -13,10 +14,30 @@
 -->
 		
 		<ul class="nav topDateRight">
+      <li class="nav-item dropdown">
+        <a  class="nav-link mt-3"><i class="fa fa-bell" aria-hidden="true"></i> Notification</a>
+        
+    </li>
 			<li class="nav-item dropdown">
-                    <a  class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                    <a  class="nav-link mt-3"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
                     
                 </li>
+                <!-- <li class="nav-item dropdown">
+                  <div class="dropdown e-caret-hide">
+                  <a  class="nav-link" data-toggle="dropdown"><img src="/assets/profile.png" alt="Avatar" class="avatar" ></a>
+                
+                  <ul class="dropdown-menu p-2" role="menu" aria-labelledby="menu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1">{{emp_name}}</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a data-toggle="modal" data-target="#mymodal_profile" (click)="profile=false;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-user-o"
+                      aria-hidden="true"></i>&nbsp;My Profile</a></li>
+                    
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a data-toggle="modal" data-target="#mymodal" role="menuitem" tabindex="-1"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></li>
+                  </ul>
+                </div>
+                  
+              </li> -->
 			<!-- <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Main Menu 1</a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -40,10 +61,7 @@
 
                     </div>
                 </li> -->
-                <li class="nav-item dropdown">
-                    <a  class="nav-link"><i class="fa fa-bell" aria-hidden="true"></i> Notification</a>
-                    
-                </li>
+                
             </ul>
 		
 </div>
@@ -82,4 +100,131 @@
 		
 	<!-- </div> -->
 </nav>
+
+<div class="modal fade in" id="mymodal_profile" >
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center w-100 "><b>My Profile</b></h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+         
+        <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+          <ul class="navbar-nav">
+            <li class="nav-item" [ngClass]="{'active':!profile}">
+              <a class="nav-link" (click)="change_ps()">Profile Settings</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active':profile}">
+              <a class="nav-link"(click)="change_cp()">Change Password</a>
+            </li>
+           
+          </ul>
+        </nav>
+        <div [hidden]="profile">
+          
+            <div class="ml-5 d-flex justify-content-center">
+              <div>
+              <img class="thumbnail" src="/assets/profile.png">
+
+                     
+
+            </div>
+            <div class="mt-5 pt-5"> <a style="color:rgb(102, 102, 187)">Change <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </a> | <a style="color:palevioletred"> Remove <i class="fa fa-trash" aria-hidden="true"></i>
+            </a></div>
+
+          
+          </div>
+          <div class="form-row-lg-6 p-5">
+            <div class="col-lg-6">
+              <label for="cd">Code : </label>
+              <input class="form-control" type="text" id="cd" value="{{code_no}}" readonly>
+            </div>
+            <div class="col-lg-6">
+              <label for="nm">Name : </label>
+              <input class="form-control" type="text" id="nm" value="{{emp_name}}">
+            </div>
+          </div>
+          <div class="form-row-lg-6 p-5">
+            <div class="col-lg-6">
+              <label for="em">Email : </label>
+              <input class="form-control" type="text" id="em" value="{{email_id}}" readonly>
+            </div>
+            <div class="col-lg-6">
+              <label for="ph">Phone : </label>
+              <input class="form-control" type="text" id="ph">
+            </div>
+          </div>
+          <div class="form-row-lg-6 p-5 ml-100 d-flex justify-content-center">
+            
+            <div class="col-lg-6">
+              <label for="tp">Type : </label>
+              <input class="form-control align-middle" type="text" id="tp" value="{{type}}" readonly>
+            </div>
+          </div>
+         
+          
+        </div>
+        
+        <div [hidden]="!profile">
+          
+          <div class="col-sm-6 p-3">
+            <label for="np">Enter New Password : </label>
+            <input class="form-control align-middle" type="text" id="np">
+          </div>
+          <div class="col-sm-6 p-3">
+            <label for="cnp">Confirm New Password : </label>
+            <input class="form-control align-middle" type="text" id="cnp">
+          </div>
+        </div>
+      
+      <div class="modal-footer mt-5" [hidden]="profile">
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="save()">Save</button>
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
+        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
+        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
+      </div>
+      <div class="modal-footer mt-5" [hidden]="!profile">
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="change()" >Change</button>
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
+        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
+        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
+      </div>
+    </div>
+    
+  </div>
+ </div>
+</div>
+<div class="modal fade in" id="mymodal" >
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center w-100 ">Alert!!</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+         
+        <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center p-4 h4"><strong>Are you sure you want to log out? </strong></p>
+      </div>
+      <div class="modal-footer p-3">
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="logout()">Ok</button>
+        <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
+        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
+        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
+      </div>
+    </div>
+    
+  </div>
+</div>
 	

@@ -5,6 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 4){
+    success
+    message
+  }
+}
+`;
 const SHOW_PM=gql`
 query{
   getPriorityModeData(id:"", db_type: 4){
@@ -12,6 +20,7 @@ query{
     priority_mode
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Operational_Mode: any;
@@ -41,20 +50,25 @@ query{
 export class PmdashboardComponent implements OnInit,OnDestroy {
   displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit','Delete'];
   dataSource = new MatTableDataSource; 
-
+  x:any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  dlt=true;
   updt=true;
   insrt=true;
   updatepm:any;
   insertpm:any;
   loading: boolean=false;
   posts_pm: any;
+  pmid:any;
+  userdel:any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
+    localStorage.setItem('address','/prioritymode/dashboard'); 
+
     this.updatepm=localStorage.getItem('updatepm')
     this.insertpm=localStorage.getItem('addpm')
     if(this.updatepm=='0')
@@ -77,6 +91,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
             localStorage.setItem('addpm','0')
    
           }
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -118,5 +133,33 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.pmid=v;}
+  delete_item(){this.apollo.mutate({
+    mutation:DEL_MAS,
+    variables:{
+      id:this.pmid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteMaster.message)
+    if(this.userdel.deleteMaster.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }

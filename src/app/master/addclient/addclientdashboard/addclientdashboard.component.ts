@@ -14,6 +14,13 @@ query getClient($active: String){
     district_name
   }
 }`
+const DEL_CLI=gql`
+mutation deleteClient($id: String){
+  deleteClient(id: $id){
+    success
+    message
+  }
+}`;
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Client_Code: any;
@@ -52,19 +59,24 @@ export class AddclientdashboardComponent implements OnInit {
   displayedColumns: string[] = ['Client_Code','Name','Type','Phone','District','Edit','Delete'];
 
   
-
+ x:any;
   dataSource = new MatTableDataSource; 
-
+cl:any;
+userdel:any;
+dlt=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   updt=true;
   insrt=true;
   updatec:any;
   insertc:any;
-
+ 
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
+    localStorage.setItem('address', '/addclient/dashboard');
+
     this.updatec=localStorage.getItem('updatec')
     this.insertc=localStorage.getItem('addc')
     console.log(this.updatec)
@@ -88,6 +100,7 @@ export class AddclientdashboardComponent implements OnInit {
             localStorage.setItem('addc','0')
    
           }
+
     this.fetch_data(1);
     //this.fetch_data(1);
     this.dataSource.paginator = this.paginator;
@@ -123,12 +136,40 @@ export class AddclientdashboardComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/addclient/addcl'])   ; 
+    this.router.navigate(['/addclient/addcl']); 
   }
   go_to_update(v1:any){
     this.router.navigate(['/addclient/editclient',v1])
   }
-delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+delete(v:any){this.cl=v;}
+delete_item(){this.apollo.mutate({
+  mutation:DEL_CLI,
+  variables:{
+    id:this.cl,
+    // name:v2,
+    // user_id:localStorage.getItem("UserId")
+    
+  }
+}).subscribe(({data})=>{this.userdel=data;console.log(data);
+  console.log("data:" +JSON.stringify(data))
+  console.log(this.userdel.deleteClient.message)
+  if(this.userdel.deleteClient.success==1)
+  { // this.done=true;this.msg="Client Type updated successfully!!";
+ // this.ctmdash.ngOnInit();
+    // localStorage.setItem('updatectm','1')
+    // this.router.navigate(['/clienttypemaster/dashboard'])
+ this.dlt=false;
+    }
+    else
+    this.showsnackbar();
+},error=>{ this.showsnackbar()
+});}
 sendstatus(v:any){
   this.fetch_data(v);
   //this.fetch_data(v);

@@ -120,7 +120,13 @@ export class AdclComponent implements OnInit,OnDestroy {
   prevent_init_email=false;
   private querySubscription: Subscription = new Subscription;
   private querySubscription1: Subscription = new Subscription;
+  x:any;
+
+  spinshow=false;
+
   ngOnInit(): void {
+    
+    localStorage.setItem('address', '/addclient/addcl');
     this.email_null=false;
     this.namevalid=true;
     this.addressvalid=false;
@@ -189,25 +195,57 @@ export class AdclComponent implements OnInit,OnDestroy {
   //   this.rentalvalid=false;
   // }
   select_district(v:any){
-    if(v=='')
-    { this.distvalid=true; this.prevent_init_dist=true;}
-    else
-    {this.distvalid=false; this.prevent_init_dist=false;}
+// <<<<<<< HEAD
+//     if(v=='')
+//     { this.distvalid=true; this.prevent_init_dist=true;}
+//     else
+//     {this.distvalid=false; this.prevent_init_dist=false;}
+//   }
+//   select_client_type(v:any){
+//     if(v=='')
+//     { this.ctmvalid=true; this.prevent_init_ctm=true;}
+//     else
+//     { this.ctmvalid=false; this.prevent_init_ctm=false;}
+//   }
+//   select_operation(v:any){
+//     if(v=='')
+//     { this.oprnvalid=true; this.prevent_init_oprn=true;}
+//     else
+//     { this.oprnvalid=false; this.prevent_init_oprn=false;}
+// =======
+    if(v==''){
+    this.distvalid=true;
+    this.prevent_init_dist=true;
+    }
+    else{
+    this.distvalid=false;
+    this.prevent_init_dist=false;
+    }
   }
   select_client_type(v:any){
-    if(v=='')
-    { this.ctmvalid=true; this.prevent_init_ctm=true;}
-    else
-    { this.ctmvalid=false; this.prevent_init_ctm=false;}
+    if(v==''){
+    this.ctmvalid=true;
+    this.prevent_init_ctm=true;
+    }
+    else{
+    this.ctmvalid=false;
+    this.prevent_init_ctm=false;
+    }
   }
   select_operation(v:any){
-    if(v=='')
-    { this.oprnvalid=true; this.prevent_init_oprn=true;}
-    else
-    { this.oprnvalid=false; this.prevent_init_oprn=false;}
+    if(v==''){
+    this.oprnvalid=true;
+     this.prevent_init_oprn=true;
+    }
+    else{
+    this.oprnvalid=false;
+    this.prevent_init_oprn=false;
+  }
+
+
   }
   select_mode(){
-this.mode_select=false;
+   this.mode_select=false;
   }
   prevent_null(e:any){
     this.done=false;
@@ -215,12 +253,23 @@ this.mode_select=false;
     {
       if(e.target.value=='')
       {
-        this.namevalid=true; this.prevent_init_name=true;
+
+        this.namevalid=true;
+        this.prevent_init_name=true;
+
+
         this.input_name.style.border="solid red 1px"
        // this.hide_val=true;
       }
       else
-       {this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"; this.prevent_init_name=false;}
+// <<<<<<< HEAD
+//        {this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"; this.prevent_init_name=false;}
+// =======
+
+       {
+        this.prevent_init_name=false;this.namevalid=false;this.input_name.style.border="solid lightgrey 1px"}
+
+
     }
     else if(e.target.id=='itemphone')
     {
@@ -232,7 +281,12 @@ this.mode_select=false;
         //this.hide_val=true;
       }
       else
-       {this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"; this.prevent_init_phone=false;}
+
+
+       {
+        this.prevent_init_phone=false;this.phonevalid=false;this.input_phone.style.border="solid lightgrey 1px"}
+
+
     }
     else if(e.target.id=='itemaddress')
     {
@@ -251,7 +305,11 @@ this.mode_select=false;
   }
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
-    if (!em.test(event.target.value)) {this.prevent_init_email=true; this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid red 1px"}}
+
+
+    if (!em.test(event.target.value)) {this.prevent_init_email=true; this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid lightgrey 1px";}}
+
+
     else {this.prevent_init_email=false; this.notavalidemail=false; this.email_null=false;this.input_email.style.border="solid lightgrey 1px"}
   }
   fetch_ctm(){
@@ -361,10 +419,26 @@ this.mode_select=false;
         this.select_d.value='';
         this.select_o.value='';}
       
-      
-    });
+
+
+        else
+        this.showsnackbar();
+    },error=>{ this.showsnackbar()
+   } );
+
+
     //console.log(name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
   }
+
+
+
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   preventNonNumericalInput(e:any){
     e = e || window.event;
     
@@ -380,6 +454,8 @@ this.mode_select=false;
   }
   clearfield(){
     console.log(this.radio_amc);
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.email_null=false;
     this.namevalid=false;
     this.addressvalid=false;

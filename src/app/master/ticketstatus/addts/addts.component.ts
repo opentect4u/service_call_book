@@ -19,6 +19,10 @@ mutation insertMaster($ts: String,$user_id: String) {
 export class AddtsComponent implements OnInit {
 
   constructor(private apollo:Apollo,private router:Router) { }
+  x:any;
+
+  spinshow=false;
+
   userdata:any;
   input_tag:any;
   msg='';
@@ -26,6 +30,8 @@ export class AddtsComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
+    
+    localStorage.setItem('address','/ticketstatus/addts');  
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -46,6 +52,7 @@ export class AddtsComponent implements OnInit {
     }
   }
   send_item(v:any){
+    this.msg='';
     if(v=='')
     {
       this.done=false;
@@ -61,7 +68,7 @@ export class AddtsComponent implements OnInit {
           mutation:ADD_TS,
           variables:{
             ts:v,
-            user_id:'123'
+            user_id:localStorage.getItem("UserId")
           }
         }).subscribe(({data})=>{this.userdata=data;console.log(data);
           console.log("data:" +JSON.stringify(data))
@@ -69,20 +76,33 @@ export class AddtsComponent implements OnInit {
           if(this.userdata.insertMaster.message=='Inserted Successfully !!')
           // this.msg="Ticket status added successfully!!"
           { localStorage.setItem('addts','1');
+            this.clear_field();
             this.router.navigate(['/ticketstatus/dashboard'])
           }
-        });
+          else
+          this.showsnackbar();
+      },error=>{ this.showsnackbar()
+      });
       this.done=true;
      // this.msg="Ticket status added successfully!!"
-     this.input_tag.value='';
+    
      this.disable_button=true
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_tag.value='';
     this.error=false;
     this.done=false;
+    this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
       

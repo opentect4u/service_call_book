@@ -12,7 +12,14 @@ query{
     emp_code
     emp_name
   }
-}`
+}`;
+const DEL_EMP=gql`
+mutation deleteEmp($id: String){
+  deleteEmp(id:$id){
+    success
+    message
+  }
+}`;
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Employee_Code: any;
@@ -41,7 +48,7 @@ query{
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class AddempdashboardComponent implements OnInit {
-
+  dlt=true;
   displayedColumns: string[] = ['Sl_No', 'Employee_Code','Name','Edit','Delete'];
   dataSource = new MatTableDataSource; 
 
@@ -51,14 +58,18 @@ export class AddempdashboardComponent implements OnInit {
   insrt=true;
   updatee:any;
   inserte:any;
-
+  userdel:any;
+empid:any;
   loading: boolean=false;
   posts_emp: any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
-
+ x:any;
 
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
+    localStorage.setItem('address', '/addemp/dashboard');
+
     console.log(this.updt);
     this.updatee=localStorage.getItem('updatee');
     this.inserte=localStorage.getItem('adde');
@@ -83,6 +94,7 @@ export class AddempdashboardComponent implements OnInit {
             localStorage.setItem('adde','0')
    
           }
+
     this.fetch_data();
     //this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -119,5 +131,33 @@ export class AddempdashboardComponent implements OnInit {
     //console.log(v1+" "+v2+" "+" "+v3);
     this.router.navigate(['/addemp/editemp',v1,v2,v3])
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.empid=v}
+  delete_item(){ this.apollo.mutate({
+    mutation:DEL_EMP,
+    variables:{
+      id:this.empid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteEmp.message)
+    if(this.userdel.deleteEmp.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }

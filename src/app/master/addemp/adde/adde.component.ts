@@ -22,6 +22,7 @@ export class AddeComponent implements OnInit {
 
   constructor(private apollo: Apollo,private router:Router) { }
   userdata:any;
+  spinshow=false;
   notavalidemail=true;
    confirm_email='';
    input_code:any;
@@ -36,7 +37,10 @@ export class AddeComponent implements OnInit {
    email_null=false;
    msg='';
    done=false;
+   x:any;
   ngOnInit(): void {
+    
+    localStorage.setItem('address', '/addemp/adde');
     this.input_code=document.getElementById('itemcode');
     this.input_name=document.getElementById('itemname');
     this.input_phone=document.getElementById('itemph');
@@ -130,11 +134,23 @@ export class AddeComponent implements OnInit {
       console.log(this.userdata.insertEmpMaster.message)
       if(this.userdata.insertEmpMaster.message=='Data Inserted Successfully')
      { localStorage.setItem('adde','1');
+     this.clear_all()
        this.router.navigate(['/addemp/dashboard'])}
-    });
-    this.clear_all()
+       else
+       this.showsnackbar();
+   },error=>{ this.showsnackbar()
+  } );
+    
   }
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_all(){
+    this.spinshow=true;
+    setTimeout(()=>{this.spinshow=false;;},1000);
     this.input_code.value=''
     this.input_name.value=''
     this.input_email.value=''

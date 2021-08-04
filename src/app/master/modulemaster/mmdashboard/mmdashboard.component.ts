@@ -5,6 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router'
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 5){
+    success
+    message
+  }
+}
+`;
 const SHOW_MM=gql`
 query{
   getModuleTypeData(id:"", db_type: 5){
@@ -12,6 +20,7 @@ query{
     module_type
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Module: any;
@@ -46,16 +55,22 @@ export class MmdashboardComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   updt=true;
   insrt=true;
+  userdel:any;
   updatemm:any;
   insertmm:any;
-
+  dlt=true;
   loading: boolean=false;
   posts_mm: any;
+  mmid:any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
-
+  x:any;
 
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
+
+    localStorage.setItem('address','/mastermodule/dashboard'); 
+
     this.updatemm=localStorage.getItem('updatemm')
     this.insertmm=localStorage.getItem('addmm')
     console.log(this.updatemm)
@@ -79,6 +94,7 @@ export class MmdashboardComponent implements OnInit {
             localStorage.setItem('addmm','0')
    
           }
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -120,5 +136,33 @@ export class MmdashboardComponent implements OnInit {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.mmid=v}
+  delete_item(){this.apollo.mutate({
+    mutation:DEL_MAS,
+    variables:{
+      id:this.mmid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteMaster.message)
+    if(this.userdel.deleteMaster.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }

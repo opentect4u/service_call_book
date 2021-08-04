@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +23,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-//import { AddctmComponent } from './master/addclient/addclientdashboard/addctm/addctm.component';
 import { AddclienttypeComponent } from './master/clienttypemaster/ctmdashboard/addclienttype/addclienttype.component';
 import { AddomComponent } from './master/operationalmode/addom/addom.component';
 import { AddtsComponent } from './master/ticketstatus/addts/addts.component';
@@ -52,10 +51,36 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
-//import { GraphQLModule } from './graphql.module';
-// import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ng6-toastr-notifications';
+import { NgxSpinnerModule } from "ngx-spinner";  
+// import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+// import {MatButtonModule} from '@angular/material/button';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { NgSelectModule } from '@ng-select/ng-select'; 
+
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
+
+
+import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
+import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
+import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
+import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
+
+import {MatRadioModule} from '@angular/material/radio';
+
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
+import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
+import { SearchByDateComponent } from './search/search-by-date/search-by-date.component';
+import { SearchByTicketComponent } from './search/search-by-ticket/search-by-ticket.component';
+import { ClientHeaderComponent } from './common/client-header/client-header.component';
+import { ViewComponent } from './search/view/view.component';
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,11 +120,27 @@ import { TemplateComponent } from './mail_template_reg_verification/template/tem
     ComponentNameComponent,
     RightclickoffDirective,
     ControlkeyoffDirective,
-    TemplateComponent
 
+
+
+    TemplateComponent,
+
+
+    UsermaintananceComponent,
+    NotificationsComponent,
+    AddnotifyComponent,
+    EditnotifyComponent,
+    EdittktComponent,
+    SearchByDateComponent,
+    SearchByTicketComponent,
+    ClientHeaderComponent,
+    ViewComponent
 
   ],
   imports: [
+    NgMultiSelectDropDownModule.forRoot(),
+    AngularMultiSelectModule,
+    NgSelectModule,
     BrowserModule,
     MatButtonModule,
     AppRoutingModule,
@@ -111,13 +152,21 @@ import { TemplateComponent } from './mail_template_reg_verification/template/tem
     MatInputModule,
     MatSelectModule,
     FormsModule,
-
     ReactiveFormsModule,
-
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule,
+    NgxSpinnerModule,
+    MatRadioModule,
+    AutocompleteLibModule,
+    ToastrModule.forRoot()
+    
+   
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

@@ -15,6 +15,9 @@ export class ForgetpassComponent implements OnInit {
   constructor(private fb:FormBuilder) { }
 
   ngOnInit(): void {
+    localStorage.setItem('address','/forgetpassword');
+    console.log("Branch");
+    // localStorage.setItem("address",'/forgetpassword');
 
     this.LoginForm = this.fb.group({
       email:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]]})

@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, state, transition, animate } from '@angular/animations'
-import { Router } from '@angular/router';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
+
+const APPROVE=gql`
+mutation  approveUser($email_id:String!){
+  approveUser(email_id:$email_id){
+    success
+    message
+ }
+
+}`
+
+
+
 @Component({
   selector: 'app-template',
   templateUrl: './template.component.html',
@@ -33,22 +47,79 @@ import { Router } from '@angular/router';
 export class TemplateComponent implements OnInit {
   message = true;
   loginbtn = true;
-  constructor(private router:Router) { }
+
+  url:any;
+  x:any;
+  constructor(private router:Router,private route: ActivatedRoute,private apollo:Apollo) {}
   divwelcome = false;
+   Id:any;
   ngOnInit(): void {
+    localStorage.setItem('address','/template');
+
+    this.route.queryParams.subscribe(params => {
+      this.Id= params['id'];
+      console.log("id:" +this.Id);
+
+  });
+  // this.url = decodeURIComponent(window.location.href);
+  //  console.log(localStorage.getItem('address'));
+
+
+ }
+  confirm() {
+
+    this.apollo
+    .mutate({
+      mutation: APPROVE,
+      variables:{
+        email_id:this.Id
+      }
+    }).subscribe(({data})=>{
+          //  console.log("Success:" +data);
+           this.url=data;
+           console.log("Success:" +this.url.approveUser.success);
+           if(this.url.approveUser.success==1){
+            this.divwelcome = true;
+            setTimeout(() => {
+              this.message = false
+            }, 1000);
+            setTimeout(() => {
+              this.loginbtn = false
+            }, 2500);
+           }
+          else{
+            this.showsnackbar();
+          }
+
+       },error=>{ this.showsnackbar()
+       })
+
 
   }
-  confirm() {
-    this.divwelcome = true;
-    setTimeout(() => {
-      this.message = false
-    }, 1000);
-    setTimeout(() => {
-      this.loginbtn = false
-    }, 2500);
-   
-  }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+
   go() {
     this.router.navigate(['/']);
   }
+
+//  For getting value frrom Encoded url
+// function myFunction() {
+//   var uri = "https://w3schools.com/my test.asp?name=Suman&car=Mitra";
+//    var res = decodeURIComponent(uri);
+
+// var url = new URL(res);
+// var d = url.searchParams.get("car");
+// var c = url.searchParams.get("name");
+// console.log(c);
+
+//   document.getElementById("demo1").innerHTML = d;
+//   document.getElementById("demo").innerHTML = c;
+// }
+
 }

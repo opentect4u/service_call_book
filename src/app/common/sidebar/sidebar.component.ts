@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
+import { interval } from 'rxjs';
 //import {MatDialog} from '@angular/material/dialog';
+
+
+const GET_USER_TYPE=gql`
+query  getUserDetailsById($user_id:String!){
+  getUserDetailsById(user_id:$user_id){
+    user_type,
+    user_status
+  }
+}
+`
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -13,48 +26,207 @@ import { Router } from '@angular/router';
 ]
 })
 export class SidebarComponent implements OnInit {
+   u_type:any;
   store:any;
   marker:any;
   marker1:any;
-  constructor(private router:Router) { }
+  admindropdown:any;
+  searchtkt:any;
+  utype:boolean=true;
+  Etype:boolean=true;
+  user:any;
+  done_dt_frm=true;
+  done_dt_to=true;
+  done=true;
+  prevent=false;
+  old_u_type:any;
+  tkt:any;
+  ct=0;
+  frm:any;
+  done_dt=true;
+  t:any;
+  constructor(private router:Router,private apollo:Apollo) {
+   
+ 
+   }
 
   ngOnInit(): void {
+    this.frm=document.getElementById('frm');
+    this.t=document.getElementById('t');
+      this.old_u_type=localStorage.getItem('user_Type');
+       this.apollo.watchQuery<any>({
+      query: GET_USER_TYPE,
+      variables:{
+        user_id:localStorage.getItem('UserId')
+      },
+      pollInterval:500
+
+      
+    }).valueChanges
+    .subscribe(({ data}) => {
+      console.log(data);
+     localStorage.setItem('user_Type',data.getUserDetailsById[0].user_type) ;
+      this.u_type=localStorage.getItem('user_Type');
+      // if(data.getUserDetailsById[0].user_status=='D'){
+      //   this.router.navigate(['/']);
+      // }
+      // else{
+
+        if(this.u_type=='T'){
+        this.utype=true;
+        }
+        else{
+            this.utype=false;
+        }
+        if(this.u_type=='E'){
+            this.Etype=true;
+        }
+        else{
+          this.Etype=false;
+        }
+        if(this.old_u_type!=this.u_type)
+        {
+          this.old_u_type=this.u_type;
+          this.router.navigate(['/dashboard'])
+        }
+//  }  
+    })
+ 
+
+
+   
+    
+    // setInterval(()=>{alert(localStorage.getItem('user_Type'));},6000)
+   
   }
+  make_date_true(){this.done_dt_frm=true;this.done_dt_to=true;this.ct=0; this.done_dt=true;
+  this.frm=document.getElementById('frm');
+  this.frm.value='';
+  this.t=document.getElementById('t');
+  this.t.value='';
+  
+  }
+prevent_null_frm(){this.done_dt_frm=false;
+if(this.t.value=='' || (this.frm.value>this.t.value))
+this.done_dt=true;
+else
+this.done_dt=false;
 
-
-
+}
+prevent_null_to(){this.done_dt_to=false;
+  if(this.frm.value=='' || (this.frm.value>this.t.value))
+  this.done_dt=true;
+  else
+  this.done_dt=false;
+}
+ prevent_null(e:any){
+   if(e.target.value=='')
+   {this.done=true; this.prevent=true;}
+   else
+  { this.done=false;this.prevent=false;}
+ }
+  
+make_true(){
+  this.prevent=false;
+  this.done=true;
+  this.tkt=document.getElementById('tkt_no');
+  this.tkt.value='';
+}
+srch_tkt(v:any){
+//alert(v);
+this.router.navigate(['/search_ticket',btoa(v)]);
+}
+srch_dt(v1:any,v2:any){
+  this.router.navigate(['/search_date',btoa(v1),btoa(v2)])
+}
   openclosedropdown1(){
+    
+    this.u_type=localStorage.getItem('user_Type');
+   
     this.store=document.getElementById('openclose');
+    console.log(this.store.style);
     this.marker1=document.getElementById('openclose1');
+    this.admindropdown=document.getElementById('openclose_admin');
+    this.searchtkt=document.getElementById('openclose_searchtkt');
+    if( this.u_type=='A'||  this.u_type=='M' || this.u_type=='T'){
     if(this.store.style.display=='block'){
         this.store.style.display='none';
+      
+        
       this.marker=document.getElementById('down');
 
     
       console.log("block");
      }
      else{
+      
       this.marker1.style.display='none';
       this.store.style.display='block';
-   
+      this.searchtkt.style.display='none';
+      
+      console.log(this.store);
       console.log("none");
+      if( this.u_type=='A'||  this.u_type=='M'){
+        this.admindropdown.style.display='none';
+
+      }
+
 
      }
+    }
+    else{
+      // this.admindropdown=document.getElementById('openclose_admin');
+    this.searchtkt=document.getElementById('openclose_searchtkt');
+    this.store=document.getElementById('openclose');
+    if(this.store.style.display=='block'){
+      this.store.style.display='none';
+    
+      
+      this.marker=document.getElementById('down');
+
+  
+    console.log("block");
+   }
+   else{
+       this.store.style.display='block';
+       this.searchtkt.style.display='none';
+      //  this.admindropdown.style.display='none';
+    
+   }
+
+    }
+
+   
+    
     
     }
 
     openclosedropdown(){
+      this.u_type=localStorage.getItem('user_Type');
       this.marker1=document.getElementById('openclose');
        this.store=document.getElementById('openclose1');
-    if(this.store.style.display=='block'){
+       this.admindropdown=document.getElementById('openclose_admin');
+       this.searchtkt=document.getElementById('openclose_searchtkt');
+        
+       if(this.store.style.display=='block'){
+    
         this.store.style.display='none';
+        // this.admindropdown.style.dispaly='none'
+
       this.marker=document.getElementById('down1');
     
       console.log("block");
      }
      else{
       this.marker1.style.display='none';
+     
+      if(this.u_type=='A'||this.u_type=='M')
+      this.admindropdown.style.display='none';
+    
+      this.searchtkt.style.display='none';
+
       this.store.style.display='block';
+      
    
       console.log("none");
 
@@ -64,9 +236,105 @@ export class SidebarComponent implements OnInit {
 
 
     }
+    opencloseadminsubmenu(){
+      this.u_type=localStorage.getItem('user_Type');
+      this.marker1=document.getElementById('openclose');
+      this.store=document.getElementById('openclose1');
+      this.admindropdown=document.getElementById('openclose_admin');
+      this.searchtkt=document.getElementById('openclose_searchtkt');
+      if( this.u_type=='A'||  this.u_type=='M'){
+      if(this.admindropdown.style.display == 'block'){
+        this.admindropdown.style.display='none';
+        
+
+
+      }
+      else{
+        this.store.style.display='none';
+        this.marker1.style.display='none';
+        this.searchtkt.style.display='none';
+        this.admindropdown.style.display='block';
+
+
+      }
+    }
+    // else{
+    //   this.store=document.getElementById('openclose1');
+    //   this.admindropdown=document.getElementById('openclose_admin');
+    //   this.searchtkt=document.getElementById('openclose_searchtkt');
+    //   if(this.admindropdown.style.display == 'block'){
+    //     this.admindropdown.style.display='none';
+        
+
+
+    //   }
+    //   else{
+    //     this.store.style.display='none';
+        
+    //     this.searchtkt.style.display='none';
+    //     this.admindropdown.style.display='block';
+
+
+    //   }
+
+    // }
+
+
+    }
+
+    openclosesearchticket(){
+      this.u_type=localStorage.getItem('user_Type');
+      this.marker1=document.getElementById('openclose');
+      this.store=document.getElementById('openclose1');
+      this.admindropdown=document.getElementById('openclose_admin');
+      this.searchtkt=document.getElementById('openclose_searchtkt');
+      if( this.u_type=='A' ||  this.u_type=='M' || this.u_type=='T'){
+      if(this.searchtkt.style.display == 'block')
+      {
+        this.searchtkt.style.display='none';
+      }
+      else{
+        this.store.style.display='none';
+        this.marker1.style.display='none';
+        // this.admindropdown.style.display='none';
+        this.searchtkt.style.display='block';
+        if(this.u_type=='A' || this.u_type=='M'){
+          this.admindropdown.style.display='none';
+        }
+        
+
+      }
+    }
+    else{
+      this.marker1=document.getElementById('openclose');
+     
+      this.searchtkt=document.getElementById('openclose_searchtkt');
+      if(this.searchtkt.style.display == 'block')
+      {
+        this.searchtkt.style.display='none';
+      }
+      else{
+        this.marker1.style.display='none';
+      
+        this.searchtkt.style.display='block';
+
+      }
+
+    }
+
+
+    }
+
+   
+
+
+    
     logout(){
       localStorage.clear();
-      this.router.navigate(['/'])
+      localStorage.setItem('isLoggedIn',"false");
+      this.router.navigate(['/']).then(() => {
+        window.location.reload();
+      });;
     }
 
 }

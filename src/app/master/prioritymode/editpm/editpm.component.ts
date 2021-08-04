@@ -17,7 +17,7 @@ mutation updateMaster($id:String, $name: String,$user_id: String) {
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class EditpmComponent implements OnInit {
-
+  x:any;
   item1: any;
   item2: any;
 
@@ -29,7 +29,11 @@ export class EditpmComponent implements OnInit {
   done=false;
   input_tag:any;
   msg='';
+  pathname:any;
   ngOnInit(): void {
+    this.pathname=window.location.href.split('#').pop();
+    console.log("path:" +window.location.href.split('#').pop())
+    localStorage.setItem('address', decodeURIComponent(this.pathname));
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
@@ -67,7 +71,7 @@ export class EditpmComponent implements OnInit {
       variables:{
         id:v1,
         name:v2,
-        user_id:'123'
+        user_id:localStorage.getItem("UserId")
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -76,7 +80,10 @@ export class EditpmComponent implements OnInit {
       //this.msg="Priority updated successfully!!"
       { localStorage.setItem('updatepm','1');
       this.router.navigate(['/prioritymode/dashboard'])}
-    });
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });
       this.done=true;
       this.msg="Priority updated successfully!!"
      //this.input_tag.value='';
@@ -84,6 +91,13 @@ export class EditpmComponent implements OnInit {
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
   clear_field(){
     this.input_tag.value='';
     this.error=false;

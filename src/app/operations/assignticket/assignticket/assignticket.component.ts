@@ -3,28 +3,23 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-export interface PeriodicElement {
-  Ticket_No: any;
-  Client_Name: any;
-  Phone_no:any;
-  Assigned_to:any;
-  Priority:any;
-  Ticket_Status:any;
-  Edit:any;
-}
+import { Apollo, gql } from 'apollo-angular';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    Ticket_No: 1,
-    Client_Name:1,
-    Phone_no: 'abc',
-    Assigned_to:'',
-    Priority:'123',
-    Ticket_Status:'',
-   Edit:''
-  }, 
-  
-];
+
+const GET_RAISETICKITE=gql`
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,tag:"2",user_type:$user_type,user_id:$user_id){
+     id
+    client_name
+    phone_no
+    tkt_no
+    emp_name
+    priority
+    tktStatus
+    log_in
+  }
+}`
+;
 
 
 @Component({
@@ -40,16 +35,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AssignticketComponent implements OnInit {
 
-  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Phone_no','Assigned_to','Priority','Ticket_Status','Edit'];
-  dataSource = new MatTableDataSource<PeriodicElement> (ELEMENT_DATA); 
-
+  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Assigned_to','Priority','Ticket_Status','ticket_log_date','Edit'];
+  dataSource = new MatTableDataSource<any> (); 
+  Tickite:any;
+  edittickit:boolean=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+       if( localStorage.getItem('edittickit')=='1'){
+            this.edittickit=false;
+       }
+     
+    localStorage.setItem('address', '/operations/assignticket');
+    localStorage.setItem('Active', '1');
+
+    this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -58,11 +62,45 @@ export class AssignticketComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/addclient/addcl'])   ; 
+    this.router.navigate(['/addclient/addcl']); 
   }
-  go_to_update(v1:any,v2:any){
-    this.router.navigate(['/operations/editassignticket'])
+  go_to_update(v1:any){
+    console.log("v1:" +v1);
+    this.router.navigate(['/operations/editassignticket',v1])
   }
+
+  private fetch_data(){
+    this.apollo.watchQuery<any>({
+      query: GET_RAISETICKITE,
+      variables:{
+         id:"",
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+      },
+      pollInterval:500
+      
+    })
+      .valueChanges
+      .subscribe(({ data}) => {
+
+         this.Tickite=data;
+         this.putdata(this.Tickite);
+      })
+
+    
+  }
+  private putdata(posts:any){
+    this.dataSource=new MatTableDataSource(posts.getSupportLogDtls);
+    console.log(this.dataSource);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  localStorage(){
+    localStorage.setItem('edittickit','0');
+    this.edittickit=true;
+}
+
+
 
 
 

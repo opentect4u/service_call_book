@@ -5,6 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router'
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+const DEL_MAS = gql`
+mutation deleteMaster($id: String!){
+  deleteMaster(id: $id, db_type: 3){
+    success
+    message
+  }
+}
+`;
 const SHOW_TS=gql`
 query{
   getTktStatusData(id:"", db_type: 3){
@@ -12,6 +20,7 @@ query{
     tkt_status
   }
 }`
+
 // export interface PeriodicElement {
 //   Sl_No: any;
 //   Status: any;
@@ -47,15 +56,20 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
   updt=true;
   insrt=true;
+  dlt=true;
   updatets:any;
   insertts:any;
   loading: boolean=false;
   posts_ts: any=[];
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo) { }
- 
-
+  tsid:any;
+ x:any;
+ userdel:any;
   ngOnInit(): void {
+    localStorage.setItem('Active', '1');
+    localStorage.setItem('address','/ticketstatus/dashboard');  
+
     this.updatets=localStorage.getItem('updatets')
     this.insertts=localStorage.getItem('addts')
     if(this.updatets=='0')
@@ -78,6 +92,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
             localStorage.setItem('addts','0')
    
           }
+
     this.posts_ts.length=0;
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
@@ -121,5 +136,33 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
-  delete(){}
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+  delete(v:any){this.tsid=v;}
+  delete_item(){this.apollo.mutate({
+    mutation:DEL_MAS,
+    variables:{
+      id:this.tsid,
+      // name:v2,
+      // user_id:localStorage.getItem("UserId")
+      
+    }
+  }).subscribe(({data})=>{this.userdel=data;console.log(data);
+    console.log("data:" +JSON.stringify(data))
+    console.log(this.userdel.deleteMaster.message)
+    if(this.userdel.deleteMaster.success==1)
+    { // this.done=true;this.msg="Client Type updated successfully!!";
+   // this.ctmdash.ngOnInit();
+      // localStorage.setItem('updatectm','1')
+      // this.router.navigate(['/clienttypemaster/dashboard'])
+   this.dlt=false;
+      }
+      else
+      this.showsnackbar();
+  },error=>{ this.showsnackbar()
+  });}
 }

@@ -72,6 +72,10 @@
 
 
               <input id="getit" [hidden]="true" value="0">
+              <div class="alert alert-success alert-dismissible fade in" style="text-align: center;" [hidden]="dlt">
+                <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
+                Deletion Successful!! <a style="float:right;" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
               <div class="alert alert-success alert-dismissible fade in" style="text-align: center;" [hidden]="updt">
                 <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
                 Updation Successful!! <a style="float:right;" data-dismiss="alert" aria-label="close">&times;</a>
@@ -97,14 +101,26 @@
                 </div>
                 
                 <div class="col-sm-10">
+                    <!-- <input type="radio" id="a" name="Status" checked="true" value="1" (click)="sendstatus(1)">
+
+                    <label for="a"> Active</label><br>
+
+                    <input type="radio" id="i" name="Status" value="0" (click)="sendstatus(0)">
+                    <label for="i"> Inactive</label><br> -->
                     <input type="radio" id="a" name="Status" checked="true" value="1" (click)="sendstatus(1)">
                     <label for="a"> Active</label>
                     <input type="radio" id="i" name="Status" value="0" (click)="sendstatus(0)" class="ml-3">
                     <label for="i"> Inactive</label>
+                  </div>
+
+                    <!-- <label for="a"> Active</label>
+                    <input type="radio" id="i" name="Status" value="0" (click)="sendstatus(0)" class="ml-3">
+                    <label for="i"> Inactive</label> -->
                 </div>
+
             </div><br>
               <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort>
+                <table mat-table [dataSource]="dataSource" matSort >
 
 
                   <!-- <ng-container matColumnDef="Sl_No">
@@ -131,16 +147,19 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="phone_no"> Phone No.</th>
                     <td mat-cell *matCellDef="let row">{{row.phone_no}}</td>
                   </ng-container>
-<<<<<<< HEAD
-                  <ng-container matColumnDef="District">
+
+
+                 
+
+                 <ng-container matColumnDef="District">
+
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="district_name"> District</th>
                     <td mat-cell *matCellDef="let row">{{row.district_name}}</td>
                   </ng-container>
-=======
 
->>>>>>> master
+
                  
-                <ng-container matColumnDef="Edit">
+                <ng-container matColumnDef="Edit" >
                   <th mat-header-cell *matHeaderCellDef> Edit</th>
                   <td mat-cell *matCellDef="let row">
                       <a (click)="go_to_update(row.id)"
@@ -151,18 +170,23 @@
                   </ng-container>
                   <ng-container matColumnDef="Delete">
                     <th mat-header-cell *matHeaderCellDef> Delete</th>
-<<<<<<< HEAD
-                    <td mat-cell *matCellDef="let row"><a (click)="delete()" class="delete editeCus"
-                      title="Delete"><i class="fa fa-trash-o menu-icon"
+
+
+                    <td mat-cell *matCellDef="let row" class="pl-3"><a (click)="delete(row.id)" class="delete editeCus"
+
+
+                      title="Delete"
+                      data-toggle="modal" data-target="#clientmodal"><i class="fa fa-trash-o menu-icon"
                         style="color: #bd2130"></i></a></td>
-=======
-                    <td mat-cell *matCellDef="let row">
+
+                    <!-- <td mat-cell *matCellDef="let row">
                         <a (click)="delete()"
                         data-toggle="tooltip" data-placement="bottom" title="Delete" class="deletCus">
                         <i class="fa fa-delete menu-icon"></i>
                     </a>
-                </td>
->>>>>>> master
+                </td> -->
+
+
                   </ng-container>
 
                   <!-- <ng-container matColumnDef="Delete">
@@ -215,7 +239,44 @@
 
 
 
-</div>
+
+
+
+
+
+  <div class="modal fade in" id="clientmodal">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-center w-100 p-2">Warning!!</h4>
+          <button type="button" class="close mr-2 mb-3" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+          <p class="text-center p-4 h5"><strong>Are you sure you want to delete? </strong></p>
+        </div>
+        <div class="modal-footer p-3">
+          <!-- <button type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>-->
+
+          <button mat-raised-button data-dismiss="modal" class="color mr-2" (click)="delete_item()">Ok</button>
+
+          <button mat-raised-button data-dismiss="modal"  class="color ">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+  <div id="snackbar"><i class="fa fa-times-circle" style="color:red"></i>&nbsp; Deletion failed.Please try again after some time</div>
+
+
+
+
+<!-- </div> -->
 
 
 

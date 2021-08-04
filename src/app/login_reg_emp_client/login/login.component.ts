@@ -1,7 +1,11 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Apollo, gql, Subscription} from 'apollo-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
 
 const GET_POST_LOGIN = gql`
 query userLogin($user_id: String!, $password: String!){
@@ -12,6 +16,14 @@ query userLogin($user_id: String!, $password: String!){
 }
 `;
 
+const GET_USER_TYPE=gql`
+query  getUserDetailsById($user_id:String!){
+  getUserDetailsById(user_id:$user_id){
+    user_type,
+    user_status
+  }
+}
+`
 
 
 
@@ -30,10 +42,12 @@ query userLogin($user_id: String!, $password: String!){
               '../../../assets/Login_assets/css/apps.css',
                '../../../assets/Login_assets/css/apps_inner.css',
               '../../../assets/Login_assets/css/res.css']
+
 })
 export class LoginComponent implements OnInit {
- 
-   error_for_user:any="Please Check Your User ID Or Password";
+   show_eye: boolean = false;
+  //  error_for_user:any="Please Check Your User ID Or Password";
+  error_for_user:any;
    error_log:boolean=true;
    Success:any;
   recaptcha:any='';
@@ -41,21 +55,36 @@ export class LoginComponent implements OnInit {
   clone:any;
   captch:boolean=false;
   errormsg:any="Captcha mismatch";
- constructor(private router:Router,private fb:FormBuilder,private apollo: Apollo) { }
+ constructor(private router:Router,private fb:FormBuilder,private apollo: Apollo,private spinner: NgxSpinnerService) { }
   LoginForm!: FormGroup;
   login:boolean=false;
   loading!: boolean;
   userid:any;
   user:any;
   successfull_register:boolean=true;
- 
-  
+  show_password:any;
+  x:any;
+  load:any;
+
+
+
+
+
+
+
+
   ngOnInit(): void {
+
+
+
+     localStorage.setItem('address', '/')
+
+
     if(localStorage.getItem("Employee_signup")== '1'){
       this.successfull_register=false
 
     }
-      
+
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
     'O','P','Q','R','S','T','U','V','W','X','Y','Z',
     '1','2','3','4','5','6','7','8','9','0',
@@ -69,7 +98,7 @@ export class LoginComponent implements OnInit {
     var f=alpha[Math.floor(Math.random()*62)]
     var g=alpha[Math.floor(Math.random()*62)]
     var sum=a+b+c+d+e+f+g;
-    this.recaptcha=document.getElementById("capt");
+    this.recaptcha=document.getElementById("capt_login");
     this.recaptcha.value=sum;
 
 
@@ -114,7 +143,7 @@ export class LoginComponent implements OnInit {
 
   Submit(){
     this.error_log=true;
-    this.recaptcha=document.getElementById("capt");
+    this.recaptcha=document.getElementById("capt_login");
     console.log("dashboard1")
     this.login=true;
     if(this.LoginForm.invalid){
@@ -126,11 +155,11 @@ export class LoginComponent implements OnInit {
       // localStorage.setItem('username',this.f.username.value);
       // localStorage.setItem('password',this.f.password.value);
 
-      console.log("UserName:" +this.f.username.value)
-      console.log("PassWord:" +this.f.password.value)
+      // console.log("UserName:" +this.f.username.value)
+      // console.log("PassWord:" +this.f.password.value)
       console.log("Captcha;" +this.f.captcha.value);
       console.log(this.recaptcha.value);
-     
+
       if(this.f.captcha.value != this.recaptcha.value){
         this.captch=true;
         console.log("false")
@@ -139,64 +168,96 @@ export class LoginComponent implements OnInit {
         this.error_log=true;
         this.captch=false;
           console.log("dashboard")
+
+
+          this.spinner.show();
+
          this.apollo.watchQuery<any>({
             query: GET_POST_LOGIN,
+            fetchPolicy: 'network-only',
             variables:{
               user_id:this.f.username.value,
               password:this.f.password.value
             }
-            
-          })
-            .valueChanges
-            .subscribe(({ data, loading}) => {
-               this.loading=loading;
-              //  console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)));
-              //  console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message.user_id)));
-              //  this.userid=JSON.stringify(data);
-              //  console.log(this.userid);
-           
-            
-              //  this.user=JSON.parse(data.userLogin.message)[0];
-              //  console.log(this.user);
-              //  console.log(this.user.user_id);
-             localStorage.setItem("UserId",this.f.username.value);
-               this.Success= data.userLogin.success;
-               if( this.Success == 1){
 
-                this.user=JSON.parse(data.userLogin.message)[0];
+
+
+          }).valueChanges
+            .subscribe(({ data}) => {
+              console.log(data);
+          // localStorage.setItem("user_email",this.f.username.value);
+
+
+
+               this.Success= data.userLogin.success;
+               this.spinner.hide();
+              //  console.log("Success:" +this.Success.user_status);
+
+               if( this.Success == 1){
+                localStorage.setItem('Active','1');
+                console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
+                localStorage.setItem("UserId",JSON.parse(data.userLogin.message)[0].code_no);
+                localStorage.setItem("user_Type",JSON.parse(data.userLogin.message)[0].user_type);
+                localStorage.setItem("user_name",JSON.parse(data.userLogin.message)[0].emp_name);
+                localStorage.setItem("user_email",this.f.username.value)
+                console.log("user_type:" +JSON.parse(data.userLogin.message)[0].user_type);
+
+
+
+
+                localStorage.setItem('isLoggedIn',"true");
+
+                this.user=JSON.parse(data.userLogin.message);
+
                  console.log("success");
                  console.log("userid:" + this.user)
-                //  alert("Success");
-                 
-                this.router.navigate(['/dashboard'])
- 
+                 this.router.navigate(['/dashboard']);
+
+
 
                }
-               else{
-               
-               
-              //  this.clone=document.getElementById("address")
-                // this.clone.style="border:1px solid red";
-                console.log(JSON.stringify(data.userLogin.message));
+               else if(this.Success == 0){
+
+
+
+                this.error_for_user=JSON.parse(JSON.stringify(data.userLogin.message));
+                console.log("unsuccess:" +this.error_for_user);
                 console.log("Failure");
-                // alert("failure");
+
                 this.error_log=false;
+                localStorage.setItem('isLoggedIn',"false");
 
                }
-              
-               
-            
-               
-            });
-       
-         
+
+
+
+
+               else
+                  this.spinner.hide();
+                  this.showsnackbar();
+          },error=>{
+            this.spinner.hide();
+            this.showsnackbar()
+           }
+          );
+
+
+
       }
     }
 
   }
+
+  showsnackbar() {
+    // alert("error");
+     this.x = document.getElementById("snackbar");
+     this.x.className = "show";
+     setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
+   }
+
   refresh_captcha(){
 
-      var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
+       var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
       'O','P','Q','R','S','T','U','V','W','X','Y','Z',
       '1','2','3','4','5','6','7','8','9','0',
       'a','b','c','d','e','f','g','h','i','j','k','l','m','n',
@@ -209,19 +270,35 @@ export class LoginComponent implements OnInit {
       var f=alpha[Math.floor(Math.random()*62)]
       var g=alpha[Math.floor(Math.random()*62)]
       var sum=a+ b+c+d+e+f+g;
-      this.recaptcha=document.getElementById("capt");
+      this.recaptcha=document.getElementById("capt_login");
       this.recaptcha.value=sum;
-  } 
-
-
-  close_alert(){
-
-    localStorage.setItem("Employee_signup",'0');
-    this.successfull_register=true;
-    
+      // this.load=document.getElementById("refresh")?.setAttribute("class",'fa fa-refresh');
 
   }
 
- 
+
+
+
+
+
+
+
+
+
+  close_alert(){
+    localStorage.setItem("Employee_signup",'0');
+    this.successfull_register=true;
+  }
+
+  myFunction(){
+    this.show_password=document.getElementById('passwd');
+    if (this.show_password.type === "password") {
+      this.show_password.type = "text";
+    } else {
+      this.show_password.type = "password";
+    }
+
+  }
+
 
 }
