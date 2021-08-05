@@ -89,7 +89,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { NotificationService } from './service/notification.service';
 import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
 import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/editclientraiseticket/editclientraiseticket.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,7 +150,8 @@ import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addc
     SearchByDateComponent,
     SearchByTicketComponent,
     ClientHeaderComponent,
-    ViewComponent
+    ViewComponent,
+    EditclientraiseticketComponent
 
 
   ],
@@ -179,6 +181,8 @@ import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addc
     MatDialogModule,
     MatIconModule,
     MatMenuModule,
+    MatTabsModule,
+
     ToastrModule.forRoot()
     // ToastrModule.forRoot({
     //   timeOut: 10000,

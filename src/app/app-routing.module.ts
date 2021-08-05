@@ -43,6 +43,7 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
 import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
+import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/editclientraiseticket/editclientraiseticket.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
 import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raiseticket.component';
@@ -276,6 +277,10 @@ const routes: Routes = [
   {
     path:'view/:id1/:id2',
     component:ViewComponent
+  },
+  {
+    path:'Edit/clientraiseticket/:id',
+    component:EditclientraiseticketComponent
   }
 
 

@@ -241,7 +241,7 @@ export class AddclientraisetktComponent implements OnInit {
   }
 
   submit(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
-          console.log(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13);
+          console.log(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v12,v13,v11);
           this.apollo.mutate({
             mutation:FOR_GET,
             variables:{
@@ -255,7 +255,7 @@ export class AddclientraisetktComponent implements OnInit {
 
             }
           }).subscribe(({data})=>{
-            // console.log(data);
+
 
             this.res=data;
             if(this.res.clientTktSave.success==1){

@@ -16,7 +16,8 @@
 
             <div class="titleSec">
                 <!-- <button class="btn btn-primary" type="button" (click)="go_to_AddItem()">Add</button> -->
-                <h2>Search results from {{from_date | date: 'longDate'}} to {{to_date | date: 'longDate'}}</h2>
+                <h2 *ngIf="from_date!=to_date">Search results from {{from_date | date: 'longDate'}} to {{to_date | date: 'longDate'}}</h2>
+                <h2 *ngIf="from_date==to_date">Search results for {{from_date | date: 'longDate'}}</h2>
 
                 <!-- <div id="snackbar" class="text-danger pull-right">{{linkshareinterpolation}}</div> -->
 

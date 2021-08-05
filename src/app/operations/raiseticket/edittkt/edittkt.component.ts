@@ -34,7 +34,7 @@ query{
 }`
 
 
-// For Filling  the readonly field  by using client type 
+// For Filling  the readonly field  by using client type
 const GET_EDITABLE=gql`
 query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
   getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
@@ -61,7 +61,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     call_attend
     delivery
   }
-}` 
+}`
 ;
 
 
@@ -70,8 +70,8 @@ const EDITABLE=gql`
 mutation updateRaiseTkt($id:String!,$tkt_module: String!,
   $phone_no:String!,$priority_status:String!
   ,$prob_reported:String!,$remarks:String!,$user_id:String!) {
-  
-    updateRaiseTkt(id: $id
+
+    updateRaiseTkt(id:$id
       tkt_module: $tkt_module
       phone_no:  $phone_no
       priority_status:$priority_status
@@ -91,7 +91,7 @@ mutation updateRaiseTkt($id:String!,$tkt_module: String!,
 @Component({
   selector: 'app-edittkt',
   templateUrl: './edittkt.component.html',
-  styleUrls: ['./edittkt.component.css', 
+  styleUrls: ['./edittkt.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -99,7 +99,7 @@ mutation updateRaiseTkt($id:String!,$tkt_module: String!,
  ]
 })
 export class EdittktComponent implements OnInit {
- 
+
   user:any;
   mod:any;
   moddata:any;
@@ -119,7 +119,7 @@ export class EdittktComponent implements OnInit {
   attendedat:any;
   deliveryat:any;
   work_status:any;
- 
+
   logDate:any;
   valid_init=false;
   mm_val=true;
@@ -151,7 +151,7 @@ export class EdittktComponent implements OnInit {
   x:any;
   Priority:any;
   pathname:any;
-  constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) { 
+  constructor(private apollo:Apollo,private route:ActivatedRoute,private router:Router) {
     setInterval(() => {
       this.now = new Date();
     }, 1);
@@ -175,7 +175,7 @@ export class EdittktComponent implements OnInit {
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
-        
+
         this.posts = data;
        console.log(data)
        this.ctmdata=this.posts.getClient;
@@ -184,7 +184,7 @@ export class EdittktComponent implements OnInit {
       });
       this.apollo.watchQuery<any>({
       query: SHOW_MM
-     
+
     })
       .valueChanges
       .subscribe(({ data }) => {
@@ -193,17 +193,17 @@ export class EdittktComponent implements OnInit {
         console.log(data);
         this.moddata=this.mod.getModuleTypeData
      console.log(this.mod);
-        
-       
+
+
        //this.putdata(this.posts);
       });
      this.apollo.watchQuery<any>({
         query: SHOW_PM,
-        
+
       })
         .valueChanges
         .subscribe(({ data, loading }) => {
-         
+
           this.posts_pm = data;
           this.pmdata=this.posts_pm.getPriorityModeData
           console.log(this.posts_pm);
@@ -221,12 +221,12 @@ export class EdittktComponent implements OnInit {
                user_id:localStorage.getItem('UserId')
             },
              pollInterval:500
-          
-            
+
+
           })
             .valueChanges
             .subscribe(({ data}) => {
-    
+
               console.log(data);
 
               this.assign_to=data.getSupportLogDtls[0].emp_name;
@@ -234,7 +234,7 @@ export class EdittktComponent implements OnInit {
               this.attendedat=data.getSupportLogDtls[0].call_attend;
               this.deliveryat=data.getSupportLogDtls[0].delivery;
               this.work_status=data.getSupportLogDtls[0].work_status > 0 ? 'Done' : 'Pending';
-             
+
               this.client_name=data.getSupportLogDtls[0].client_name;
                this.district_name=data.getSupportLogDtls[0].district_name;
               this.client_type=data.getSupportLogDtls[0].client_type;
@@ -250,14 +250,14 @@ export class EdittktComponent implements OnInit {
               this.logDate=data.getSupportLogDtls[0].log_in;
               console.log(this.priority_status)
 
-                   
+
                   for(let i=0;i<this.posts_pm.getPriorityModeData.length;i++){
                     console.log("status:" +this.priority_status);
                     console.log("status:" +this.posts_pm.getPriorityModeData[i].priority_id)
                         if(this.posts_pm.getPriorityModeData[i].priority_id== this.priority_status){
                           this.Priority=this.posts_pm.getPriorityModeData[i].priority_mode;
                           this.prio=this.posts_pm.getPriorityModeData[i].priority_id;
-                            
+
                         }
                   }
 
@@ -267,16 +267,16 @@ export class EdittktComponent implements OnInit {
                         if(this.mod.getModuleTypeData[i].module_id== this.tkt_module){
                           this.modul=this.mod.getModuleTypeData[i].module_id;
                           this.Module=this.mod.getModuleTypeData[i].module_type;
-                            
+
                         }
                   }
-                       
+
                  console.log(this.assign_to);
-                  
-              
+
+
              })
-            
-     
+
+
 }
 
 
@@ -313,15 +313,15 @@ export class EdittktComponent implements OnInit {
     }
   }
   preventNonNumericalInput(e:any){e = e || window.event;
-    
+
     var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
     var charStr = String.fromCharCode(charCode);
 
     if (!charStr.match(/^[0-9]+$/))
      { e.preventDefault();}}
- 
+
    prevent_null(e:any){
-     
+
     if(e.target.id=='itemphone')
     {
       if(e.target.value=='')
@@ -355,13 +355,13 @@ export class EdittktComponent implements OnInit {
         this.prevent_init_issue=false;this.issue_val=false;this.input_issue.style.border="solid lightgrey 1px"}
 
     }
-  
+
   }
   clearfield(){this.spinshow=true;
     setTimeout(()=>{this.spinshow=false;;},1000);
     // this.spinshow=false;
 
-   
+
   }
   go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
 
@@ -383,7 +383,7 @@ export class EdittktComponent implements OnInit {
       mutation: EDITABLE,
       variables:{
         id:this.id,
-        tkt_module:v11, 
+        tkt_module:v11,
         phone_no:v9,
         priority_status:v10,
         prob_reported:v12,
@@ -398,7 +398,7 @@ export class EdittktComponent implements OnInit {
         localStorage.setItem('editraisetickit','1');
         this.router.navigate(['/operations/raiseticket']);
       }
-       
+
       else
       this.showsnackbar();
       },error=>{ this.showsnackbar()

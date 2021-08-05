@@ -3,3 +3,55 @@
     height:100px;
     width:100px;
 }
+
+
+
+.example-small-box, .example-large-box {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  /* margin: 16px; */
+  /* padding: 16px; */
+  border-radius: 8px;
+}
+
+.example-small-box {
+  height: 100%;
+  width: 100%;
+}
+
+.example-large-box {
+  height: 100%;
+  width: 100%;
+}
+
+
+.example-button-row  {
+  margin: 8px 8px 8px 0;
+}
+
+/* .mat-ink-bar {
+  background-color: rgb(255, 255, 255);
+}
+  ::ng-deep .mat-tab-list .mat-tab-labels {
+    color:white;
+  background-color: #282a3c;
+  } */
+
+
+mat-tab-group.mat-primary.my-tab-class .mat-ink-bar{
+    background-color: rgb(236, 236, 236);
+}
+mat-tab-group.mat-primary.my-tab-class .mat-tab-labels{
+       background-color: #282a3c;
+}
+
+.mat-tab-label .mat-tab-label-content{
+  color:rgb(236, 236, 236)!important;
+}
+
+.primary{
+    color:white;
+    background-color: #282a3c;
+
+  }
