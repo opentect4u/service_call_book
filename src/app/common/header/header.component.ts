@@ -64,10 +64,11 @@ declare var showprofile: any;
   '../../../assets/css/font-awesome.css',
   '../../../assets/css/apps.css',
   '../../../assets/css/apps_inner.css',
-  '../../../assets/css/res.css'],
-  encapsulation: ViewEncapsulation.None
+  '../../../assets/css/res.css']
 })
 export class HeaderComponent implements OnInit {
+  bgColor='primary';
+  color='accent';
    emp_name:any;
    type:any;
    distdata:any;

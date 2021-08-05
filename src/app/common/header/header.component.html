@@ -157,8 +157,10 @@
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
 
       </div> -->
-     <mat-tab-group dynamicHeight  class="my-tab-class">
-        <mat-tab label="Profile Settings" (click)="change_ps()" >
+     <mat-tab-group dynamicHeight="true" selectedIndex='0' >
+        <mat-tab  (click)="change_ps()" >
+          <ng-template mat-tab-label><mat-icon class="text-white icon-2x">manage_accounts</mat-icon><p class="text-white pt-3">Settings</p> </ng-template>
+
           <div class="example-large-box mat-elevation-z4" >
             <div>
 
@@ -310,7 +312,8 @@
 
           </div>
         </mat-tab>
-        <mat-tab label="Change Password" (click)="change_cp">
+        <mat-tab >
+          <ng-template  mat-tab-label ><mat-icon class="text-white icon-2x">lock</mat-icon><p class="text-white pt-3">Change Password</p></ng-template>
           <div class="example-small-box mat-elevation-z4">
             <div>
 

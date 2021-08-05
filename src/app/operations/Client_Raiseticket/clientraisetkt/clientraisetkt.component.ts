@@ -53,6 +53,7 @@ export class ClientraisetktComponent implements OnInit {
   constructor(private router:Router,private apollo:Apollo) { }
 
   ngOnInit(): void {
+
     if(localStorage.getItem('editclientraisetickit')=='1'){
        this.edit=false;
     }
@@ -105,6 +106,10 @@ export class ClientraisetktComponent implements OnInit {
     localStorage.setItem('client_raiseticket','0')
 
   }
+
+  localstoragedelete(){
+    this.deleteticket=true;
+  }
   localstorage1(){
     this.edit=true;
     localStorage.setItem('editclientraisetickit','0')
@@ -131,6 +136,7 @@ export class ClientraisetktComponent implements OnInit {
         this.deleted=data;
         if(this.deleted.deleteTkt.success==1){
             this.deleteticket=false;
+
           }
         else
       this.showsnackbar();
