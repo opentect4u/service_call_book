@@ -4,16 +4,16 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 
 const EMAIL_CHECK = gql`
-  query checkEmail($email_id: String!) {
-    checkEmail(email_id: $email_id) {
+  query checkEmail($email_id:String!) {
+    checkEmail(email_id:$email_id) {
       success
       message
     }
   }
 `;
 const RESEND_PASSWORD = gql`
-  mutation forgotPassword($email_id: String!) {
-    forgotPassword(email_id: $email_id) {
+  mutation forgotPassword($email_id:String!) {
+    forgotPassword(email_id:$email_id) {
       success
       message
     }
@@ -96,6 +96,7 @@ export class ForgetpassComponent implements OnInit {
   }
 
   Submit() {
+    console.log(this.f.email.value);
     this.login = true;
     console.log(this.error);
     console.log(this.f.email.value);
@@ -122,7 +123,7 @@ export class ForgetpassComponent implements OnInit {
               .mutate({
                 mutation: RESEND_PASSWORD,
                 variables: {
-                  email_id: this.f.email.value,
+                  email_id:this.f.email.value,
                 },
               })
               .subscribe(({ data }) => {

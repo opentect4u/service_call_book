@@ -14,7 +14,9 @@ const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!){
     emp_name
     work_status
   }
- }`
+ }`;
+
+
 @Component({
   selector: 'app-search-by-ticket',
   templateUrl: './search-by-ticket.component.html',

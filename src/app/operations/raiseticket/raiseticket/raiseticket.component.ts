@@ -96,7 +96,7 @@ export class RaiseticketComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/operations/addraiseticket'])   ;
+    this.router.navigate(['/operations/addraiseticket']);
   }
   go_to_update(v1:any){
     this.router.navigate(['/operations/editeraiseticket',v1]);

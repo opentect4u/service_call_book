@@ -3,17 +3,25 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { interval } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
+
 //import {MatDialog} from '@angular/material/dialog';
 
 
 const GET_USER_TYPE=gql`
-query  getUserDetailsById($user_id:String!){
-  getUserDetailsById(user_id:$user_id){
+query  getUserDetailsById($user_email:String!){
+  getUserDetailsById(user_email:$user_email){
     user_type,
     user_status
   }
 }
 `
+;
+const conf_tkt=gql`query checkTktNo($tkt_no: String!){
+  checkTktNo(tkt_no: $tkt_no){
+    message
+    success
+  }
+}`
 
 @Component({
   selector: 'app-sidebar',
@@ -61,7 +69,7 @@ export class SidebarComponent implements OnInit {
        this.apollo.watchQuery<any>({
       query: GET_USER_TYPE,
       variables:{
-        user_id:localStorage.getItem('UserId')
+        user_email:localStorage.getItem('user_email')
       },
       pollInterval:500
 
@@ -143,7 +151,26 @@ make_true(){
 }
 srch_tkt(v:any){
 //alert(v);
-this.router.navigate(['/search_ticket',btoa(v)]);
+this.apollo
+.watchQuery<any>({
+  query:conf_tkt,
+  variables: {
+    tkt_no:v,
+  },
+})
+.valueChanges.subscribe(({ data }) => {
+    if(data.checkTktNo.success==1){
+      this.router.navigate(['/search_ticket',btoa(v)]);
+
+    }
+    else{
+        this.toastr.errorToastr('No Data Found','Error!')
+    }
+}, (error=>{
+  this.toastr.errorToastr('Something went wrong!','Error!')
+}))
+
+
 }
 srch_dt(v1:any,v2:any){
   this.router.navigate(['/search_date',btoa(v1),btoa(v2)])
