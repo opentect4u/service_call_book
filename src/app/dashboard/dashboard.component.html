@@ -15,6 +15,79 @@
           <div class="card">
            <div class="card-body">
 
+            <!-- Material Grid -->
+
+            <mat-grid-list cols="3" rowHeight="5:3" gutterSize="5px">
+
+              <mat-grid-tile>
+
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-1">
+                       <p><i class='fa fa-ticket fa-1x'></i>Open/Close Tickets</p>
+                    </li>
+                    <li class="list-group-item p-1"><i class="fa fa-caret-up" ></i></li>
+
+                  </ul>
+                  <ul class="card-body d-flex flex-row">
+                     <li class="list-group-item p-2">
+                    <h3>3147</h3>
+                      <p class="text-center">Opened</p>
+                     </li>
+                    <li class="list-group-item p-2">
+                      <h3 class="text-success">1000</h3>
+                         <p class="text-center">Closed</p>
+                    </li>
+                    <li class="list-group-item p-1">
+                      <button class='btn btn-primary'><p>Tickets</p></button>
+                    </li>
+
+
+                  </ul>
+                </div>
+
+
+
+
+
+              </mat-grid-tile>
+
+
+
+              <mat-grid-tile [rowspan]="3" style="background-color: green;">tile2</mat-grid-tile>
+              <mat-grid-tile [rowspan]="3"  style="background-color: yellow;">tile3</mat-grid-tile>
+
+
+
+              <mat-grid-tile >
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-1">
+                       <p><i class='fa fa-ticket fa-1x'></i>Open/Close Tickets</p>
+                    </li>
+                    <li class="list-group-item p-1"><i class="fa fa-caret-up" ></i></li>
+
+                  </ul>
+                  <div class="card-body d-flex flex-row">
+
+
+                  </div>
+                </div>
+
+
+
+              </mat-grid-tile>
+              <mat-grid-tile [rowspan]="2" style="background-color: green;">tile5</mat-grid-tile>
+              <mat-grid-tile [rowspan]="3" style="background-color: green;">tile6</mat-grid-tile>
+
+
+
+                <mat-grid-tile [rowspan]="3" style="background-color: yellow;">tile7</mat-grid-tile>
+
+
+                <mat-grid-tile [rowspan]="2" style="background-color: rgb(255, 0, 255);">tile8</mat-grid-tile>
+            </mat-grid-list>
+
 
           </div>
           </div>

@@ -35,6 +35,7 @@ query getUserDetailsA($tag:String!){
     user_name
     user_type
     user_status
+    login_status
   }
 }`;
 const GET_DATA_D = gql`
@@ -44,6 +45,7 @@ query getUserDetailsD($tag:String!){
     user_name
     user_type
     user_status
+    login_status
   }
 }`;
 
@@ -72,7 +74,7 @@ export class UsermaintananceComponent implements OnInit {
   deactive: any;
   a_status: any;
   d_status: any;
-  displayedColumns: string[] = ['Username', 'UserType', 'Status'];
+  displayedColumns: string[] = ['Username', 'UserType', 'Status','Login_Status'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -114,7 +116,7 @@ export class UsermaintananceComponent implements OnInit {
   sendstatus(v: any) {
     if(v=='1'){
       localStorage.setItem('Active', '1');
-       
+
     }
     else{
       localStorage.setItem('Active', '0');
@@ -136,7 +138,7 @@ export class UsermaintananceComponent implements OnInit {
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
-        
+
         this.user_data = data;
         console.log("put_data:", v);
         console.log("yarn");
@@ -179,7 +181,7 @@ export class UsermaintananceComponent implements OnInit {
         }
         else
          this.showsnackbar();
-         
+
          },error=>{ this.showsnackbar();
         });
 }
@@ -198,7 +200,7 @@ checkstat(v: any, v1: any) {
         console.log(data);
         this.succed = data
         localStorage.setItem('V',v);
-       
+
         if (this.succed.updateUserStatus.success > 0) {
           console.log("fetch_data");
           this.stats = document.querySelector('input[name="status"]:checked');
@@ -208,13 +210,13 @@ checkstat(v: any, v1: any) {
 
          else
          this.showsnackbar();
-         
-         },error=>{ 
+
+         },error=>{
           this.stats = document.querySelector('input[name="status"]:checked');
           localStorage.setItem('Active', this.stats.value);
           this.showsnackbar();
           location.reload();
-          
+
          });
     }
     showsnackbar() {

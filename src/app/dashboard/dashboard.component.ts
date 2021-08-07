@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,6 +14,9 @@ import { Router } from '@angular/router';
    '../../assets/css/res.css']
 })
 export class DashboardComponent implements OnInit {
+
+
+
 
    u_type:any;
   formattedDate : any;

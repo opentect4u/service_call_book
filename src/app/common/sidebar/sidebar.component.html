@@ -76,9 +76,9 @@
 
     <li *ngIf="u_type=='C'"> <div class="link log"><i class="fa fa-ticket" aria-hidden="true"></i><a>My Tickets</a></div></li>
 
-  <li>
+  <!-- <li>
   <div class="link log" data-toggle="modal" data-target="#mymodal" ><i class="fa fa-sign-out" ></i>Log out</div>
-  </li>
+  </li> -->
 
 
 
@@ -118,11 +118,10 @@
 <div class="modal fade in" id="mymodal" >
   <div class="modal-dialog modal-sm modal-dialog-centered">
 
-    <!-- Modal content-->
-    <div class="modal-content">
+<div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-center w-100 ">Alert!!</h4>
-        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+
 
         <button type="button" class="close pt-1" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -134,13 +133,14 @@
       <div class="modal-footer p-3">
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="logout()">Ok</button>
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
-        <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
-        <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
+
       </div>
     </div>
 
   </div>
 </div>
+
+
 <div class="modal fade in" id="mymodal_dt" >
   <div class="modal-dialog modal-lg modal-dialog-centered">
 
