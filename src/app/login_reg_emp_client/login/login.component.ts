@@ -149,7 +149,7 @@ export class LoginComponent implements OnInit {
   Submit(){
     this.error_log=true;
     this.recaptcha=document.getElementById("capt_login");
-    console.log("dashboard1")
+    console.log("dashboard1"+this.f.username.value,this.f.password.value)
     this.login=true;
     if(this.LoginForm.invalid){
       this.captch=false;

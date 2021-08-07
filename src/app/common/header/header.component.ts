@@ -55,6 +55,39 @@ query{
     oprn_mode
   }
 }`;
+
+
+const UPDATE_PROFILE=gql`
+mutation  updateProfile($id:String!, $user_type:String!, $designation: String!, $phone_no:String!, $emp_name:String!, $district_id:String!, $client_name:String!, $oprn_mode_id:String!,$client_type_id:String!, $client_addr:String!, $working_hrs:String!){
+  updateProfile(id: $id, user_type: $user_type, designation: $designation, phone_no: $phone_no, emp_name:$emp_name, district_id:$district_id, client_name:$client_name, oprn_mode_id:$oprn_mode_id,client_type_id:$client_type_id, client_addr:$client_addr, working_hrs:$working_hrs){
+    success
+    message
+  }
+}`
+;
+const UPDATE_LOGIN_STATUS=gql`
+query   getUserDetailsById($user_email:String! ){
+  getUserDetailsById(user_email:$user_email){
+    user_type,
+    user_status
+    login_status
+  }
+}`;
+
+const SEE_UPDATE_STATUS=gql`
+mutation  updateLoginStatus($user_id:String!,$login_status:String!)
+{
+  updateLoginStatus(user_id:$user_id,login_status:$login_status){
+    message
+    success
+
+  }
+}
+
+
+`
+
+
 declare var showprofile: any;
 @Component({
   selector: 'app-header',
@@ -80,6 +113,7 @@ export class HeaderComponent implements OnInit {
    code_no:any;
    email_id:any;
    profile=false;
+   today:any;
    District:any;
    client:any;
    client_addr:any
@@ -88,6 +122,7 @@ export class HeaderComponent implements OnInit {
    rental:any;
    amc:any;
    url:any;
+   show_ConPassword:any;
    id:any;
    c_type:any
    success:any;
@@ -96,11 +131,17 @@ export class HeaderComponent implements OnInit {
    cl_type:any;
    oprn_mode:any;
    user_type:any
+   con:any;
+   in:any;
+   lie:any;
+   status:any;
+   newPass:any;
    conf_pass:boolean=false;
   constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo) { }
 
   ngOnInit(): void {
     setInterval(()=>{
+      this.today=new Date();
       this.code_no=localStorage.getItem('UserId');
       this.email_id=localStorage.getItem('user_email');
       console.log(this.email_id);
@@ -109,6 +150,40 @@ export class HeaderComponent implements OnInit {
     console.log(this.emp_name);
     this.user_type = localStorage.getItem('user_Type');
     this.type= this.user_type =='A' ? 'Admin' : (this.user_type == 'M' ? 'Manager' : (this.user_type == 'T' ? 'Telecaller' : (this.user_type == 'E' ? 'Engineer' :  this.user_type == 'C' ? 'Client' :  'Viewer')));
+
+    this.apollo.watchQuery<any>({
+      query: UPDATE_LOGIN_STATUS,
+      variables:{
+        user_email:localStorage.getItem('user_email'),
+      },
+      fetchPolicy: 'network-only'
+
+    }).valueChanges
+    .subscribe(({ data}) => {
+      console.log(data);
+      if(data.getUserDetailsById[0].login_status==1){
+         this.lie=true;
+
+          this.status='Working'
+
+
+
+      }
+      else{
+        this.lie=false;
+        this.status='Idle';
+      }
+
+    })
+
+
+
+
+
+
+
+
+
   },500);
 
   this.apollo.watchQuery<any>({
@@ -199,11 +274,33 @@ export class HeaderComponent implements OnInit {
 
   }
   logout(){
+
+
+      this.apollo
+      .mutate({
+        mutation: SEE_UPDATE_STATUS,
+        variables:{
+          user_id:localStorage.getItem('user_email'),
+           login_status:'0'
+        }
+
+
+    })
+    .subscribe(({ data}) => {
+
+      console.log(data);
+
+    })
+
     localStorage.clear();
     localStorage.setItem('isLoggedIn',"false");
     this.router.navigate(['/']).then(() => {
       window.location.reload();
-    });;
+    });
+
+
+
+
   }
  change_ps()
  {
@@ -219,7 +316,45 @@ export class HeaderComponent implements OnInit {
  save(name:any,ph_no:any,designation:any){
    console.log(name+" "+" "+ph_no+" "+designation);
 
-  this.toastr.successToastr('Profile updated successfully!', 'Done!');
+   this.apollo
+   .mutate({
+     mutation: UPDATE_PROFILE,
+     variables:{
+      //  postId:this.c.client_code.value,
+      //   userType:this.c.client_type.value,
+      //    userId:this.c.client_email.value,
+      //    Password:this.c.client_pass.value
+          id:localStorage.getItem('UserId'),
+          user_type:localStorage.getItem('user_Type'),
+          phone_no:ph_no,
+          emp_name:name,
+          designation:designation,
+          district_id:'',
+          client_name:'',
+          oprn_mode_id:'',
+          client_type_id:'',
+          client_addr:'',
+          working_hrs:'',
+
+
+     }
+   }).subscribe(({data})=>{
+     console.log(data);
+            this.con=data;
+            // console.log(this.con.updateProfile[0].emp_name)
+          if(this.con.updateProfile.success==1){
+            localStorage.setItem('user_name',name);
+            this.toastr.successToastr('Profile updated successfully!', 'Done!');
+          }
+          else{
+            this.toastr.errorToastr('Something Went Wrong!', 'Error!');
+          }
+
+   },error=>{
+    this.toastr.errorToastr('Something Went Wrong!', 'Error!');
+   })
+
+
 
  }
  change(v:any,v1:any){
@@ -271,9 +406,82 @@ getvalue_client(cl_code:any,cl_name:any,cl_email:any,cl_mobile:any,cl_district:a
   console.log("client_Work_hrs:" +cl_wrk_hrs);
   console.log("client_amc_date:" +cl_amc_date);
   console.log("rental:" +cl_rental_date);
-  this.toastr.successToastr('Profile updated successfully!', 'Done!');
+  this.apollo
+   .mutate({
+     mutation: UPDATE_PROFILE,
+     variables:{
+      //  postId:this.c.client_code.value,
+      //   userType:this.c.client_type.value,
+      //    userId:this.c.client_email.value,
+      //    Password:this.c.client_pass.value
+          id:localStorage.getItem('UserId'),
+          user_type:localStorage.getItem('user_Type'),
+          phone_no:cl_mobile,
+          emp_name:'',
+          designation:'',
+          district_id:cl_district,
+          client_name:cl_name,
+          oprn_mode_id:cl_op_mode,
+          client_type_id:cl_Type,
+          client_addr:cl_address,
+          working_hrs:cl_wrk_hrs,
 
 
+     }
+   }).subscribe(({data})=>{
+
+    this.con=data;
+            // console.log(this.con.updateProfile[0].emp_name)
+          if(this.con.updateProfile.success==1){
+            localStorage.setItem('user_name',cl_name);
+            this.toastr.successToastr('Profile updated successfully!', 'Done!');
+          }
+          else{
+            this.toastr.errorToastr('Something Went Wrong!', 'Error!');
+          }
+
+   },error=>{
+    this.toastr.errorToastr('Something Went Wrong!', 'Error!');
+   })
+
+
+}
+Alert(event:any){
+  this.in=document.getElementById('chec')
+  console.log(this.in.checked);
+
+  this.apollo
+  .mutate({
+    mutation:SEE_UPDATE_STATUS,
+    variables:{
+      user_id:localStorage.getItem('user_email'),
+      login_status: this.in.checked ? '1':'2'
+       }
+  }).subscribe(({data})=>{
+      console.log(data);
+      // this.in.checked ? 'Working':'2'
+      if(this.lie=='true'){
+         this.status='Working'
+      }
+      else{
+        this.status='Idle';
+      }
+  })
+
+}
+
+
+myconfirm(){
+
+this.show_ConPassword=document.getElementById('conpasswd');
+this.newPass=document.getElementById('passwd')
+if (this.show_ConPassword.type == "password" || this.newPass.type=="password") {
+  this.show_ConPassword.type = "text";
+  this.newPass.type="text";
+} else {
+  this.show_ConPassword.type = "password";
+  this.newPass.type="password";
+}
 }
 
 }

@@ -1,17 +1,39 @@
 /* ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-  
+
 	background-color: #007bff !important;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-	background-color: #007bff !important;   
+	background-color: #007bff !important;
 }
 
 ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-	border-color:#007bff !important; 
+	border-color:#007bff !important;
 } */
 select {
     border: none;
     outline: none;
     scroll-behavior: smooth;
 }
+
+
+.dot {
+  height: 9px;
+  width: 9px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;}
+  .dot1 {
+    height: 9px;
+    width: 9px;
+    background-color:#ff8d0078;
+    border-radius: 50%;
+    display: inline-block;}
+
+    .dot2 {
+      height: 9px;
+      width: 9px;
+      background-color:red;
+      border-radius: 50%;
+      display: inline-block;}
+/* slide toggle */

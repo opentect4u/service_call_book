@@ -86,11 +86,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 
 // import { ToastrModule } from 'ngx-toastr';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { NotificationService } from './service/notification.service';
 import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
 import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/editclientraiseticket/editclientraiseticket.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {MatBadgeModule} from '@angular/material/badge';
 @NgModule({
   declarations: [
     AppComponent,
@@ -182,6 +186,10 @@ import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/
     MatIconModule,
     MatMenuModule,
     MatTabsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatListModule,
+    MatBadgeModule,
 
     ToastrModule.forRoot()
     // ToastrModule.forRoot({
