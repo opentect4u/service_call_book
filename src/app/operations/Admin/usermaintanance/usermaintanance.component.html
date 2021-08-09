@@ -247,14 +247,22 @@
                     <td mat-cell *matCellDef="let row">
 
                       <a role="menuitem" tabindex="-1"
-                      ><span class="dot" *ngIf="row.login_status == '1'"></span
-                      ><span class="dot2" *ngIf="row.login_status == '0'"></span
+                      >
+                      <div class="ring-container" *ngIf="row.login_status == '1'">
+                        <div class="ringring"></div>
+                        <div class="circle"></div>
+
+
+                       </div>
+                      <!-- <span class="dot" *ngIf="row.login_status == '1'"></span
+                      > -->
+                      <span class="dot2" *ngIf="row.login_status == '0'"></span
                       >
                       <span class="dot1" *ngIf="row.login_status == '2'"></span
                         >
-                        <span  *ngIf="row.login_status == '1'" class="ml-2">Working</span>
-                        <span  *ngIf="row.login_status == '0'" class="ml-2">Logged Out</span>
-                        <span  *ngIf="row.login_status == '2'" class="ml-2">Idle</span>
+                        <small  *ngIf="row.login_status == '1'" class="ml-4">Working</small>
+                        <small  *ngIf="row.login_status == '0'" class="ml-3 text-muted">Logged Out</small>
+                        <small  *ngIf="row.login_status == '2'" class="ml-3">Idle</small>
 
                     </a>
                     </td>

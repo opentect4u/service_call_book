@@ -73,18 +73,7 @@
     height: 50px;
     font-size: 20px;
   } */
-  .dot {
-    height: 8px;
-    width: 8px;
-    background-color: green;
-    border-radius: 50%;
-    display: inline-block;}
-    .dot1 {
-      height: 8px;
-      width: 8px;
-      background-color:rgba(255, 0, 0, 0.568);
-      border-radius: 50%;
-      display: inline-block;}
+
   /* slide toggle */
 
   .switch {
@@ -107,7 +96,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(252, 158, 158);
+    background-color: #ff8f07;
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -126,11 +115,11 @@
   }
 
   input:checked + .slider {
-    background-color: rgb(150, 248, 150);
+    background-color:  #62bd19;
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px rgb(153, 253, 153);
+    box-shadow: 0 0 1px  #62bd19;
   }
 
   input:checked + .slider:before {
@@ -154,7 +143,7 @@
     transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
-    font-size: 10px;
+    font-size: 9px;
     font-family: Verdana, sans-serif;
   }
   .pt{
@@ -173,4 +162,62 @@
 
   ::ng-deep .mat-ink-bar {
     background-color: var(--primary-color,#1F89CE) !important;
+    }
+
+
+    /* For Dot Animation */
+    .dot {
+      height: 8px;
+      width: 8px;
+      background-color: green;
+      border-radius: 50%;
+      display: inline-block;}
+
+
+    .ring-container {
+      position: relative;
+    }
+
+    .circle {
+      width: 7px;
+      height: 8px;
+      background-color: #62bd19;
+      border-radius: 50%;
+      position: absolute;
+      top: 7px;
+      left: 0px;
+    }
+
+    .ringring {
+      border: 3px solid #62bd19;
+      border-radius: 30px;
+      height: 22px;
+      width: 22px;
+      position: absolute;
+      left: -7px;
+      top: 0px;
+
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: infinite;
+      opacity: 0.0;
+    }
+    @keyframes pulsate {
+      0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+      50% {opacity: 1.0;}
+      100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+    }
+
+
+    .dot1 {
+      height: 8px;
+      width: 8px;
+      background-color:#ff8f07;;
+      border-radius: 50%;
+      display: inline-block;
+    animation:blink 2s infinite}
+
+    @keyframes blink {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
     }
