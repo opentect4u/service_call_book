@@ -1,42 +1,146 @@
-.mat-grid-tile {
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.example_card{
-  /* float:left; */
-  width:230px;
-  height: inherit;
-
-}
-.card{
+mat-card {
+  width: 100%;
   height:100%;
-  width:100%;
-  background-color: darkturquoise;
 
 }
-.list-group{
-  display: flex;
+.card-list{
+  list-style-type:none;
+  display:flex;
+  justify-content: space-between;
+
+}
+.card-header{
+  width:100%;
+}
+
+.card-content{
+  list-style-type:none;
+  display:flex;
+  flex-direction: row;
+}
+.card-content-list{
+  list-style-type:none;
+  display:flex;
   flex-direction: row;
   justify-content: space-between;
+
 }
-
-
-.mat-icon,p{
+small{
   font-size: 10px;
+  overflow-wrap: initial;
 
 }
-
-.card-header{
-  height: 20%;
-  display: flex;
-  flex-direction:row;
-  justify-content: space-between;
-
-}
-/* .list-group-item{
-  display:inline-block;
-  border-right:1px soild grey;
+/* .metrial_button:hover{
+   background-color: blanchedalmond;
+   color:#282a3c;
+   transition:all 1s linear;
 } */
+button.hover-class:hover {
+  background-color: white !important;
+  color: #282a3c !important;
+  transition: all .1s linear;
+}
+
+small{
+  font-size: 10px;
+}
+
+/* For make the material data table scrollable */
+.example-container  {
+ height: 400px;
+  overflow: auto;
+ }
+ .example-container1{
+  position: relative;
+
+  height: 246px;;
+  overflow: auto;
+
+ }
+
+ .thumbnail{
+  border-radius: 50%;
+  height:100px;
+  width:100px;
+}
+
+
+.dot {
+  height: 9px;
+  width: 9px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;}
+  .dot1 {
+    height: 9px;
+    width: 9px;
+    background-color:#ff8f07;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 2s infinite;}
+
+    .dot2 {
+      height: 9px;
+      width: 9px;
+      background-color:red;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+      @keyframes blink {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+/* slide toggle */
+
+/* For dot animation */
+
+.ring-container {
+  position: relative;
+}
+
+.circle {
+  width: 10px;
+  height: 11px;
+  background-color: #62bd19;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 0px;
+}
+
+.ringring {
+  border: 3px solid #62bd19;
+  border-radius: 30px;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  left: -7px;
+  top: -2px;
+animation: pulsate 1s ease-out;
+ animation-iteration-count: infinite;
+  opacity: 0.0
+}
+@keyframes pulsate {
+  0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+  50% {opacity: 1.0;}
+  100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+.avatar1{
+  vertical-align: middle;
+  width: 40px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+td,th{
+  width:30%;
+}
+
+
+
+
+
 

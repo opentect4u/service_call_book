@@ -25,9 +25,18 @@
           <ul class="dropdown-menu p-2" role="menu" aria-labelledby="menu1">
             <li role="presentation">
               <a role="menuitem" tabindex="-1"
-                ><span class="dot" *ngIf="lie == true"></span
-                ><span class="dot1" *ngIf="lie == false"></span
-                ><small class="pl-3">{{ emp_name }}</small></a
+                >
+                <!-- <span class="dot" *ngIf="lie == true"></span
+                > -->
+                <div class="ring-container" *ngIf="lie == true">
+                  <div class="ringring"></div>
+                  <div class="circle"></div>
+
+
+                 </div>
+                <span class="dot1" *ngIf="lie == false"></span
+                >
+                <span [ngStyle]="{'padding-left': lie ? '18px' : '8px'}"><strong>{{ emp_name }}</strong></span></a
               >
             </li>
             <li role="presentation" class="divider"></li>
@@ -39,14 +48,14 @@
                 role="menuitem"
                 tabindex="-1"
                 href="#"
-                ><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;My
+                ><i class="fa fa-user" aria-hidden="true" style="color:#282a3c;"></i>&nbsp;My
                 Profile</a
               >
             </li>
             <li role="presentation" class="divider"></li>
             <li role="presentation">
               <a role="menuitem" tabindex="-1" href="#"
-                ><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a
+                ><i class="fa fa-bell" aria-hidden="true"  style="color:#282a3c;"></i> Notifications</a
               >
             </li>
 
@@ -57,7 +66,7 @@
                 data-target="#mymodal"
                 role="menuitem"
                 tabindex="-1"
-                ><i class="fa fa-sign-out" aria-hidden="true"></i
+                ><i class="fa fa-sign-out" aria-hidden="true"  style="color:#282a3c;"></i
                 >&nbsp;Logout</a
               >
             </li>
@@ -196,8 +205,9 @@
                     <img class="thumbnail" src="/assets/profile.png" />
                   </div>
                   <div class="mt-5 pt-5">
+                    <!-- <input type="file" id="imagefile" accept="image/*" [hidden]="true"> -->
                     <a style="color: rgb(102, 102, 187)"
-                      >Change
+                      (click)="anchor()">Change
                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                     |

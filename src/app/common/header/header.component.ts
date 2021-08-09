@@ -100,6 +100,11 @@ declare var showprofile: any;
   '../../../assets/css/res.css']
 })
 export class HeaderComponent implements OnInit {
+
+
+   upload:any;
+
+
   bgColor='primary';
   color='accent';
    emp_name:any;
@@ -483,5 +488,10 @@ if (this.show_ConPassword.type == "password" || this.newPass.type=="password") {
   this.newPass.type="password";
 }
 }
+
+anchor(){
+
+}
+
 
 }

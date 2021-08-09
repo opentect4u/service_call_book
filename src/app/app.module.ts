@@ -95,6 +95,7 @@ import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -190,6 +191,7 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatCardModule,
     MatListModule,
     MatBadgeModule,
+    ChartsModule,
 
     ToastrModule.forRoot()
     // ToastrModule.forRoot({
