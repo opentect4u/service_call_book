@@ -5,6 +5,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 
+
 const APPROVE=gql`
 mutation resetPassword($pass:String!,$user_email:String!){
   resetPassword(password:$pass, user_email:$user_email){
@@ -55,6 +56,12 @@ query{
     oprn_mode
   }
 }`;
+const img_upload=gql`mutation uploadImage($image:Upload!){
+  uploadImage(image:$image){
+    message
+    success
+  }
+}`
 
 
 const UPDATE_PROFILE=gql`
@@ -104,7 +111,7 @@ export class HeaderComponent implements OnInit {
 
    upload:any;
 
-
+  inpt:any;
   bgColor='primary';
   color='accent';
    emp_name:any;
@@ -149,10 +156,10 @@ export class HeaderComponent implements OnInit {
       this.today=new Date();
       this.code_no=localStorage.getItem('UserId');
       this.email_id=localStorage.getItem('user_email');
-      console.log(this.email_id);
+      // console.log(this.email_id);
       this.name = localStorage.getItem('user_name');
     this.emp_name= this.name == 'null' ? 'Admin' : localStorage.getItem('user_name');
-    console.log(this.emp_name);
+    // console.log(this.emp_name);
     this.user_type = localStorage.getItem('user_Type');
     this.type= this.user_type =='A' ? 'Admin' : (this.user_type == 'M' ? 'Manager' : (this.user_type == 'T' ? 'Telecaller' : (this.user_type == 'E' ? 'Engineer' :  this.user_type == 'C' ? 'Client' :  'Viewer')));
 
@@ -165,7 +172,7 @@ export class HeaderComponent implements OnInit {
 
     }).valueChanges
     .subscribe(({ data}) => {
-      console.log(data);
+      // console.log(data);
       if(data.getUserDetailsById[0].login_status==1){
          this.lie=true;
 
@@ -200,7 +207,7 @@ export class HeaderComponent implements OnInit {
         pollInterval:500
       }).valueChanges
       .subscribe(({ data}) => {
-        console.log(data);
+        // console.log(data);
         this.pn=data.getProfileDtls[0].phone_no;
         this.Desig=data.getProfileDtls[0].emp_designation;
         this.District=data.getProfileDtls[0].district_id;
@@ -212,7 +219,7 @@ export class HeaderComponent implements OnInit {
         this.amc=data.getProfileDtls[0].amc_upto;
         this.c_type=data.getProfileDtls[0].client_type_id;
 
-        console.log(this.pn,this.Desig);
+        // console.log(this.pn,this.Desig);
         this.apollo.watchQuery<any>({
           query: SHOW_DIST
 
@@ -221,7 +228,7 @@ export class HeaderComponent implements OnInit {
           .subscribe(({ data }) => {
             //this.loading = loading;
             // this.districts = data;
-            console.log(data);
+            // console.log(data);
             this.distdata=data.getDistrict
             // console.log(this.ctmdata);
             for(let i=0;i<data.getDistrict.length;i++){
@@ -262,7 +269,7 @@ export class HeaderComponent implements OnInit {
                 //this.loading1 = loading;
                 // this.posts1 = data;
                 this.opdata=data.getOprnModeData
-                console.log(this.opdata);
+                // console.log(this.opdata);
 
                 for(let i=0;i<data.getOprnModeData.length;i++){
                   if(this.op_mode==data.getOprnModeData[i].oprn_id
@@ -293,7 +300,7 @@ export class HeaderComponent implements OnInit {
     })
     .subscribe(({ data}) => {
 
-      console.log(data);
+      // console.log(data);
 
     })
 
@@ -311,15 +318,15 @@ export class HeaderComponent implements OnInit {
  {
   console.log("1sttab")
    this.profile=false;
-   console.log(this.profile)
+  //  console.log(this.profile)
  }
  change_cp(){
    console.log("2ndtab")
    this.profile=true;
-   console.log(this.profile)
+  //  console.log(this.profile)
  }
  save(name:any,ph_no:any,designation:any){
-   console.log(name+" "+" "+ph_no+" "+designation);
+  //  console.log(name+" "+" "+ph_no+" "+designation);
 
    this.apollo
    .mutate({
@@ -344,7 +351,7 @@ export class HeaderComponent implements OnInit {
 
      }
    }).subscribe(({data})=>{
-     console.log(data);
+    //  console.log(data);
             this.con=data;
             // console.log(this.con.updateProfile[0].emp_name)
           if(this.con.updateProfile.success==1){
@@ -366,7 +373,7 @@ export class HeaderComponent implements OnInit {
 
   if(v==v1){
     this.conf_pass=false;
-  console.log(v);
+  // console.log(v);
   this.id=localStorage.getItem('user_email');
   this.apollo
   .mutate({
@@ -411,6 +418,7 @@ getvalue_client(cl_code:any,cl_name:any,cl_email:any,cl_mobile:any,cl_district:a
   console.log("client_Work_hrs:" +cl_wrk_hrs);
   console.log("client_amc_date:" +cl_amc_date);
   console.log("rental:" +cl_rental_date);
+
   this.apollo
    .mutate({
      mutation: UPDATE_PROFILE,
@@ -463,7 +471,7 @@ Alert(event:any){
       login_status: this.in.checked ? '1':'2'
        }
   }).subscribe(({data})=>{
-      console.log(data);
+      // console.log(data);
       // this.in.checked ? 'Working':'2'
       if(this.lie=='true'){
          this.status='Working'
@@ -489,9 +497,27 @@ if (this.show_ConPassword.type == "password" || this.newPass.type=="password") {
 }
 }
 
-anchor(){
+anchor(e:any){
+console.log(e.target.files[0]);
+this.apollo
+.mutate({
+  mutation:  img_upload,
+  variables:{
+    image:e.target.files[0]
+  }
 
+
+})
+.subscribe(({ data}) => {
+
+console.log(data);
+
+})
+//  this.inpt.onchange=this.show($event);
 }
-
+show(){
+ this.inpt=document.getElementById('fileopen');
+ this.inpt.click();
+}
 
 }

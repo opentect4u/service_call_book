@@ -11,7 +11,23 @@
       <li class="nav-item dropdown">
         <a class="nav-link pt-4">{{
           today | date: "dd/MM/yyyy | h:mm:ss a "
-        }}</a>
+        }}   </a>
+      </li>
+      <li class="nav-item dropdown mt-3">
+        <!-- <div class="col-lg-6"> -->
+          <label for="">&nbsp;</label>
+          <!-- <div class="w-100 mt-2"> -->
+            <label class="switch float-end">
+              <input
+                type="checkbox"
+                id="chec"
+                [checked]="this.lie"
+                (click)="Alert($event)"
+              />
+              <span class="slider round"><span class="on">{{ this.status }}</span></span> </label
+            >&nbsp;&nbsp;
+          <!-- </div> -->
+        <!-- </div> -->
       </li>
       <li class="nav-item dropdown">
         <!-- <a  class="nav-link mt-3"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a> -->
@@ -80,7 +96,6 @@
                         <a href="#" class="dropdown-item">Dropdown Menu 2</a>
 					            	<a href="#" class="dropdown-item">Dropdown Menu 3</a>
 					            	<a href="#" class="dropdown-item">Dropdown Menu 4</a>
-
                     </div>
                 </li> -->
       <!-- <li class="nav-item dropdown">
@@ -91,10 +106,7 @@
 						<a href="#" class="dropdown-item">Dropdown Menu 3</a>
 						<a href="#" class="dropdown-item">Dropdown Menu 4</a>
 >>>>>>> 87df1f939993cdea71727a2897e114cc6a958b79
-
                 </li>
-
-
                     </div>
                 </li> -->
     </ul>
@@ -128,23 +140,16 @@
             <li class="nav-item" [ngClass]="{'active':profile}">
               <a class="nav-link"(click)="change_cp()">Change Password</a>
             </li>
-
           </ul>
         </nav> -->
         <!-- <div [hidden]="profile">
-
             <div class="ml-5 d-flex justify-content-center">
               <div>
               <img class="thumbnail" src="/assets/profile.png">
-
-
-
             </div>
             <div class="mt-5 pt-5"> <a style="color:rgb(102, 102, 187)">Change <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </a> | <a style="color:palevioletred"> Remove <i class="fa fa-trash" aria-hidden="true"></i>
             </a></div>
-
-
           </div>
           <div class="form-row-lg-6 p-5">
             <div class="col-lg-6">
@@ -167,18 +172,14 @@
             </div>
           </div>
           <div class="form-row-lg-6 p-5 ml-100 d-flex justify-content-center">
-
             <div class="col-lg-6">
               <label for="tp">Type : </label>
               <input class="form-control align-middle" type="text" id="tp" value="{{type}}" readonly>
             </div>
           </div>
-
-
         </div> -->
 
         <!-- <div [hidden]="!profile">
-
           <div class="col-sm-6 p-3">
             <label for="np">Enter New Password : </label>
             <input class="form-control align-middle" type="text" id="np">
@@ -188,11 +189,9 @@
             <input class="form-control align-middle" type="text" id="cnp">
           </div>
         </div>
-
       <div class="modal-footer mt-5" [hidden]="profile">
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="save()">Save</button>
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
-
       </div> -->
         <mat-tab-group dynamicHeight="true" selectedIndex='0'>
           <mat-tab  (click)="change_ps()">
@@ -203,11 +202,12 @@
                 <div class="ml-5 d-flex justify-content-center">
                   <div class="mt-3">
                     <img class="thumbnail" src="/assets/profile.png" />
+                    <input type="file" id="fileopen" hidden (change)="anchor($event)"/>
                   </div>
                   <div class="mt-5 pt-5">
                     <!-- <input type="file" id="imagefile" accept="image/*" [hidden]="true"> -->
                     <a style="color: rgb(102, 102, 187)"
-                      (click)="anchor()">Change
+                     (click)="show()" >Change
                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                     |
@@ -286,7 +286,7 @@
                         #designation
                       />
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                       <label for="">&nbsp;</label>
                       <div class="w-100 mt-2">
                         <label class="switch float-end">
@@ -299,7 +299,7 @@
                           <span class="slider round"><span class="on">{{ this.status }}</span></span> </label
                         >&nbsp;&nbsp;
                       </div>
-                    </div>
+                    </div> -->
                   </div>
 
                   <button
@@ -538,13 +538,11 @@
         <!-- <div class="modal-footer mt-5" >
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="save()">Save</button>
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
-
       </div> -->
 
         <!-- <div class="modal-footer mt-5"  >
         <button type="button" class="btn btn-primary btn-lg text-white" data-dismiss="modal" (click)="change()">Change</button>
         <button type="button" class="btn btn-primary btn-lg text-white" data-dismiss="modal">Cancel</button>
-
       </div> -->
       </div>
     </div>
