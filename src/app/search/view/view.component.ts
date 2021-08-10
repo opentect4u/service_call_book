@@ -68,7 +68,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
 })
 export class ViewComponent implements OnInit {
   tktno: any;
-  phone: any;
+  phoneno: any;
   status: any;
   priority: any;
   assign_to: any;
@@ -116,7 +116,7 @@ export class ViewComponent implements OnInit {
        this.dt=data.getSupportLogDtls[0].log_in;
        this.client_name=data.getSupportLogDtls[0].client_name;
        this.tktno=data.getSupportLogDtls[0].tkt_no;
-       this.phone=data.getSupportLogDtls[0].phone_no;
+       this.phoneno=data.getSupportLogDtls[0].phone_no;
        this.status=data.getSupportLogDtls[0].tktStatus;
        this.priority=data.getSupportLogDtls[0].priority;
         //  this.Tickite=data;

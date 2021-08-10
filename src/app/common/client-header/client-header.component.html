@@ -141,13 +141,13 @@
                      
 
             </div>
-            <div class="mt-5 pt-5"> <a style="color:rgb(102, 102, 187)">Change <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <div class="mt-5 pt-5"><a href="#" style="color:rgb(102, 102, 187)" (click)="open_folder()">Change <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </a> | <a style="color:palevioletred"> Remove <i class="fa fa-trash" aria-hidden="true"></i>
             </a></div>
 
           
           </div>
-          <div class="form-row-lg-6 p-5">
+          <div class="form-row-lg-6">
             <div class="col-lg-6">
               <label for="cd">Code : </label>
               <input class="form-control" type="text" id="cd" value="{{code_no}}" readonly>
@@ -157,7 +157,7 @@
               <input class="form-control" type="text" id="nm" value="{{emp_name}}">
             </div>
           </div>
-          <div class="form-row-lg-6 p-5">
+          <div class="form-row-lg-6">
             <div class="col-lg-6">
               <label for="em">Email : </label>
               <input class="form-control" type="text" id="em" value="{{email_id}}" readonly>
@@ -167,12 +167,54 @@
               <input class="form-control" type="text" id="ph">
             </div>
           </div>
-          <div class="form-row-lg-6 p-5 ml-100 d-flex justify-content-center">
+          <div class="form-row-lg-6">
             
             <div class="col-lg-6">
-              <label for="tp">Type : </label>
-              <input class="form-control align-middle" type="text" id="tp" value="{{type}}" readonly>
+              <label for="tp">District : </label>
+              <select class="form-control">
+                <option value="">Select </option>
+              </select>
             </div>
+            <div class="col-lg-6">
+              <label for="tp">Client Type: </label>
+              <select class="form-control">
+                <option value="">Select</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-lg-6">
+            
+            <div class="col-lg-6">
+              <label for="tp">Operation Mode : </label>
+              <select class="form-control">
+                <option value="">Select </option>
+              </select>
+            </div>
+            <div class="col-lg-6">
+              <label for="address">Client Address: </label>
+              
+              <input class="form-control" type="text" id="address">
+            </div>
+          </div>
+          <div class="form-row-lg-6">
+            
+            <div class="col-lg-6">
+              <label for="hrs">Working Hours : </label>
+              <input class="form-control" type="text" id="hrs">
+            </div>
+            <div class="col-lg-6">
+              <label for="amc">AMC Upto: </label>
+              
+              <input class="form-control" type="text" id="amc">
+            </div>
+          </div>
+          <div class="form-row-lg-6 ">
+            
+            <div class="col-lg-6 justify-content-center">
+              <label for="rental">Rental Upto : </label>
+              <input class="form-control" type="text" id="rental">
+            </div>
+            
           </div>
          
           
@@ -190,13 +232,13 @@
           </div>
         </div>
       
-      <div class="modal-footer mt-5" [hidden]="profile">
+      <div class="modal-footer" [hidden]="profile">
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="save()">Save</button>
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
         <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>
         <button mat-button data-dismiss="modal"  class="color ">Cancel</button> -->
       </div>
-      <div class="modal-footer mt-5" [hidden]="!profile">
+      <div class="modal-footer" [hidden]="!profile">
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal" (click)="change()" >Change</button>
         <button type="button" class="btn btn-dark btn-lg text-white" data-dismiss="modal">Cancel</button>
         <!-- <button mat-button data-dismiss="modal" class="color mr-2" (click)="logout()">Ok</button>

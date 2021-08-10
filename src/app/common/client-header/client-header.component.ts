@@ -20,6 +20,7 @@ export class ClientHeaderComponent implements OnInit {
   code_no:any;
   email_id:any;
   profile=false;
+  input_el:any;
  constructor(private router:Router,public toastr: ToastrManager) { }
 
 
@@ -47,6 +48,11 @@ export class ClientHeaderComponent implements OnInit {
    this.profile=false;
    console.log(this.profile)
  }
+ open_folder(){
+   this.input_el=document.createElement('input');
+   this.input_el.setAttribute('type','file');
+   this.input_el.click();
+  console.log(this.input_el) }
  change_cp(){
    this.profile=true;
    console.log(this.profile)

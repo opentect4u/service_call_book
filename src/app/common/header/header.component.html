@@ -3,7 +3,7 @@
 	<div class="float-left navRightSec">
 		
 		<ul class="topDate">
-      <li class="text-bold text-dark" style="font-size: 22px; color: #282a3c;">Welcome, {{this.emp_name}} &nbsp;({{this.type}})</li>
+      <li class="text-bold text-dark" style="font-size: 22px; color: #282a3c;">Welcome, {{this.emp_name}}  <p class="">{{today | date:'dd-MM-yyyy h:mm:ss a '}}</p></li>
 <!-- <li>Branch Name: Head Office</li> <li>KMS Year: 2020-21</li> <li>User: synergic</li> <li>Module: Paddy Procurement</li> -->
 </ul>
 		
@@ -14,15 +14,15 @@
 -->
 		
 		<ul class="nav topDateRight">
-      <li class="nav-item dropdown">
+      <!-- <li class="nav-item dropdown">
         <a  class="nav-link mt-3"><i class="fa fa-bell" aria-hidden="true"></i> Notification</a>
         
-    </li>
+    </li> -->
 			<li class="nav-item dropdown">
                     <a  class="nav-link mt-3"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
                     
                 </li>
-                <!-- <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                   <div class="dropdown e-caret-hide">
                   <a  class="nav-link" data-toggle="dropdown"><img src="/assets/profile.png" alt="Avatar" class="avatar" ></a>
                 
@@ -31,13 +31,16 @@
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a data-toggle="modal" data-target="#mymodal_profile" (click)="profile=false;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-user-o"
                       aria-hidden="true"></i>&nbsp;My Profile</a></li>
-                    
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a></li>
+                      <!-- <li role="presentation"><a role="menuitem" tabindex="-1">{{emp_name}}</a></li> -->
+                     <!-- <a role="menuitem" tabindex="-1" href="#"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a>  -->
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a data-toggle="modal" data-target="#mymodal" role="menuitem" tabindex="-1"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></li>
                   </ul>
                 </div>
                   
-              </li> -->
+              </li>
 			<!-- <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Main Menu 1</a>
                     <div class="dropdown-menu dropdown-menu-right">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
- 
+import { DatePipe } from '@angular/common'
 declare var showprofile: any;
 @Component({
   selector: 'app-header',
@@ -20,10 +20,12 @@ export class HeaderComponent implements OnInit {
    code_no:any;
    email_id:any;
    profile=false;
+   today:any;
   constructor(private router:Router,public toastr: ToastrManager) { }
 
   ngOnInit(): void {
     setInterval(()=>{
+      this.today=new Date();
       this.code_no=localStorage.getItem('UserId');
       this.email_id=localStorage.getItem('user_email');
       console.log(this.email_id);
