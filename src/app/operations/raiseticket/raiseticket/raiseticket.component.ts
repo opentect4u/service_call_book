@@ -18,7 +18,6 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     emp_name
     priority
     tktStatus
-    
     log_in
   }
 }`
@@ -26,7 +25,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
 
 const DELETED=gql`
 mutation deleteTkt($id:String!) {
-  
+
   deleteTkt(id:$id)  {
 
        success
@@ -39,7 +38,7 @@ mutation deleteTkt($id:String!) {
 @Component({
   selector: 'app-raiseticket',
   templateUrl: './raiseticket.component.html',
-  styleUrls: ['./raiseticket.component.css', 
+  styleUrls: ['./raiseticket.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -52,10 +51,11 @@ export class RaiseticketComponent implements OnInit {
   cl:any;
   x:any;
   d_icon:any;
+  u_type:any;
   // assign_eng:any;
- 
+
   displayedColumns: string[] = ['Ticket_No', 'Client_Name','Phone_no','Priority','ticket_log_date','Edit','Delete'];
-  dataSource = new MatTableDataSource<any> (); 
+  dataSource = new MatTableDataSource<any> ();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -67,42 +67,43 @@ export class RaiseticketComponent implements OnInit {
   ngOnInit(): void {
     // if(localStorage.getItem('editraisetickit')=='1'){
     //   this.deleteticket=false;
-    //   this.edittickite=false; 
+    //   this.edittickite=false;
     //   this.insertitckit=true;
     //   localStorage.setItem('deletetickit','0');
     // }
     if(localStorage.getItem('editraisetickit')=='1'){
-       this.edittickite=false; 
+       this.edittickite=false;
        this.insertitckit=true;
        localStorage.setItem('insertickit','0');
 
     }
     if( localStorage.getItem('insertickit')== '1'){
-           this.insertitckit=false; 
-           this.edittickite=true; 
+           this.insertitckit=false;
+           this.edittickite=true;
 
     }
-    
+
     localStorage.setItem('address','/operations/raiseticket');
     localStorage.setItem('Active', '1');
+
     this.fetch_data();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  
+
 }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/operations/addraiseticket'])   ; 
+    this.router.navigate(['/operations/addraiseticket']);
   }
   go_to_update(v1:any){
     this.router.navigate(['/operations/editeraiseticket',v1]);
   }
   private fetch_data(){
     console.log({user_type:localStorage.getItem('user_Type'), user_id:localStorage.getItem('UserId')});
-    
+
     this.apollo.watchQuery<any>({
       query: GET_RAISETICKITE,
       variables:{
@@ -110,11 +111,11 @@ export class RaiseticketComponent implements OnInit {
          user_type:localStorage.getItem('user_Type'),
          user_id:localStorage.getItem('UserId')
 
-         
+
       },
       pollInterval: 500
-      
-      
+
+
     })
       .valueChanges
       .subscribe(({ data}) => {
@@ -124,14 +125,14 @@ export class RaiseticketComponent implements OnInit {
         //  for(let i=0;i<this.Tickite.getSupportLogDtls.length;i++){
         //      if(this.Tickite.getSupportLogDtls[i].assign_engg>0 &&this.Tickite.getSupportLogDtls[i].assign_engg!=null){
         //            this.d_icon=document.getElementsByClassName('deleted') ;
-        //            this.d_icon.style.color='grey';  
+        //            this.d_icon.style.color='grey';
         //      }
         //  }
-      
+
          this.putdata(this.Tickite);
       })
 
-    
+
   }
 
   showsnackbar() {
@@ -151,7 +152,7 @@ export class RaiseticketComponent implements OnInit {
     localStorage.setItem('insertickit','0');
   }
   go_to(){
-   
+
     this.edittickite=true;
     localStorage.setItem('editraisetickit','0');
   }
@@ -176,7 +177,7 @@ export class RaiseticketComponent implements OnInit {
       this.showsnackbar();
       },error=>{ this.showsnackbar()
       });
-      
+
     }
     deletestorage(){
       this.deleteticket=true;

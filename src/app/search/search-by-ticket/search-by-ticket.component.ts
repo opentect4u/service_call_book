@@ -12,8 +12,11 @@ const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!){
     client_name
     tktStatus
     emp_name
+    work_status
   }
- }`
+ }`;
+
+
 @Component({
   selector: 'app-search-by-ticket',
   templateUrl: './search-by-ticket.component.html',
@@ -28,7 +31,7 @@ export class SearchByTicketComponent implements OnInit {
   type: any;
   posts:any;
   user_type: any;;
-  
+
 
   constructor(private activatedroute:ActivatedRoute,private apollo:Apollo,private router:Router) { }
   tkt:any;
@@ -55,16 +58,16 @@ export class SearchByTicketComponent implements OnInit {
      query: srch_tkt,
      variables:{
        tkt_no:this.tkt,
-       
+
        user_id:this.type
      },
      pollInterval:100
    })
      .valueChanges
      .subscribe(({ data }) => {
-       
+
        this.posts = data;
-      
+
        console.log(this.posts);
       this.putdata(this.posts);
      });
@@ -76,7 +79,7 @@ export class SearchByTicketComponent implements OnInit {
     }
   public putdata(posts:any){
     this.dataSource=new MatTableDataSource(posts.searchByTktNo);
-   
+
     console.log(this.dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -84,7 +87,7 @@ export class SearchByTicketComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

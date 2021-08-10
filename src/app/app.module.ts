@@ -20,7 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from'@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { AddclienttypeComponent } from './master/clienttypemaster/ctmdashboard/addclienttype/addclienttype.component';
@@ -51,14 +51,16 @@ import { AttendanddeliverComponent } from './operations/attendanddeliverticket/a
 import { EditatComponent } from './operations/assignticket/editat/editat/editat.component';
 import { EditadanddComponent } from './operations/attendanddeliverticket/attendanddeliver/edita&d/editadandd/editadandd.component';
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
+
 import { ToastrModule } from 'ng6-toastr-notifications';
-import { NgxSpinnerModule } from "ngx-spinner";  
+import { NgxSpinnerModule } from "ngx-spinner";
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 // import {MatButtonModule} from '@angular/material/button';
+
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-import { NgSelectModule } from '@ng-select/ng-select'; 
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 
@@ -78,9 +80,22 @@ import { ClientHeaderComponent } from './common/client-header/client-header.comp
 import { ViewComponent } from './search/view/view.component';
 
 
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogmodalComponent } from './login_reg_emp_client/dialogmodal/dialogmodal.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
-
-
+// import { ToastrModule } from 'ngx-toastr';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { NotificationService } from './service/notification.service';
+import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
+import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/editclientraiseticket/editclientraiseticket.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {MatBadgeModule} from '@angular/material/badge';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,8 +109,7 @@ import { ViewComponent } from './search/view/view.component';
     MmdashboardComponent,
     AddempdashboardComponent,
     AddclientdashboardComponent,
-    //AddctmComponent,
-    AddclienttypeComponent,
+   AddclienttypeComponent,
     AddomComponent,
     AddtsComponent,
     AddpmComponent,
@@ -123,18 +137,27 @@ import { ViewComponent } from './search/view/view.component';
 
 
 
+
     TemplateComponent,
 
 
     UsermaintananceComponent,
+
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent,
     EdittktComponent,
+
+    DialogmodalComponent,
+    ClientraisetktComponent,
+    AddclientraisetktComponent,
+
     SearchByDateComponent,
     SearchByTicketComponent,
     ClientHeaderComponent,
-    ViewComponent
+    ViewComponent,
+    EditclientraiseticketComponent
+
 
   ],
   imports: [
@@ -159,14 +182,35 @@ import { ViewComponent } from './search/view/view.component';
     NgxSpinnerModule,
     MatRadioModule,
     AutocompleteLibModule,
+
+    MatDialogModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTabsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatListModule,
+    MatBadgeModule,
+    ChartsModule,
+
     ToastrModule.forRoot()
-    
-   
+    // ToastrModule.forRoot({
+    //   timeOut: 10000,
+    //   positionClass: 'toast-top-center',
+    //   preventDuplicates: false,
+    // }),
+
+],
+
+  providers: [NotificationService,
+    {provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent,
+
   ],
-  providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent],
+
+
   bootstrap: [AppComponent],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

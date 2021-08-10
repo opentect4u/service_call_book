@@ -6,7 +6,7 @@
 <div class="page-body-wrapper">
     <app-sidebar></app-sidebar>
     <!-- <nav class="sidebar sidebar-offcanvas" id="sidebar">
-		
+
 		<ul id="accordion" class="accordion">
   <li>
     <div class="link"><a href="index.html"><i class="fa fa-tachometer"></i>Dashboard</a></div>
@@ -14,7 +14,7 @@
   <li>
     <div class="link"><a href="publisher_management.html"><i class="fa fa-code"></i>Publisher Management </a></div>
   </li>
-	
+
 	<li>
 	<div class="link"><a href="user_management.html"><i class="fa fa-code"></i>User Management </a></div>
 	</li>
@@ -26,7 +26,7 @@
 	<li>
 	<div class="link"><a href="sub_category.html"><i class="fa fa-code"></i>Sub-Category </a></div>
 	</li>
-			
+
 	<li>
 	<div class="link"><a href="all_books.html"><i class="fa fa-code"></i>All Books </a></div>
 	</li>
@@ -34,9 +34,9 @@
 	<li>
 	<div class="link"><a href="#"><i class="fa fa-sign-out"></i>Log out</a></div>
 	</li>
-			
-			
-			
+
+
+
   <li>
     <div class="link"><i class="fa fa-mobile"></i>Dropdown 1<i class="fa fa-chevron-down"></i></div>
     <ul class="submenu">
@@ -54,9 +54,9 @@
     </ul>
   </li>
 </ul>
-		
-       
-		
+
+
+
       </nav> -->
 
     <div class="main-panel">
@@ -67,7 +67,7 @@
 
                     <div class="titleSec">
                         <!-- <button type="button" class="btn btn-primary">Add</button> -->
-                        <h2>View Details of "{{tktno}}"</h2>
+                        <h2>View Details of Ticket No.: {{tktno}}</h2>
                     </div>
 
 
@@ -95,7 +95,7 @@
                                     </div>
 
                                     <div class="col-sm-3"></div>
-                                    
+
                                 </div>
                                 <br>
 
@@ -112,7 +112,7 @@
                                         </select> -->
                                         <input type="text" class="form-control p-2" placeholder=""
                                         name="client" id="itemclient" required="" #client readonly value="{{client_name}}">
-                                    
+
                                         <!-- <span  class="text-danger"
                                     *ngIf="cl_val&&prevent_init_client">*Please select a client</span>  -->
 
@@ -129,10 +129,10 @@
                                 <div class="col-sm-10" >
                                     <input type="text" class="form-control" placeholder="Enter Address1 " name="cust_name"
                                         id="itemname" required=""   #addddd1>
-                                      
+
                                         <span  class="text-danger"
                                         *ngIf="upload&&!address1">*please Enter Address</span>
-                                      
+
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -143,9 +143,9 @@
                                 <div class="col-sm-10" >
                                     <input type="text" class="form-control" placeholder="Enter Address2 " name="cust_name"
                                         id="itemname" required=""   #addddd2>
-                                      
+
                                 </div>
-                               
+
 
                             </div> -->
 
@@ -158,9 +158,9 @@
                                     <input type="text" class="form-control" placeholder="Enter Pin" name="pin" id="pin"
                                         required="" #pini (keypress)="preventNonNumericalInput($event)">
                                 </div>
-                              
+
                                 <span  class="text-danger"
-                                *ngIf="upload&&!pin">*please Enter Pin</span> 
+                                *ngIf="upload&&!pin">*please Enter Pin</span>
                             </div>
                               -->
                               <div class="form-group row">
@@ -258,9 +258,11 @@
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder=""
 
+
                                         name="phone" id="itemphone" #phone
                                         readonly
                                         
+
                                       value="{{phoneno}}">
                                     <!-- <span  class="text-danger" -->
                                     <!-- *ngIf="phone_val&&prevent_init_phone">*Please enter a phone number</span>  -->
@@ -276,8 +278,8 @@
                                     <!-- <select class="form-control" name="module" #priority (click)="select_priority(priority.value)"
                                    >
 
-                                       
-                                        <option *ngFor="let p of pmdata" value="{{p.priority_id}}" [selected]="this.prio==p.priority_id">{{p.priority_mode}}</option> 
+
+                                        <option *ngFor="let p of pmdata" value="{{p.priority_id}}" [selected]="this.prio==p.priority_id">{{p.priority_mode}}</option>
 
                                     </select>
                                     <span  class="text-danger"
@@ -305,7 +307,7 @@
 
                                         </select>
                                          <span  class="text-danger"
-                                    *ngIf="upload&&!company">*please Enter Company type</span> 
+                                    *ngIf="upload&&!company">*please Enter Company type</span>
 
 
                                     </div>
@@ -327,7 +329,7 @@
 
                                         </select>
                                          <span  class="text-danger"
-                                        *ngIf="upload&&!company">*please Enter Company type</span> 
+                                        *ngIf="upload&&!company">*please Enter Company type</span>
 
 
                                     </div>
@@ -335,7 +337,7 @@
 
                                 </div> -->
                                 <br>
-                               
+
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
@@ -345,15 +347,15 @@
                                         <input type="text" class="form-control p-2" value="{{tkt_module}}" readonly>
                                         <!-- <select class="form-control"  name="module" #module (click)="select_mm(module.value)"
                                        >
-    
-                                          
+
+
                                             <option *ngFor="let m of moddata" value="{{m.module_id}}" [selected]="this.modul==m.module_id">{{m.module_type}}</option>
-                                            
-    
+
+
                                         </select>
                                         <span  class="text-danger"
-                                    *ngIf="mm_val&&prevent_init_module">*Please select module</span> 
-    
+                                    *ngIf="mm_val&&prevent_init_module">*Please select module</span>
+
      -->
                                     </div>
                                 </div><br>
@@ -365,12 +367,15 @@
                                     <div class="col-sm-10">
                                          <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
 
-                                            name="issue" id="itemissue" #issue 
+
+                                            name="issue" id="itemissue" #issue
+
 
                                             readonly
                                         value="{{prob_reported}}"></textarea>
                                          <!-- <span  class="text-danger" -->
-            <!-- *ngIf="issue_val&&prevent_init_issue">*Please provide the issue</span>  --> 
+            <!-- *ngIf="issue_val&&prevent_init_issue">*Please provide the issue</span>  -->
+
 
                                     </div>
                                 </div>
@@ -409,27 +414,31 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2" placeholder=""
-                                         
-                      
+
+
+
                                             name="Attendedat" id="Itemattendedat" #Attendedat readonly
                                              value="{{attendedat | date:'dd-MM-yyyy'}}">
-                                       
-    
+
+
                                     </div>
                                     <div class="col-sm-2"></div>
-                                    
+
+
                                     <div class="col-sm-2">
                                         <label><b>Delivery At</b></label>
                                     </div>
                                     <div class="col-sm-3">
-    
+
+
                                         <input type="text" class="form-control p-2" placeholder=""
-                                        
-                                      
+
+
                                             name="Deliveryat" id="itemDeliveryat" #Deliveryat readonly
                                              value="{{deliveryat | date:'dd-MM-yyyy'}}">
-                                      
-    
+
+
+
                                     </div>
                                 </div>
                                 <br>
@@ -438,65 +447,62 @@
                                         <label><b>Ticket Status</b>&nbsp;</label>
                                     </div>
                                     <div class="col-sm-3">
-    
-    
+
+
+
                                          <input type="text" class="form-control p-2" placeholder=""
-                                        
-                                      
+
+
                                         name="ticketstatus" id="tktstatus1" #ticketstatus readonly
-                                        value="{{status}}"> 
-    
-    
-    
-    
+                                        value="{{status}}">
+
+
+
+
                                         <!-- <select class="form-control" id="tktstatus" name="ticketstatus" #ticketstatus (click)="tkt_select(ticketstatus.value)">
-    
-                                          
+
+
                                             <option *ngFor="let t of tsdata" value="{{t.tkt_id}}" [selected]="this.tktid==t.tkt_id">{{t.tkt_status}}</option>
-                                            
-    
+
+
                                         </select>
                                         <span  class="text-danger"
                                     *ngIf="tkt">*please Enter Ticket Status</span> -->
-    
-    
+
+
                                     </div>
                                     <div class="col-sm-2"></div>
-                                   
+
                                         <div class="col-sm-2">
                                             <label><b>Work Status</b>&nbsp;</label>
                                         </div>
-    
-                                  
+
+
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2" placeholder=""
-                                        
-                                      
+
+
+
                                         name="Wrkstatus" id="wrkstatus" #wrkingstatus readonly
                                         value="{{work_status}}">
-    
-    
+
                                         <!-- <select class="form-control" id="wrkstatus" name="Wrkstatus" #wrkingstatus (click)="wrk_select(wrkingstatus.value)">
-    
+
                                             <option value="">Select</option>
                                             <option  value="0">Pending</option>
                                             <option  value="1">Done</option>
-                                            
-    
+
+
                                         </select>
                                         <span  class="text-danger"
                                     *ngIf="wrork_stat">*please Enter Working Status</span> -->
-    
+
                                     </div>
-                                    
-    
-    
+
+
+
                                 </div>
-                                <br>   
-
-                              
-
-                               
+                                <br>
 
 
 
@@ -506,9 +512,13 @@
 
 
 
-                                
-                            
-                                
+
+
+
+
+
+
+
                                 <div class="form-group row">
 
                                     <div class="col-sm-2">
@@ -527,14 +537,14 @@
                                 </div>
                                 <div class="col-sm-3" >
                                     <input type="text" class="form-control" placeholder="Enter contact" name="tan" id="itemname"   #tana>
-                                    
 
-                                    
+
+
                                     <span  class="text-danger ml-3"
-                                    *ngIf="upload&&!tan">*please Enter TAN</span> 
-                                   
+                                    *ngIf="upload&&!tan">*please Enter TAN</span>
+
                                 </div>
-                               
+
                             </div>
 
                             <div class="form-group row" >
@@ -545,9 +555,9 @@
                                 <div class="col-sm-3" >
                                     <input type="text" class="form-control" placeholder="Enter Bank Name" name="bank_name"
                                         id="itemname"   #banknn>
-                                      
+
                                          <span  class="text-danger"
-                                        *ngIf="upload&&!bank">*please Enter Bank name</span> 
+                                        *ngIf="upload&&!bank">*please Enter Bank name</span>
                                 </div>
 
                                 <div class="col-sm-3" ></div>
@@ -557,7 +567,7 @@
                                 <div class="col-sm-3" >
                                     <input type="text" class="form-control" placeholder="Enter Branch Name" name="branch_name"
                                         id="itemname" #bran>
-                                        
+
                                         <span  class="text-danger ml-3"
                                         *ngIf="upload&&!branch">*please Enter Branch name</span> -->
                                     <!-- </div> -->
@@ -572,10 +582,10 @@
                                 <div class="col-sm-3" >
                                     <input type="text" class="form-control" placeholder="Enter Account Number" name="ac_no"
                                         id="itemname"   #no>
-                                        
+
                                         < <span  class="text-danger"
-                                        *ngIf="upload&&!ac">*please Enter Ac Number</span> 
-                                      
+                                        *ngIf="upload&&!ac">*please Enter Ac Number</span>
+
                                 </div>
                                 <div class="col-sm-3" ></div>
                                 <div class="col-sm-1" >
@@ -584,17 +594,17 @@
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control" placeholder="Enter IFS Code" name="ifs_code"
                                         id="itemname"  #is>
-                                       
-                                        <span  class="text-danger ml-3"
-                                        *ngIf="upload&&!ifs">*please Enter Ifsc</span> 
 
-                                      
-                                       
-                                      
+                                        <span  class="text-danger ml-3"
+                                        *ngIf="upload&&!ifs">*please Enter Ifsc</span>
+
+
+
+
                                 </div>
                             </div>  -->
 
-                         
+
 
 
 
@@ -605,20 +615,20 @@
                                     <div class="col-sm-12 btnSubmitSec">
                                         <!-- <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="mm_val||prior_val||phone_val||issue_val"
                                             value="Submit" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)"> -->
-                                            
-                                            
-                                            
+
+
+
                                             <!-- <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || this.work_status!='Pending'"
                                             value="Update" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
-                                            
+
                                              -->
-                                            
+
                                             <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
                                                 &nbsp; Updation failed.Please try again after some time</div>
                                             <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button> -->
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
                                     </div>
-                                    
+
                                 </div>
 
 
