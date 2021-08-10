@@ -27,6 +27,7 @@
     "apollo-angular": "^2.6.0",
     "bootstrap": "^5.0.2",
     "chart.js": "^2.9.4",
+    "chartjs": "^0.3.24",
     "chartjs-plugin-datalabels": "^2.0.0",
     "graphql": "^15.0.0",
     "jquery": "^3.6.0",
