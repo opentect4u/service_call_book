@@ -21,6 +21,15 @@ query getUserDetailsA($tag:String!){
   }
 }`;
 
+
+const SHOW_EMPLOYWW=gql`
+query workDone($user_type:String!,$user_id:String!){
+  workDone(user_type:$user_type, user_id:$user_id){
+    done
+    emp_name
+  }
+}`
+
 const TKT=gql`
 query openTktByStatus($user_type:String!, $user_id: String!){
   openTktByStatus(user_type:$user_type, user_id:$user_id){
@@ -49,7 +58,13 @@ query  openCloseTkt($user_type: String!, $user_id: String!){
     closed
   }
 }`
-
+const LAST_SEVEN=gql`
+query totalTktByDate($user_type:String!,$user_id:String!){
+  totalTktByDate(user_type: $user_type, user_id: $user_id){
+    no_tkt
+    date_name
+  }
+}`
 
 
 
@@ -74,10 +89,15 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-
+  colors1:any=[];
+  colors2:any=[];
+  colors3:any=[];
+  no_tkt:any=[];
+  date_time:any=[];
    bar:any;
    tkt:any;
    t:any;
+   background_color_for_1st_pie_chart:any=[];
   // myChart:any=[];
   user_data:any;
   breakpoint:any;
@@ -87,8 +107,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   last_month:any;
   this_year:any;
   lifetime:any;
-
-
+   Done:any=[];
+   Emp:any=[];
+   tkt_stat:any=[];
+   stat:any=[];
    u_type:any;
    op:any;
    clos:any;
@@ -170,34 +192,46 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
 
 
-
+      this.apollo.watchQuery<any>({
+        query:LAST_SEVEN,
+        variables: {
+          user_type:localStorage.getItem('user_Type'),
+          user_id:localStorage.getItem('UserId')
+      
+        },
+        pollInterval:500,
+      
+      })
+        .valueChanges
+        .subscribe(({ data, loading }) => {
+          console.log("tkt:" ,data);
+           
+          for(let i=0;i<data.totalTktByDate.length;i++){
+            console.log(data.totalTktByDate[i].no_tkt);
+          this.no_tkt[i]=data.totalTktByDate[i].no_tkt;
+          this.date_time[i]=data.totalTktByDate[i].date_name;
+          this.colors3[i]= '#'+Math.floor(Math.random()*16777212).toString(16);
+          // console.log(this.colors1[i])
+          }
 
 //  For Bar Charts in Angular
     var myChart = new Chart('ctx', {
     type: 'bar',
      data: {
-        labels: [ "Blue","Red", "Yellow", "Green", "Purple", "Orange","SkyBlue"],
+        labels: this.date_time,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 20, 10, 15,20],
-            backgroundColor: [
-                'rgba(23, 162, 184, 1)',
-                'rgba(220, 53, 69, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(40, 167, 69, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(22, 132, 226, 1)'
-            ],
-            borderColor: [
-                 'rgba(255, 255, 255, 1)',
-                 'rgba(255, 255, 255, 1)',
-                 'rgba(255, 255, 255, 1)',
-                 'rgba(255, 255, 255, 1)',
-                 'rgba(255, 255, 255, 1)',
-                 'rgba(255, 255, 255, 1)',
-                 'rgba(255, 255, 255, 1)'
-            ],
+           
+            data: this.no_tkt,
+            backgroundColor: this.colors3,
+            // borderColor: [
+            //      'rgba(255, 255, 255, 1)',
+            //      'rgba(255, 255, 255, 1)',
+            //      'rgba(255, 255, 255, 1)',
+            //      'rgba(255, 255, 255, 1)',
+            //      'rgba(255, 255, 255, 1)',
+            //      'rgba(255, 255, 255, 1)',
+            //      'rgba(255, 255, 255, 1)'
+            // ],
 
 
             // hoverBackgroundColor:['blue','yellow'],
@@ -206,7 +240,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     },
 
     options: {
-
+      legend:{
+        display:false
+     },
      responsive:true,
       maintainAspectRatio:false,
         scales: {
@@ -225,46 +261,128 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         }
     }
 });
+        });
+  
+// For 1st Pie Chart
+this.apollo.watchQuery<any>({
+  query:TKT,
+  variables: {
+    user_type:localStorage.getItem('user_Type'),
+    user_id:localStorage.getItem('UserId')
 
-// For Line Charts
-var myChart = new Chart("line", {
-  type: 'line',
-  data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 20, 10, 15],
-          fill: false,
+  },
+  pollInterval:500,
 
-          borderColor: 'rgb(0, 112, 112)',
-          pointBackgroundColor:['red', 'Yellow','pink','green','purple','Orange'],
+})
+  .valueChanges
+  .subscribe(({ data, loading }) => {
+    console.log("tkt:" ,data);
+     
+    for(let i=0;i<data.openTktByStatus.length;i++){
+      console.log(data.openTktByStatus[i].tkt_status);
+    this.tkt_stat[i]=data.openTktByStatus[i].tkt_status;
+    this.stat[i]=data.openTktByStatus[i].status;
+    this.colors1[i]= '#'+Math.floor(Math.random()*16777217).toString(16);
+    console.log(this.colors1[i])
+    }
+    console.log(this.tkt_stat);
 
-          // pointHoverBackgroundColor:['red','blue','yellow','Green','purple','orange'],
-          pointStyle:'rectRot',
-          borderWidth: 1
-      }],
+   
+  
 
+
+    var MyChart = new Chart('pie1', {
+      type: 'pie',
+     
+      data : {
+        labels:this.tkt_stat,
+        datasets: [{
+        
+          data:this.stat,
+          
+          // backgroundColor: [
+          //   'rgb(255, 99, 132)',
+          //   'rgb(54, 162, 235)',
+          //   'rgb(255, 205, 86)'
+          // ],
+          backgroundColor:this.colors1,
+          
+          // hoverOffset: 4
+        }]
+      },
+      options: {
+        elements:{
+       arc:{
+         borderWidth:0
+       }
+    },
+        legend:{
+           display:false
+        },
+        responsive:true,
+         maintainAspectRatio:false,}
+    })
+    
+
+
+  })
+
+
+
+
+
+
+// For 2nd Pie Chart
+this.apollo.watchQuery<any>({
+query:SHOW_EMPLOYWW,
+  variables: {
+    user_type:localStorage.getItem('user_Type'), 
+    user_id:localStorage.getItem('UserId')
+
+  },
+  pollInterval:500,
+
+}) .valueChanges
+.subscribe(({ data, loading }) => {
+  console.log(data);
+
+  for(let i=0;i<data.workDone.length;i++){
+    console.log(data.workDone[i].tkt_status);
+  this.Done[i]=data.workDone[i].done;
+  this.Emp[i]=data.workDone[i].emp_name;
+  this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
+   }
+  console.log(this.Done);
+  console.log(this.Emp);
+
+
+var MyPieChart = new Chart('pie2', {
+  type: 'pie',
+  data : {
+    labels:this.Emp,
+    datasets: [{
+      data:this.Done,
+      backgroundColor:this.colors2,
+      // hoverOffset: 4
+    }]
   },
   options: {
-   animation: {
-      duration:1
-  },
+    elements:{
+       arc:{
+         borderWidth:0
+       }
+    },
+    legend:{
+      display:false
+   },
     responsive:true,
-    maintainAspectRatio:false,
-      scales: {
-          yAxes: [{
+     maintainAspectRatio:false,
+    }
+})
 
-              ticks: {
-                  beginAtZero:true
-              },
-              gridLines:{
-                display: false
-              }
+})
 
-          }]
-      }
-  }
-});
+
 
 }
 
