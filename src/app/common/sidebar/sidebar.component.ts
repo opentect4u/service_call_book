@@ -7,6 +7,21 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 //import {MatDialog} from '@angular/material/dialog';
 
 
+
+
+
+const GET_DATA_A = gql`
+query getUserDetailsA($tag:String!){
+  getUserDetailsA(tag:$tag){
+    id
+    user_name
+    user_type
+    user_status
+    login_status
+  }
+}`;
+
+
 const GET_USER_TYPE=gql`
 query  getUserDetailsById($user_email:String!){
   getUserDetailsById(user_email:$user_email){
@@ -50,6 +65,7 @@ export class SidebarComponent implements OnInit {
   done=true;
   prevent=false;
   old_u_type:any;
+  user_data:any;
 
   tkt:any;
   ct=0;
@@ -108,6 +124,31 @@ export class SidebarComponent implements OnInit {
 
 //  }
     })
+
+
+
+
+
+
+    this.apollo.watchQuery<any>({
+      query:GET_DATA_A,
+      variables: {
+        tag: '1'
+      },
+      pollInterval:500
+    })
+      .valueChanges
+      .subscribe(({ data, loading }) => {
+        console.log(data);
+  
+        this.user_data = data.getUserDetailsA;
+  
+       
+  
+      })
+       
+
+  
 
 
 

@@ -64,7 +64,15 @@ query totalTktByDate($user_type:String!,$user_id:String!){
     no_tkt
     date_name
   }
-}`
+}`;
+
+const CHART_PIE=gql`
+query totalTktByClient($user_type: String!, $user_id: String!){
+  totalTktByClient(user_type: $user_type, user_id:$user_id){
+    total_tkt
+    client_type
+  }
+}`;
 
 
 
@@ -97,8 +105,12 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    bar:any;
    tkt:any;
    t:any;
+   total:any=[];
+   cli_typ:any=[];
    background_color_for_1st_pie_chart:any=[];
   // myChart:any=[];
+  piechart:any;
+  pi:any;
   user_data:any;
   breakpoint:any;
   today:any;
@@ -113,6 +125,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    stat:any=[];
    u_type:any;
    op:any;
+   colors4:any=[];
    clos:any;
   formattedDate : any;
   constructor(private router:Router,private apollo:Apollo) {
@@ -120,8 +133,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.fetch_data();
-    this.fetch_data1();
+    // this.fetch_data();
+    // this.fetch_data1();
 
 
      this.u_type = localStorage.getItem('user_Type');
@@ -191,7 +204,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
 
 
-
+//  For Bar Charts in Angular
       this.apollo.watchQuery<any>({
         query:LAST_SEVEN,
         variables: {
@@ -204,6 +217,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       })
         .valueChanges
         .subscribe(({ data, loading }) => {
+          console.log("Bar Chart");
           console.log("tkt:" ,data);
            
           for(let i=0;i<data.totalTktByDate.length;i++){
@@ -211,11 +225,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.no_tkt[i]=data.totalTktByDate[i].no_tkt;
           this.date_time[i]=data.totalTktByDate[i].date_name;
           this.colors3[i]= '#'+Math.floor(Math.random()*16777212).toString(16);
-          // console.log(this.colors1[i])
           }
 
-//  For Bar Charts in Angular
-    var myChart = new Chart('ctx', {
+     var myChart = new Chart('ctx', {
     type: 'bar',
      data: {
         labels: this.date_time,
@@ -223,18 +235,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
            
             data: this.no_tkt,
             backgroundColor: this.colors3,
-            // borderColor: [
-            //      'rgba(255, 255, 255, 1)',
-            //      'rgba(255, 255, 255, 1)',
-            //      'rgba(255, 255, 255, 1)',
-            //      'rgba(255, 255, 255, 1)',
-            //      'rgba(255, 255, 255, 1)',
-            //      'rgba(255, 255, 255, 1)',
-            //      'rgba(255, 255, 255, 1)'
-            // ],
-
-
-            // hoverBackgroundColor:['blue','yellow'],
+            
             borderWidth: 1
         }]
     },
@@ -263,7 +264,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 });
         });
   
-// For 1st Pie Chart
+// For 1st horizontal bar Chart
 this.apollo.watchQuery<any>({
   query:TKT,
   variables: {
@@ -286,13 +287,11 @@ this.apollo.watchQuery<any>({
     console.log(this.colors1[i])
     }
     console.log(this.tkt_stat);
-
    
-  
 
 
-    var MyChart = new Chart('pie1', {
-      type: 'pie',
+   var MyChart = new Chart('pie1', {
+      type: 'horizontalBar',
      
       data : {
         labels:this.tkt_stat,
@@ -332,7 +331,7 @@ this.apollo.watchQuery<any>({
 
 
 
-// For 2nd Pie Chart
+// For 2nd horizontal bar chart 
 this.apollo.watchQuery<any>({
 query:SHOW_EMPLOYWW,
   variables: {
@@ -347,7 +346,7 @@ query:SHOW_EMPLOYWW,
   console.log(data);
 
   for(let i=0;i<data.workDone.length;i++){
-    console.log(data.workDone[i].tkt_status);
+    
   this.Done[i]=data.workDone[i].done;
   this.Emp[i]=data.workDone[i].emp_name;
   this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
@@ -357,7 +356,7 @@ query:SHOW_EMPLOYWW,
 
 
 var MyPieChart = new Chart('pie2', {
-  type: 'pie',
+  type: 'horizontalBar',
   data : {
     labels:this.Emp,
     datasets: [{
@@ -384,71 +383,127 @@ var MyPieChart = new Chart('pie2', {
 
 
 
-}
 
 
-fetch_data() {
-
-  this.apollo.watchQuery<any>({
-    query:GET_DATA_A,
+// Pie Chart
+this.apollo.watchQuery<any>({
+  query:CHART_PIE,
     variables: {
-      tag: '1'
-    },
-    pollInterval:500
-  })
-    .valueChanges
-    .subscribe(({ data, loading }) => {
-      console.log(data);
-
-      this.user_data = data;
-
-      this.dataSource.sort = this.sort;
-      this.putdata(this.user_data);
-
-    })
-
-
-
-}
-public putdata(v:any){
-  this.dataSource = new MatTableDataSource(v.getUserDetailsA);
-
-}
-
-
-fetch_data1() {
-
-
-  this.apollo.watchQuery<any>({
-    query:TKT,
-    variables: {
-      user_type:localStorage.getItem('user_Type'),
+      user_type:localStorage.getItem('user_Type'), 
       user_id:localStorage.getItem('UserId')
-
+  
     },
     pollInterval:500,
+  
+  }) .valueChanges
+  .subscribe(({ data, loading }) => {
+    console.log(data);
+   for(let i=0;i<data.totalTktByClient.length;i++){
+      
+    this.total[i]=data.totalTktByClient[i].total_tkt
+    
+    this.cli_typ[i]=data.totalTktByClient[i].client_type;
+    this.colors4[i]='#'+Math.floor(Math.random()*18777219).toString(16)
+     }
+    //  this.piechart=document.getElementById('container-pie3')
+    //  this.pi=document.getElementById('pie3');
+    //  this.pi.remove();
+    //  this.piechart.append("<canvas id='pie3'></canvas>");
+  
 
+var MyPie = new Chart('pie3', {
+  type: 'pie',
+  data : {
+    labels:this.cli_typ,
+    datasets: [{
+      data:this.total,
+      backgroundColor:this.colors4,
+      // hoverOffset: 4
+    }]
+  },
+  options: {
+    elements:{
+       arc:{
+         borderWidth:0
+       }
+    },
+    legend:{
+      display:false
+   },
+    responsive:true,
+     maintainAspectRatio:true,
+    }
+})
   })
-    .valueChanges
-    .subscribe(({ data, loading }) => {
-      console.log("tkt:" ,data);
-      this.t=data;
-
-      this.putdata1(this.t);
-
-
-    })
-
 
 
 
 
 }
 
-public putdata1(v1:any){
-  this.dataSource1 = new MatTableDataSource(v1.openTktByStatus);
-  this.dataSource1.paginator = this.paginator;
-}
+
+// fetch_data() {
+
+//   this.apollo.watchQuery<any>({
+//     query:GET_DATA_A,
+//     variables: {
+//       tag: '1'
+//     },
+//     pollInterval:500
+//   })
+//     .valueChanges
+//     .subscribe(({ data, loading }) => {
+//       console.log(data);
+
+//       this.user_data = data;
+
+//       this.dataSource.sort = this.sort;
+//       this.putdata(this.user_data);
+
+//     })
+
+
+
+// }
+// public putdata(v:any){
+//   this.dataSource = new MatTableDataSource(v.getUserDetailsA);
+
+// }
+
+
+// fetch_data1() {
+
+
+//   this.apollo.watchQuery<any>({
+//     query:TKT,
+//     variables: {
+//       user_type:localStorage.getItem('user_Type'),
+//       user_id:localStorage.getItem('UserId')
+
+//     },
+//     pollInterval:500,
+
+//   })
+//     .valueChanges
+//     .subscribe(({ data, loading }) => {
+//       console.log("tkt:" ,data);
+//       this.t=data;
+
+//       this.putdata1(this.t);
+
+
+//     })
+
+
+
+
+
+// }
+
+// public putdata1(v1:any){
+//   this.dataSource1 = new MatTableDataSource(v1.openTktByStatus);
+//   this.dataSource1.paginator = this.paginator;
+// }
 
 
 

@@ -109,7 +109,7 @@ export class EditadanddComponent implements OnInit {
   posts_ts:any;
   tsdata:any;
   deliver:any;
-
+   w_stats:any;
   attended:any;
   dateitem:any;
   valid_init=false;
@@ -143,6 +143,11 @@ export class EditadanddComponent implements OnInit {
     localStorage.setItem('Active', '1');
     this.input_delivery=document.getElementById('itemdeliveryat')
     this.input_attended=document.getElementById('itemattendedat')
+    this.w_stats=document.getElementById('wrkstatus');
+    if(this.w_stats.value==''){
+      console.log("d")
+      this.valid_init=true;
+    }
     var iso = new Date().toISOString();
     var minDate = iso.substring(0,iso.length-1);
 
@@ -216,7 +221,8 @@ export class EditadanddComponent implements OnInit {
             this.logDate=data.getSupportLogDtls[0].log_in;
             this.c=data.getSupportLogDtls[0].call_attend;
             this.d=data.getSupportLogDtls[0].delivery;
-            this.w=data.getSupportLogDtls[0].work_status;
+            this.w=data.getSupportLogDtls[0].work_status > 0 ? data.getSupportLogDtls[0].work_status : '';
+            console.log(this.w)
             this.c =this.datepipe.transform(this.c, 'yyyy-MM-ddTHH:mm:ss');
             this.d=this.datepipe.transform(this.d, 'yyyy-MM-ddTHH:mm:ss');
 
@@ -238,10 +244,10 @@ export class EditadanddComponent implements OnInit {
            this.valid_init_de=true;
           }
 
-          if(this.w==''){
-            console.log("d")
-           this.valid_init=true;
-          }
+          // if(this.w==''){
+          //   console.log("d")
+          //  this.valid_init=true;
+          // }
 
 
 

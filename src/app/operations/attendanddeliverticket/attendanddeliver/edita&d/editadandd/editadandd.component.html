@@ -362,7 +362,7 @@
                                     <div class="col-sm-10">
                                         <textarea type="text" rows="5" class="form-control p-2" placeholder=""
                                             name="itemissue" id="itemissue" #issue
-
+                                            [readonly]="this.w=='1'"
                                             value="{{this.prob_reported}}"
                                             (keyup)="prevent_null_issue($event)"></textarea>
                                         <span  class="text-danger"
@@ -397,6 +397,7 @@
                                          value="{{this.c}}"
                                         (change)="prevent_null($event)"
                                             name="attendedat" id="itemattendedat" #attendedat
+                                            [readonly]="this.w=='1'"
                                             >
                                         <span  class="text-danger"
                                    *ngIf="mobile">*please Enter Attended Date And Time</span>
@@ -416,7 +417,8 @@
                                         (change)="prevent_null($event)" value={{this.d}}
 
                                             name="deliveryat" id="itemdeliveryat" #deliveryat
-                                           (click)="setcalender()">
+                                           (click)="setcalender()"
+                                           [readonly]="this.w=='1'">
                                         <span  class="text-danger"
                                          *ngIf="phonmobile">*please Enter Delivery Date And Time</span>
 
@@ -427,9 +429,9 @@
                                         <label><b>Ticket Status</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" id="tktstatus" name="ticketstatus" #ticketstatus (click)="tkt_select(ticketstatus.value)">
+                                        <select class="form-control" id="tktstatus" name="ticketstatus" #ticketstatus (click)="tkt_select(ticketstatus.value)" [disabled]="this.w=='1'">
 
-                                            <!-- <option value="{{this.tktid}}">{{this.TktStatus}}</option> -->
+                                        <option value="">Select</option>
                                             <option *ngFor="let t of tsdata" value="{{t.tkt_id}}" [selected]="this.tktid==t.tkt_id">{{t.tkt_status}}</option>
 
 
@@ -447,11 +449,11 @@
 
 
                                     <div class="col-sm-3">
-                                        <select class="form-control" id="wrkstatus" name="Wrkstatus" #wrkingstatus (click)="wrk_select(wrkingstatus.value)">
+                                        <select class="form-control" id="wrkstatus" name="Wrkstatus" #wrkingstatus (click)="wrk_select(wrkingstatus.value)" [disabled]="this.w=='1'">
 
-                                            <option value="">Select</option>
-                                            <option  value="0" [selected]="this.w==0">Pending</option>
-                                            <option  value="1" [selected]="this.w==1">Done</option>
+                                            <option value="" >Select</option>
+                                            <option  value="0" [selected]="this.w=='0'" >Pending</option>
+                                            <option  value="1"  [selected]="this.w=='1'">Done</option>
 
 
                                         </select>
@@ -475,7 +477,8 @@
 
 
                                             name="remarks" id="itemremarks" #remarks
-                                            value="{{this.Remarks}}"></textarea>
+                                            value="{{this.Remarks}}"
+                                            [readonly]="this.w=='1'"></textarea>
                                     </div>
                                     <div class="col-sm-3"></div>
 
@@ -569,7 +572,7 @@
                                     <div class="col-sm-12 btnSubmitSec">
                                         <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="valid_init || valid_init_de || valid_init_at ||valid_issue"
                                             value="Update"
-
+                                             [hidden]="this.w=='1'"
                                             (click)="go_to_dashboard(date.value,ticketno.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,prioritystatus.value,module.value,issue.value,assignedto.value,attendedat.value,deliveryat.value,ticketstatus.value,remarks.value,wrkingstatus.value)">
 
 

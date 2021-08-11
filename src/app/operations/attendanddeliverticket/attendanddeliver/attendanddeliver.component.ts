@@ -22,6 +22,26 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
 }`
 ;
 
+
+
+const FETCH=gql`
+query getSuppLogDone($user_type:String!,$user_id:String!){
+  getSuppLogDone(user_type:$user_type , user_id:$user_id){
+    id
+    client_name
+    phone_no
+    tkt_no
+    emp_name
+    priority
+    tktStatus
+    log_in
+    work_status
+  }
+}
+
+
+`
+
 @Component({
   selector: 'app-attendanddeliver',
   templateUrl: './attendanddeliver.component.html',
@@ -95,6 +115,46 @@ export class AttendanddeliverComponent implements OnInit {
   LocalStorage(){
     localStorage.setItem('attendent','0');
     this.attendtickite=false;
+  }
+
+  public fetchdata_for_Done(){
+    this.apollo.watchQuery<any>({
+      query: FETCH,
+      variables:{
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+         
+      },
+      pollInterval:500
+      
+    })
+      .valueChanges
+      .subscribe(({ data}) => {
+        console.log(data);
+
+         this.Tickite=data;
+         this.putdata1(this.Tickite);
+      })
+
+
+
+  }
+
+  private putdata1(posts:any){
+    this.dataSource=new MatTableDataSource(posts.getSuppLogDone);
+    console.log(this.dataSource);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  sendstatus(v:any){
+     if(v==1){
+      this.fetch_data();
+     }
+     else{
+      this.fetchdata_for_Done();
+     }
+
   }
 
 

@@ -12,4 +12,30 @@ td, th {
     border: 1px solid transparent;
     border-radius: .35rem;
   }
+
+
+  .make-gold {
+    background-color: rgb(248, 222, 74);
+    text-align: center;
+  }
+  .make-medium{
+    background-color: skyblue;
+    text-align: center;
+  
+  }
+  .make-high{
+    background-color: lightgreen;
+    text-align: center;
+  }
+ .make-critical{
+  background-color: rgb(228, 31, 70);
+  text-align: center;
+ }
+ .make-Customer{
+   text-align: center;
+ }
+
+
  
+
+

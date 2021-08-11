@@ -81,7 +81,19 @@
 
 
               <div class="row">
-                <div class="col-md-9 "></div>
+                <div class="col-md-9 ">
+
+                 
+
+
+                    <input type="radio" id="a" value="1"  checked="true" (click)="sendstatus('1')" name="status">
+                    <label for="a" class="ml-1"> Pending</label>
+                    <input type="radio" id="i" value="0" class="ml-4" (click)="sendstatus('0')" name="status">
+                    <label for="i" class="ml-1"> Done</label>
+               
+
+
+                </div>
                 
                 <div class="col-md-3 pull-right">
                   <mat-form-field appearance="outline">
@@ -130,8 +142,8 @@
                   </ng-container>
                  
                   <ng-container matColumnDef="Priority">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="priority"> Priority </th>
-                    <td mat-cell *matCellDef="let row">{{row.priority}}</td>
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Priority </th>
+                    <td mat-cell *matCellDef="let row" [ngClass]="{'make-gold':row.priority == 'Low','make-medium':row.priority == 'Medium','make-high':row.priority=='High','make-critical':row.priority=='Critical','make-Customer':row.priority=='Customer Waiting'}">{{row.priority}}</td>
                   </ng-container>
                   <ng-container matColumnDef="Ticket_Status">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="tktStatus"> Ticket&nbsp;Status </th>
@@ -155,7 +167,7 @@
                   </ng-container> -->
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
 
 
                   <tr class="mat-row" *matNoDataRow>
@@ -163,7 +175,7 @@
                   </tr>
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[10, 25, 50,100]" showFirstLastButtons></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[100, 200, 500,1000]" showFirstLastButtons></mat-paginator>
               </div>
 
 

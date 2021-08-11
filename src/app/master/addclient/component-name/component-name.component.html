@@ -180,23 +180,27 @@
                                     </div>
                                     <div class="col-sm-3"></div>
 
+
+
                                     <div class="col-sm-1">
-                                        <label><b>Client Type</b>&nbsp;<span class="text-danger">*</span></label>
+                                        <label><b>Block</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="ctm" id="ctm" #ctm (click)="select_client_type(ctm.value)">
+                                        <select class="form-control">
 
-                                            <option value="{{clidselect}}">{{client_data}}</option>
+                                            <option value="">Select</option>
                                            
-                                            <option *ngFor="let c of ctmdata" value="{{c.client_id}}">{{c.client_type}}</option>
+                                            <option value="1">abc</option>
+                                            <option value="2">xyz</option>
+                                            <option value="3">tyu</option>
+                                            <option value="4">uyt</option>
                                         </select>
-                                         <!-- <span  class="text-danger"
-                                        *ngIf="ctmvalid">*Please Select Client Type</span>  -->
+                                       
 
 
                                     </div>
 
-
+                                    
                                 </div>
                                 <br>
                                 <div class="form-group row">
@@ -216,12 +220,76 @@
 
                                     </div>
                                     <div class="col-sm-3"></div>
+                                    <div class="col-sm-1">
+                                        <label><b>Client Type</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" name="ctm" id="ctm" #ctm (click)="select_client_type(ctm.value)">
+
+                                            <option value="{{clidselect}}">{{client_data}}</option>
+                                           
+                                            <option *ngFor="let c of ctmdata" value="{{c.client_id}}">{{c.client_type}}</option>
+                                        </select>
+                                         <!-- <span  class="text-danger"
+                                        *ngIf="ctmvalid">*Please Select Client Type</span>  -->
+
+
+                                    </div>
+
+
 
                                   
 
 
                                 </div>
                                 <br>
+
+                                <div class="form-group row">
+
+                                     
+                                    <div class="col-sm-2">
+                                        <label><b>DCCB</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+
+                                            <option value="">Select</option>
+                                           
+                                            <option value="1">abc</option>
+                                            <option value="2">xyz</option>
+                                            <option value="3">tyu</option>
+                                            <option value="4">uyt</option>
+                                        </select>
+                                       
+
+
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                      
+                                    <div class="col-sm-1">
+                                        <label><b>Branch</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+
+                                            <option value="">Select</option>
+                                           
+                                            <option value="1">abc</option>
+                                            <option value="2">xyz</option>
+                                            <option value="3">tyu</option>
+                                            <option value="4">uyt</option>
+                                        </select>
+                                       
+
+
+                                    </div>
+
+                                    
+
+
+
+
+                                </div><br>
                                 
                                 <div class="form-group row">
 

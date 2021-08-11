@@ -19,7 +19,7 @@
 
 
             <mat-grid-list [cols]="2" gutterSize="10px" rowHeight="150px">
-              <mat-grid-tile class="shadow-lg p-3 mb-5 bg-body rounded">
+              <mat-grid-tile colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded">
                 <mat-card>
                    <div class="card-header">
                     <ul class="card-list">
@@ -28,7 +28,7 @@
                     </ul>
                   </div><br>
                   <mat-card-content>
-                       <ul class="card-content">
+                       <!-- <ul class="card-content">
                          <li class='p-4'>
                            <h2 class='text-center'>{{this.op}}</h2>
                            <small class='text-center'>Opened</small>
@@ -36,31 +36,47 @@
 
                          </li>
                          <li class='p-4'>
-                          <!-- <h3 class="text-success text-center">{{this.clos}}</h3>
-                          <small class='text-success text-center'>Closed</small> -->
+                      
                          </li>
-                         <li class='p-4'></li>
-                         <li class='p-4'>
+                        
+                         <li class='p-4 float-right'>
                           <h2 class="text-success text-center">{{this.clos}}</h2>
                           <small class='text-success text-center'>Closed</small>
                          </li>
                          <li class='p-4'>
                           
                          </li>
-                         <li class='p-4'></li>
-                         <li class='p-4'></li>
-                         <li class='p-4'></li>
-                         <li class='p-4'></li>
-                         <li class='p-4'></li>
                         
                         
-                         <li class='p-4'>
+                        
+                         <li class='p-4 float-end'>
                           <button mat-raised-button  class='hover-class ml-5' style="background-color:#282a3c;color:white;" (click)="go_to_page()"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
 
                         </li>
 
-                       </ul>
+                       </ul> -->
 
+
+
+              <div class="row">
+                       <div class="col-4 text-center">
+                        <h1>{{this.op}}</h1>
+                        <span >Opened</span>
+
+
+                       </div>
+                       <div class="col-2 text-center ">
+                        <h1 class="text-success">{{this.clos}}</h1>
+                        <span class='text-success'>Closed</span>
+                       </div>
+                       
+                       <div class="col-6 float-end">
+                        <button mat-raised-button  class='hover-class pull-right mt-2' style="background-color:#282a3c;color:white;" (click)="go_to_page()"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
+
+
+                       </div>
+
+                      </div>
                   </mat-card-content>
 
 
@@ -71,7 +87,7 @@
               </mat-grid-tile>
 
                 <!-- For bar chart -->
-              <mat-grid-tile rowspan="2" class="shadow-lg p-3 mb-5 bg-body rounded">
+              <!-- <mat-grid-tile rowspan="2" class="shadow-lg p-3 mb-5 bg-body rounded">
                 <mat-card>
                   <div class="card-header">
                    <ul class="card-list">
@@ -92,12 +108,12 @@
                  </mat-card-content>
                 </mat-card>
 
-              </mat-grid-tile>
+              </mat-grid-tile> -->
 
 
 
 
-              <mat-grid-tile class="shadow-lg p-3 mb-5 bg-body rounded">
+              <mat-grid-tile colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded">
                 <mat-card>
                   <div class="card-header">
                    <ul class="card-list">
@@ -107,64 +123,44 @@
                  </div>
                  <mat-card-content>
 
-                  <div class='row mt-2'>
-                    <div class="col-4">
-                     <span class="label label-default bg-success pb-1">{{today}}</span><small class='text-success p-1'>Today</small>
+                  <div class='row mt-5'>
+                    <div class="col-2 text-center">
+                     <!-- <span class="label label-default bg-success pb-1">{{today}}</span> -->
+                     <h2 class="text-success ">{{today}}</h2>
+                     <span class='text-success p-1'>Today</span>
 
 
                     </div>
-                    <div class="col-4">
-                     <!-- <span class="label label-default bg-dark pb-1">0</span><small class='text-dark p-1'>Yesterday</small> -->
-
-
-                    </div>
-                    <div class="col-4">
-                     <span class="label label-default bg-dark pb-1">{{yesterday}}</span><small class='text-dark p-1'>Yesterday</small>
+                    
+                    <div class="col-2 text-center">
+                     <h2>{{yesterday}}</h2>
+                     <span class='text-dark p-1'>Yesterday</span>
 
                     </div>
-
-
+                    <div class="col-2 text-center">
+                      <h2>{{this_month}}</h2>
+                      <span class='text-dark p-1'>This Month</span>
+ 
+                     </div>
+                     <div class="col-2 text-center">
+                      <h2>{{last_month}}</h2>
+                      <span class='text-dark p-1'>Last Month</span>
+ 
+                     </div>
+                     <div class="col-2 text-center">
+                      <h2>{{this_year}}</h2>
+                      <span class='text-dark p-1'>This Year</span>
+ 
+                     </div>
+                     <div class="col-2 text-center">
+                      <h2 class="text-primary">{{lifetime}}</h2>
+                      <span class='text-primary p-1'>Lifetime</span>
+ 
+                     </div>
+                     
                   </div>
-                  <div class='row mt-4'>
-                    <div class="col-4">
-                     <span class="label label-default bg-dark pb-1">{{this_month}}</span><small class='text-dark p-1'>This Month</small>
-
-
-                    </div>
-                    <div class="col-4">
-                     <!-- <span class="label label-default bg-dark pb-1">7</span><small class='text-dark p-1'>This Month</small> -->
-
-
-                    </div>
-                    <div class="col-4">
-                     <span class="label label-default bg-dark  pb-1">{{last_month}}</span><small class='text-dark p-1'>Last Month</small>
-
-                    </div>
-
-
-                  </div>
-                  <div class='row mt-4'>
-                    <div class="col-4">
-                     <span class="label label-default bg-dark pb-1">{{this_year}}</span><small class='text-dark p-1'>This Year</small>
-
-
-                    </div>
-                    <div class="col-4">
-                     <!-- <span class="label label-default bg-dark pb-1">13</span><small class='text-dark p-1'>Last Year</small> -->
-
-
-                    </div>
-                    <div class="col-4">
-
-
-                      <span class="label label-default bg-primary pb-1 text-center">{{lifetime}}</span><small class='text-primary p-1'>Lifetime</small>
-
-                    </div>
-
-
-
-
-                  </div>
+                
+                 
 
 
                  </mat-card-content>
@@ -272,8 +268,8 @@
               </mat-grid-tile> -->
 
 
-
-              <mat-grid-tile rowspan="2" colspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
+             <!-- For Table -->
+              <!-- <mat-grid-tile rowspan="2" colspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
 
                 <mat-card >
                   <div class="card-header">
@@ -283,32 +279,7 @@
                    </ul>
                  </div><br>
                  <mat-card-content>
-                   <!-- <div class="row">
-                     <div class="col-12">
-                      <strong><i class='fa fa-user'></i><strong>DemoSupportAgent</strong></strong>
-                     </div>
-                   </div><br>
-                   <div class="row">
-                     <div class="col-9"></div>
-                     <div class="col-3 text-center">
-                       <h1>31</h1>
-                       <small>over 6 days</small>
-                     </div>
-                   </div><br>
-                   <div class="row">
-                    <div class="col-12"> <strong><i class='fa fa-user'></i><strong>DemoSupportAgent3</strong></strong></div>
-
-                  </div><br>
-                  <div class="row">
-                    <div class="col-9"></div>
-                    <div class="col-3 text-center">
-                      <h1>25</h1>
-                      <small>over 6 days</small>
-                    </div>
-                  </div><br> -->
-
-
-                  <div class="example-container mat-elevation-z8">
+                <div class="example-container mat-elevation-z8">
                     <table mat-table [dataSource]="dataSource"  matSort matSortActive="username" matSortDirection="asc" >
                       <ng-container matColumnDef="imge">
                         <th mat-header-cell *matHeaderCellDef  [hidden]="true">Image</th>
@@ -371,11 +342,11 @@
 
              </mat-card>
 
-              </mat-grid-tile>
+              </mat-grid-tile> -->
 
 
              <!-- For Horizental Line chart -->
-              <!-- <mat-grid-tile rowspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
+            <!-- <mat-grid-tile rowspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
                 <mat-card>
                   <div class="card-header">
                    <ul class="card-list">
@@ -391,9 +362,9 @@
                   </div>
                 </mat-card-content>
                 </mat-card>
-                </mat-grid-tile> -->
+                </mat-grid-tile>  -->
 
-                   <!--1st Pie Chart -->
+                   <!--1st horizontal bar Chart -->
                 <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded">
 
                   <mat-card >
@@ -405,7 +376,7 @@
                    </div><br>
                    <mat-card-content>
 
-                    <div style="display: block" class="mt-5"  style="width:100%;height:38vh;">
+                    <div style="display: block" class="mt-5" id="outerpie"  style="width:100%;height:50vh;">
                       <canvas id="pie1" 
                       
                       ></canvas>
@@ -416,7 +387,7 @@
                 </mat-grid-tile>
 
 
-                 <!--2nd Pie Chart -->
+                 <!--2nd horizontal bar Chart -->
                 <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded">
 
                   <mat-card >
@@ -428,13 +399,67 @@
                    </div><br>
                    <mat-card-content>
 
-                    <div style="display: block" class="mt-5" style="width:100%;height:38vh;">
+                    <div style="display: block" class="mt-5" style="width:100%;height:50vh;">
                       <canvas id="pie2"></canvas>
                     </div>
                   </mat-card-content>
                </mat-card>
   
                 </mat-grid-tile>
+
+
+
+                <mat-grid-tile rowspan="3"  class="shadow-lg p-3 mb-5 bg-body rounded">
+                  <mat-card>
+                    <div class="card-header">
+                     <ul class="card-list">
+                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets of last seven days</b></small></li>
+                       <li><small> <i class="fa fa-caret-up"></i></small></li>
+                     </ul>
+                   </div>
+                   <mat-card-content>
+  
+                      <div  id="container" class="mt-5" style="width:100%;height:50vh;">
+                       <canvas id="ctx">
+  
+                       </canvas>
+                      </div>
+  
+  
+  
+                   </mat-card-content>
+                  </mat-card>
+  
+                </mat-grid-tile>
+
+
+                <mat-grid-tile rowspan="3"  class="shadow-lg p-3 mb-5 bg-body rounded">
+                  <mat-card>
+                    <div class="card-header">
+                     <ul class="card-list">
+                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets by client type</b></small></li>
+                       <li><small> <i class="fa fa-caret-up"></i></small></li>
+                     </ul>
+                   </div>
+                   <mat-card-content>
+  
+                      <div  id="container-pie3" class="mt-5" style="width:100%;height:50vh;">
+                       <canvas id="pie3">
+  
+                       </canvas>
+                      </div>
+  
+  
+  
+                   </mat-card-content>
+                  </mat-card>
+  
+                </mat-grid-tile>
+
+
+
+                
+
 
 
 

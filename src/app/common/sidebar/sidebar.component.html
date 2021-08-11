@@ -80,6 +80,43 @@
   <div class="link log" data-toggle="modal" data-target="#mymodal" ><i class="fa fa-sign-out" ></i>Log out</div>
   </li> -->
 
+  <br>
+
+
+ 
+<!-- 
+    <ul class="link"  *ngFor="let u of user_data">
+      <li ><small *ngIf="u.login_status=='1'||u.login_status=='2'"><img src="/assets/profile.png"/>{{u.user_name}}</small></li>
+   
+    </ul> -->
+    <mat-divider></mat-divider>
+ 
+    <small class="text-center text-white ml-4 mt-2"><strong>Engineer Status</strong></small>
+    <mat-list *ngFor="let u of user_data">
+      <!-- <div mat-subheader class="ml-2 text-white">Engineer Status</div> -->
+  
+      <mat-list-item *ngIf="u.login_status=='1'||u.login_status=='2'"  class="text-white">
+     
+        <div mat-line >
+
+          <div class="ring-container" *ngIf="u.login_status == '1'">
+            <div class="ringring"></div>
+            <div class="circle"></div>
+
+
+           </div>
+           <span class="dot1" *ngIf="u.login_status == '2'"></span
+            >
+
+          <img src="/assets/profile.png" alt="Avatar" class="avatar"/>&nbsp;&nbsp;{{u.user_name}}</div>
+      
+        <mat-divider style="color:grey" *ngIf="u.login_status=='1'||u.login_status=='2'"></mat-divider>
+   
+      </mat-list-item>
+  </mat-list>
+  
+
+
 
 
 
