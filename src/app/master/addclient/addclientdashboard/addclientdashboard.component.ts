@@ -110,7 +110,7 @@ dlt=true;
   fetch_data(v:any){
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT,
-      pollInterval:100,
+      pollInterval:40000,
       variables:{
         active:v.toString()
       }

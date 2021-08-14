@@ -4,6 +4,23 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import {ThemePalette} from '@angular/material/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
+
+const UPDATE_TKT_STATUS=gql`
+mutation  updateTktStatus($id:String!,$user_id:String!,$tkt_status:String!){
+  
+  updateTktStatus(id:$id,user_id:$user_id,tkt_status:$tkt_status){
+    message
+    success
+    
+  }
+}
+
+
+`
 
 
 const GET_RAISETICKITE=gql`
@@ -15,7 +32,8 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     tkt_no
     emp_name
     priority
-    tktStatus
+    tktStatus,
+    tkt_status
     log_in
     work_status
   }
@@ -36,6 +54,7 @@ query getSuppLogDone($user_type:String!,$user_id:String!){
     tktStatus
     log_in
     work_status
+    tkt_status
   }
 }
 
@@ -54,14 +73,17 @@ query getSuppLogDone($user_type:String!,$user_id:String!){
 export class AttendanddeliverComponent implements OnInit {
   Tickite:any;
   attendtickite:boolean=true;
-  displayedColumns: string[] = ['Ticket_No', 'Client_Name','ticket_log_date','Assigned_to','Priority','Ticket_Status','Edit'];
+  displayedColumns: string[] = ['SL NO','Ticket_No', 'Client_Name','ticket_log_date','Assigned_to','Priority','Ticket_Status','Edit'];
   dataSource = new MatTableDataSource<any> (); 
-
+  color: ThemePalette = 'primary';
+  checked = false;
+  disabled = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  dis:any;
 
 
-  constructor(private router:Router,private apollo:Apollo) { }
+  constructor(private router:Router,private apollo:Apollo,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     if( localStorage.getItem('attendent')=='1'){
@@ -69,7 +91,10 @@ export class AttendanddeliverComponent implements OnInit {
      }
     localStorage.setItem('address', '/operations/attendanddeliver');
     localStorage.setItem('Active', '1');
+    
+
     this.fetch_data();
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -85,6 +110,7 @@ export class AttendanddeliverComponent implements OnInit {
   }
 
   private fetch_data(){
+    this.spinner.show();
     this.apollo.watchQuery<any>({
       query: GET_RAISETICKITE,
       variables:{
@@ -93,14 +119,24 @@ export class AttendanddeliverComponent implements OnInit {
          user_id:localStorage.getItem('UserId')
          
       },
-      pollInterval:500
+      pollInterval:20000
       
     })
       .valueChanges
       .subscribe(({ data}) => {
+        for(let i=0;i<data.getSupportLogDtls.length;i++){
+          if(data.getSupportLogDtls[i].tkt_status==''|| data.getSupportLogDtls[i].tkt_status!=null){
+
+            this.dis=true;
+          }
+          
+
+        }
+     
 
          this.Tickite=data;
          this.putdata(this.Tickite);
+         this.spinner.hide();
       })
 
     
@@ -118,6 +154,7 @@ export class AttendanddeliverComponent implements OnInit {
   }
 
   public fetchdata_for_Done(){
+    this.spinner.show();
     this.apollo.watchQuery<any>({
       query: FETCH,
       variables:{
@@ -125,7 +162,7 @@ export class AttendanddeliverComponent implements OnInit {
          user_id:localStorage.getItem('UserId')
          
       },
-      pollInterval:500
+      pollInterval:20000
       
     })
       .valueChanges
@@ -134,6 +171,7 @@ export class AttendanddeliverComponent implements OnInit {
 
          this.Tickite=data;
          this.putdata1(this.Tickite);
+         this.spinner.hide();
       })
 
 
@@ -155,6 +193,25 @@ export class AttendanddeliverComponent implements OnInit {
       this.fetchdata_for_Done();
      }
 
+  }
+
+  onToggle(event:any,id:any){
+
+    console.log("Slide Me:",event.checked);
+
+    this.apollo.mutate({
+      mutation:UPDATE_TKT_STATUS ,
+      variables:{
+        id:id,
+       user_id: localStorage.getItem("UserId"),
+        tkt_status: event.checked ? '4' : '0'
+
+      }
+    }).subscribe(({data})=>{
+      console.log(data);
+
+    })
+    
   }
 
 

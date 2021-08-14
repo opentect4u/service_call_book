@@ -125,6 +125,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    stat:any=[];
    u_type:any;
    op:any;
+   tot:any;
    colors4:any=[];
    clos:any;
   formattedDate : any;
@@ -163,7 +164,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         user_id:localStorage.getItem('UserId')
 
       },
-      pollInterval:500
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
@@ -189,81 +190,126 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         user_id:localStorage.getItem('UserId')
 
       },
-      pollInterval:500
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
-        console.log(data);
-
+      
         this.tkt = data.openCloseTkt[0];
         this.op=this.tkt.opened;
          this.clos=this.tkt.closed;
-         console.log( this.op,this.clos);
+         this.tot=this.op+this.clos;
+        
 
       })
 
 
 
-//  For Bar Charts in Angular
-      this.apollo.watchQuery<any>({
-        query:LAST_SEVEN,
-        variables: {
-          user_type:localStorage.getItem('user_Type'),
-          user_id:localStorage.getItem('UserId')
-      
-        },
-        pollInterval:500,
-      
-      })
-        .valueChanges
-        .subscribe(({ data, loading }) => {
-          console.log("Bar Chart");
-          console.log("tkt:" ,data);
-           
-          for(let i=0;i<data.totalTktByDate.length;i++){
-            console.log(data.totalTktByDate[i].no_tkt);
-          this.no_tkt[i]=data.totalTktByDate[i].no_tkt;
-          this.date_time[i]=data.totalTktByDate[i].date_name;
-          this.colors3[i]= '#'+Math.floor(Math.random()*16777212).toString(16);
-          }
+      //Pie Chart
 
-     var myChart = new Chart('ctx', {
-    type: 'bar',
-     data: {
-        labels: this.date_time,
-        datasets: [{
-           
-            data: this.no_tkt,
-            backgroundColor: this.colors3,
-            
-            borderWidth: 1
-        }]
-    },
-
-    options: {
-      legend:{
-        display:false
-     },
-     responsive:true,
-      maintainAspectRatio:false,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                },
-
-                gridLines: {
-                  display: false,
-
-              },
-
-            }],
-
-        }
-    }
-});
-        });
+this.apollo.watchQuery<any>({
+  query:CHART_PIE,
+    variables: {
+      user_type:localStorage.getItem('user_Type'), 
+      user_id:localStorage.getItem('UserId')
   
+    },
+    pollInterval:40000,
+  
+  }) .valueChanges
+  .subscribe(({ data, loading }) => {
+ 
+   for(let i=0;i<data.totalTktByClient.length;i++){
+      
+    this.total[i]=data.totalTktByClient[i].total_tkt
+    
+    this.cli_typ[i]=data.totalTktByClient[i].client_type;
+    this.colors4[i]='#'+Math.floor(Math.random()*18777219).toString(16)
+     }
+  
+
+var MyPie = new Chart('pie3', {
+  type: 'pie',
+  data : {
+    labels:this.cli_typ,
+    datasets: [{
+      data:this.total,
+      backgroundColor:this.colors4,
+     
+    }]
+  },
+  options: {
+    elements:{
+       arc:{
+         borderWidth:0
+       }
+    },
+    legend:{
+      display:false
+   },
+    responsive:true,
+     maintainAspectRatio:true,
+    }
+})
+  })
+
+
+
+
+
+// For 2nd horizontal bar chart 
+this.apollo.watchQuery<any>({
+query:SHOW_EMPLOYWW,
+  variables: {
+    user_type:localStorage.getItem('user_Type'), 
+    user_id:localStorage.getItem('UserId')
+
+  },
+  pollInterval:40000,
+
+}) .valueChanges
+.subscribe(({ data, loading }) => {
+  // console.log(data);
+
+  for(let i=0;i<data.workDone.length;i++){
+    
+  this.Done[i]=data.workDone[i].done;
+  this.Emp[i]=data.workDone[i].emp_name;
+  this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
+   }
+  // console.log(this.Done);
+  // console.log(this.Emp);
+
+
+var MyPieChart = new Chart('pie2', {
+  type: 'horizontalBar',
+  data : {
+    labels:this.Emp,
+    datasets: [{
+      data:this.Done,
+      backgroundColor:this.colors2,
+      // hoverOffset: 4
+    }]
+  },
+  options: {
+    elements:{
+       arc:{
+         borderWidth:0
+       }
+    },
+    legend:{
+      display:false
+   },
+    responsive:true,
+     maintainAspectRatio:false,
+    }
+})
+
+})
+
+
+
+
 // For 1st horizontal bar Chart
 this.apollo.watchQuery<any>({
   query:TKT,
@@ -272,21 +318,21 @@ this.apollo.watchQuery<any>({
     user_id:localStorage.getItem('UserId')
 
   },
-  pollInterval:500,
+  pollInterval:40000,
 
 })
   .valueChanges
   .subscribe(({ data, loading }) => {
-    console.log("tkt:" ,data);
+    // console.log("tkt:" ,data);
      
     for(let i=0;i<data.openTktByStatus.length;i++){
       console.log(data.openTktByStatus[i].tkt_status);
     this.tkt_stat[i]=data.openTktByStatus[i].tkt_status;
     this.stat[i]=data.openTktByStatus[i].status;
     this.colors1[i]= '#'+Math.floor(Math.random()*16777217).toString(16);
-    console.log(this.colors1[i])
+    // console.log(this.colors1[i])
     }
-    console.log(this.tkt_stat);
+    // console.log(this.tkt_stat);
    
 
 
@@ -328,113 +374,81 @@ this.apollo.watchQuery<any>({
 
 
 
-
-
-
-// For 2nd horizontal bar chart 
-this.apollo.watchQuery<any>({
-query:SHOW_EMPLOYWW,
-  variables: {
-    user_type:localStorage.getItem('user_Type'), 
-    user_id:localStorage.getItem('UserId')
-
-  },
-  pollInterval:500,
-
-}) .valueChanges
-.subscribe(({ data, loading }) => {
-  console.log(data);
-
-  for(let i=0;i<data.workDone.length;i++){
-    
-  this.Done[i]=data.workDone[i].done;
-  this.Emp[i]=data.workDone[i].emp_name;
-  this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
-   }
-  console.log(this.Done);
-  console.log(this.Emp);
-
-
-var MyPieChart = new Chart('pie2', {
-  type: 'horizontalBar',
-  data : {
-    labels:this.Emp,
-    datasets: [{
-      data:this.Done,
-      backgroundColor:this.colors2,
-      // hoverOffset: 4
-    }]
-  },
-  options: {
-    elements:{
-       arc:{
-         borderWidth:0
-       }
-    },
-    legend:{
-      display:false
-   },
-    responsive:true,
-     maintainAspectRatio:false,
-    }
-})
-
-})
-
-
-
-
-
-// Pie Chart
-this.apollo.watchQuery<any>({
-  query:CHART_PIE,
-    variables: {
-      user_type:localStorage.getItem('user_Type'), 
-      user_id:localStorage.getItem('UserId')
-  
-    },
-    pollInterval:500,
-  
-  }) .valueChanges
-  .subscribe(({ data, loading }) => {
-    console.log(data);
-   for(let i=0;i<data.totalTktByClient.length;i++){
+//  For Bar Charts in Angular
+      this.apollo.watchQuery<any>({
+        query:LAST_SEVEN,
+        variables: {
+          user_type:localStorage.getItem('user_Type'),
+          user_id:localStorage.getItem('UserId')
       
-    this.total[i]=data.totalTktByClient[i].total_tkt
-    
-    this.cli_typ[i]=data.totalTktByClient[i].client_type;
-    this.colors4[i]='#'+Math.floor(Math.random()*18777219).toString(16)
-     }
-    //  this.piechart=document.getElementById('container-pie3')
-    //  this.pi=document.getElementById('pie3');
-    //  this.pi.remove();
-    //  this.piechart.append("<canvas id='pie3'></canvas>");
-  
+        },
+        pollInterval:40000,
+      
+      })
+        .valueChanges
+        .subscribe(({ data, loading }) => {
+          // console.log("Bar Chart");
+          // console.log("tkt:" ,data);
+           
+          for(let i=0;i<data.totalTktByDate.length;i++){
+            // console.log(data.totalTktByDate[i].no_tkt);
+          this.no_tkt[i]=data.totalTktByDate[i].no_tkt;
+          this.date_time[i]=data.totalTktByDate[i].date_name;
+          this.colors3[i]= '#'+Math.floor(Math.random()*16777212).toString(16);
+          }
 
-var MyPie = new Chart('pie3', {
-  type: 'pie',
-  data : {
-    labels:this.cli_typ,
-    datasets: [{
-      data:this.total,
-      backgroundColor:this.colors4,
-      // hoverOffset: 4
-    }]
-  },
-  options: {
-    elements:{
-       arc:{
-         borderWidth:0
-       }
+     var myChart = new Chart('ctx', {
+    type: 'bar',
+     data: {
+        labels: this.date_time,
+        datasets: [{
+           
+            data: this.no_tkt,
+            backgroundColor: this.colors3,
+            
+            borderWidth: 1
+        }]
     },
-    legend:{
-      display:false
-   },
-    responsive:true,
-     maintainAspectRatio:true,
+
+    options: {
+      legend:{
+        display:false
+     },
+     responsive:true,
+      maintainAspectRatio:false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                },
+
+                gridLines: {
+                  display: false,
+
+              },
+
+            }],
+
+        }
     }
-})
-  })
+});
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

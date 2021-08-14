@@ -31,6 +31,7 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "graphql": "^15.0.0",
     "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "ng-multiselect-dropdown": "^0.3.4",
     "ng2-charts": "^2.4.3",
     "ng6-toastr-notifications": "^1.0.4",

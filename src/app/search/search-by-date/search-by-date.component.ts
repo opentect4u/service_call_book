@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 const srch_dt= gql`
 query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!){
   searchByDate(frm_dt: $frm_dt, to_dt: $to_dt, user_id: $user_id){
@@ -30,7 +31,7 @@ query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!){
 })
 export class SearchByDateComponent implements OnInit {
 
-  constructor(private activatedroute:ActivatedRoute,private apollo:Apollo,private router:Router) { }
+  constructor(private activatedroute:ActivatedRoute,private apollo:Apollo,private router:Router,private spinner: NgxSpinnerService) { }
    from_date:any;
    to_date:any;
    posts:any;
@@ -44,7 +45,8 @@ export class SearchByDateComponent implements OnInit {
    @ViewChild(MatPaginator) paginator!: MatPaginator;
    @ViewChild(MatSort) sort!: MatSort;
   ngOnInit(): void {
-  setInterval(()=>{
+    
+  
     this.from_date=this.activatedroute.snapshot.params['id1'];
    this.from_date=atob(this.from_date);
    this.to_date=this.activatedroute.snapshot.params['id2'];
@@ -54,11 +56,16 @@ export class SearchByDateComponent implements OnInit {
   {this.type=''; console.log("type="+localStorage.getItem('user_Type'))}
   else
   this.type=localStorage.getItem('UserId');
+  
   this.fetch_data();
-  },1000);
+
+
+  
 
   }
   fetch_data(){
+         
+    this.spinner.show();
      this.apollo.watchQuery<any>({
       query: srch_dt,
       variables:{
@@ -66,15 +73,19 @@ export class SearchByDateComponent implements OnInit {
         to_dt:this.to_date,
         user_id:this.type
       },
-      pollInterval:100
+
+      
     })
       .valueChanges
       .subscribe(({ data }) => {
-
+        
         this.posts = data;
 
         console.log(this.posts);
        this.putdata(this.posts);
+       this.spinner.hide();
+   
+    
       });
 
   }
@@ -86,7 +97,9 @@ export class SearchByDateComponent implements OnInit {
   public putdata(posts:any){
     this.dataSource=new MatTableDataSource(posts.searchByDate);
 
+
     console.log(this.dataSource);
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

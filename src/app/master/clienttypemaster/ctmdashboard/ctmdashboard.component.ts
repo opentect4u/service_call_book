@@ -106,7 +106,7 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
   public fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
-      pollInterval: 100,
+      pollInterval: 40000,
     })
       .valueChanges
       .subscribe(({ data, loading }) => {

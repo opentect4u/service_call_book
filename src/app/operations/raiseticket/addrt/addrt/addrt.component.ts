@@ -344,7 +344,9 @@ export class AddrtComponent implements OnInit {
       localStorage.setItem('insertickit','1');
 
           this.successmsg=this.success.createTkt.message;
-          this.route.navigate(['/operations/raiseticket']);
+          this.route.navigate(['/operations/raiseticket']).then(() => {
+            window.location.reload()
+          })
      }
      else
      this.showsnackbar();

@@ -54,6 +54,7 @@ import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.compo
 
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { NgxSpinnerModule } from "ngx-spinner";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 // import {MatButtonModule} from '@angular/material/button';
@@ -97,6 +98,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ChartsModule } from 'ng2-charts';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
@@ -193,6 +195,8 @@ import { ChartsModule } from 'ng2-charts';
     MatListModule,
     MatBadgeModule,
     ChartsModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
 
     ToastrModule.forRoot()
     // ToastrModule.forRoot({

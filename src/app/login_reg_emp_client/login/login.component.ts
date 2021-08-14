@@ -77,7 +77,18 @@ export class LoginComponent implements OnInit {
 
 
 
-     localStorage.setItem('address', '/')
+    // if(localStorage.getItem('isLoggedIn')=='true'){
+    //   localStorage.clear();
+    //   localStorage.setItem('isLoggedIn','false');
+    //   localStorage.setItem('address','/');
+    //   this.router.navigate(['/']);
+
+    // }
+   
+
+
+
+     localStorage.setItem('address', '/');
 
 
     if(localStorage.getItem("Employee_signup")== '1'){
@@ -149,7 +160,7 @@ export class LoginComponent implements OnInit {
   Submit(){
     this.error_log=true;
     this.recaptcha=document.getElementById("capt_login");
-    console.log("dashboard1"+this.f.username.value,this.f.password.value)
+    // console.log("dashboard1"+this.f.username.value,this.f.password.value)
     this.login=true;
     if(this.LoginForm.invalid){
       this.captch=false;
@@ -162,17 +173,17 @@ export class LoginComponent implements OnInit {
 
       // console.log("UserName:" +this.f.username.value)
       // console.log("PassWord:" +this.f.password.value)
-      console.log("Captcha;" +this.f.captcha.value);
-      console.log(this.recaptcha.value);
+      // console.log("Captcha;" +this.f.captcha.value);
+      // console.log(this.recaptcha.value);
 
       if(this.f.captcha.value != this.recaptcha.value){
         this.captch=true;
-        console.log("false")
+        // console.log("false")
        }
       else{
         this.error_log=true;
         this.captch=false;
-          console.log("dashboard")
+          // console.log("dashboard")
 
 
           this.spinner.show();
@@ -189,7 +200,7 @@ export class LoginComponent implements OnInit {
 
           }).valueChanges
             .subscribe(({ data}) => {
-              console.log(data);
+              // console.log(data);
           // localStorage.setItem("user_email",this.f.username.value);
 
 
@@ -200,12 +211,12 @@ export class LoginComponent implements OnInit {
 
                if( this.Success == 1){
                 localStorage.setItem('Active','1');
-                console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
+                // console.log("data:" + JSON.stringify(JSON.parse(data.userLogin.message)[0].code_no));
                 localStorage.setItem("UserId",JSON.parse(data.userLogin.message)[0].code_no);
                 localStorage.setItem("user_Type",JSON.parse(data.userLogin.message)[0].user_type);
                 localStorage.setItem("user_name",JSON.parse(data.userLogin.message)[0].emp_name);
                 localStorage.setItem("user_email",this.f.username.value)
-                console.log("user_type:" +JSON.parse(data.userLogin.message)[0].user_type);
+                // console.log("user_type:" +JSON.parse(data.userLogin.message)[0].user_type);
 
 
 
@@ -214,8 +225,8 @@ export class LoginComponent implements OnInit {
 
                 this.user=JSON.parse(data.userLogin.message);
 
-                 console.log("success");
-                 console.log("userid:" + this.user)
+                //  console.log("success");
+                //  console.log("userid:" + this.user)
                  this.router.navigate(['/dashboard']);
 
 
@@ -226,8 +237,8 @@ export class LoginComponent implements OnInit {
 
 
                 this.error_for_user=JSON.parse(JSON.stringify(data.userLogin.message));
-                console.log("unsuccess:" +this.error_for_user);
-                console.log("Failure");
+                // console.log("unsuccess:" +this.error_for_user);
+                // console.log("Failure");
 
                 this.error_log=false;
                 localStorage.setItem('isLoggedIn',"false");

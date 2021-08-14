@@ -103,7 +103,7 @@ empid:any;
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_EMP,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {

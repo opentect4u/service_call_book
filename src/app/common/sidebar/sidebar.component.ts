@@ -79,6 +79,8 @@ export class SidebarComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+  
     this.frm=document.getElementById('frm');
     this.t=document.getElementById('t');
       this.old_u_type=localStorage.getItem('user_Type');
@@ -87,7 +89,7 @@ export class SidebarComponent implements OnInit {
       variables:{
         user_email:localStorage.getItem('user_email')
       },
-      pollInterval:500
+      pollInterval:40000
 
 
     }).valueChanges
@@ -130,22 +132,22 @@ export class SidebarComponent implements OnInit {
 
 
 
-    this.apollo.watchQuery<any>({
-      query:GET_DATA_A,
-      variables: {
-        tag: '1'
-      },
-      pollInterval:500
-    })
-      .valueChanges
-      .subscribe(({ data, loading }) => {
-        console.log(data);
+    // this.apollo.watchQuery<any>({
+    //   query:GET_DATA_A,
+    //   variables: {
+    //     tag: '1'
+    //   },
+    //   pollInterval:40000
+    // })
+    //   .valueChanges
+    //   .subscribe(({ data, loading }) => {
+    //     console.log(data);
   
-        this.user_data = data.getUserDetailsA;
+    //     this.user_data = data.getUserDetailsA;
   
        
   
-      })
+    //   })
        
 
   
@@ -201,7 +203,9 @@ this.apollo
 })
 .valueChanges.subscribe(({ data }) => {
     if(data.checkTktNo.success==1){
-      this.router.navigate(['/search_ticket',btoa(v)]);
+      this.router.navigate(['/search_ticket',btoa(v)])
+      .then(() => {
+        window.location.reload();})
 
     }
     else{
@@ -214,7 +218,8 @@ this.apollo
 
 }
 srch_dt(v1:any,v2:any){
-  this.router.navigate(['/search_date',btoa(v1),btoa(v2)])
+  this.router.navigate(['/search_date',btoa(v1),btoa(v2)]).then(() => {
+    window.location.reload();})
 }
   openclosedropdown1(){
 
@@ -412,7 +417,7 @@ srch_dt(v1:any,v2:any){
       localStorage.setItem('isLoggedIn',"false");
       this.router.navigate(['/']).then(() => {
         window.location.reload();
-      });;
+      });
     }
 
 }

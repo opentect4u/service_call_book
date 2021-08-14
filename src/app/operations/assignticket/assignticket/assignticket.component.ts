@@ -4,7 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 
+declare const $: any;
 
 const GET_RAISETICKITE=gql`
 query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
@@ -17,9 +19,31 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     priority
     tktStatus
     log_in
+    assign_engg
+    prob_reported
   }
 }`
 ;
+
+
+const FOR_GET_EMPLOYEE=gql`
+query{
+  getEngList{
+  id
+  emp_name
+  emp_code
+}
+}`
+;
+const FOR_EMPLOYEE=gql`
+mutation  updateAssignEng($user_id:String!, $id: String!, $assign_engg: String!){
+  updateAssignEng(user_id:$user_id, id:$id, assign_engg:$assign_engg){
+    message
+    success
+  }
+}
+
+`
 
 
 @Component({
@@ -35,17 +59,26 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
 })
 export class AssignticketComponent implements OnInit {
 
-  displayedColumns: string[] = ['Ticket_No', 'Client_Name','Assigned_to','Priority','Ticket_Status','ticket_log_date','Edit'];
+  displayedColumns: string[] = ['SL NO','Ticket_No', 'Client_Name','Assigned_to','Priority','Ticket_Status','ticket_log_date','Edit'];
   dataSource = new MatTableDataSource<any> (); 
+  ctmdata:any;
+  s:any;
+  pop:boolean=true;
   Tickite:any;
   edittickit:boolean=true;
+  popup:any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private router:Router,private apollo:Apollo) { }
+  constructor(private router:Router,private apollo:Apollo,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+
+    
+
+
+
        if( localStorage.getItem('edittickit')=='1'){
             this.edittickit=false;
        }
@@ -69,7 +102,37 @@ export class AssignticketComponent implements OnInit {
     this.router.navigate(['/operations/editassignticket',v1])
   }
 
+
+
+  // public select_client(v:any){}
+
   private fetch_data(){
+   
+    this.apollo.watchQuery<any>({
+      query: FOR_GET_EMPLOYEE
+      
+    })
+      .valueChanges
+      .subscribe(({ data}) => {
+        console.log(data);
+        this.ctmdata=data.getEngList;
+        
+        // this.emplist=data.getEngList;
+        // console.log(this.emplist);
+     
+  })
+
+  
+  // $('#client').on("change",  (e:any) => {
+  //  console.log(e);
+  //  console.log("select2:select" + e.params.data.id);
+  //  console.log("select2:select" + e.params.data.text);
+    
+  // })
+
+
+
+  this.spinner.show();
     this.apollo.watchQuery<any>({
       query: GET_RAISETICKITE,
       variables:{
@@ -77,7 +140,7 @@ export class AssignticketComponent implements OnInit {
          user_type:localStorage.getItem('user_Type'),
          user_id:localStorage.getItem('UserId')
       },
-      pollInterval:500
+      pollInterval:20000
       
     })
       .valueChanges
@@ -85,6 +148,7 @@ export class AssignticketComponent implements OnInit {
 
          this.Tickite=data;
          this.putdata(this.Tickite);
+         this.spinner.hide();
       })
 
     
@@ -99,6 +163,36 @@ export class AssignticketComponent implements OnInit {
     localStorage.setItem('edittickit','0');
     this.edittickit=true;
 }
+
+SHOW_Employee(v:any,v1:any){
+  console.log("v:"+v);
+
+  this.apollo.mutate({
+    mutation: FOR_EMPLOYEE,
+    variables:{
+      user_id: localStorage.getItem("UserId"),
+      id:v1,
+      assign_engg:v, 
+      }
+  }).subscribe(({data})=>{
+    console.log(data);
+    
+    this.s=data;
+    console.log("Suceess:", this.s.updateAssignEng.success)
+    if(this.s.updateAssignEng.success>0){
+          location.reload();
+    }
+    else{
+              console.log("reload")
+    }
+  })
+
+
+
+}
+
+
+
 
 
 

@@ -67,6 +67,11 @@
 
           <div class="row">
 
+
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#ffffff" type = "ball-pulse" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
+
+
+
             <!-- <div class="alert  ml-5" role="alert" [hidden]="alert_show">
                 Item Deleted Successfully!! &#x2714;
                <span class="closebtn span pl-5" (click)="close_alert()">&times;</span>
@@ -102,13 +107,23 @@
               <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="dataSource" matSort>
 
+                  <ng-container matColumnDef="SL NO">
+                    <th mat-header-cell *matHeaderCellDef>#</th>
+                    <td mat-cell *matCellDef="let row;index as i"> {{i+1}} </td>
+                  </ng-container>
+
 
                   <ng-container matColumnDef="Ticket_No">
                     <th mat-header-cell *matHeaderCellDef>Ticket No. </th>
-                    <td mat-cell *matCellDef="let row"> {{row.tkt_no}} </td>
+                    <td mat-cell *matCellDef="let row" 
+                    
+                > <span #tooltip="matTooltip"
+                matTooltip="{{row.prob_reported}}"
+                matTooltipClass="custom-tooltip"
+               matTooltipPosition="below">{{row.tkt_no}}</span></td>
                   </ng-container>
 
-                  <ng-container matColumnDef="Client_Name">
+                  <ng-container matColumnDef="Client_Name"> 
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="client_name"> Client Name </th>
                     <td mat-cell *matCellDef="let row">{{row.client_name}}</td>
                   </ng-container>
@@ -120,21 +135,38 @@
 
                   <ng-container matColumnDef="Assigned_to">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="emp_name"> Assigned To </th>
-                    <td mat-cell *matCellDef="let row">{{row.emp_name}}</td>
+                    <td mat-cell *matCellDef="let row">
+                      
+                      <!-- {{row.emp_name}} -->
+
+                      <select class="form-control" name="client" id="client" #Client (change)='SHOW_Employee(Client.value,row.id)'>
+
+                        <option value="">Select</option>
+                        <option   *ngFor="let c of ctmdata" value="{{c.emp_code}}" [selected]="row.assign_engg==c.emp_code">{{c.emp_name}}</option>
+                       
+
+                    </select>
+
+
+
+                    </td>
                   </ng-container>
                  
                   <ng-container matColumnDef="Priority">
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Priority </th>
-                    <td mat-cell *matCellDef="let row"  [ngClass]="{'make-gold':row.priority == 'Low','make-medium':row.priority == 'Medium','make-high':row.priority=='High','make-critical':row.priority=='Critical'}">{{row.priority}}</td>
+                    <td mat-cell *matCellDef="let row"  [ngClass]="{'make-gold':row.priority == 'Low','make-medium':row.priority == 'Medium','make-high':row.priority=='High','make-critical':row.priority=='Critical','make-Customer':row.priority=='Customer Waiting'}">{{row.priority}}</td>
                   </ng-container>
-                  <ng-container matColumnDef="Ticket_Status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="tktStatus"> Ticket&nbsp;Status </th>
-                    <td mat-cell *matCellDef="let row">{{row.tktStatus}}</td>
+                  <ng-container matColumnDef="Ticket_Status" >
+                    <th mat-header-cell *matHeaderCellDef  class="text-center"> Ticket&nbsp;Status </th>
+                    <td mat-cell *matCellDef="let row" class="text-center">
+                      
+                     
+                      {{row.tktStatus}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="ticket_log_date">
-                    <th mat-header-cell *matHeaderCellDef >Log&nbsp;Date</th>
-                    <td mat-cell *matCellDef="let row">{{row.log_in |  date:'medium'}}</td>
+                    <th mat-header-cell *matHeaderCellDef class="text-center">Log&nbsp;Date</th>
+                    <td mat-cell *matCellDef="let row">{{row.log_in |  date: 'dd/MM/yyyy HH:mm'}}</td>
                   </ng-container>
                   <ng-container matColumnDef="Edit" >
                     <th mat-header-cell *matHeaderCellDef class="p-3"> Edit</th>

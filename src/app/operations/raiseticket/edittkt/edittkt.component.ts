@@ -60,6 +60,8 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     work_status
     call_attend
     delivery
+    priority_status
+    tkt_module
   }
 }`
 ;
@@ -207,6 +209,7 @@ export class EdittktComponent implements OnInit {
           this.posts_pm = data;
           this.pmdata=this.posts_pm.getPriorityModeData
           console.log(this.posts_pm);
+          console.log(this.pmdata);
         //  this.putdata(this.posts_pm);
         });
 
@@ -248,7 +251,8 @@ export class EdittktComponent implements OnInit {
               this.prob_reported=data.getSupportLogDtls[0].prob_reported;
               this.Remarks=data.getSupportLogDtls[0].remarks;
               this.logDate=data.getSupportLogDtls[0].log_in;
-              console.log(this.priority_status)
+              console.log(this.priority_status);
+              console.log("Module:" +this.tkt_module)
 
 
                   for(let i=0;i<this.posts_pm.getPriorityModeData.length;i++){
@@ -375,7 +379,7 @@ export class EdittktComponent implements OnInit {
     console.log("rentalupto:" +v8);
     console.log("phone:" +v9);
     console.log("priority:" +v10);
-    console.log("module:" +v11);
+    console.log("Module:" +v11);
     console.log("issue:" +v12);
     console.log("remarks:" +v13);
 
@@ -396,7 +400,9 @@ export class EdittktComponent implements OnInit {
       this.edit=data;
       if(this.edit.updateRaiseTkt.success==1){
         localStorage.setItem('editraisetickit','1');
-        this.router.navigate(['/operations/raiseticket']);
+        this.router.navigate(['/operations/raiseticket']).then(() => {
+          window.location.reload()
+        });
       }
 
       else

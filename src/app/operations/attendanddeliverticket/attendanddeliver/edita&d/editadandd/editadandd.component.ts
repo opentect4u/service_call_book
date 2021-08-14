@@ -118,6 +118,7 @@ export class EditadanddComponent implements OnInit {
   input_attended:any;
   input_delivery:any;
   Remarks:any;
+  today:any;
   x:any;
   attend:any;
    input:any;
@@ -148,11 +149,11 @@ export class EditadanddComponent implements OnInit {
       console.log("d")
       this.valid_init=true;
     }
-    var iso = new Date().toISOString();
-    var minDate = iso.substring(0,iso.length-1);
+    // var iso = new Date().toISOString();
+    // var minDate = iso.substring(0,iso.length-1);
 
 
-    this.input_attended.min=minDate;
+    // this.input_attended.min=minDate;
     // this.input_delivery.min=minDate;
 
 
@@ -222,9 +223,9 @@ export class EditadanddComponent implements OnInit {
             this.c=data.getSupportLogDtls[0].call_attend;
             this.d=data.getSupportLogDtls[0].delivery;
             this.w=data.getSupportLogDtls[0].work_status > 0 ? data.getSupportLogDtls[0].work_status : '';
-            console.log(this.w)
-            this.c =this.datepipe.transform(this.c, 'yyyy-MM-ddTHH:mm:ss');
-            this.d=this.datepipe.transform(this.d, 'yyyy-MM-ddTHH:mm:ss');
+            console.log(this.w,this.d,this.c)
+            this.c =this.datepipe.transform(this.c, 'medium');
+            this.d=this.datepipe.transform(this.d, 'medium');
 
 
             console.log( this.tkt_no)
@@ -309,6 +310,7 @@ else{
     console.log("tickitstatus:" +v17);
     // console.log("remarks:" +v18);
     console.log("workingstatus:" +v19);
+    // console.log(this.datepipe.transform( v16, 'yyyy-mm-dd hh:mm:sss'))
     console.log(this.id);
     // if(v15<v16){
     //   console.log("Its Ok");
@@ -321,8 +323,8 @@ else{
       mutation: EDITABLE,
       variables:{
         id:this.id,
-        call_attend:v15,
-        delivery:v16.toString(),
+        call_attend:this.datepipe.transform( v15, 'yyyy-MM-dd HH:mm:ss'),
+        delivery: v16 != '' ? this.datepipe.transform( v16, 'yyyy-MM-dd HH:mm:ss') : '',
         tkt_status:v17,
         remarks:v18,
         user_id:localStorage.getItem("UserId"),
@@ -334,7 +336,9 @@ else{
       this.Attend=data;
       if( this.Attend.updateDeliverTkt.success==1){
         localStorage.setItem('attendent','1');
-        this.router.navigate(['/operations/attendanddeliver']);
+        this.router.navigate(['/operations/attendanddeliver']).then(() => {
+          window.location.reload()
+        });
       }
 
       else
@@ -365,7 +369,16 @@ else{
       // this.valid_init_work=false;
       this.valid_init=false;
     }
+    if(v=='1'){
+      this.d=Date.now();
+      this.d = this.datepipe.transform( this.d, 'medium');
+      // this.d==this.datepipe.transform(this.d, 'dd');
 
+    }
+    else{
+      this.d='';
+    }
+    console.log(this.d);
    }
 
 
@@ -378,17 +391,15 @@ else{
       if(e.target.value=='')
       {
         this.valid_init_at=true;
-        // this.delive=true;
-        // this.phone_val=true;
-        // this.prevent_init_phone=true;
+       
          this.mobile=true;
         this.input_attended.style.border="solid red 1px"
-        //this.hide_val=true;
+       
       }
       else
 
        {
-        // this.delive=false;
+      
        this.mobile=false;
          this.valid_init_at=false;
        this.input_attended.style.border="solid lightgrey 1px"}
@@ -399,11 +410,11 @@ else{
       if(e.target.value=='')
       {
         this.valid_init_de=true;
-      //  this.issue_val=true;
+    
        this.phonmobile=true;
         this.input_delivery.style.border="solid red 1px"
         console.log("phone")
-        //this.hide_val=true;
+      
       }
       else
 
@@ -421,14 +432,15 @@ else{
     this.tickit=document.getElementById("tktstatus")
     if(v==''){
       this.tkt=true;
-    this.valid_init=true;
-     this.tickit.style.border="solid red 1px";
+      this.valid_init=true;
+       this.tickit.style.border="solid red 1px";
     }
     else{
       this.tickit.style.border="solid lightgrey 1px";
       this.tkt=false;
-    this.valid_init=false;
+      this.valid_init=false;
     }
+   
   }
   prevent_null_issue(e:any){
         if(e.target.value==''){

@@ -224,7 +224,7 @@ export class EditatComponent implements OnInit {
     // console.log("phone:" +v10);
     // console.log("prioritystatus:" +v11);
     // console.log("module:" +v12);
-    // console.log("issue:" +v13);
+    console.log("issue:" +v13);
     // console.log("assignedto:" +v14);
     // console.log("remarks:" +v15);
     // console.log("id:" +this.id );
@@ -243,7 +243,9 @@ export class EditatComponent implements OnInit {
       this.edit=data;
       if(this.edit.updateAssignTkt.success==1){
         localStorage.setItem('edittickit','1');
-        this.router.navigate(['/operations/assignticket']);
+        this.router.navigate(['/operations/assignticket']).then(() => {
+          window.location.reload();
+      })
       }
        
       else

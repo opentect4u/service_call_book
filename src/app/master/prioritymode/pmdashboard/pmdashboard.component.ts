@@ -99,7 +99,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_PM,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {

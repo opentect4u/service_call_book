@@ -101,7 +101,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_TS,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {

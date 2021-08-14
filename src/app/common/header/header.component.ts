@@ -1,9 +1,12 @@
-import { Component, OnInit,ViewEncapsulation} from '@angular/core';
+import { Component, OnDestroy, OnInit,ViewEncapsulation,HostListener } from '@angular/core';
 // import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import moment from 'moment';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+
+
 
 
 const APPROVE=gql`
@@ -108,6 +111,8 @@ declare var showprofile: any;
 })
 export class HeaderComponent implements OnInit {
 
+  
+
 
    upload:any;
 
@@ -142,16 +147,48 @@ export class HeaderComponent implements OnInit {
    d_data:any;
    cl_type:any;
    oprn_mode:any;
-   user_type:any
+   user_type:any;
+   log_in_time:any;
    con:any;
    in:any;
    lie:any;
    status:any;
+   N=moment().format('hh:mm:ss a');
+   addHr:any;
    newPass:any;
+   win:any;
    conf_pass:boolean=false;
-  constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo) { }
+  constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo) {
+    
+   }
+
+
+
+  
+ 
 
   ngOnInit(): void {
+
+
+    setTimeout(() => {
+      this.logout();
+    }, 14400000);
+    
+    console.log("NNN:",this.N);
+    
+    console.log("Current:" +this.addHr);
+    
+ 
+   
+    
+
+    this.log_in_time=Date();
+    
+    
+    
+
+ 
+
     setInterval(()=>{
       this.today=new Date();
       this.code_no=localStorage.getItem('UserId');
@@ -163,40 +200,30 @@ export class HeaderComponent implements OnInit {
     this.user_type = localStorage.getItem('user_Type');
     this.type= this.user_type =='A' ? 'Admin' : (this.user_type == 'M' ? 'Manager' : (this.user_type == 'T' ? 'Telecaller' : (this.user_type == 'E' ? 'Engineer' :  this.user_type == 'C' ? 'Client' :  'Viewer')));
 
-    this.apollo.watchQuery<any>({
-      query: UPDATE_LOGIN_STATUS,
-      variables:{
-        user_email:localStorage.getItem('user_email'),
-      },
-      fetchPolicy: 'network-only'
-
-    }).valueChanges
-    .subscribe(({ data}) => {
-      // console.log(data);
-      if(data.getUserDetailsById[0].login_status==1){
-         this.lie=true;
-
-          this.status='Working'
-
-
-
-      }
-      else{
-        this.lie=false;
-        this.status='Idle';
-      }
-
-    })
-
-
-
-
-
-
-
-
-
   },500);
+
+
+this.apollo.watchQuery<any>({
+  query: UPDATE_LOGIN_STATUS,
+  variables:{
+    user_email:localStorage.getItem('user_email'),
+  },
+  fetchPolicy: 'network-only'
+
+}).valueChanges
+.subscribe(({ data}) => {
+  // console.log(data);
+  if(data.getUserDetailsById[0].login_status==1){
+     this.lie=true;
+
+      this.status='Working'
+     }
+  else{
+    this.lie=false;
+    this.status='Idle';
+  }
+
+})
 
   this.apollo.watchQuery<any>({
         query: GET_PROFILE,
@@ -204,7 +231,7 @@ export class HeaderComponent implements OnInit {
           user_email:localStorage.getItem('user_email'),
           user_type:localStorage.getItem('user_Type')
         },
-        pollInterval:500
+        pollInterval:60000
       }).valueChanges
       .subscribe(({ data}) => {
         // console.log(data);
@@ -284,7 +311,17 @@ export class HeaderComponent implements OnInit {
 
       })
 
+
+
+
+
+
+
+      
+
   }
+ 
+
   logout(){
 
 
@@ -316,12 +353,12 @@ export class HeaderComponent implements OnInit {
   }
  change_ps()
  {
-  console.log("1sttab")
+  // console.log("1sttab")
    this.profile=false;
   //  console.log(this.profile)
  }
  change_cp(){
-   console.log("2ndtab")
+  //  console.log("2ndtab")
    this.profile=true;
   //  console.log(this.profile)
  }
@@ -386,7 +423,7 @@ export class HeaderComponent implements OnInit {
     this.modal=document.getElementById('mymodal_profile')
         //  console.log("Success:" +data);
          this.url=data;
-         console.log("Success:" +this.url.resetPassword.success);
+        //  console.log("Success:" +this.url.resetPassword.success);
 
          if(this.url.resetPassword.success==1)
          { this.toastr.successToastr('Password changed successfully!', 'Done!');}
@@ -407,17 +444,17 @@ export class HeaderComponent implements OnInit {
 
 
 getvalue_client(cl_code:any,cl_name:any,cl_email:any,cl_mobile:any,cl_district:any,cl_Type:any,cl_op_mode:any,cl_address:any,cl_wrk_hrs:any,cl_amc_date:any,cl_rental_date:any){
-  console.log("clientid:" +cl_code);
-  console.log("Clientname:" +cl_name);
-  console.log("client_email:"+cl_email);
-  console.log("client_mobile:"+cl_mobile)
-  console.log("client_district:" +cl_district);
-  console.log("client_type:"+cl_Type);
-  console.log("client_OP_mode:"+cl_op_mode);
-  console.log("address:" +cl_address)
-  console.log("client_Work_hrs:" +cl_wrk_hrs);
-  console.log("client_amc_date:" +cl_amc_date);
-  console.log("rental:" +cl_rental_date);
+  // console.log("clientid:" +cl_code);
+  // console.log("Clientname:" +cl_name);
+  // console.log("client_email:"+cl_email);
+  // console.log("client_mobile:"+cl_mobile)
+  // console.log("client_district:" +cl_district);
+  // console.log("client_type:"+cl_Type);
+  // console.log("client_OP_mode:"+cl_op_mode);
+  // console.log("address:" +cl_address)
+  // console.log("client_Work_hrs:" +cl_wrk_hrs);
+  // console.log("client_amc_date:" +cl_amc_date);
+  // console.log("rental:" +cl_rental_date);
 
   this.apollo
    .mutate({
@@ -460,8 +497,25 @@ getvalue_client(cl_code:any,cl_name:any,cl_email:any,cl_mobile:any,cl_district:a
 
 }
 Alert(event:any){
+
+    
+//   if(this.lie.checked=='true'){
+//     this.status='Working'
+//  }
+//  else{
+//    this.status='Idle';
+//  }
   this.in=document.getElementById('chec')
   console.log(this.in.checked);
+  if(this.in.checked==true){
+    this.status='Working';
+    this.lie=true;
+  }
+  else{
+    this.status='Idle';
+    this.lie=false;
+
+  }
 
   this.apollo
   .mutate({
@@ -471,14 +525,7 @@ Alert(event:any){
       login_status: this.in.checked ? '1':'2'
        }
   }).subscribe(({data})=>{
-      // console.log(data);
-      // this.in.checked ? 'Working':'2'
-      if(this.lie=='true'){
-         this.status='Working'
-      }
-      else{
-        this.status='Idle';
-      }
+    
   })
 
 }
@@ -525,5 +572,16 @@ mouseEnter(){
 mouseLeave(){
  
 }
+
+// @HostListener('window:beforeunload', ['$event'])
+// doSomething(event:any) {
+//   console.log("CLOSEoRNOT:" +event);
+// }
+
+// @HostListener('window:onunload', ['$event'])
+// DoSomething($event:any) {
+//   console.log("CLOSEoRNOT:" +$event)
+//   this.logout();
+// }
 
 }

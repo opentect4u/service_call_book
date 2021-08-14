@@ -59,18 +59,24 @@
 
 
               <div class="row">
-                       <div class="col-4 text-center">
+                       <div class="col-3 text-center text-success">
                         <h1>{{this.op}}</h1>
                         <span >Opened</span>
 
 
                        </div>
-                       <div class="col-2 text-center ">
-                        <h1 class="text-success">{{this.clos}}</h1>
-                        <span class='text-success'>Closed</span>
+                       <div class="col-3 text-center ">
+                        <h1>{{this.clos}}</h1>
+                        <span >Closed</span>
+                       </div>
+
+                       <div class="col-3 text-center text-primary">
+                         
+                         <h1>{{this.tot}}</h1>
+                        <span >Total</span>
                        </div>
                        
-                       <div class="col-6 float-end">
+                       <div class="col-3 float-end">
                         <button mat-raised-button  class='hover-class pull-right mt-2' style="background-color:#282a3c;color:white;" (click)="go_to_page()"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
 
 

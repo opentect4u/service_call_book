@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Apollo, gql } from 'apollo-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -80,7 +81,7 @@ export class UsermaintananceComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     localStorage.setItem('address', '/operations/Admin/usermaintanance')
@@ -128,20 +129,24 @@ export class UsermaintananceComponent implements OnInit {
   }
 
   fetch_data(v: any) {
+
+    this.spinner.show();
     console.log("fetch_data:" + v);
     this.apollo.watchQuery<any>({
       query: v == '1' ? GET_DATA_A : GET_DATA_D,
       variables: {
         tag: v
       },
-      pollInterval:500
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
+        
 
         this.user_data = data;
         console.log("put_data:", v);
         console.log("yarn");
+        this.spinner.hide();
         var method = v == '1' ? this.user_data.getUserDetailsA : this.user_data.getUserDetailsD;
         this.dataSource = new MatTableDataSource(method);
         console.log(this.dataSource);
