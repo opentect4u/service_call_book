@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 const SHOW_DASHBOARD=gql`
@@ -50,7 +51,7 @@ export class ClientraisetktComponent implements OnInit {
   edit:boolean=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private router:Router,private apollo:Apollo) { }
+  constructor(private router:Router,private apollo:Apollo,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
 
@@ -69,21 +70,22 @@ export class ClientraisetktComponent implements OnInit {
   }
   fetchdata(){
 
+    this.spinner.show();
+
     this.apollo.watchQuery<any>({
       query: SHOW_DASHBOARD,
       variables:{
          id:"",
          client_id:localStorage.getItem('UserId'),
         },
-      pollInterval: 500
+      // pollInterval: 500
     })
       .valueChanges
       .subscribe(({ data}) => {
         console.log(data);
         this.Tickite=data;
-
-
-         this.putdata(this.Tickite);
+        this.putdata(this.Tickite);
+        this.spinner.hide();
       })
 
   }

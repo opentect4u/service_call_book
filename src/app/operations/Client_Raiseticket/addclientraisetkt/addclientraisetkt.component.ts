@@ -259,8 +259,10 @@ export class AddclientraisetktComponent implements OnInit {
 
             this.res=data;
             if(this.res.clientTktSave.success==1){
-              this.router.navigate(['/Clientraisetkt']);
               localStorage.setItem('client_raiseticket','1');
+              this.router.navigate(['/Clientraisetkt']).then(() => {
+                window.location.reload()});
+              
             }
             else
             this.showsnackbar();

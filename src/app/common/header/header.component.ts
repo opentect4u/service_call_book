@@ -5,8 +5,16 @@ import moment from 'moment';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { global } from 'src/app/global';
 
-
+const REMOVE_IMAGE=gql`
+mutation removeImage($user_id:String!){
+  removeImage(user_id: $user_id){
+    message
+    success
+  }
+}
+`
 
 
 const APPROVE=gql`
@@ -36,6 +44,7 @@ query getProfileDtls($user_email:String!,$user_type:String!){
     working_hrs
     amc_upto
     rental_upto
+    image
   }
 }`;
 const SHOW_DIST=gql`
@@ -59,12 +68,14 @@ query{
     oprn_mode
   }
 }`;
-const img_upload=gql`mutation uploadImage($image:Upload!){
-  uploadImage(image:$image){
+
+const img_upload=gql`
+mutation uploadImage($user_id: String!, $image: Upload!){
+  uploadImage(user_id: $user_id, image: $image){
     message
     success
   }
-}`
+}`;
 
 
 const UPDATE_PROFILE=gql`
@@ -92,10 +103,8 @@ mutation  updateLoginStatus($user_id:String!,$login_status:String!)
     success
 
   }
-}
+}`
 
-
-`
 
 
 declare var showprofile: any;
@@ -157,6 +166,9 @@ export class HeaderComponent implements OnInit {
    addHr:any;
    newPass:any;
    win:any;
+   bacckend_url:any;
+   uri=global.img;
+   i:any;
    conf_pass:boolean=false;
   constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo) {
     
@@ -169,10 +181,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+  console.log("Path:"+this.uri);
+    // setTimeout(() => {
+    //   this.logout();
+    // }, 21600000);
 
-    setTimeout(() => {
-      this.logout();
-    }, 14400000);
+
+    // setTimeout(() => {
+    //   this.logout();
+    // }, 120000);
     
     console.log("NNN:",this.N);
     
@@ -219,6 +236,7 @@ this.apollo.watchQuery<any>({
       this.status='Working'
      }
   else{
+    this.logout();
     this.lie=false;
     this.status='Idle';
   }
@@ -245,6 +263,9 @@ this.apollo.watchQuery<any>({
         this.rental=data.getProfileDtls[0].rental_upto;
         this.amc=data.getProfileDtls[0].amc_upto;
         this.c_type=data.getProfileDtls[0].client_type_id;
+        this.i=data.getProfileDtls[0].image?this.uri+data.getProfileDtls[0].image:'/assets/profile.png';
+
+       
 
         // console.log(this.pn,this.Desig);
         this.apollo.watchQuery<any>({
@@ -545,12 +566,34 @@ if (this.show_ConPassword.type == "password" || this.newPass.type=="password") {
 }
 
 anchor(e:any){
-console.log(e.target.files[0]);
+// console.log(e.target.files[0]);
+// this.apollo
+// .mutate({
+//   mutation:  img_upload,
+//   variables:{
+//     image:e.target.files[0]
+//   }
+
+
+// })
+// .subscribe(({ data}) => {
+
+// console.log(data);
+
+// })
+
+
+console.log({img: e.target.files[0], user: localStorage.getItem('user_email')});
+let file = e.target.files[0];
 this.apollo
 .mutate({
-  mutation:  img_upload,
+  mutation: img_upload,
   variables:{
-    image:e.target.files[0]
+    user_id:localStorage.getItem('user_email'),
+    image: e.target.files[0]
+  },
+  context: {
+    useMultipart: true
   }
 
 
@@ -558,9 +601,11 @@ this.apollo
 .subscribe(({ data}) => {
 
 console.log(data);
-
+this.bacckend_url=data;
+this.i=this.uri+this.bacckend_url.uploadImage.message;
 })
-//  this.inpt.onchange=this.show($event);
+
+
 }
 show(){
  this.inpt=document.getElementById('fileopen');
@@ -583,5 +628,27 @@ mouseLeave(){
 //   console.log("CLOSEoRNOT:" +$event)
 //   this.logout();
 // }
+
+uplaod_file(){
+  console.log('IMAGE:',this.i)
+  this.i='/assets/profile.png';
+  console.log('IMAGE:',this.i)
+  
+  this.apollo
+.mutate({
+  mutation: REMOVE_IMAGE,
+  variables:{
+    user_id:localStorage.getItem('user_email'),
+    },
+  })
+.subscribe(({ data}) => {
+
+console.log(data);
+// this.bacckend_url=data;
+// this.i=this.uri+this.bacckend_url.uploadImage.message;
+})
+
+
+}
 
 }

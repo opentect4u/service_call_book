@@ -7,12 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 // For update data
 const EDITABLE=gql`
 mutation updateAssignTkt($id:String!,$assign_engg: String!,
-  $remarks:String!,$user_id:String!) {
+  $remarks:String!,$user_id:String!,$prob_reported:String!) {
   
     updateAssignTkt(id: $id
       assign_engg: $assign_engg
       remarks: $remarks
-      user_id: $user_id)  {
+      user_id: $user_id,
+      prob_reported:$prob_reported)  {
 
        success
        message
@@ -235,7 +236,8 @@ export class EditatComponent implements OnInit {
         id:this.id,
         assign_engg:v14, 
         remarks:v15,
-        user_id: localStorage.getItem("UserId")
+        user_id: localStorage.getItem("UserId"),
+        prob_reported:v13
 
       }
     }).subscribe(({data})=>{

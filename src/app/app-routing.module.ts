@@ -253,12 +253,12 @@ const routes: Routes = [
 },
  {
    path:'Clientraisetkt',
-  //  canActivate:[AfterloginGuard],
+
    component:ClientraisetktComponent
  },
  {
   path:'Add/clientraisetkt',
-  // canActivate:[AfterloginGuard],
+  
   component:AddclientraisetktComponent
 },
 

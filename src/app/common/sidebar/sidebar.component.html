@@ -32,11 +32,11 @@
         </ul>
     </li>
 
-      <li>
+      <li [hidden]="u_type=='C'">
         <div  class="link" (click)="openclosedropdown1()"><i class="fa fa-wrench"></i>Operations<i class="fa fa-chevron-down" id="down1" ></i></div>
         <ul class="submenu" id="openclose">
 
-          <li [hidden]="Etype||utype||u_type=='A'||u_type=='M' || u_type=='T'|| u_type=='V'"><a routerLink="/Clientraisetkt" routerLinkActive="true">Raise Ticket</a></li>
+          <!-- <li [hidden]="Etype||utype||u_type=='A'||u_type=='M' || u_type=='T'|| u_type=='V'"><a routerLink="/Add/clientraisetkt" routerLinkActive="true">Raise Ticket</a></li> -->
           <li [hidden]="Etype||Ctype"><a  routerLinkActive="true" routerLink="/operations/raiseticket">Raise Ticket</a></li>
           <li [hidden]="utype || Etype||Ctype"><a  routerLinkActive="true" routerLink="/operations/assignticket">Assign Ticket</a></li>
           <li [hidden]="utype||Ctype"><a  routerLinkActive="true" routerLink="/operations/attendanddeliver">Attend & Deliver Ticket</a></li>
@@ -48,10 +48,14 @@
         </ul>
       </li>
 
+      <li [hidden]="Etype||utype||u_type=='A'||u_type=='M' || u_type=='T'|| u_type=='V'"><div class="link log"><i class="fa fa-ticket" aria-hidden="true"></i><a routerLink="/Add/clientraisetkt" routerLinkActive="true">Raise Ticket</a></div></li> 
 
 
 
-      <li *ngIf="u_type!='C'">
+      <li *ngIf="u_type=='C'"> <div class="link log"><i class="fa fa-ticket" aria-hidden="true"></i><a a routerLink="/Clientraisetkt" routerLinkActive="true">My Tickets</a></div></li>
+
+
+      <li [hidden]="u_type=='C'">
         <div  class="link" (click)="openclosesearchticket()"><i class="fa fa-search" aria-hidden="true"></i>Search Ticket<i class="fa fa-chevron-down "></i></div>
         <ul class="submenu" id="openclose_searchtkt">
           <li><a data-toggle="modal" data-target="#mymodal_dt" (click)="make_date_true()">Search by Date </a></li>
@@ -59,6 +63,9 @@
         </ul>
 
       </li>
+
+      <li *ngIf="u_type=='C'"> <div class="link log"><i class="fa fa-search" aria-hidden="true"></i><a  data-toggle="modal" data-target="#mymodal_tkt" (click)="make_true()">Search Tickets By Ticket No.</a></div></li>
+      <li *ngIf="u_type=='C'"> <div class="link log"><i class="fa fa-search" aria-hidden="true"></i><a  data-toggle="modal" data-target="#mymodal_dt" (click)="make_date_true()">Search My Previous Tickets</a></div></li>
 
 
 
@@ -74,25 +81,25 @@
 
     </li>
 
-    <li *ngIf="u_type=='C'"> <div class="link log"><i class="fa fa-ticket" aria-hidden="true"></i><a>My Tickets</a></div></li>
+    
 
-  <!-- <li>
+  <li *ngIf="u_type=='C'">
   <div class="link log" data-toggle="modal" data-target="#mymodal" ><i class="fa fa-sign-out" ></i>Log out</div>
-  </li> -->
+  </li>
 
   <br>
 
 
- 
+    <div *ngIf="u_type!='C'">
 
-    <!-- <mat-divider></mat-divider> -->
+    <mat-divider></mat-divider>
  
-    <!-- <small class="text-center text-white ml-4 mt-2"><strong>Engineer Status</strong></small>
-    <mat-list *ngFor="let u of user_data">
+    <small class="text-center text-white ml-4 mt-2"><strong>Engineer Status</strong></small>
+    <ul id="accordion" class="accordion" *ngFor="let u of user_data">
     
-      <mat-list-item *ngIf="u.login_status=='1'||u.login_status=='2'"  class="text-white">
+      <li *ngIf="u.login_status=='1'||u.login_status=='2'"  class="text-white">
      
-        <div mat-line >
+        <div class="link log">
 
           <div class="ring-container" *ngIf="u.login_status == '1'">
             <div class="ringring"></div>
@@ -103,12 +110,13 @@
            <span class="dot1" *ngIf="u.login_status == '2'"></span
             >
 
-          <img src="/assets/profile.png" alt="Avatar" class="avatar"/>&nbsp;&nbsp;{{u.user_name}}</div>
+          <img [src]="u.image?this.uri+u.image:'/assets/profile.png'" alt="Avatar" class="avatar"/>&nbsp;&nbsp;{{u.user_name}}</div>
       
         <mat-divider style="color:grey" *ngIf="u.login_status=='1'||u.login_status=='2'"></mat-divider>
    
-      </mat-list-item>
-  </mat-list> -->
+           </li>
+          </ul>
+</div>
   
 
 

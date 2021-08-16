@@ -156,7 +156,7 @@
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Ticket&nbsp;Status </th>
                     <td mat-cell *matCellDef="let row"  class="text-center" >
                     
-                  
+                        <div *ngIf = "row.work_status != '1'">
                          <div *ngIf="row.tkt_status != 4 && row.tkt_status!=0" >
                                   <span>{{row.tktStatus}}</span>
                          </div>
@@ -173,6 +173,10 @@
                     
                             </mat-slide-toggle>
                      </div>
+                    </div>
+                    <div *ngIf="row.work_status > 0" >
+                      <span>{{row.tktStatus}}</span>
+                    </div>
 
 
                  
@@ -183,7 +187,7 @@
                    
                     <td mat-cell *matCellDef="let row" class="p-3">  
                    
-                      <div *ngIf= "row.tkt_status > 0">
+                      <div [hidden] = "row.tkt_status > 0 ? false : true" id="av_{{row.id}}">
                         <a type="button" (click)="go_to_update(row.id)"                      
                         data-toggle="tooltip" data-placement="bottom" title="Edit" class="deletCus">
                         <i class="fa fa-edit menu-icon"></i>

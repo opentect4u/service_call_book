@@ -27,38 +27,9 @@
                       <li><small> <i class="fa fa-caret-up"></i></small></li>
                     </ul>
                   </div><br>
-                  <mat-card-content>
-                       <!-- <ul class="card-content">
-                         <li class='p-4'>
-                           <h2 class='text-center'>{{this.op}}</h2>
-                           <small class='text-center'>Opened</small>
-
-
-                         </li>
-                         <li class='p-4'>
-                      
-                         </li>
-                        
-                         <li class='p-4 float-right'>
-                          <h2 class="text-success text-center">{{this.clos}}</h2>
-                          <small class='text-success text-center'>Closed</small>
-                         </li>
-                         <li class='p-4'>
-                          
-                         </li>
-                        
-                        
-                        
-                         <li class='p-4 float-end'>
-                          <button mat-raised-button  class='hover-class ml-5' style="background-color:#282a3c;color:white;" (click)="go_to_page()"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
-
-                        </li>
-
-                       </ul> -->
-
-
-
-              <div class="row">
+                  <mat-card-content *ngIf="u_type!='C'">
+                     
+                    <div class="row">
                        <div class="col-3 text-center text-success">
                         <h1>{{this.op}}</h1>
                         <span >Opened</span>
@@ -83,6 +54,34 @@
                        </div>
 
                       </div>
+                  </mat-card-content>
+                  <mat-card-content *ngIf="u_type=='C'">
+                    <div class="row">
+                      <div class="col-3 text-center text-success">
+                       <h1>0</h1>
+                       <span >Opened</span>
+
+
+                      </div>
+                      <div class="col-3 text-center ">
+                       <h1>0</h1>
+                       <span >Closed</span>
+                      </div>
+
+                      <div class="col-3 text-center text-primary">
+                        
+                        <h1>0</h1>
+                       <span >Total</span>
+                      </div>
+                      
+                      <div class="col-3 float-end">
+                       <button mat-raised-button  class='hover-class pull-right mt-2' style="background-color:#282a3c;color:white;"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
+
+
+                      </div>
+
+                     </div>
+
                   </mat-card-content>
 
 
@@ -127,7 +126,7 @@
                      <li><small> <i class="fa fa-caret-up"></i></small></li>
                    </ul>
                  </div>
-                 <mat-card-content>
+                 <mat-card-content *ngIf="u_type!='C'">
 
                   <div class='row mt-5'>
                     <div class="col-2 text-center">
@@ -169,6 +168,9 @@
                  
 
 
+                 </mat-card-content>
+                 <mat-card-content *ngIf="u_type=='C'">
+                  
                  </mat-card-content>
 
 
@@ -380,13 +382,16 @@
                        <li><small> <i class="fa fa-caret-up"></i></small></li>
                      </ul>
                    </div><br>
-                   <mat-card-content>
+                   <mat-card-content *ngIf="u_type!='C'">
 
                     <div style="display: block" class="mt-5" id="outerpie"  style="width:100%;height:50vh;">
                       <canvas id="pie1" 
                       
                       ></canvas>
                     </div>
+                  </mat-card-content>
+                  <mat-card-content *ngIf="u_type=='C'">
+                    <p>horizontal bar chart</p>
                   </mat-card-content>
                </mat-card>
   
@@ -403,11 +408,14 @@
                        <li><small> <i class="fa fa-caret-up"></i></small></li>
                      </ul>
                    </div><br>
-                   <mat-card-content>
+                   <mat-card-content *ngIf="u_type!='C'">
 
                     <div style="display: block" class="mt-5" style="width:100%;height:50vh;">
                       <canvas id="pie2"></canvas>
                     </div>
+                  </mat-card-content>
+                  <mat-card-content *ngIf="u_type=='C'">
+                    <p>Horizontal Bar chart</p>
                   </mat-card-content>
                </mat-card>
   
@@ -423,7 +431,7 @@
                        <li><small> <i class="fa fa-caret-up"></i></small></li>
                      </ul>
                    </div>
-                   <mat-card-content>
+                   <mat-card-content *ngIf="u_type!='C'">
   
                       <div  id="container" class="mt-5" style="width:100%;height:50vh;">
                        <canvas id="ctx">
@@ -434,6 +442,10 @@
   
   
                    </mat-card-content>
+                   <mat-card-content *ngIf="u_type=='C'">
+                     <p>vertical bar chart</p>
+                     </mat-card-content>
+  
                   </mat-card>
   
                 </mat-grid-tile>
@@ -447,7 +459,7 @@
                        <li><small> <i class="fa fa-caret-up"></i></small></li>
                      </ul>
                    </div>
-                   <mat-card-content>
+                   <mat-card-content *ngIf="u_type!='C'">
   
                       <div  id="container-pie3" class="mt-5" style="width:100%;height:50vh;">
                        <canvas id="pie3">
@@ -457,6 +469,9 @@
   
   
   
+                   </mat-card-content>
+                   <mat-card-content *ngIf="u_type=='C'">
+                   <p>Pie Chart</p>
                    </mat-card-content>
                   </mat-card>
   

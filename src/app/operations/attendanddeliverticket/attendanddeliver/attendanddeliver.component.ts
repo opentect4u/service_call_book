@@ -81,6 +81,7 @@ export class AttendanddeliverComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   dis:any;
+  btn:any;
 
 
   constructor(private router:Router,private apollo:Apollo,private spinner:NgxSpinnerService) { }
@@ -196,9 +197,16 @@ export class AttendanddeliverComponent implements OnInit {
   }
 
   onToggle(event:any,id:any){
-
+  
+    this.btn = document.getElementById('av_'+id);
+    if(event.checked == true){
+      this.btn.removeAttribute('hidden');
+      this.btn.style.display = "block";
+    }else{
+      this.btn.style.display = "none";
+    }
     console.log("Slide Me:",event.checked);
-
+   
     this.apollo.mutate({
       mutation:UPDATE_TKT_STATUS ,
       variables:{

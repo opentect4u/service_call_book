@@ -9,7 +9,7 @@ declare const $: any;
 
 const EDITABLE=gql`
 mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
- $tkt_status:String!,$remarks:String!,$user_id:String!,$work_status:String!) {
+ $tkt_status:String!,$remarks:String!,$user_id:String!,$work_status:String!,$prob_reported:String!) {
 
   updateDeliverTkt(id:$id
       call_attend:$call_attend
@@ -17,7 +17,8 @@ mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
       tkt_status:$tkt_status
       remarks:$remarks
       user_id:$user_id,
-      work_status:$work_status)  {
+      work_status:$work_status,
+      prob_reported:$prob_reported)  {
 
        success
        message
@@ -303,7 +304,7 @@ else{
     // console.log("phone:" +v10);
     // console.log("prioritystatus:" +v11);
     // console.log("module:" +v12);
-    // console.log("issue:" +v13);
+    console.log("issue:" +v13);
     // console.log("assignedto:" +v14);
     console.log("Attendantat:" +v15);
     console.log("Delivaryat:" +v16);
@@ -328,7 +329,8 @@ else{
         tkt_status:v17,
         remarks:v18,
         user_id:localStorage.getItem("UserId"),
-        work_status:v19
+        work_status:v19,
+        prob_reported:v13
 
       }
     }).subscribe(({data})=>{

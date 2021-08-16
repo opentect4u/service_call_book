@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { interval } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { global } from 'src/app/global';
 
 //import {MatDialog} from '@angular/material/dialog';
 
@@ -18,6 +19,7 @@ query getUserDetailsA($tag:String!){
     user_type
     user_status
     login_status
+    image
   }
 }`;
 
@@ -66,7 +68,8 @@ export class SidebarComponent implements OnInit {
   prevent=false;
   old_u_type:any;
   user_data:any;
-
+  uri=global.img;
+  backend_image_url:any;
   tkt:any;
   ct=0;
   frm:any;
@@ -132,22 +135,23 @@ export class SidebarComponent implements OnInit {
 
 
 
-    // this.apollo.watchQuery<any>({
-    //   query:GET_DATA_A,
-    //   variables: {
-    //     tag: '1'
-    //   },
-    //   pollInterval:40000
-    // })
-    //   .valueChanges
-    //   .subscribe(({ data, loading }) => {
-    //     console.log(data);
+    this.apollo.watchQuery<any>({
+      query:GET_DATA_A,
+      variables: {
+        tag: '1'
+      },
+      pollInterval:40000
+    })
+      .valueChanges
+      .subscribe(({ data, loading }) => {
+        console.log(data);
   
-    //     this.user_data = data.getUserDetailsA;
+        this.user_data = data.getUserDetailsA;
+       
   
        
   
-    //   })
+      })
        
 
   
