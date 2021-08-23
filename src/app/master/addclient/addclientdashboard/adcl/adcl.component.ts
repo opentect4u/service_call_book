@@ -491,6 +491,12 @@ export class AdclComponent implements OnInit,OnDestroy {
     //location.reload();
   }
 
+ 
+  
+ 
+
+
+
   
     
 

@@ -88,7 +88,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control p-2" 
-                                            name="cust_name" id="itemname" required="" #name11 (keyup)="prevent_null($event)">
+                                            name="cust_name" id="itemname" required="" #name11 (keyup)="prevent_null($event)" (change)="prevent_null($event)">
                                          <span class="text-danger"
                                         *ngIf="namevalid&&prevent_init_name">*Please Enter Name</span>
                                         
@@ -146,7 +146,7 @@
                                         <label><b>District</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="district" id="district" #dist (click)="select_district(dist.value)">
+                                        <select class="form-control" name="district" id="district" #dist (click)="select_district(dist.value)" (change)="select_district(dist.value)">
 
                                             <option value="">Select</option>
                                             <option *ngFor="let d of distdata" value="{{d.id}}">{{d.name}}</option>
@@ -190,7 +190,7 @@
                                         <label><b>Operational Mode</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="op" id="op" #comp (click)="select_operation(comp.value)">
+                                        <select class="form-control" name="op" id="op" #comp (click)="select_operation(comp.value)" (change)="select_operation(comp.value)">
 
                                             <option value="">Select</option>
                                             <option value="{{op.oprn_id}}" *ngFor="let op of opdata">{{op.oprn_mode}}</option>
@@ -208,7 +208,7 @@
                                         <label><b>Client Type</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="ctm" id="ctm" #ctm (click)="select_client_type(ctm.value)">
+                                        <select class="form-control" name="ctm" id="ctm" #ctm (click)="select_client_type(ctm.value)" (change)="select_client_type(ctm.value)">
 
                                             <option value="">Select</option>
                                            
@@ -368,7 +368,7 @@
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2" 
                                             name="mobile_no" id="itemphone" #phone pattern="[0-9]*"
-                                            (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
+                                            (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)" (change)="prevent_null($event)">
                                          <span  class="text-danger"
                                         *ngIf="phonevalid&&prevent_init_phone">*Please Enter Mobile Number</span> 
 
