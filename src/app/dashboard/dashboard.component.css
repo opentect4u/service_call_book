@@ -140,7 +140,60 @@ td,th{
 }
 
 
+.mat-row:nth-child(even){
+  background-color: #ffffff;
+
+}
+      
+.mat-row:nth-child(odd){
+  background-color: #f2f2f2;;
+  /* color:white ; */
+}
+
+::ng-deep.mat-menu-panel
+  {
+    margin-top:60px;  
+    position: sticky !important;
+      /* top : 1%; */
+  }
 
 
 
+/* For Profile Card */
 
+
+.modal{
+  position: absolute;
+  left: 50%;
+}
+
+
+/* .example-menu-row {
+  margin-bottom: 24px;
+} */
+
+/* .mat-menu-pannel{
+  margin-top:10px;
+} */
+/* .fa-whatsapp{
+  background: #3cff00;
+  color: white;
+}
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.icon{
+  padding: 20px;
+ 
+  width: 52px;
+  text-align: center;
+  text-decoration: none;
+
+  border-radius: 50%;
+}
+.fa-twitter{
+
+  background: #02e0fd;
+  color: white;
+} */

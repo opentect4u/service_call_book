@@ -7,6 +7,26 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Apollo, gql } from 'apollo-angular';
 
+export interface PeriodicElement {
+  position: number;
+  Log: any;
+  Assignedto: any;
+  Status: any;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 2, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 3, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 4, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Permanent'},
+  {position: 5, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 6, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 7, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 8, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Permanent'},
+  {position: 9, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+  {position: 10, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
+];
+
 
 
 
@@ -89,6 +109,9 @@ query totalTktByClient($user_type: String!, $user_id: String!){
 })
 export class DashboardComponent implements OnInit,AfterViewInit {
 
+   displayedColumns2: string[] = ['position', 'Log', 'Assignedto', 'Status'];
+  dataSource2 = ELEMENT_DATA;
+
   displayedColumns1: string[] = ['Id','Status','Count'];
   dataSource1 = new MatTableDataSource<any>();
   displayedColumns: string[] = ['imge','Username','Login_Status'];
@@ -96,7 +119,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
+  show_profile:boolean=true;
   colors1:any=[];
   colors2:any=[];
   colors3:any=[];
@@ -128,12 +151,15 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    tot:any;
    colors4:any=[];
    clos:any;
+   randomColor:any
   formattedDate : any;
   constructor(private router:Router,private apollo:Apollo) {
 
   }
 
   ngOnInit(): void {
+    
+    this.randomColor = Math.floor(Math.random()*16777215).toString(16);
     // this.fetch_data();
     // this.fetch_data1();
 
@@ -542,6 +568,14 @@ go_to_page(){
 
 
 }
+showprofile(){
+  this.show_profile=false;
+
+}
+
+
+
+
 
 }
 

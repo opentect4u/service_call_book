@@ -138,6 +138,7 @@ export class ClientraisetktComponent implements OnInit {
         this.deleted=data;
         if(this.deleted.deleteTkt.success==1){
             this.deleteticket=false;
+            location.reload()
 
           }
         else

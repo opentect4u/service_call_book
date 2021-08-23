@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import {formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common'
+import { ToastrManager } from 'ng6-toastr-notifications';
 declare const $: any;
 // For update Deliver&Attendent Tickite
 
@@ -26,14 +27,6 @@ mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
 }
 }`
 ;
-
-
-
-
-
-
-
-
 
 const SHOW_TS=gql`
 query{
@@ -102,6 +95,7 @@ export class EditadanddComponent implements OnInit {
   prob_reported:any;
   assign_engg:any;
   tickit:any;
+  mes:any;
   tkt:boolean=false;
   phonmobile:boolean=false;
   mobile:boolean=false;
@@ -134,7 +128,7 @@ export class EditadanddComponent implements OnInit {
   issue:any;
   work:any;
   wrork_stat:boolean=false;
-  constructor(public datepipe: DatePipe,private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
+  constructor(public datepipe: DatePipe,private apollo:Apollo,private route:ActivatedRoute,private router:Router,public toastr: ToastrManager) {}
   ngOnInit(): void {
 
    this.issue=document.getElementById("itemissue");
@@ -341,6 +335,14 @@ else{
         this.router.navigate(['/operations/attendanddeliver']).then(() => {
           window.location.reload()
         });
+      }
+      else if(this.Attend.updateDeliverTkt.success==2){
+            this.mes=this.Attend.updateDeliverTkt.message;
+            console.log("message:",this.mes);
+            this.toastr.errorToastr(this.mes, 'Error!',{
+              position: 'top-center',
+              toastTimeout: (5000)
+          });
       }
 
       else

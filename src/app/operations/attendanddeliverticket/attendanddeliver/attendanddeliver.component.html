@@ -126,7 +126,11 @@
 
                   <ng-container matColumnDef="Ticket_No">
                     <th mat-header-cell *matHeaderCellDef>Ticket No. </th>
-                    <td mat-cell *matCellDef="let row"> {{row.tkt_no}} </td>
+                    <td mat-cell *matCellDef="let row"> 
+                      <span #tooltip="matTooltip"
+                matTooltip="{{row.prob_reported}}"
+                matTooltipClass="custom-tooltip"
+               matTooltipPosition="below">{{row.tkt_no}} </span></td>
                   </ng-container>
 
                   <ng-container matColumnDef="Client_Name">

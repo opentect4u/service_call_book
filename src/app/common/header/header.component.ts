@@ -249,7 +249,8 @@ this.apollo.watchQuery<any>({
           user_email:localStorage.getItem('user_email'),
           user_type:localStorage.getItem('user_Type')
         },
-        pollInterval:60000
+        // pollInterval:60000
+        fetchPolicy:'network-only'
       }).valueChanges
       .subscribe(({ data}) => {
         // console.log(data);
@@ -266,7 +267,7 @@ this.apollo.watchQuery<any>({
         this.i=data.getProfileDtls[0].image?this.uri+data.getProfileDtls[0].image:'/assets/profile.png';
 
        
-
+       console.log(this.i);
         // console.log(this.pn,this.Desig);
         this.apollo.watchQuery<any>({
           query: SHOW_DIST

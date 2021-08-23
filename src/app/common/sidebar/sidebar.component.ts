@@ -58,6 +58,7 @@ export class SidebarComponent implements OnInit {
   marker1:any;
   admindropdown:any;
   searchtkt:any;
+  im:any;
   utype:boolean=true;
   Etype:boolean=true;
   Ctype:boolean=true;
@@ -72,6 +73,7 @@ export class SidebarComponent implements OnInit {
   backend_image_url:any;
   tkt:any;
   ct=0;
+  image_ur:any;
   frm:any;
   done_dt=true;
   t:any;
@@ -422,6 +424,13 @@ srch_dt(v1:any,v2:any){
       this.router.navigate(['/']).then(() => {
         window.location.reload();
       });
+    }
+
+
+    show_Image(v:any){
+      console.log(v);
+      this.image_ur=v;
+    
     }
 
 }

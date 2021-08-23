@@ -203,8 +203,8 @@
             <div class="example-large-box mat-elevation-z4">
               <div>
                 <div class="ml-5 d-flex justify-content-center">
-                  <div class="mt-3">
-                    <img class="thumbnail" src="{{i}}" />
+                  <div class="mt-3"  >
+                   <img class="thumbnail" src="{{i}}" data-toggle="modal" data-target="#myModal"/>
                     <input type="file" id="fileopen" hidden (change)="anchor($event)"/>
                   </div>
                   <div class="mt-5 pt-5">
@@ -285,7 +285,7 @@
                         class="form-control align-middle"
                         type="text"
                         id="desig"
-                        value="{{ Desig }}"
+                        value="{{Desig}}"
                         #designation
                       />
                     </div>
@@ -337,6 +337,7 @@
                         id="nm"
                         value="{{ this.client }}"
                         #cl_name
+                        readonly
                       />
                     </div>
                   </div>
@@ -366,7 +367,7 @@
                   <div class="form-group row">
                     <div class="col-lg-6">
                       <label for="tp">District : </label>
-                      <select class="form-control" #cl_district>
+                      <select class="form-control" #cl_district disabled>
                         <option value="{{ this.District }}">
                           {{ d_data }}
                         </option>
@@ -377,7 +378,7 @@
                     </div>
                     <div class="col-lg-6">
                       <label for="tp">Client Type: </label>
-                      <select class="form-control" #cl_Type>
+                      <select class="form-control" #cl_Type disabled>
                         <option value="{{ c_type }}">{{ cl_type }}</option>
                         <option
                           value="{{ c.client_id }}"
@@ -391,7 +392,7 @@
                   <div class="form-group row">
                     <div class="col-lg-6">
                       <label for="tp">Operation Mode : </label>
-                      <select class="form-control" #cl_op_mode>
+                      <select class="form-control" #cl_op_mode disabled>
                         <option value="{{ this.op_mode }}">
                           {{ oprn_mode }}
                         </option>
@@ -403,19 +404,7 @@
                         </option>
                       </select>
                     </div>
-                    <div class="col-lg-6">
-                      <label for="address">Client Address: </label>
-
-                      <input
-                        class="form-control"
-                        #cl_address
-                        type="text"
-                        id="address"
-                        value="{{ this.client_addr }}"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
+                   
                     <div class="col-lg-6">
                       <label for="hrs">Working Hours : </label>
                       <input
@@ -426,6 +415,39 @@
                         #cl_wrk_hrs
                       />
                     </div>
+
+
+
+
+
+                   
+                  </div>
+                  <div class="form-group row">
+                    <!-- <div class="col-lg-6">
+                      <label for="hrs">Working Hours : </label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="hrs"
+                        value="{{ this.wrk_hrs }}"
+                        #cl_wrk_hrs
+                      />
+                    </div> -->
+                    <div class="col-lg-6">
+                      <label for="rental">Rental Upto : </label>
+                      <input
+                        class="form-control"
+                        #cl_rental_date
+                        type="text"
+                        id="rental"
+                        value="{{ this.rental | date: 'dd-MM-yyyy' }}"
+                        readonly
+                      />
+                    </div>
+
+
+
+
                     <div class="col-lg-6">
                       <label for="amc">AMC Upto: </label>
 
@@ -440,7 +462,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                       <label for="rental">Rental Upto : </label>
                       <input
                         class="form-control"
@@ -450,8 +472,22 @@
                         value="{{ this.rental | date: 'dd-MM-yyyy' }}"
                         readonly
                       />
+                    </div> -->
+
+
+                    <div class="col-sm-12">
+                      <label for="address">Client Address: </label>
+
+                      <textarea
+                        rows="5"
+                        class="form-control"
+                        #cl_address
+                         type="text"
+                        id="address"
+                        value="{{ this.client_addr }}"
+                      ></textarea>
                     </div>
-                    <div class="col-lg-6 mt-4">
+                    <!-- <div class="col-lg-6 mt-4">
                       <button
                         type="button"
                         class="btn btn-lg text-white float-right"
@@ -474,9 +510,36 @@
                       >
                         Change
                       </button>
-                    </div>
+                    </div> -->
                   </div>
                   <br />
+                  <div class="form-group row">
+                  <div class="col-lg-12">
+                    <button
+                    type="button"
+                    class="btn btn-lg text-white float-right"
+                    style="background-color: #282a3c"
+                    (click)="
+                      getvalue_client(
+                        cl_code.value,
+                        cl_name.value,
+                        cl_email.value,
+                        cl_mobile.value,
+                        cl_district.value,
+                        cl_Type.value,
+                        cl_op_mode.value,
+                        cl_address.value,
+                        cl_wrk_hrs.value,
+                        cl_amc_date.value,
+                        cl_rental_date.value
+                      )
+                    "
+                  >
+                    Change
+                  </button>
+                     
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -595,4 +658,19 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <img src="{{i}}" class="img-fluid">
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
 

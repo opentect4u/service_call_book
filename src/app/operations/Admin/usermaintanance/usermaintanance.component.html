@@ -208,6 +208,7 @@
                     <th mat-header-cell *matHeaderCellDef > User Type </th>
                     <td mat-cell *matCellDef="let row">
                         <select class="form-control"  name="module" #module (change)="select_none(module.value,row.id)">
+                          <option value="">Select</option>
                           <option  value="A" [selected]="row.user_type=='A'">Admin</option>
                           <option  value="T" [selected]="row.user_type=='T'">Telecaller</option>
                           <option  value="E" [selected]="row.user_type=='E'">Engineer</option>

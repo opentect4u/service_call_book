@@ -80,6 +80,12 @@
       </ul>
 
     </li>
+    <li *ngIf="u_type=='C'">
+      <div class="link log">
+        <i class="fa fa-address-card-o"></i>Assigned
+    </div>
+
+    </li>
 
     
 
@@ -110,7 +116,7 @@
            <span class="dot1" *ngIf="u.login_status == '2'"></span
             >
 
-          <img [src]="u.image?this.uri+u.image:'/assets/profile.png'" alt="Avatar" class="avatar"/>&nbsp;&nbsp;{{u.user_name}}</div>
+          <img [src]="u.image?this.uri+u.image:'/assets/profile.png'" alt="Avatar" id="imageee" class="avatar" #img (click)="show_Image(img.src)" [matMenuTriggerFor]="menuHero" />&nbsp;&nbsp;{{u.user_name}}</div>
       
         <mat-divider style="color:grey" *ngIf="u.login_status=='1'||u.login_status=='2'"></mat-divider>
    
@@ -286,6 +292,14 @@
     </div>
   </div>
 </div> -->
+
+<mat-menu #menuHero="matMenu" xPosition="after">
+
+  <div class="d-flex justify-content-center">
+    <img src="{{this.image_ur}}" class="img-fluid thumbnail mt-2" height="100px" width="100px"/>
+  </div>
+</mat-menu>
+
 
 
 

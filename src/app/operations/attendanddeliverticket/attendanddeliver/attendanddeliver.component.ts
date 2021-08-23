@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import {ThemePalette} from '@angular/material/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 
 
@@ -36,6 +37,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     tkt_status
     log_in
     work_status
+    prob_reported
   }
 }`
 ;
@@ -55,6 +57,7 @@ query getSuppLogDone($user_type:String!,$user_id:String!){
     log_in
     work_status
     tkt_status
+    prob_reported
   }
 }
 
