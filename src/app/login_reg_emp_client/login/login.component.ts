@@ -224,6 +224,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('isLoggedIn',"true");
 
                 this.user=JSON.parse(data.userLogin.message);
+                sessionStorage.setItem('reloaded','1');
 
                 //  console.log("success");
                 //  console.log("userid:" + this.user)

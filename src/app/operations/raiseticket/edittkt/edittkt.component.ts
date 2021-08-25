@@ -253,6 +253,13 @@ export class EdittktComponent implements OnInit {
               this.logDate=data.getSupportLogDtls[0].log_in;
               console.log(this.priority_status);
               console.log("Module:" +this.tkt_module)
+              if(this.tkt_module==''){
+                this.valid_init=true;
+              }
+              else{
+                this.valid_init=false;
+              }
+
 
 
                   for(let i=0;i<this.posts_pm.getPriorityModeData.length;i++){

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit,ViewEncapsulation,HostListener } from '@angular/core';
+import { Component, OnDestroy, OnInit,ViewEncapsulation,HostListener, Input } from '@angular/core';
 // import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import moment from 'moment';
@@ -6,7 +6,7 @@ import moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { global } from 'src/app/global';
-
+declare var $: any; 
 const REMOVE_IMAGE=gql`
 mutation removeImage($user_id:String!){
   removeImage(user_id: $user_id){
@@ -14,7 +14,44 @@ mutation removeImage($user_id:String!){
     success
   }
 }
-`
+`;
+
+const FETCH=gql`
+query getSuppLogDone($user_type:String!,$user_id:String!){
+  getSuppLogDone(user_type:$user_type , user_id:$user_id){
+    id
+    client_name
+    phone_no
+    tkt_no
+    emp_name
+    priority
+    tktStatus
+    log_in
+    work_status
+    tkt_status
+    prob_reported
+  }
+}`;
+
+
+const GET_RAISETICKITE=gql`
+query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+  getSupportLogDtls(id:$id,tag:"0",user_type:$user_type,user_id:$user_id){
+    id
+    client_name
+    phone_no
+    tkt_no
+    emp_name
+    priority
+    tktStatus,
+    tkt_status
+    log_in
+    work_status
+    prob_reported
+  }
+}`
+;
+
 
 
 const APPROVE=gql`
@@ -120,7 +157,11 @@ declare var showprofile: any;
 })
 export class HeaderComponent implements OnInit {
 
-  
+  // @Input()
+  // emp: any;
+  // @Input()
+  // cli: any;
+
 
 
    upload:any;
@@ -169,22 +210,199 @@ export class HeaderComponent implements OnInit {
    bacckend_url:any;
    uri=global.img;
    i:any;
+   e:any;
+   old_value:any;
+   new_value:any;
+   screenHeight:any;
+   screenWidth:any;
    conf_pass:boolean=false;
+   tkt_number:any;
+   emp_:any;
+   cl:any;
+   tkt:any=[];
+   t_done:any=[];
+   old_done:any;
+   
   constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo) {
     
    }
 
-
+   
 
   
  
 
   ngOnInit(): void {
+    // For Done
+
+    this.apollo.watchQuery<any>({
+      query: FETCH,
+      variables:{
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+         
+      },
+     
+      
+    })
+      .valueChanges
+      .subscribe(({ data}) => {
+        console.log(data);
+         this.old_done=data.getSuppLogDone.length;
+         console.log(this.old_done)
+        
+    
+     })
+
+     this.apollo.watchQuery<any>({
+      query: FETCH,
+      variables:{
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+         
+      },
+     pollInterval:20000
+      
+    })
+      .valueChanges
+      .subscribe(({ data}) => {
+        console.log(data);
+        console.log(this.old_done);
+   
+        if(this.old_done!=data.getSuppLogDone.length){
+          if(localStorage.getItem('user_Type')=='A'|| localStorage.getItem('user_Type')=='T' ||localStorage.getItem('user_Type')=='M'){
+          
+          for(let i=(data.getSuppLogDone.length-1);i>=this.old_done;i--){
+            this.toastr.infoToastr(data.getSuppLogDone[i].emp_name+" has successfully completed "+data.getSuppLogDone[i].client_name,'ALERT!!');
+          }
+          this.old_done=data.getSuppLogDone.length;
+        }
+      }
+      
+     })
+
+
+     
+  
+  // For Pending
+    this.apollo.watchQuery<any>({
+      query: GET_RAISETICKITE,
+      variables:{
+         id:"",
+         user_type:localStorage.getItem('user_Type'),
+         user_id:localStorage.getItem('UserId')
+         },
+  })
+   .valueChanges
+  .subscribe(({ data}) => {
+      this.old_value=data.getSupportLogDtls.length;
+
+      console.log(this.old_value);
+      for(let i=0;i<data.getSupportLogDtls.length;i++)
+      {
+        this.tkt[i]=data.getSupportLogDtls[i].tktStatus;
+        // this.t_done[i]=data.getSupportLogDtls[i].work_status;
+      }
+      
+   })
+
+     
+
+      this.apollo.watchQuery<any>({
+        query: GET_RAISETICKITE,
+        variables:{
+           id:"",
+           user_type:localStorage.getItem('user_Type'),
+           user_id:localStorage.getItem('UserId')
+           
+        },
+      
+        pollInterval:20000
+      })
+        .valueChanges
+        .subscribe(({data}) => {
+          // if(this.new_value!=data.getSupportLogDtls.length){
+            // if(this.old_value!=data.getSupportLogDtls.length){
+              
+            // }
+            // this.old_value=data.getSupportLogDtls.length;
+            // console.log(this.old_value);
+  
+            // console.log(this.new_value);
+          // }
+          console.log(data);
+          if(localStorage.getItem('user_Type')=='E'){
+            console.log(this.old_value);
+            if(this.old_value!=data.getSupportLogDtls.length){
+              
+              this.old_value=data.getSupportLogDtls.length;
+           
+              this.toastr.infoToastr("A new ticket has been assigned to you",data.getSupportLogDtls[data.getSupportLogDtls.length-1].client_name,{
+                position:'top-right',
+                animate:'slideFromRight',
+                  toastTimeout: (5000)
+              });
+            }
+          }
+            if(localStorage.getItem('user_Type')=='A'|| localStorage.getItem('user_Type')=='T' ||localStorage.getItem('user_Type')=='M') {
+             
+             for(let i=0;i<data.getSupportLogDtls.length;i++){
+               if(this.tkt[i]!=data.getSupportLogDtls[i].tktStatus && data.getSupportLogDtls[i].tktStatus=='Working'){
+                this.toastr.infoToastr(data.getSupportLogDtls[i].emp_name+" has started working on "+data.getSupportLogDtls[i].client_name,'ALERT!!');
+                this.tkt[i]=data.getSupportLogDtls[i].tktStatus;
+               }
+              //  if(this.t_done[i]!=data.getSupportLogDtls[i].work_status && data.getSupportLogDtls[i].work_status=="1"){
+              //   this.toastr.infoToastr(data.getSupportLogDtls[i].emp_name+" has successfully completed "+data.getSupportLogDtls[i].client_name,'ALERT!!');
+              //   this.t_done[i]=data.getSupportLogDtls[i].work_status;
+              //  }
+              
+              //  else if(this.tkt[i]!=data.getSupportLogDtls[i].tktStatus && data.getSupportLogDtls[i].tktStatus=='Working'){
+
+              //  }
+             }
+            //  if(data.getSupportLogDtls)
+            }
+           
+         
+        
+       
+  
+         
+        })
+  
+
+
+    // $(window).bind('beforeunload ', (eventObject:any) => {
+      // alert("CLOSE WINDOW");
+        //  this.logout();
+        
+      // console.log(eventObject);
+      // this.e=eventObject;
+    
+      // localStorage.setItem('Event',eventObject);
+
+       
+        // eventObject.preventDefault();
+        // console.log(eventObject.returnValue);
+        // console.log(eventObject.type);
+        // return eventObject.returnValue = "Are you sure you want to exit?";
+        
+   
+  
+   
+     
+// })
+  
+
+ 
+   console.log(localStorage.getItem('Event'));
+  
 
   console.log("Path:"+this.uri);
+
     // setTimeout(() => {
     //   this.logout();
-    // }, 21600000);
+    // },3600000 );
 
 
     // setTimeout(() => {
@@ -216,6 +434,18 @@ export class HeaderComponent implements OnInit {
     // console.log(this.emp_name);
     this.user_type = localStorage.getItem('user_Type');
     this.type= this.user_type =='A' ? 'Admin' : (this.user_type == 'M' ? 'Manager' : (this.user_type == 'T' ? 'Telecaller' : (this.user_type == 'E' ? 'Engineer' :  this.user_type == 'C' ? 'Client' :  'Viewer')));
+  //   console.log(this.emp+" " +this.cli);
+  //   if(localStorage.getItem('user_Type')=='A' || localStorage.getItem('user_Type')=='T')
+  //   {
+  //   if(this.cli!=null && this.emp!=null){
+    
+         
+  //     this.toastr.infoToastr(this.emp,"has started working on",this.cli);
+  //     this.emp=null;
+  //     this.cli=null;
+  //   }
+  // }
+
 
   },500);
 
@@ -236,7 +466,7 @@ this.apollo.watchQuery<any>({
       this.status='Working'
      }
   else{
-    this.logout();
+    // this.logout();
     this.lie=false;
     this.status='Idle';
   }
@@ -342,6 +572,9 @@ this.apollo.watchQuery<any>({
       
 
   }
+
+
+  
  
 
   logout(){

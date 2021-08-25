@@ -245,6 +245,7 @@ export class EditatComponent implements OnInit {
       this.edit=data;
       if(this.edit.updateAssignTkt.success==1){
         localStorage.setItem('edittickit','1');
+        localStorage.setItem('E_notify','1');
         this.router.navigate(['/operations/assignticket']).then(() => {
           window.location.reload();
       })

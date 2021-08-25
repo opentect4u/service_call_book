@@ -85,6 +85,11 @@ export class AttendanddeliverComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   dis:any;
   btn:any;
+  new_value:any;
+  old_value:any;
+  passdata:any[]=[];
+  emp:any;
+  cli:any;
 
 
   constructor(private router:Router,private apollo:Apollo,private spinner:NgxSpinnerService) { }
@@ -128,6 +133,17 @@ export class AttendanddeliverComponent implements OnInit {
     })
       .valueChanges
       .subscribe(({ data}) => {
+        // if(this.new_value!=data.getSupportLogDtls.length){
+          // if(this.old_value!=data.getSupportLogDtls.length){
+            
+          // }
+          // this.old_value=data.getSupportLogDtls.length;
+          // console.log(this.old_value);
+
+          // console.log(this.new_value);
+        // }
+        
+        
         for(let i=0;i<data.getSupportLogDtls.length;i++){
           if(data.getSupportLogDtls[i].tkt_status==''|| data.getSupportLogDtls[i].tkt_status!=null){
 
@@ -176,6 +192,8 @@ export class AttendanddeliverComponent implements OnInit {
          this.Tickite=data;
          this.putdata1(this.Tickite);
          this.spinner.hide();
+         
+        
       })
 
 
@@ -199,12 +217,17 @@ export class AttendanddeliverComponent implements OnInit {
 
   }
 
-  onToggle(event:any,id:any){
-  
+  onToggle(event:any,id:any,Emp_name:any,Client_name:any){
+   console.log(Emp_name,Client_name);
     this.btn = document.getElementById('av_'+id);
     if(event.checked == true){
       this.btn.removeAttribute('hidden');
       this.btn.style.display = "block";
+      this.passdata.push(Emp_name);
+      this.passdata.push(Client_name);
+      this.emp=Emp_name;
+      this.cli=Client_name;
+
     }else{
       this.btn.style.display = "none";
     }

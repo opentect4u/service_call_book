@@ -274,7 +274,7 @@
                                     <select class="form-control" name="module" #priority (click)="select_priority(priority.value)"
                                    >
 
-                                        <!-- <option value="{{this.prio}}">{{this.Priority}}</option> -->
+                                        <option value="">Select</option>
                                         <option *ngFor="let p of pmdata" value="{{p.priority_id}}" [selected]="this.prio==p.priority_id">{{p.priority_mode}}</option> 
 
                                     </select>
@@ -343,7 +343,7 @@
                                         <select class="form-control"  name="module" #module (click)="select_mm(module.value)"
                                        >
     
-                                            <!-- <option value="{{this.modul}}">{{this.Module}}</option> -->
+                                            <option value="">Select</option>
                                             <option *ngFor="let m of moddata" value="{{m.module_id}}" [selected]="this.modul==m.module_id">{{m.module_type}}</option>
                                             
     

@@ -25,6 +25,24 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
 }`
 ;
 
+// const GET_ATTENDED_DELIVERTICKITE=gql`
+// query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
+//   getSupportLogDtls(id:$id,tag:"0",user_type:$user_type,user_id:$user_id){
+//     id
+//     client_name
+//     phone_no
+//     tkt_no
+//     emp_name
+//     priority
+//     tktStatus,
+//     tkt_status
+//     log_in
+//     work_status
+//     prob_reported
+//   }
+// }`
+// ;
+
 
 const FOR_GET_EMPLOYEE=gql`
 query{
@@ -44,6 +62,8 @@ mutation  updateAssignEng($user_id:String!, $id: String!, $assign_engg: String!)
 }
 
 `
+
+
 
 
 @Component({
@@ -67,6 +87,8 @@ export class AssignticketComponent implements OnInit {
   Tickite:any;
   edittickit:boolean=true;
   popup:any;
+  old_value:any;
+  new_value:any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -74,12 +96,9 @@ export class AssignticketComponent implements OnInit {
   constructor(private router:Router,private apollo:Apollo,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-
     
 
-
-
-       if( localStorage.getItem('edittickit')=='1'){
+  if( localStorage.getItem('edittickit')=='1'){
             this.edittickit=false;
        }
      
@@ -147,6 +166,7 @@ export class AssignticketComponent implements OnInit {
       .subscribe(({ data}) => {
 
          this.Tickite=data;
+
          this.putdata(this.Tickite);
          this.spinner.hide();
       })

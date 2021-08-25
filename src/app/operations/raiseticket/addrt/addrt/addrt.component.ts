@@ -224,11 +224,16 @@ export class AddrtComponent implements OnInit {
            this.amc_upto=data.getClient[0].amc_upto;
            this.rental_upto=data.getClient[0].rental_upto;
            this.phone_no=data.getClient[0].phone_no;
-
+               
 
           })
 
-
+            if(this.phone_no==''){
+              this.phone_val=true;
+            }
+            else{
+              this.phone_val=false;
+            }
     }
   }
   select_mm(v:any){

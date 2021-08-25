@@ -250,7 +250,10 @@ this.apollo.watchQuery<any>({
     this.total[i]=data.totalTktByClient[i].total_tkt
     
     this.cli_typ[i]=data.totalTktByClient[i].client_type;
-    this.colors4[i]='#'+Math.floor(Math.random()*18777219).toString(16)
+    this.colors4[i]='#'+Math.floor(Math.random()*18777219).toString(16);
+    // var o = Math.round, r = Math.random, s = 255;
+    // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .2 + ')';
+    // this.colors4[i]=g;
      }
   
 
@@ -302,6 +305,9 @@ query:SHOW_EMPLOYWW,
   this.Done[i]=data.workDone[i].done;
   this.Emp[i]=data.workDone[i].emp_name;
   this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
+  // var o = Math.round, r = Math.random, s = 255;
+  // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .4+ ')';
+  // this.colors2[i]=g;
    }
   // console.log(this.Done);
   // console.log(this.Emp);
@@ -356,6 +362,9 @@ this.apollo.watchQuery<any>({
     this.tkt_stat[i]=data.openTktByStatus[i].tkt_status;
     this.stat[i]=data.openTktByStatus[i].status;
     this.colors1[i]= '#'+Math.floor(Math.random()*16777217).toString(16);
+    // var o = Math.round, r = Math.random, s = 255;
+    // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .4+ ')';
+    // this.colors1[i]=g;
     // console.log(this.colors1[i])
     }
     // console.log(this.tkt_stat);
@@ -421,6 +430,9 @@ this.apollo.watchQuery<any>({
           this.no_tkt[i]=data.totalTktByDate[i].no_tkt;
           this.date_time[i]=data.totalTktByDate[i].date_name;
           this.colors3[i]= '#'+Math.floor(Math.random()*16777212).toString(16);
+          // var o = Math.round, r = Math.random, s = 255;
+          // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .4+ ')';
+          // this.colors3[i]=g;
           }
 
      var myChart = new Chart('ctx', {

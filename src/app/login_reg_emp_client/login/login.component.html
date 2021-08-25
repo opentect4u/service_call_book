@@ -125,7 +125,8 @@
 			<input type="text" class="form-control LoginEmailPasswordForm-passwordInput p-2"
 			formControlName="captcha"
 			[ngClass]="{'is-invalid': login && f.captcha.errors }"
-			appRightclickoff  ondrop="return false" onpaste="return false">
+			appRightclickoff  ondrop="return false" onpaste="return false"
+			>
 
 			<div *ngIf="login && f.captcha.errors  " class="invalid-feedbackb text-danger">
 				<div *ngIf="f.captcha.errors.required "><small>*Please Enter captcha</small></div>
@@ -135,10 +136,8 @@
 
 
 
-			<input type="text" class="form-control float-left " id="capt_login" oncopy="return false"  disabled
-
-			>
-		   <i class="fa fa-refresh  ml-2 mt-3 " aria-hidden="true" (click)="refresh_captcha()" id="refresh"></i>
+			<input type="text" class="form-control float-left " id="capt_login" oncopy="return false"  disabled>
+		   <i class="fa fa-refresh  ml-2 mt-4" aria-hidden="true" (click)="refresh_captcha()" id="refresh"></i>
 
 			<small *ngIf="captch" class="text-danger ml-2">*{{this.errormsg}}</small>
 

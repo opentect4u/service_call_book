@@ -295,6 +295,7 @@
                                 <div class="col-sm-3">
                                     <select class="form-control" name="module" #priority (click)="select_priority(priority.value)" (change)="select_priority(priority.value)">
 
+                                        <option value="">Select</option>
                                         <!-- <option value="p.priority_id=='3'" selected>{{p.priority_mode}}</option> -->
                                         <option *ngFor="let p of pmdata" value="{{p.priority_id}}" [selected]="p.priority_id == '3'">{{p.priority_mode}}</option>
 
