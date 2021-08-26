@@ -5,6 +5,7 @@ import { interval } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { global } from 'src/app/global';
 
+
 //import {MatDialog} from '@angular/material/dialog';
 
 
@@ -15,6 +16,7 @@ const GET_DATA_A = gql`
 query getUserDetailsA($tag:String!){
   getUserDetailsA(tag:$tag){
     id
+    code_no
     user_name
     user_type
     user_status
@@ -63,6 +65,7 @@ export class SidebarComponent implements OnInit {
   Etype:boolean=true;
   Ctype:boolean=true;
   user:any;
+  u_id:any;
   done_dt_frm=true;
   done_dt_to=true;
   done=true;
@@ -131,8 +134,8 @@ export class SidebarComponent implements OnInit {
 
 //  }
     })
-
-
+   
+    this.u_id=localStorage.getItem('UserId');
 
 
 
@@ -149,6 +152,13 @@ export class SidebarComponent implements OnInit {
         console.log(data);
   
         this.user_data = data.getUserDetailsA;
+        for(let i=0;i<this.user_data.length;i++){
+          console.log(this.user_data[i].code_no);
+        }
+         
+       
+        
+
        
   
        

@@ -103,7 +103,7 @@
     <small class="text-center text-white ml-4 mt-2"><strong>Engineer Status</strong></small>
     <ul id="accordion" class="accordion" *ngFor="let u of user_data">
     
-      <li *ngIf="u.login_status=='1'||u.login_status=='2'"  class="text-white">
+      <li *ngIf="(u.login_status=='1'||u.login_status=='2') && u.code_no!=u_id"  class="text-white">
      
         <div class="link log">
 

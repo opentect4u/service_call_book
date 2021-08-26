@@ -3,9 +3,11 @@ import { Component, OnDestroy, OnInit,ViewEncapsulation,HostListener, Input } fr
 import { ToastrManager } from 'ng6-toastr-notifications';
 import moment from 'moment';
 
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { global } from 'src/app/global';
+import { ConnectionService } from 'ng-connection-service';
 declare var $: any; 
 const REMOVE_IMAGE=gql`
 mutation removeImage($user_id:String!){
@@ -222,8 +224,31 @@ export class HeaderComponent implements OnInit {
    tkt:any=[];
    t_done:any=[];
    old_done:any;
+   Status = 'ONLINE';
+   isConnected = true;
    
-  constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo) {
+  constructor(private router:Router,public toastr: ToastrManager,private apollo:Apollo,private connectionService: ConnectionService) {
+
+    this.connectionService.monitor().subscribe(isConnected => {
+      this.isConnected = isConnected;
+      if (this.isConnected) {
+        // this.Status = "ONLINE";
+        this.toastr.successToastr("You are back online",'Yeah!!',{
+          position: 'top-full-width',
+          animate:'slideFromTop',
+          setTimeout:15000
+
+        })
+      }
+      else {
+       
+        this.toastr.errorToastr("You are offline.Wait until your network is back" ,"Oops!!",{
+          position: 'top-full-width',
+          animate:'slideFromTop',
+          });
+        // this.Status = "OFFLINE";
+      }
+    })
     
    }
 
@@ -273,7 +298,7 @@ export class HeaderComponent implements OnInit {
           if(localStorage.getItem('user_Type')=='A'|| localStorage.getItem('user_Type')=='T' ||localStorage.getItem('user_Type')=='M'){
           
           for(let i=(data.getSuppLogDone.length-1);i>=this.old_done;i--){
-            this.toastr.infoToastr(data.getSuppLogDone[i].emp_name+" has successfully completed "+data.getSuppLogDone[i].client_name,'ALERT!!');
+            this.toastr.successToastr(data.getSuppLogDone[i].emp_name+" has successfully completed "+data.getSuppLogDone[i].client_name,'Task completed!!');
           }
           this.old_done=data.getSuppLogDone.length;
         }
@@ -348,7 +373,7 @@ export class HeaderComponent implements OnInit {
              
              for(let i=0;i<data.getSupportLogDtls.length;i++){
                if(this.tkt[i]!=data.getSupportLogDtls[i].tktStatus && data.getSupportLogDtls[i].tktStatus=='Working'){
-                this.toastr.infoToastr(data.getSupportLogDtls[i].emp_name+" has started working on "+data.getSupportLogDtls[i].client_name,'ALERT!!');
+                this.toastr.infoToastr(data.getSupportLogDtls[i].emp_name+" has started working on "+data.getSupportLogDtls[i].client_name,'Task Commenced!!');
                 this.tkt[i]=data.getSupportLogDtls[i].tktStatus;
                }
               //  if(this.t_done[i]!=data.getSupportLogDtls[i].work_status && data.getSupportLogDtls[i].work_status=="1"){
