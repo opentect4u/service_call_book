@@ -298,6 +298,7 @@ export class HeaderComponent implements OnInit {
           if(localStorage.getItem('user_Type')=='A'|| localStorage.getItem('user_Type')=='T' ||localStorage.getItem('user_Type')=='M'){
           
           for(let i=(data.getSuppLogDone.length-1);i>=this.old_done;i--){
+            this.playAudio();
             this.toastr.successToastr(data.getSuppLogDone[i].emp_name+" has successfully completed "+data.getSuppLogDone[i].client_name,'Task completed!!');
           }
           this.old_done=data.getSuppLogDone.length;
@@ -356,23 +357,77 @@ export class HeaderComponent implements OnInit {
             // console.log(this.new_value);
           // }
           console.log(data);
+          console.log("Done Data:" +this.old_done)
           if(localStorage.getItem('user_Type')=='E'){
             console.log(this.old_value);
-            if(this.old_value!=data.getSupportLogDtls.length){
+
+            if(this.old_value<data.getSupportLogDtls.length){
+              console.log("OLD VALUE:" +this.old_value+" "+"NEW VALUE:"+data.getSupportLogDtls.length);
               
               this.old_value=data.getSupportLogDtls.length;
+              this.playAudio();
            
               this.toastr.infoToastr("A new ticket has been assigned to you",data.getSupportLogDtls[data.getSupportLogDtls.length-1].client_name,{
                 position:'top-right',
                 animate:'slideFromRight',
-                  toastTimeout: (5000)
+                  toastTimeout: (10000)
               });
+              // this.toastr.customToastr(
+              //   '<span style="background-color: #282a3c;color:white; font-size: 16px; text-align: center;">A new ticket has been assigned to you</span>',
+              //    'alert!!',
+              //   { enableHTML: true }
+              //   );
             }
+            if(this.old_value>data.getSupportLogDtls.length){
+          //  alert("Hello");
+           console.log("OLD VALUE:" +this.old_value+" "+"New Value"+" "+data.getSupportLogDtls.length);
+              this.apollo.watchQuery<any>({
+                query: FETCH,
+                variables:{
+                   user_type:localStorage.getItem('user_Type'),
+                   user_id:localStorage.getItem('UserId')
+                   
+                },
+               
+                
+              })
+                .valueChanges
+                .subscribe(({ data}) => {
+                  console.log(data);
+              
+                  //  this.old_done=data.getSuppLogDone.length;
+                   console.log("New Data Leangth:" +data.getSuppLogDone.length +" "+"Old Data length"+" "+this.old_done);
+                   if(this.old_done==data.getSuppLogDone.length){
+                    this.playAudio();
+                     this.toastr.warningToastr("An assignement of yours has been re-assigned to someone else","Alert!!",{   position:'top-right',
+                     animate:'slideFromRight',
+                       toastTimeout: (10000)
+                   });
+                   }
+                  
+              
+               })
+          
+
+            }
+          //  if(this.old_value>data.getSupportLogDtls.length && this.old_done==data.getSuppLogDone.length){
+          //    alert("You are removed");
+
+                      
+          //     this.old_value=data.getSupportLogDtls.length;
+          //   }
+           
+
+          
+           
           }
             if(localStorage.getItem('user_Type')=='A'|| localStorage.getItem('user_Type')=='T' ||localStorage.getItem('user_Type')=='M') {
              
              for(let i=0;i<data.getSupportLogDtls.length;i++){
+               
                if(this.tkt[i]!=data.getSupportLogDtls[i].tktStatus && data.getSupportLogDtls[i].tktStatus=='Working'){
+                 console.log("Loop value:"+i);
+                this.playAudio();
                 this.toastr.infoToastr(data.getSupportLogDtls[i].emp_name+" has started working on "+data.getSupportLogDtls[i].client_name,'Task Commenced!!');
                 this.tkt[i]=data.getSupportLogDtls[i].tktStatus;
                }
@@ -387,6 +442,7 @@ export class HeaderComponent implements OnInit {
              }
             //  if(data.getSupportLogDtls)
             }
+            
            
          
         
@@ -908,6 +964,14 @@ console.log(data);
 })
 
 
+}
+
+
+playAudio(){
+  let audio = new Audio();
+  audio.src = "../../../../assets/mp3/mixkit-message-pop-alert-2354.mp3";
+  audio.load();
+  audio.play();
 }
 
 }

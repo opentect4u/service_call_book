@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Apollo, gql } from 'apollo-angular';
+import { global } from 'src/app/global';
 
 export interface PeriodicElement {
   position: number;
@@ -27,8 +28,76 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, Log: '08-08-2021', Assignedto: 'Amit Kumar Jha', Status: 'Working'},
 ];
 
+// For client Last ticket of current day
+const CLIEN_LAST_TKT_OF_CURRENT_DAY=gql`
+query  clientLastTke($user_id: String!){
+  clientLastTke(user_id:$user_id){
+    id
+    emp_name
+    email
+    phone_no
+    tkt_no
+    log_in
+    assign_engg
+    work_status
+  }
+}`
 
+// For client Monthly tickite
+const CLIENT_MONTHLY_TKT=gql`
 
+query  clientMonthlySupport($user_id:String!){
+  clientMonthlySupport(user_id:$user_id){
+    no_tkt
+    date_name
+  }
+}`
+
+// FOR GETTING NUMBER OF TICKITES OPEN,CLOSE AND TOTAL FOR CLIENT
+const CLIENT_OPEN_CLOSE_TOTAL_TICKITE=gql`
+query  clientOpenCloseTkt($user_id:String!){
+  clientOpenCloseTkt(user_id: $user_id){
+    opened
+    closed
+  }
+}`
+// For getting employee details
+const GET_PROFILE=gql`
+query getProfileDtls($user_email:String!,$user_type:String!){
+  getProfileDtls(user_email:$user_email, user_type: $user_type){
+    id
+    user_type
+    emp_code
+    emp_name
+    phone_no
+    email
+    emp_designation
+    remarks
+    client_name
+    district_id
+    client_type_id
+    oprn_mode_id
+    client_addr
+    working_hrs
+    amc_upto
+    rental_upto
+    image
+  }
+}`;
+
+const GET_CLIENT_TICKITES_DETAILS=gql`
+query clientGetTktDashboard($client_id:String!){
+  clientGetTktDashboard(client_id:$client_id){
+    id
+    tkt_no
+    tktStatus
+    work_status
+    assign_engg
+    log_in
+    emp_name
+    email
+  }
+}`;
 
 const GET_DATA_A = gql`
 query getUserDetailsA($tag:String!){
@@ -109,8 +178,9 @@ query totalTktByClient($user_type: String!, $user_id: String!){
 })
 export class DashboardComponent implements OnInit,AfterViewInit {
 
-   displayedColumns2: string[] = ['position', 'Log', 'Assignedto', 'Status'];
-  dataSource2 = ELEMENT_DATA;
+   displayedColumns2: string[] = ['position', 'Log', 'Assignedto', 'Action'];
+  // dataSource2 = ELEMENT_DATA;
+  dataSource2 = new MatTableDataSource<any>();
 
   displayedColumns1: string[] = ['Id','Status','Count'];
   dataSource1 = new MatTableDataSource<any>();
@@ -120,6 +190,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   show_profile:boolean=true;
+  details_tickite:any=[];
   colors1:any=[];
   colors2:any=[];
   colors3:any=[];
@@ -132,6 +203,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    cli_typ:any=[];
    background_color_for_1st_pie_chart:any=[];
   // myChart:any=[];
+  uri=global.img;
+  Email:any;
+  pn:any;
+  i:any;
+  EMP_NAME:any;
   piechart:any;
   pi:any;
   user_data:any;
@@ -153,14 +229,51 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    clos:any;
    randomColor:any
   formattedDate : any;
+  details:any;
+  employee_name:any;
+  employee_phone:any;
+  employee_email:any;
+  emp_img:any;
+  emp_id:any;
+  client_last_tkt_no:any;
+  client_last_tkt_log_date:any;
+  client_last_tkt_wrk_status:any;
+  
   constructor(private router:Router,private apollo:Apollo) {
 
   }
 
   ngOnInit(): void {
+  // For Client Last tickit of Current day
+    this.apollo.watchQuery<any>({
+      query:CLIEN_LAST_TKT_OF_CURRENT_DAY,
+      variables:{
+        user_id:localStorage.getItem('UserId')
+      },
+      pollInterval:40000,
+      fetchPolicy:'cache-and-network'
+    }).valueChanges.subscribe(({data})=>{
+          console.log(data);
+          this.employee_name=data.clientLastTke[0].emp_name;
+          this.employee_email=data.clientLastTke[0].email;
+          this.employee_phone=data.clientLastTke[0].phone_no;
+          this.emp_img=data.clientLastTke[0].image?this.uri+data.clientLastTke[0].image:'/assets/profile.png';
+          this.emp_id=data.clientLastTke[0].assign_engg;
+          this.client_last_tkt_no=data.clientLastTke[0].tkt_no;
+          this.client_last_tkt_log_date=data.clientLastTke[0].log_in;
+          this.client_last_tkt_wrk_status=data.clientLastTke[0].work_status;
+          console.log("Employee PhoneNo." +this.employee_phone);
+          
+
+
+
+    })
+
+  
+
     
     this.randomColor = Math.floor(Math.random()*16777215).toString(16);
-    // this.fetch_data();
+    this.fetch_data();
     // this.fetch_data1();
 
 
@@ -204,13 +317,15 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         this.this_year= data.closeTkt[0].this_year;
         this.lifetime= data.closeTkt[0].lifetime;
 
+        
+
       })
 
 
 
 
      this.apollo.watchQuery<any>({
-      query:OPEN_CLOSE_TKT,
+      query: localStorage.getItem('user_Type') != 'C' ? OPEN_CLOSE_TKT : CLIENT_OPEN_CLOSE_TOTAL_TICKITE,
       variables: {
         user_type:localStorage.getItem('user_Type'),
         user_id:localStorage.getItem('UserId')
@@ -221,7 +336,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       .valueChanges
       .subscribe(({ data, loading }) => {
       
-        this.tkt = data.openCloseTkt[0];
+        this.tkt = localStorage.getItem('user_Type') != 'C' ? data.openCloseTkt[0] : data.clientOpenCloseTkt[0];
         this.op=this.tkt.opened;
          this.clos=this.tkt.closed;
          this.tot=this.op+this.clos;
@@ -288,7 +403,7 @@ var MyPie = new Chart('pie3', {
 
 // For 2nd horizontal bar chart 
 this.apollo.watchQuery<any>({
-query:SHOW_EMPLOYWW,
+query: localStorage.getItem('user_Type') != 'C' ? SHOW_EMPLOYWW : CLIENT_MONTHLY_TKT,
   variables: {
     user_type:localStorage.getItem('user_Type'), 
     user_id:localStorage.getItem('UserId')
@@ -299,16 +414,28 @@ query:SHOW_EMPLOYWW,
 }) .valueChanges
 .subscribe(({ data, loading }) => {
   // console.log(data);
-
-  for(let i=0;i<data.workDone.length;i++){
+  if(localStorage.getItem('user_Type') != 'C'){
+    for(let i=0;i<data.workDone.length;i++){
     
-  this.Done[i]=data.workDone[i].done;
-  this.Emp[i]=data.workDone[i].emp_name;
-  this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
-  // var o = Math.round, r = Math.random, s = 255;
-  // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .4+ ')';
-  // this.colors2[i]=g;
-   }
+      this.Done[i]=data.workDone[i].done;
+      this.Emp[i]=data.workDone[i].emp_name;
+      this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
+      // var o = Math.round, r = Math.random, s = 255;
+      // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .4+ ')';
+      // this.colors2[i]=g;
+       }
+  }else{
+    for(let i=0;i<data.clientMonthlySupport.length;i++){
+    
+      this.Done[i]=data.clientMonthlySupport[i].no_tkt;
+      this.Emp[i]=data.clientMonthlySupport[i].date_name;
+      this.colors2[i]='#'+Math.floor(Math.random()*16777215).toString(16)
+      // var o = Math.round, r = Math.random, s = 255;
+      // var g= 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + .4+ ')';
+      // this.colors2[i]=g;
+       }
+  }
+  
   // console.log(this.Done);
   // console.log(this.Emp);
 
@@ -493,9 +620,32 @@ this.apollo.watchQuery<any>({
 
 }
 
+go_to_update(v:any){
+  console.log(v);
+  this.router.navigate(['/Edit/clientraiseticket',v]);
 
-// fetch_data() {
+}
 
+
+public fetch_data() {
+    // For Client Dashboard
+    this.apollo.watchQuery<any>({
+      query:GET_CLIENT_TICKITES_DETAILS,
+      variables:{
+        client_id:localStorage.getItem('UserId')
+      },
+      pollInterval:40000
+
+    }).valueChanges.subscribe(({data})=>{
+      console.log(data);
+      this.details_tickite=data.clientGetTktDashboard;
+
+      this.put_data(this.details_tickite);
+
+
+    })
+
+}
 //   this.apollo.watchQuery<any>({
 //     query:GET_DATA_A,
 //     variables: {
@@ -565,7 +715,9 @@ ngAfterViewInit() {
 
 }
 
-
+public put_data(v:any){
+  this.dataSource2=new MatTableDataSource(v);
+}
 
 
 
@@ -584,6 +736,27 @@ showprofile(){
   this.show_profile=false;
 
 }
+
+get_emp_details(v:any,v1:any)
+{
+  this.apollo.watchQuery<any>({
+    query: GET_PROFILE,
+    variables:{
+      user_email:v.toString(),
+      user_type:'E'
+    },
+    // pollInterval:60000
+    fetchPolicy:'network-only'
+  }).valueChanges
+  .subscribe(({ data}) => {
+    // console.log(data);
+    this.pn=data.getProfileDtls[0].phone_no;
+    this.EMP_NAME=v1;
+     this.Email=v;
+     this.i=data.getProfileDtls[0].image?this.uri+data.getProfileDtls[0].image:'/assets/profile.png';})
+}
+
+
 
 
 

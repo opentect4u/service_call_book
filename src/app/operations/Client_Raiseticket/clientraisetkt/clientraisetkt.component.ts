@@ -12,8 +12,10 @@ query clientGetTkt($client_id:String!){
   clientGetTkt(id: "",client_id:$client_id){
     tkt_no
     log_in
-    work_status,
+    work_status
     id
+    assign_engg
+    
   }
 }`
 
@@ -78,7 +80,7 @@ export class ClientraisetktComponent implements OnInit {
          id:"",
          client_id:localStorage.getItem('UserId'),
         },
-      // pollInterval: 500
+      pollInterval: 20000
     })
       .valueChanges
       .subscribe(({ data}) => {
@@ -119,7 +121,7 @@ export class ClientraisetktComponent implements OnInit {
 
   go_to_update(v:any){
     console.log(v)
-  this.router.navigate(['/Edit/clientraiseticket',v]);
+    this.router.navigate(['/Edit/clientraiseticket',v]);
 
   }
 

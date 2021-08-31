@@ -230,5 +230,15 @@
       max-height: calc(100vh - 50px);
       overflow-y: auto;
   }
+/* 
+  .profile_modal{
+    border-radius:10%;
+  } */
+
+  .toast-custom{
+        background-color:#282a3c;
+        color:whitesmoke;
+  }
+
 
  

@@ -5,8 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {Apollo, gql} from 'apollo-angular';
 import { NgxSpinnerService } from 'ngx-spinner';
-const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!){
-  searchByTktNo(tkt_no: $tkt_no, user_id: $user_id){
+const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!,$user_type:String!){
+  searchByTktNo(tkt_no: $tkt_no, user_id: $user_id,user_type:$user_type){
     id
     log_in
     tkt_no
@@ -61,7 +61,8 @@ export class SearchByTicketComponent implements OnInit {
      variables:{
        tkt_no:this.tkt,
 
-       user_id:this.type
+       user_id:this.type,
+       user_type:localStorage.getItem('user_Type')
      }
    })
      .valueChanges

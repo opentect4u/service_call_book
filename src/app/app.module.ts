@@ -198,7 +198,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatSlideToggleModule,
     MatTooltipModule,
 
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
     // ToastrModule.forRoot({
     //   timeOut: 10000,
     //   positionClass: 'toast-top-center',

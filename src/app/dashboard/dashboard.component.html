@@ -60,19 +60,19 @@
                   <mat-card-content *ngIf="u_type=='C'">
                     <div class="row">
                       <div class="col-3 text-center text-success">
-                       <h1>0</h1>
+                       <h1>{{this.op}}</h1>
                        <span >Opened</span>
 
 
                       </div>
                       <div class="col-3 text-center ">
-                       <h1>0</h1>
+                       <h1>{{this.clos}}</h1>
                        <span >Closed</span>
                       </div>
 
                       <div class="col-3 text-center text-primary">
                         
-                        <h1>0</h1>
+                        <h1>{{this.tot}}</h1>
                        <span >Total</span>
                       </div>
                       
@@ -179,6 +179,182 @@
 
 
               </mat-grid-tile>
+                 
+              <!-- For clients -->
+                  <!-- <mat-grid-tile rowspan="3" colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type=='C'">
+                    <mat-card>
+                      <div class="card-header">
+                       <ul class="card-list">
+                         <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets of last seven days</b></h5></li>
+                         <li><small> <i class="fa fa-caret-up"></i></small></li>
+                       </ul>
+                     </div>
+                     <mat-card-content >
+    
+                      
+    
+    
+    
+                     </mat-card-content>
+                   
+    
+                    </mat-card>
+    
+                  </mat-grid-tile> -->
+
+                  
+                   <!--1st horizontal bar Chart --> 
+                <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded"  >
+
+                  <mat-card >
+                    <div class="card-header">
+                     <ul class="card-list">
+                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Ticket Status</b></small></li>
+                       <li><small> <i class="fa fa-caret-up"></i></small></li>
+                     </ul>
+                   </div><br>
+                   <mat-card-content *ngIf="u_type!='C'">
+
+                    <div style="display: block" class="mt-5" id="outerpie"  style="width:100%;height:50vh;">
+                      <canvas id="pie1" 
+                      
+                      ></canvas>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-content *ngIf="u_type=='C'">
+                    <!-- <mat-grid-list  [cols]="3" gutterSize="10px" rowHeight="80px" class="mt-5">
+                      <mat-grid-tile class="tile1 rounded-pill shadow-lg  bg-body">tile1</mat-grid-tile>
+                      <mat-grid-tile class=' rounded-pill  shadow-lg  bg-body'>tile2</mat-grid-tile>
+                      <mat-grid-tile class="tile2  rounded-pill  shadow-lg  bg-body">tile3</mat-grid-tile>
+                    </mat-grid-list>
+                    <br><br>
+                    <mat-divider></mat-divider>
+                    <br><br>
+
+                   <mat-card>
+                     <div class="row">
+                       <div class="col-md-3 text-center"> <img src="assets/profile.png" class="rounded-circle" height="80px" width="80px"></div>
+                       <div class="col-md-6 text-center pt-5">
+                         <b>Suman Mitra</b>
+                        
+                         <p>sumanmitra0096@gmail.com</p>
+                        </div>
+                       <div class="col-md-3 text-center pt-5">
+                        <button class="btn hover-class " style="background-color: #282a3c;color:white"><i class="fa fa-wechat"></i>&nbsp;Message</button>
+                        
+                       </div>
+
+
+
+                      
+                     </div>
+                   </mat-card>
+                    <br>
+                    <div class="text-center">
+                      <button class="btn hover-class mt-2 rounded-pill" style="background-color: #282a3c;color:white; width:50%"><small><i class="fa fa-eye"></i>&nbsp;View Tickets</small></button>
+         
+                    </div> -->
+                   
+                   
+                      
+                   
+                    <mat-grid-list [cols]="3" gutterSize="20px" rowHeight="80px" class="mt-5">
+                      <mat-grid-tile class="rounded-pill shadow-lg  bg-body">
+                       
+                        <mat-card  class="rounded-pill text-white mat-card1">
+                        <mat-card-content class="text-center">
+                          <h5>Ticket No</h5><br>
+                          <small><b>{{client_last_tkt_no}}</b></small>
+                        </mat-card-content>
+                        </mat-card>
+                      </mat-grid-tile>
+                      <mat-grid-tile class="rounded-pill shadow-lg  bg-body">
+                        <mat-card  class="rounded-pill text-center">
+                          <mat-card-content >
+                            <h5>Log Date</h5><br>
+                            <small><b>{{client_last_tkt_log_date | date: 'dd/MM/yyyy HH:mm'}}</b></small>
+                          </mat-card-content>
+                          </mat-card>
+                   
+                      </mat-grid-tile>
+                      <mat-grid-tile class="rounded-pill shadow-lg  bg-body">
+                      
+                        <mat-card  class="rounded-pill  mat-card2 text-white ">
+                        <mat-card-content class="text-center">
+                          <h5>Work Status</h5><br>
+                          <p *ngIf="client_last_tkt_wrk_status==0"><b class="dot3">pending...</b></p>
+                          <p *ngIf="client_last_tkt_wrk_status==1"><b>
+                            Done
+                          </b></p>
+                        </mat-card-content>
+                        </mat-card>
+                      </mat-grid-tile>
+                    </mat-grid-list><br>
+                    <mat-divider></mat-divider>
+                    
+                    <div class="card mt-5 rounded-3" style="max-width: 570px;" *ngIf="this.emp_id>0">
+                      <div class="row g-0">
+                        <div class="col-md-4 text-center">
+                          <img src="{{this.emp_img}}" class="img-fluid rounded-pill mt-5" alt="Enginner Img" height="80px" width="80px">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body ">
+                            <h4 class="card-title"><i class="fa fa-user-circle-o p-2 text-muted"></i><b>{{this.employee_name}}</b></h4><br>
+                            <p class="card-text"><i class="fa fa-phone p-2 text-muted"></i><b>{{this.employee_phone}}</b></p>
+                            <p class="card-text"><i class="fa fa-envelope p-2 text-muted"></i><small class="text-dark"><b>{{this.employee_email}}</b></small></p>
+                            <!-- <button class="btn btn-info m-1">Message</button> -->
+                            <button mat-raised-button  class='hover-class btn-lg rounded-pill pull-right mb-2' style="background-color:#282a3c;color:white;"><small><i class="fa fa-wechat"></i>&nbsp;Message</small></button>
+
+
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                    <button   class='hover-class btn  btn-lg rounded-pill mt-3' style="background-color:#282a3c;color:white;"><small><i class="fa fa-eye"></i>&nbsp;View Tickets</small></button>
+
+                      </div>
+                    </div>
+
+                    
+
+
+                 
+
+                   
+                  </mat-card-content>
+                
+               </mat-card>
+  
+                </mat-grid-tile>
+
+
+
+                 <!--2nd horizontal bar Chart -->  <!-- Not For clients -->
+                 <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded">
+
+                  <mat-card >
+                    <div class="card-header">
+                     <ul class="card-list">
+                       <li *ngIf="u_type!='C'"><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Progress Status</b></small></li>
+                       <li *ngIf="u_type=='C'"><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Monthly Tickites Status</b></small></li>
+                       <li><small> <i class="fa fa-caret-up"></i></small></li>
+                     </ul>
+                   </div><br>
+                   <mat-card-content >
+
+                    <div style="display: block" class="mt-5" style="width:100%;height:50vh;">
+                      <canvas id="pie2"></canvas>
+                    </div>
+                  </mat-card-content>
+                
+               </mat-card>
+  
+                </mat-grid-tile>
+
+
 
 
               <!-- For Clients -->
@@ -186,7 +362,7 @@
                 <mat-card>
                   <div class="card-header">
                    <ul class="card-list">
-                     <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class='p-1' style="color:#282a3c">Ticket Status</b></h5></li>
+                     <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class='p-1' style="color:#282a3c">Last 10 Tickets</b></h5></li>
                      <li><small> <i class="fa fa-caret-up"></i></small></li>
                    </ul>
                  </div>
@@ -208,21 +384,24 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="Log">
                       <th mat-header-cell *matHeaderCellDef   class="bg-success text-white"> Log Date </th>
-                      <td mat-cell *matCellDef="let element" > {{element.Log}} </td>
+                      <td mat-cell *matCellDef="let element" > {{element.log_in |  date: 'dd/MM/yyyy HH:mm'}} </td>
                     </ng-container>
                   
                     <!-- Weight Column -->
                     <ng-container matColumnDef="Assignedto">
-                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white"> Assigned To </th>
+                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white">Assigned To</th>
                       <!-- <td mat-cell *matCellDef="let element" class="text-center" style="cursor:pointer" data-toggle="modal" data-target="#myModal"> {{element.Assignedto}} </td> -->
-                      <td mat-cell *matCellDef="let element" style="cursor:pointer" ><p [matMenuTriggerFor]="menuHero">{{element.Assignedto}} </p> </td>
+                      <td mat-cell *matCellDef="let element" style="cursor:pointer" ><p [matMenuTriggerFor]="menuHero" (click)="get_emp_details(element.email,element.emp_name)">{{element.emp_name}} </p> </td>
                     
                     </ng-container>
                   
                     <!-- Symbol Column -->
-                    <ng-container matColumnDef="Status">
-                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white">Status</th>
-                      <td mat-cell *matCellDef="let element" >{{element.Status}}</td>
+                    <ng-container matColumnDef="Action">
+                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white text-center" >Action</th>
+                      <td mat-cell *matCellDef="let element" class="text-center">
+                        <a (click)="go_to_update(element.id)"><i class="fa fa-eye" style="color:#282a3c"></i></a> 
+                      
+                      </td>
                     </ng-container>
                   
                     <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -436,50 +615,7 @@
                 </mat-card>
                 </mat-grid-tile>  -->
 
-                   <!--1st horizontal bar Chart -->  <!-- Not For clients -->
-                <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded"  *ngIf="u_type!='C'">
 
-                  <mat-card >
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Ticket Status</b></small></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div><br>
-                   <mat-card-content>
-
-                    <div style="display: block" class="mt-5" id="outerpie"  style="width:100%;height:50vh;">
-                      <canvas id="pie1" 
-                      
-                      ></canvas>
-                    </div>
-                  </mat-card-content>
-                
-               </mat-card>
-  
-                </mat-grid-tile>
-
-
-                 <!--2nd horizontal bar Chart -->  <!-- Not For clients -->
-                <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded"  *ngIf="u_type!='C'">
-
-                  <mat-card >
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Progress Status</b></small></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div><br>
-                   <mat-card-content >
-
-                    <div style="display: block" class="mt-5" style="width:100%;height:50vh;">
-                      <canvas id="pie2"></canvas>
-                    </div>
-                  </mat-card-content>
-                
-               </mat-card>
-  
-                </mat-grid-tile>
 
 
                  <!-- Not For clients -->
@@ -510,31 +646,7 @@
 
 
 
-                 <!-- For clients -->
-                <mat-grid-tile rowspan="3" colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type=='C'">
-                  <mat-card>
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets of last seven days</b></h5></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div>
-                   <mat-card-content >
-  
-                      <!-- <div  id="container" class="mt-5" style="width:100%;height:50vh;">
-                       <canvas id="ctx">
-  
-                       </canvas>
-                      </div> -->
-  
-  
-  
-                   </mat-card-content>
-                 
-  
-                  </mat-card>
-  
-                </mat-grid-tile>
+             
 
                <!-- Not For clients -->
                 <mat-grid-tile rowspan="3"  class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type!='C'">
@@ -590,14 +702,14 @@
     <mat-menu #menuHero="matMenu" class="p-5" >
 
       <div class="d-flex justify-content-center">
-        <img src="/assets/profile.png" class="img-fluid thumbnail mt-2"/>
+        <img src="{{this.i}}" class="img-fluid thumbnail mt-2"/>
       </div>
 
        <div class="row">
           <div class="col-12 text-center">
-            <label><strong>Amit Kumar Jha</strong></label><br>
-            <small class="text-primary">Web Developer</small>
-            <p><b>8777528909</b></p>
+            <label><strong>{{this.EMP_NAME}}</strong></label><br>
+            <!-- <small class="text-primary">Web Developer</small> -->
+            <p><b>{{this.pn}}</b></p>
 
           </div>
         
@@ -605,7 +717,7 @@
         <mat-divider></mat-divider><br>
         <div class="row">
           <div class="col-12">
-            <strong>sumanmitra0096@gmail.com</strong>
+            <strong>{{this.Email}}</strong>
           </div>
         </div>
         <br>

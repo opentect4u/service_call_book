@@ -132,6 +132,7 @@ export class EditclientraiseticketComponent implements OnInit {
   remarks_val=false;
   input_remarks:any;
   res:any;
+  ASSIGN_ENG:any;
 keyword:any;
   prevent_init_remarks=false;
   cl_val=true;
@@ -190,6 +191,7 @@ keyword:any;
            this.tkt_module=data.clientGetTkt[0].tkt_module;
            this.prob_reported=data.clientGetTkt[0].prob_reported;
            this.Remarks=data.clientGetTkt[0].remarks;
+           this.ASSIGN_ENG=data.clientGetTkt[0].assign_engg;
            console.log(this.tkt_module);
            })
        }

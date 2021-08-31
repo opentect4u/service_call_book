@@ -7,8 +7,8 @@ import {Apollo, gql} from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 const srch_dt= gql`
-query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!){
-  searchByDate(frm_dt: $frm_dt, to_dt: $to_dt, user_id: $user_id){
+query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!,$user_type:String!){
+  searchByDate(frm_dt: $frm_dt, to_dt: $to_dt, user_id: $user_id,user_type:$user_type){
     id
     log_in
     tkt_no
@@ -71,7 +71,8 @@ export class SearchByDateComponent implements OnInit {
       variables:{
         frm_dt:this.from_date,
         to_dt:this.to_date,
-        user_id:this.type
+        user_id:this.type,
+        user_type:localStorage.getItem('user_Type')
       },
 
       

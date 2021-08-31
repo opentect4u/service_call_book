@@ -439,7 +439,7 @@
 
 
 
-                                  <input type="submit" class="btn btn-info" id="submit" name="submit"  [disabled]="mm_val||phone_val||issue_val||remarks_val"
+                                  <input type="submit" class="btn btn-info" id="submit" name="submit"  [disabled]="mm_val||phone_val||issue_val||remarks_val || this.ASSIGN_ENG>0"
                                   value="Update" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
 
 
