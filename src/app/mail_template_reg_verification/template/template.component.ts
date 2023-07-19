@@ -54,7 +54,9 @@ export class TemplateComponent implements OnInit {
   divwelcome = false;
    Id:any;
   ngOnInit(): void {
-    localStorage.setItem('address','/template');
+    console.log(this.router.getCurrentNavigation);
+
+    localStorage.setItem('address',this.router.url);
 
     this.route.queryParams.subscribe(params => {
       this.Id= params['id'];

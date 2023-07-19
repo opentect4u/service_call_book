@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { global } from 'src/app/global';
+import { commonEditor } from 'src/app/utilitY/commonEditor';
+declare const $: any;
 
 const GET_CLIENT_DATA=gql`
 query clientGetTkt($id:String!,$client_id:String!) {
@@ -28,7 +31,10 @@ query clientGetTkt($id:String!,$client_id:String!) {
     work_status
     call_attend
     delivery,
-    tkt_module
+    tkt_module,
+    user_name,
+    email_id,
+    file_path
   }
 }`;
 
@@ -45,17 +51,26 @@ query{
 
 
 const EDITABLE=gql`
-mutation updateRaiseTkt($id:String!,$tkt_module: String!,
-  $phone_no:String!,$priority_status:String!
-  ,$prob_reported:String!,$remarks:String!,$user_id:String!) {
+mutation clientTktUpdate($id:String!,
+  $client_id: String!,
+  $tkt_module: String!,
+  $phone_no: String!,
+  $priority_status: String!,
+  $prob_reported: String!,
+  $email: String!,
+  $user_id: String!
+  $name: String!) {
 
-    updateRaiseTkt(id:$id
-      tkt_module: $tkt_module
-      phone_no:  $phone_no
-      priority_status:$priority_status
-      prob_reported:$prob_reported
-      remarks: $remarks
-      user_id: $user_id)  {
+    clientTktUpdate(
+      id:$id,
+      client_id:$client_id,
+      tkt_module:$tkt_module,
+      phone_no:$phone_no,
+      priority_status: $priority_status,
+      prob_reported: $prob_reported,
+      email:$email,
+      user_id:$user_id,
+      name : $name)  {
 
        success
        message
@@ -73,8 +88,11 @@ mutation updateRaiseTkt($id:String!,$tkt_module: String!,
   '../../../../assets/masters_css_js/css/res.css']
 })
 export class EditclientraiseticketComponent implements OnInit {
+  configEditor= commonEditor.config;
+  _uploaded_type:any
+  _uploaded_img:any;
   Id:any;
-
+  Name:any
   oprn_mode_id:any
   user:any;
   mod:any;
@@ -88,6 +106,8 @@ export class EditclientraiseticketComponent implements OnInit {
   prevent_init_priority=false;
   prevent_init_issue=false;
   prevent_init_phone=false;
+
+  moblength = false;
   id:any;
   // cl_val=true;
   assign_to:any;
@@ -132,6 +152,7 @@ export class EditclientraiseticketComponent implements OnInit {
   remarks_val=false;
   input_remarks:any;
   res:any;
+  ASSIGN_ENG:any;
 keyword:any;
   prevent_init_remarks=false;
   cl_val=true;
@@ -141,7 +162,11 @@ keyword:any;
   sel:any;
   issue:any;
   remarks:any;
-  constructor(private router:Router,private apollo:Apollo,private route:ActivatedRoute) { }
+  email:any;
+  constructor(private router:Router,private apollo:Apollo,private route:ActivatedRoute) {
+    this.configEditor.editable=false;
+    this.configEditor.showToolbar=false;
+   }
 
   ngOnInit(): void {
     localStorage.setItem('editclientraisetickit','0');
@@ -152,7 +177,6 @@ keyword:any;
     this.route.params.forEach((params: any) => {
       this.Id = params['id'];
       });
-
       this.apollo.watchQuery<any>({
         query: SHOW_MM
 
@@ -166,32 +190,40 @@ keyword:any;
           });
 
 
-      this.apollo.watchQuery<any>({
-        query: GET_CLIENT_DATA,
-        variables:{
-           id:this.Id,
-           client_id:localStorage.getItem('UserId')
-        },
-        pollInterval:500
-        })
-        .valueChanges
-        .subscribe(({ data}) => {
-          console.log(data);
-          this.log=data.clientGetTkt[0].log_in
-          this.district_name=data.clientGetTkt[0].district_name;
-          this.client_type=data.clientGetTkt[0].client_type;
-          this.oprn_mode_id=data.clientGetTkt[0].oprn_mode;
-          this.working_hrs=data.clientGetTkt[0].working_hrs;
-          this.amc_upto=data.clientGetTkt[0].amc_upto;
-          this.rental_upto=data.clientGetTkt[0].rental_upto;
-          this.phone_no=data.clientGetTkt[0].phone_no;
-          this.client_name=data.clientGetTkt[0].client_name;
-           this.prior=data.clientGetTkt[0].priority_status;
-           this.tkt_module=data.clientGetTkt[0].tkt_module;
-           this.prob_reported=data.clientGetTkt[0].prob_reported;
-           this.Remarks=data.clientGetTkt[0].remarks;
-           console.log(this.tkt_module);
-           })
+      // this.apollo.watchQuery<any>({
+      //   query: GET_CLIENT_DATA,
+      //   variables:{
+      //      id:this.Id,
+      //      client_id:localStorage.getItem('UserId')
+      //   },
+      //   // pollInterval:500
+      //   })
+      //   .valueChanges
+      //   .subscribe(({ data}) => {
+      //     console.log(data);
+      //     this.email = data.clientGetTkt[0].email_id;
+      //     console.log(this.email);
+      //     this.Name = data.clientGetTkt[0].user_name;
+
+      //     this.log=data.clientGetTkt[0].log_in;
+      //     this.district_name=data.clientGetTkt[0].district_name;
+      //     this.client_type=data.clientGetTkt[0].client_type;
+      //     this.oprn_mode_id=data.clientGetTkt[0].oprn_mode;
+      //     this.working_hrs=data.clientGetTkt[0].working_hrs;
+      //     this.amc_upto=data.clientGetTkt[0].amc_upto;
+      //     this.rental_upto=data.clientGetTkt[0].rental_upto;
+      //     this.phone_no=data.clientGetTkt[0].phone_no;
+      //     this.client_name=data.clientGetTkt[0].client_name;
+      //      this.prior=data.clientGetTkt[0].priority_status;
+      //      this.tkt_module=data.clientGetTkt[0].tkt_module;
+      //      console.log(this.tkt_module);
+      //      this.prob_reported=data.clientGetTkt[0].prob_reported;
+      //      this.Remarks=data.clientGetTkt[0].remarks;
+      //      this.ASSIGN_ENG=data.clientGetTkt[0].assign_engg;
+      //      console.log(this.tkt_module);
+      //      $('select').select2().select2('val',this.tkt_module)
+      //      })
+      this.getClientDetails();
        }
 
 
@@ -302,39 +334,31 @@ keyword:any;
   }
 
 
-  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
-     console.log(this.Id)
-    console.log("Date:" +v1);
-  console.log("Client:" +v2);
-  console.log("District:" +v3);
-  console.log("Clienttype:" +v4);
-  console.log("operationalmode:" +v5);
-  console.log("workinghours:" +v6);
-  console.log("amcupto:" +v7);
-  console.log("rentalupto:" +v8);
-  console.log("phone:" +v9);
-  console.log("priority:" +v10);
-  console.log("module:" +v11);
-  console.log("issue:" +v12);
-  console.log("remarks:" +v13);
-
+  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v9:any,v10:any,v11:any,v12:any,_email:any,_name:any){
   this.apollo.mutate({
     mutation: EDITABLE,
     variables:{
+      client_id:localStorage.getItem('UserId'),
       id:this.Id,
       tkt_module:v11,
       phone_no:v9,
       priority_status:v10,
       prob_reported:v12,
-      remarks:v13,
-      user_id:localStorage.getItem("UserId")
+      user_id:localStorage.getItem("UserId"),
+      email:_email,
+      name:_name
 
     }
   }).subscribe(({data})=>{
     console.log(data);
     this.edit=data;
-    if(this.edit.updateRaiseTkt.success==1){
-      localStorage.setItem('editclientraisetickit','1');
+    if(this.edit.clientTktUpdate.success==1){
+      var now = new Date();
+      var time = "06:30 PM";
+      var getModDateTime = (now.getMonth()+1) + "/" + now.getDate() + "/" + now.getFullYear() + " " + time;
+      var userval = new Date(getModDateTime);
+      localStorage.setItem('editclientraisetickit',(now >= userval || localStorage.getItem('active_day') == 'N') ? '1' : '2');
+      // localStorage.setItem('editclientraisetickit','1');
       this.router.navigate(['/Clientraisetkt']);
 
     }
@@ -353,4 +377,42 @@ showsnackbar() {
    setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
  }
 
+ getClientDetails(){
+  this.apollo.watchQuery<any>({
+    query: GET_CLIENT_DATA,
+    variables:{
+       id:this.Id,
+       client_id:localStorage.getItem('UserId')
+    },
+    // pollInterval:500
+    })
+    .valueChanges
+    .subscribe(({ data}) => {
+      console.log(data);
+      this.email = data.clientGetTkt[0].email_id ? data.clientGetTkt[0].email_id : localStorage.getItem('user_email');
+      console.log(this.email);
+      this.Name = data.clientGetTkt[0].user_name;
+
+      this.log=data.clientGetTkt[0].log_in;
+      this.district_name=data.clientGetTkt[0].district_name;
+      this.client_type=data.clientGetTkt[0].client_type;
+      this.oprn_mode_id=data.clientGetTkt[0].oprn_mode;
+      this.working_hrs=data.clientGetTkt[0].working_hrs;
+      this.amc_upto=data.clientGetTkt[0].amc_upto;
+      this.rental_upto=data.clientGetTkt[0].rental_upto;
+      this.phone_no=data.clientGetTkt[0].phone_no;
+      this.client_name=data.clientGetTkt[0].client_name;
+       this.prior=data.clientGetTkt[0].priority_status;
+       this.tkt_module=data.clientGetTkt[0].tkt_module;
+       console.log(this.tkt_module);
+       this.prob_reported=data.clientGetTkt[0].prob_reported;
+       this.Remarks=data.clientGetTkt[0].remarks;
+        console.log(this.Remarks)
+       this.ASSIGN_ENG=data.clientGetTkt[0].assign_engg;
+       this._uploaded_img = global.raw_url+data.clientGetTkt[0].file_path;
+       this._uploaded_type = data.clientGetTkt[0].file_path ? ( data.clientGetTkt[0].file_path.substring(data.clientGetTkt[0].file_path.length -3) == 'pdf' ? 1 : 2) : 0;
+       console.log(this.tkt_module);
+       $('select').select2().select2('val',this.tkt_module)
+       })
+ }
 }

@@ -13,10 +13,7 @@ export class LoginGuard implements CanActivate {
       let url: string = state.url;  
       return this.verifyLogin(url);
       // return false;
-     
-     
-     
-  }
+    }
   
 
   verifyLogin(url:string) : any{

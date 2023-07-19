@@ -5,3 +5,9 @@
     border: 1px solid transparent;
     border-radius: .35rem;
   }
+
+  ::ng-deep .mat-tooltip {
+    color:white;
+    background-color: #282a3c;
+   text-overflow: inherit;
+  }

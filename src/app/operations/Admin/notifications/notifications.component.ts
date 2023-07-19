@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export interface PeriodicElement {
   SL: number;
   subject: string;
-  
+
 
 }
 
@@ -50,9 +50,9 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address','/operations/Admin/notifications')
+    localStorage.setItem('address',this.router.url);
     this.dataSource=new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-    
+
   }
 
 

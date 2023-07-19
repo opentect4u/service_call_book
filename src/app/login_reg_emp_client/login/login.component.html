@@ -46,7 +46,8 @@
     <div class="alert alert-success alert-dismissible fade in text-center" [hidden]="successfull_register">
 
 		<small class="pt-1">
-			An email has been sent for verification
+			<!-- An email has been sent for verification -->
+      User created successfully
 		</small>
 		<button type="button" class="close pt-1" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true" (click)="close_alert()">&times;</span>
@@ -57,7 +58,7 @@
     <div class="alert alert-success alert-dismissible fade in text-center" [hidden]="successfull_password">
 
       <span class="pt-1">
-        Please Check Your Email For New Password
+        Please try to login with new password as "<b>password</b>"
       </span>
       <button type="button" class="close pt-1" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" (click)="close_alert_pass()">&times;</span>
@@ -125,7 +126,8 @@
 			<input type="text" class="form-control LoginEmailPasswordForm-passwordInput p-2"
 			formControlName="captcha"
 			[ngClass]="{'is-invalid': login && f.captcha.errors }"
-			appRightclickoff  ondrop="return false" onpaste="return false">
+			appRightclickoff  ondrop="return false" onpaste="return false"
+			>
 
 			<div *ngIf="login && f.captcha.errors  " class="invalid-feedbackb text-danger">
 				<div *ngIf="f.captcha.errors.required "><small>*Please Enter captcha</small></div>
@@ -135,10 +137,8 @@
 
 
 
-			<input type="text" class="form-control float-left " id="capt_login" oncopy="return false"  disabled
-
-			>
-		   <i class="fa fa-refresh  ml-2 mt-3 " aria-hidden="true" (click)="refresh_captcha()" id="refresh"></i>
+			<input type="text" class="form-control float-left " id="capt_login" oncopy="return false"  disabled>
+		   <i class="fa fa-refresh  ml-2 mt-4" aria-hidden="true" (click)="refresh_captcha()" id="refresh"></i>
 
 			<small *ngIf="captch" class="text-danger ml-2">*{{this.errormsg}}</small>
 

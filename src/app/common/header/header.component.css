@@ -179,7 +179,7 @@
     }
 
     .circle {
-      width: 7px;
+      width: 8px;
       height: 8px;
       background-color: #62bd19;
       border-radius: 50%;
@@ -221,3 +221,24 @@
       50% { opacity: 1; }
       100% { opacity: 0; }
     }
+
+
+    .modal-dialog{
+      overflow-y: initial !important
+  }
+  .modal-body{
+      max-height: calc(100vh - 50px);
+      overflow-y: auto;
+  }
+/* 
+  .profile_modal{
+    border-radius:10%;
+  } */
+
+  .toast-custom{
+        background-color:#282a3c;
+        color:whitesmoke;
+  }
+
+
+ 

@@ -4,12 +4,16 @@ import { Subscription } from 'rxjs';
 import {formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common'
-declare const $: any;
+import { ToastrManager } from 'ng6-toastr-notifications';
+import { global } from 'src/app/global';
+import { commonEditor } from 'src/app/utilitY/commonEditor';
+
+declare var $: any;
 // For update Deliver&Attendent Tickite
 
 const EDITABLE=gql`
 mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
- $tkt_status:String!,$remarks:String!,$user_id:String!,$work_status:String!) {
+ $tkt_status:String!,$remarks:String!,$user_id:String!,$work_status:String!,$prob_reported:String!) {
 
   updateDeliverTkt(id:$id
       call_attend:$call_attend
@@ -17,7 +21,8 @@ mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
       tkt_status:$tkt_status
       remarks:$remarks
       user_id:$user_id,
-      work_status:$work_status)  {
+      work_status:$work_status,
+      prob_reported:$prob_reported)  {
 
        success
        message
@@ -25,14 +30,6 @@ mutation updateDeliverTkt($id:String!,$call_attend: String!,$delivery:String!,
 }
 }`
 ;
-
-
-
-
-
-
-
-
 
 const SHOW_TS=gql`
 query{
@@ -69,8 +66,9 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     work_status,
     call_attend,
     delivery,
-    work_status
-
+    work_status,
+    file_path
+    schema_name
   }
 }`
 @Component({
@@ -83,6 +81,10 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
   '../../../../../../assets/masters_css_js/css/res.css']
 })
 export class EditadanddComponent implements OnInit {
+  configEditor= commonEditor.config;
+   _schema_name:any;
+  _uploaded_type:any
+  _uploaded_img:any;
   id:any;
   tkt_no:any
   TktStatus:any;
@@ -101,6 +103,7 @@ export class EditadanddComponent implements OnInit {
   prob_reported:any;
   assign_engg:any;
   tickit:any;
+  mes:any;
   tkt:boolean=false;
   phonmobile:boolean=false;
   mobile:boolean=false;
@@ -109,7 +112,7 @@ export class EditadanddComponent implements OnInit {
   posts_ts:any;
   tsdata:any;
   deliver:any;
-
+   w_stats:any;
   attended:any;
   dateitem:any;
   valid_init=false;
@@ -118,6 +121,7 @@ export class EditadanddComponent implements OnInit {
   input_attended:any;
   input_delivery:any;
   Remarks:any;
+  today:any;
   x:any;
   attend:any;
    input:any;
@@ -132,9 +136,8 @@ export class EditadanddComponent implements OnInit {
   issue:any;
   work:any;
   wrork_stat:boolean=false;
-  constructor(public datepipe: DatePipe,private apollo:Apollo,private route:ActivatedRoute,private router:Router) {}
+  constructor(public datepipe: DatePipe,private apollo:Apollo,public route:ActivatedRoute,private router:Router,public toastr: ToastrManager) {}
   ngOnInit(): void {
-
    this.issue=document.getElementById("itemissue");
    console.log("empty:" +this.issue.value)
 
@@ -143,11 +146,16 @@ export class EditadanddComponent implements OnInit {
     localStorage.setItem('Active', '1');
     this.input_delivery=document.getElementById('itemdeliveryat')
     this.input_attended=document.getElementById('itemattendedat')
-    var iso = new Date().toISOString();
-    var minDate = iso.substring(0,iso.length-1);
+    this.w_stats=document.getElementById('wrkstatus');
+    if(this.w_stats.value==''){
+      console.log("d")
+      this.valid_init=true;
+    }
+    // var iso = new Date().toISOString();
+    // var minDate = iso.substring(0,iso.length-1);
 
 
-    this.input_attended.min=minDate;
+    // this.input_attended.min=minDate;
     // this.input_delivery.min=minDate;
 
 
@@ -157,7 +165,7 @@ export class EditadanddComponent implements OnInit {
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
     console.log("pathname:" +decodeURIComponent(this.pathname));
-    localStorage.setItem('address', decodeURIComponent(this.pathname));
+    localStorage.setItem('address',this.router.url);
 
 
 
@@ -213,20 +221,18 @@ export class EditadanddComponent implements OnInit {
             this.Remarks=data.getSupportLogDtls[0].remarks;
             this.TktStatus=data.getSupportLogDtls[0].tktStatus;
             this.tktid=data.getSupportLogDtls[0].tkt_status;
+            this._schema_name = data.getSupportLogDtls[0].schema_name;
+            console.log(this._schema_name);
+
             this.logDate=data.getSupportLogDtls[0].log_in;
             this.c=data.getSupportLogDtls[0].call_attend;
             this.d=data.getSupportLogDtls[0].delivery;
-            this.w=data.getSupportLogDtls[0].work_status;
-            this.c =this.datepipe.transform(this.c, 'yyyy-MM-ddTHH:mm:ss');
-            this.d=this.datepipe.transform(this.d, 'yyyy-MM-ddTHH:mm:ss');
-
-
-            console.log( this.tkt_no)
-           console.log(this.client_name);
-           console.log( this.district_name);
-           console.log(this.client_type);
-           console.log(this.oprn_mode);
-           console.log(this.c,this.d,this.w)
+            this.w=data.getSupportLogDtls[0].work_status > 0 ? data.getSupportLogDtls[0].work_status : '';
+            this._uploaded_img = global.raw_url+data.getSupportLogDtls[0].file_path;
+            this._uploaded_type = data.getSupportLogDtls[0].file_path ? ( data.getSupportLogDtls[0].file_path.substring(data.getSupportLogDtls[0].file_path.length -3) == 'pdf' ? 1 : 2) : 0;
+            console.log(this.w,this.d,this.c)
+            this.c =this.datepipe.transform(this.c, 'medium');
+            this.d=this.datepipe.transform(this.d, 'medium');
 
            if(this.c==''){
              console.log("c")
@@ -238,10 +244,10 @@ export class EditadanddComponent implements OnInit {
            this.valid_init_de=true;
           }
 
-          if(this.w==''){
-            console.log("d")
-           this.valid_init=true;
-          }
+          // if(this.w==''){
+          //   console.log("d")
+          //  this.valid_init=true;
+          // }
 
 
 
@@ -256,11 +262,15 @@ export class EditadanddComponent implements OnInit {
                 this.valid_issue=false;
            }
 
-
-
+           $('.select2').select2("val",this.tktid);
           })
 
       })
+      console.log(this.valid_issue)
+
+      $('.tkt_status').select2({}).on('select2:select',(e:any)=>{
+         this.tkt_select(e.params.data.id);
+        })
 
  }
 
@@ -283,7 +293,7 @@ else{
 
   preventNonNumericalInput(e:any){}
 
-  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any,v14:any,v15:any,v16:any,v17:any,v18:any,v19:any){
+  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any,v14:any,v15:any,v16:any,v17:any,v19:any){
     // console.log("Date:" +v1);
     // console.log("Tickitno:" +v2);
     // console.log("Client:" +v3);
@@ -296,13 +306,14 @@ else{
     // console.log("phone:" +v10);
     // console.log("prioritystatus:" +v11);
     // console.log("module:" +v12);
-    // console.log("issue:" +v13);
+    console.log("issue:" +v13);
     // console.log("assignedto:" +v14);
     console.log("Attendantat:" +v15);
     console.log("Delivaryat:" +v16);
     console.log("tickitstatus:" +v17);
     // console.log("remarks:" +v18);
     console.log("workingstatus:" +v19);
+    // console.log(this.datepipe.transform( v16, 'yyyy-mm-dd hh:mm:sss'))
     console.log(this.id);
     // if(v15<v16){
     //   console.log("Its Ok");
@@ -315,12 +326,13 @@ else{
       mutation: EDITABLE,
       variables:{
         id:this.id,
-        call_attend:v15,
-        delivery:v16.toString(),
+        call_attend:this.datepipe.transform( v15, 'yyyy-MM-dd HH:mm:ss'),
+        delivery: v16 != '' ? this.datepipe.transform( v16, 'yyyy-MM-dd HH:mm:ss') : '',
         tkt_status:v17,
-        remarks:v18,
+        remarks:this.Remarks ? this.Remarks : '',
         user_id:localStorage.getItem("UserId"),
-        work_status:v19
+        work_status:v19,
+        prob_reported:v13
 
       }
     }).subscribe(({data})=>{
@@ -328,7 +340,17 @@ else{
       this.Attend=data;
       if( this.Attend.updateDeliverTkt.success==1){
         localStorage.setItem('attendent','1');
-        this.router.navigate(['/operations/attendanddeliver']);
+        this.router.navigate(['/operations/attendanddeliver',this.route.snapshot.params.u_type_code]).then(() => {
+          window.location.reload()
+        });
+      }
+      else if(this.Attend.updateDeliverTkt.success==2){
+            this.mes=this.Attend.updateDeliverTkt.message;
+            console.log("message:",this.mes);
+            this.toastr.errorToastr(this.mes, 'Error!',{
+              position: 'top-center',
+              toastTimeout: (5000)
+          });
       }
 
       else
@@ -359,7 +381,16 @@ else{
       // this.valid_init_work=false;
       this.valid_init=false;
     }
+    if(v=='1'){
+      this.d=Date.now();
+      this.d = this.datepipe.transform( this.d, 'medium');
+      // this.d==this.datepipe.transform(this.d, 'dd');
 
+    }
+    else{
+      this.d='';
+    }
+    console.log(this.d);
    }
 
 
@@ -372,17 +403,15 @@ else{
       if(e.target.value=='')
       {
         this.valid_init_at=true;
-        // this.delive=true;
-        // this.phone_val=true;
-        // this.prevent_init_phone=true;
+
          this.mobile=true;
         this.input_attended.style.border="solid red 1px"
-        //this.hide_val=true;
+
       }
       else
 
        {
-        // this.delive=false;
+
        this.mobile=false;
          this.valid_init_at=false;
        this.input_attended.style.border="solid lightgrey 1px"}
@@ -393,11 +422,11 @@ else{
       if(e.target.value=='')
       {
         this.valid_init_de=true;
-      //  this.issue_val=true;
+
        this.phonmobile=true;
         this.input_delivery.style.border="solid red 1px"
         console.log("phone")
-        //this.hide_val=true;
+
       }
       else
 
@@ -415,14 +444,15 @@ else{
     this.tickit=document.getElementById("tktstatus")
     if(v==''){
       this.tkt=true;
-    this.valid_init=true;
-     this.tickit.style.border="solid red 1px";
+      this.valid_init=true;
+       this.tickit.style.border="solid red 1px";
     }
     else{
       this.tickit.style.border="solid lightgrey 1px";
       this.tkt=false;
-    this.valid_init=false;
+      this.valid_init=false;
     }
+
   }
   prevent_null_issue(e:any){
         if(e.target.value==''){

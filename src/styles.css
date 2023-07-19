@@ -127,4 +127,36 @@ body { padding-right: 0 !important }
     top: 30px;
 }
 
+.make-gold {
+  background-color: #FFFF00;
+  text-align: center;
+}
+.make-medium{
+  background-color: #FFA500;
+  text-align: center;
 
+}
+
+.make-high{
+  background-color: #FF0000;
+  text-align: center;
+}
+.make-critical{
+background-color: #8B0000;
+text-align: center;
+}
+.make-Customer{
+ text-align: center;
+}
+
+.tabUl>li.active{
+  border-bottom: 2px solid #00bfbf;
+}
+.tabUl>li.active > a{
+  background: #008181!important;
+  color: #fff!important;
+}
+
+.form-control{
+    padding: 6px 12px!important;
+}

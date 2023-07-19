@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addnotify',
@@ -13,8 +14,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddnotifyComponent implements OnInit {
   Addnotificationform!:FormGroup;
   submit:boolean=false;
-  constructor(private fb:FormBuilder) { }
- 
+  constructor(private fb:FormBuilder,private router:Router) { }
+
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
     this.Addnotificationform= this.fb.group({
@@ -23,8 +24,8 @@ export class AddnotifyComponent implements OnInit {
       message:['',Validators.required]
 
     });
- 
-    localStorage.setItem('address','/Admin/Addnotification/addnotify');
+
+    localStorage.setItem('address', this.router.url);
   }
   get f(){
        return this.Addnotificationform.controls;

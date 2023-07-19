@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Apollo, gql} from 'apollo-angular'; 
+import {Apollo, gql} from 'apollo-angular';
 import { Router } from '@angular/router'
 const ADD_TS=gql`
 mutation insertMaster($ts: String,$user_id: String) {
@@ -10,7 +10,7 @@ mutation insertMaster($ts: String,$user_id: String) {
 @Component({
   selector: 'app-addts',
   templateUrl: './addts.component.html',
-  styleUrls: ['./addts.component.css', 
+  styleUrls: ['./addts.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -30,8 +30,8 @@ export class AddtsComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
-    
-    localStorage.setItem('address','/ticketstatus/addts');  
+
+    localStorage.setItem('address', this.router.url);
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -85,7 +85,7 @@ export class AddtsComponent implements OnInit {
       });
       this.done=true;
      // this.msg="Ticket status added successfully!!"
-    
+
      this.disable_button=true
      this.input_tag.style.border="1px solid lightgrey";
     }
@@ -105,6 +105,6 @@ export class AddtsComponent implements OnInit {
     this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

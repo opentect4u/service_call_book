@@ -28,6 +28,8 @@
 
 
               <div class="row">
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#ffffff" type = "ball-pulse" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
+
 
                 <!-- <div class="alert  ml-5" role="alert" [hidden]="alert_show">
                     Item Deleted Successfully!! &#x2714;
@@ -98,7 +100,7 @@
                       </tr>
                     </table>
 
-                    <mat-paginator [pageSizeOptions]="[10, 25, 50,100]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[100,500,1000]" showFirstLastButtons></mat-paginator>
                   </div>
 
 

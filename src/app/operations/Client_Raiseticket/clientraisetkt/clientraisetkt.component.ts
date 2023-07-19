@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 const SHOW_DASHBOARD=gql`
@@ -11,8 +12,10 @@ query clientGetTkt($client_id:String!){
   clientGetTkt(id: "",client_id:$client_id){
     tkt_no
     log_in
-    work_status,
+    work_status
     id
+    assign_engg
+
   }
 }`
 
@@ -27,7 +30,26 @@ mutation deleteTkt($id:String!) {
 }
 }`
 ;
+ // id
+    // client_name
+    // phone_no
+    // tkt_no
+    // emp_name
+    // priority
+    // tktStatus
+    // log_in
+    // work_status
 
+const FETCH=gql`
+query getSuppLogDone($user_type:String!,$user_id:String!){
+  getSuppLogDone(user_type:$user_type, user_id:$user_id){
+    tkt_no
+    log_in
+    work_status
+    id
+    assign_engg
+  }
+}`
 @Component({
   selector: 'app-clientraisetkt',
   templateUrl: './clientraisetkt.component.html',
@@ -45,23 +67,22 @@ export class ClientraisetktComponent implements OnInit {
   cl:any;
   deleteticket:boolean=true;
   deleted:any;
-
+  getClientRaiseTktStatus = localStorage.getItem('client_raiseticket') ? localStorage.getItem('client_raiseticket') : '';
+  getClientRaiseTktStatusforEdit = localStorage.getItem('editclientraisetickit') ? localStorage.getItem('editclientraisetickit') : '';
   x:any;
   edit:boolean=true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private router:Router,private apollo:Apollo) { }
+  constructor(private router:Router,private apollo:Apollo,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-
-    if(localStorage.getItem('editclientraisetickit')=='1'){
+    if(localStorage.getItem('editclientraisetickit')=='1' || localStorage.getItem('editclientraisetickit')=='2'){
        this.edit=false;
     }
 
-    if(localStorage.getItem('client_raiseticket')=='1'){
+    if(localStorage.getItem('client_raiseticket')=='1' || localStorage.getItem('client_raiseticket')=='2'){
         this.insertitckit=false;
     }
-    console.log("client")
     this.fetchdata();
   }
   go_to_AddItem(){
@@ -69,27 +90,28 @@ export class ClientraisetktComponent implements OnInit {
   }
   fetchdata(){
 
+    this.spinner.show();
+
     this.apollo.watchQuery<any>({
       query: SHOW_DASHBOARD,
       variables:{
          id:"",
          client_id:localStorage.getItem('UserId'),
         },
-      pollInterval: 500
+      pollInterval: 20000
     })
       .valueChanges
       .subscribe(({ data}) => {
         console.log(data);
         this.Tickite=data;
-
-
-         this.putdata(this.Tickite);
+        this.putdata(this.Tickite.clientGetTkt);
+        this.spinner.hide();
       })
 
   }
 
   public putdata(posts:any){
-    this.dataSource=new MatTableDataSource(posts.clientGetTkt);
+    this.dataSource=new MatTableDataSource(posts);
     console.log(this.dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -117,7 +139,9 @@ export class ClientraisetktComponent implements OnInit {
 
   go_to_update(v:any){
     console.log(v)
-  this.router.navigate(['/Edit/clientraiseticket',v]);
+    this.router.navigate(['/Edit/clientraiseticket',v]).then(()=>{
+      location.reload();
+    })
 
   }
 
@@ -136,6 +160,7 @@ export class ClientraisetktComponent implements OnInit {
         this.deleted=data;
         if(this.deleted.deleteTkt.success==1){
             this.deleteticket=false;
+            location.reload()
 
           }
         else
@@ -150,5 +175,35 @@ export class ClientraisetktComponent implements OnInit {
        this.x.className = "show";
        setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
      }
+     sendstatus(v:any){
+      if(v==1){
+        this.fetchdata();
+       }
+       else{
+        this.fetchdata_for_Done();
+       }
+    }
+    public fetchdata_for_Done(){
+      this.spinner.show();
+      this.apollo.watchQuery<any>({
+        query: FETCH,
+        variables:{
+           user_type:localStorage.getItem('user_Type'),
+           user_id:localStorage.getItem('UserId')
+
+        },
+        // pollInterval:20000
+
+      })
+        .valueChanges
+        .subscribe(({ data}) => {
+          console.log(data);
+          this.Tickite = data;
+          this.putdata(this.Tickite.getSuppLogDone);
+          this.spinner.hide();
+
+        })
+
+    }
 
 }

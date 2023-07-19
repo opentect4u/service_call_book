@@ -1,4 +1,4 @@
-import { NgModule, ViewChild } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -50,6 +50,8 @@ import { RaiseticketComponent } from './operations/raiseticket/raiseticket/raise
 import { SearchByDateComponent } from './search/search-by-date/search-by-date.component';
 import { SearchByTicketComponent } from './search/search-by-ticket/search-by-ticket.component';
 import { ViewComponent } from './search/view/view.component';
+import { HolidayDashboardComponent } from './master/Holiday/holiday-dashboard/holiday-dashboard.component';
+import { HolidayModificationComponent } from './master/Holiday/holiday-modification/holiday-modification.component';
 
 const routes: Routes = [
   {
@@ -174,7 +176,6 @@ const routes: Routes = [
   },
   {
     path:'addclient/addcl',
-
     canActivate:[AfterloginGuard],
     component:AdclComponent
   },
@@ -183,14 +184,24 @@ const routes: Routes = [
     canActivate:[AfterloginGuard],
     component:ComponentNameComponent
   },
-  {
-    path:'operations/assignticket',
-    canActivate:[AfterloginGuard],
+  // {
+  //   path:'operations/assignticket',
+  //   canActivate:[AfterloginGuard],
 
+  //   component:AssignticketComponent
+  // },
+  {
+    path:'operations/assignticket/:id',
+    // canActivate:[AfterloginGuard],
     component:AssignticketComponent
   },
   {
-    path:'operations/editassignticket/:id',
+    path:'op_assignticket/:id',
+    // canActivate:[AfterloginGuard],
+    component:AssignticketComponent
+  },
+  {
+    path:'operations/editassignticket/:id/:u_type_code',
     canActivate:[AfterloginGuard],
     component:EditatComponent
   },
@@ -210,12 +221,18 @@ const routes: Routes = [
     component:EdittktComponent
   },
   {
-    path:'operations/attendanddeliver',
-    canActivate:[AfterloginGuard],
+    path:'operations/attendanddeliver/:id',
+    // canActivate:[AfterloginGuard],
     component:AttendanddeliverComponent
   },
   {
-    path:'operations/editattendanddeliver/:id1',
+    path:'op_attendanddeliver/:id',
+    // canActivate:[AfterloginGuard],
+    component:AttendanddeliverComponent
+  },
+
+  {
+    path:'operations/editattendanddeliver/:id1/:u_type_code',
     canActivate:[AfterloginGuard],
     component:EditadanddComponent
   },
@@ -253,25 +270,21 @@ const routes: Routes = [
 },
  {
    path:'Clientraisetkt',
-  //  canActivate:[AfterloginGuard],
+
    component:ClientraisetktComponent
  },
  {
   path:'Add/clientraisetkt',
-  // canActivate:[AfterloginGuard],
+
   component:AddclientraisetktComponent
 },
-
-
-
-
 
   {
     path:'search_ticket/:id',
     component:SearchByTicketComponent
   },
   {
-    path:'search_date/:id1/:id2',
+    path:'search_date/:id1/:id2/:name/:type',
     component:SearchByDateComponent
   },
   {
@@ -281,7 +294,15 @@ const routes: Routes = [
   {
     path:'Edit/clientraiseticket/:id',
     component:EditclientraiseticketComponent
-  }
+  },
+  {
+    path: 'holiday',
+    component: HolidayDashboardComponent,
+  },
+  {
+    path: 'holiday/:id',
+    component: HolidayModificationComponent,
+  },
 
 
 

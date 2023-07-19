@@ -130,17 +130,7 @@
 
 <div class="LoginCardLayout" >
 
-
 	<div class="signUpCardLayout-card memberShipArea">
-
-
-
-
-
-
-
-
-
 	<div class="LoginCardLayout-LoginLogoContainer "><a routerLink='/' routerLinkActive="true"><img src="../../../assets/Login_assets/images/logo.png" alt="" class="LoginCardLayout-LogoLogo"/></a></div>
 
 
@@ -217,8 +207,8 @@
 		</div>
 		<div class="col-sm-6 float-left">
 		<label>Client name</label>
-           <input type="text" class="form-control" value=" " readonly
-		   formControlName="client_name" id="name">
+           <input type="text" class="form-control"  readonly
+		   formControlName="client_name" id="c_name">
 		</div>
 
 		</div>
@@ -297,10 +287,11 @@
 
 					<div class="col-sm-6 ">
 
-
+                      
 						<input type="text" class="form-control float-left " id="capt_client" oncopy="return false"  disabled
 
 						>
+						
 						<!-- <a (click)="refresh_captcha_client()"><i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" ></i></a> -->
 						<i class="fa fa-refresh ml-2 mt-5" aria-hidden="true" (click)="refresh_captcha_client()" id="refresh_client"></i>
 
@@ -376,6 +367,8 @@
 			<option value="E ">Engineer</option>
 			<option value="T ">Telecaller</option>
 			<option value="M ">Viewer</option>
+			<option value="W">Support (Web & Mobile)</option>
+
 			</select>
 			<div *ngIf="login && f.type.errors" class="invalid-feedback text-danger">
 				<div *ngIf="f.type.errors.required"><span>*Please supply type</span></div>
@@ -388,7 +381,7 @@
             <label>Email</label>
 
              <input type="email"
-             class="form-control p-2"
+             class="form-control "
              formControlName="Email"
 
 			 id="emp_email"
@@ -557,7 +550,7 @@
 
 	  <!-- Modal content-->
 	  <div class="modal-content">
-		<div class="modal-header p-2">
+		<div class="modal-header ">
 		  <h4 class="modal-title text-center w-100 ">Warning!!</h4>
 		  <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
 

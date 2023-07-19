@@ -25,7 +25,7 @@ query{
 //   Sl_No: any;
 //   Status: any;
 //   Edit:any;
-  
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -33,9 +33,9 @@ query{
 //     Sl_No: 1,
 //     Status: 'abc',
 //     Edit:''
-   
-//   }, 
-  
+
+//   },
+
 // ];
 @Component({
   selector: 'app-tsdashboard',
@@ -50,7 +50,7 @@ query{
 })
 export class TsdashboardComponent implements OnInit,OnDestroy {
   displayedColumns: string[] = ['Sl_No', 'Status','Edit','Delete'];
-  dataSource = new MatTableDataSource; 
+  dataSource = new MatTableDataSource;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -68,7 +68,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
  userdel:any;
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address','/ticketstatus/dashboard');  
+    localStorage.setItem('address', this.router.url);
 
     this.updatets=localStorage.getItem('updatets')
     this.insertts=localStorage.getItem('addts')
@@ -90,7 +90,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
           {
             this.insrt=false;
             localStorage.setItem('addts','0')
-   
+
           }
 
     this.posts_ts.length=0;
@@ -101,13 +101,13 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_TS,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
         this.loading = loading;
         this.posts_ts = data;
-       
+
         console.log(this.posts_ts);
        this.putdata(this.posts_ts);
       });
@@ -149,7 +149,7 @@ export class TsdashboardComponent implements OnInit,OnDestroy {
       id:this.tsid,
       // name:v2,
       // user_id:localStorage.getItem("UserId")
-      
+
     }
   }).subscribe(({data})=>{this.userdel=data;console.log(data);
     console.log("data:" +JSON.stringify(data))

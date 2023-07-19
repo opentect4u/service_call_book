@@ -10,7 +10,7 @@ mutation insertMaster($op: String,$user_id: String) {
 @Component({
   selector: 'app-addom',
   templateUrl: './addom.component.html',
-  styleUrls: ['./addom.component.css', 
+  styleUrls: ['./addom.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -30,8 +30,8 @@ export class AddomComponent implements OnInit {
   error=false;
   done=false;
   ngOnInit(): void {
- 
-    localStorage.setItem('address','/operationmode/addom'); 
+
+    localStorage.setItem('address', this.router.url);
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -106,6 +106,6 @@ export class AddomComponent implements OnInit {
     this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

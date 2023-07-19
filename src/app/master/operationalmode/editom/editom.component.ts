@@ -32,7 +32,7 @@ export class EditomComponent implements OnInit {
   ngOnInit(): void {
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
-    localStorage.setItem('address', decodeURIComponent(this.pathname));
+    localStorage.setItem('address', this.router.url);
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
@@ -101,6 +101,6 @@ export class EditomComponent implements OnInit {
     this.error=false;
     this.done=false;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

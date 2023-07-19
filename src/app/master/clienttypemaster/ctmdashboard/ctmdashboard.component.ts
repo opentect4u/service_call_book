@@ -25,7 +25,7 @@ mutation deleteMaster($id: String!){
 //   Sl_No: any;
 //   Client_Type: any;
 //   Edit:any;
-  
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -33,9 +33,9 @@ mutation deleteMaster($id: String!){
 //     Sl_No: 1,
 //     Client_Type: 'abc',
 //     Edit:''
-   
-//   }, 
-  
+
+//   },
+
 // ];
 
 @Component({
@@ -72,7 +72,7 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address','/clienttypemaster/dashboard');
+    localStorage.setItem('address', this.router.url);
     this.posts_ctm.length=0;
     this.fetch_data();
     this.updatectm=localStorage.getItem('updatectm')
@@ -98,7 +98,7 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
           {
             this.insrt=false;
             localStorage.setItem('addctm','0')
-   
+
           }
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
@@ -106,7 +106,7 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
   public fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_CLIENT_TYPE,
-      pollInterval: 100,
+      pollInterval: 40000,
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
@@ -131,7 +131,7 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
       //     console.log(this.posts_ctm);
       //    this.putdata(this.posts_ctm);
       //   });
-  
+
 
 
 
@@ -149,13 +149,13 @@ export class CtmdashboardComponent implements OnInit, OnDestroy {
       });
 
 
-   
+
 
   }
 
 public putdata(posts:any){
   this.dataSource=new MatTableDataSource(posts.getClientTypeData);
- 
+
   console.log(this.dataSource);
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
@@ -190,14 +190,14 @@ applyFilter(event: Event) {
   }
   delete_item(){
     // alert(this.ctmid);
-  
+
     this.apollo.mutate({
       mutation:DEL_MAS,
       variables:{
         id:this.ctmid,
         // name:v2,
         // user_id:localStorage.getItem("UserId")
-        
+
       }
     }).subscribe(({data})=>{this.userdel=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -213,6 +213,6 @@ applyFilter(event: Event) {
         this.showsnackbar();
     },error=>{ this.showsnackbar()
     });
-  
+
   }
 }

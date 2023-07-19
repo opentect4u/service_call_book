@@ -10,7 +10,7 @@ mutation insertMaster($pm: String,$user_id: String) {
 @Component({
   selector: 'app-addpm',
   templateUrl: './addpm.component.html',
-  styleUrls: ['./addpm.component.css', 
+  styleUrls: ['./addpm.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -28,8 +28,8 @@ export class AddpmComponent implements OnInit {
   disable_button=true;
   spinshow=false;
   ngOnInit(): void {
-    
-    localStorage.setItem('address','/prioritymode/addpm'); 
+
+    localStorage.setItem('address', this.router.url);
     this.input_tag=document.getElementById('itemname');
   }
   prevent_null(e:any){
@@ -78,7 +78,7 @@ export class AddpmComponent implements OnInit {
     },error=>{ this.showsnackbar()
     });
       this.done=true;
-      
+
     // this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
@@ -99,6 +99,6 @@ export class AddpmComponent implements OnInit {
     this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

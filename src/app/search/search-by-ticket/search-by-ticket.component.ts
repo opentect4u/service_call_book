@@ -4,8 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {Apollo, gql} from 'apollo-angular';
-const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!){
-  searchByTktNo(tkt_no: $tkt_no, user_id: $user_id){
+import { NgxSpinnerService } from 'ngx-spinner';
+const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!,$user_type:String!){
+  searchByTktNo(tkt_no: $tkt_no, user_id: $user_id,user_type:$user_type){
     id
     log_in
     tkt_no
@@ -33,7 +34,7 @@ export class SearchByTicketComponent implements OnInit {
   user_type: any;;
 
 
-  constructor(private activatedroute:ActivatedRoute,private apollo:Apollo,private router:Router) { }
+  constructor(private activatedroute:ActivatedRoute,private apollo:Apollo,private router:Router,private spinner:NgxSpinnerService) { }
   tkt:any;
   displayedColumns: string[] = ['Report Date', 'Ticket No.','Client Name','Assigned To', 'Status','View'];
   dataSource = new MatTableDataSource([]);
@@ -41,7 +42,7 @@ export class SearchByTicketComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngOnInit(): void {
-    setInterval(()=>{this.tkt=this.activatedroute.snapshot.params['id'];
+ this.tkt=this.activatedroute.snapshot.params['id'];
     this.tkt=atob(this.tkt);
     console.log(this.tkt);
     if(localStorage.getItem('user_Type')=='A'||localStorage.getItem('user_Type')=='M')
@@ -49,19 +50,20 @@ export class SearchByTicketComponent implements OnInit {
     else
     this.type=localStorage.getItem('UserId');
     this.fetch_data();
-  },1000)
+ 
 
 
   }
   fetch_data(){
+    this.spinner.show();
     this.apollo.watchQuery<any>({
      query: srch_tkt,
      variables:{
        tkt_no:this.tkt,
 
-       user_id:this.type
-     },
-     pollInterval:100
+       user_id:this.type,
+       user_type:localStorage.getItem('user_Type')
+     }
    })
      .valueChanges
      .subscribe(({ data }) => {
@@ -70,6 +72,7 @@ export class SearchByTicketComponent implements OnInit {
 
        console.log(this.posts);
       this.putdata(this.posts);
+      this.spinner.hide();
      });
     }
     view_page(v:any){

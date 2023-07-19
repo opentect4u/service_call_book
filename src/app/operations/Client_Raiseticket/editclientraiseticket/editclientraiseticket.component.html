@@ -131,7 +131,8 @@
 
                       </div>
                   </div>
-                  <br>
+                  <!-- <br> -->
+                  <ng-template>
                   <div class="form-group row">
 
                       <div class="col-sm-2">
@@ -189,16 +190,18 @@
 
                       </div>
                   </div>
+                </ng-template>
                   <br>
                   <div class="form-group row">
-
                       <div class="col-sm-2">
                           <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder=""
+                          <input [readonly]="this.ASSIGN_ENG>0" type="text" class="form-control p-2" placeholder=""
 
-                              name="phone" id="itemphone" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)"
+                              name="phone" id="itemphone" #phone
+                              (keypress)="preventNonNumericalInput($event)"
+                              (keyup)="prevent_null($event)"
 
 
                             value="{{this.phone_no}}">
@@ -209,62 +212,20 @@
 
                       <div class="col-sm-3"></div>
                       <div class="col-sm-1">
-                          <!-- <label><b>Priority Status</b>&nbsp;<span class="text-danger">*</span></label> -->
+                          <label><b>Email</b>&nbsp;<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-3">
+                        <input type='text' [readonly]="this.ASSIGN_ENG>0" class="form-control p-2" value='{{email}}' #Email>
+
                       </div>
                       <div class="col-sm-3"[hidden]="true">
-                          <input type='text' class="form-control" value='{{this.prior}}' #priority>
+                          <input [readonly]="this.ASSIGN_ENG>0" type='text' class="form-control" value='{{this.prior}}' #priority>
 
 
                       </div>
 
                   </div>
                   <br>
-                      <!-- <div class="form-group row">
-                          <div class="col-sm-2">
-                              <label><b>District</b></label>
-                          </div>
-                          <div class="col-sm-3">
-                              <select class="form-control" name="company_type" #comp>
-
-                                  <option value="">Select</option>
-                                  <option value="P">Private Ltd</option>
-                                  <option value="R">Partnership</option>
-                                  <option value="I">Individual</option>
-                                  <option value="L">Public Ltd</option>
-                                  <option value="G">Govt.Organisation</option>
-                                  <option value="O">Others</option>
-
-                              </select>
-                               <span  class="text-danger"
-                          *ngIf="upload&&!company">*please Enter Company type</span>
-
-
-                          </div>
-                          <div class="col-sm-3"></div>
-
-                          <div class="col-sm-1">
-                              <label><b>Client Type</b></label>
-                          </div>
-                          <div class="col-sm-3">
-                              <select class="form-control" name="company_type" #comp>
-
-                                  <option value="">Select</option>
-                                  <option value="P">Private Ltd</option>
-                                  <option value="R">Partnership</option>
-                                  <option value="I">Individual</option>
-                                  <option value="L">Public Ltd</option>
-                                  <option value="G">Govt.Organisation</option>
-                                  <option value="O">Others</option>
-
-                              </select>
-                               <span  class="text-danger"
-                              *ngIf="upload&&!company">*please Enter Company type</span>
-
-
-                          </div>
-
-
-                      </div> -->
                       <br>
 
                       <div class="form-group row">
@@ -273,17 +234,26 @@
                               <label><b>Module</b>&nbsp;<span class="text-danger">*</span></label>
                           </div>
                           <div class="col-sm-3">
-                              <select class="form-control" id="mod"  name="module" #module (click)="select_mm(module.value)"
+                              <select [disabled]="this.ASSIGN_ENG>0" class="form-control select2" id="mod"  name="module" #module (click)="select_mm(module.value)"
                              >
 
                                   <option value="">Select</option>
-                                  <option *ngFor="let m of moddata" value="{{m.module_id}}"  [selected]="this.tkt_module==m.module_id">{{m.module_type}}</option>
+                                  <option *ngFor="let m of moddata" value="{{m.module_id}}"  [selected]="tkt_module==m.module_id">{{m.module_type}}</option>
 
 
                               </select>
                               <span  class="text-danger"
                           *ngIf="mm_val&&prevent_init_module">*Please select module</span>
 
+
+                          </div>
+                          <div class="col-3"></div>
+                          <div class="col-1">
+                          <label><b>Name</b>&nbsp;<span class="text-danger">*</span></label>
+
+                          </div>
+                          <div class="col-3">
+                        <input [readonly]="this.ASSIGN_ENG>0" type='text' class="form-control p-2" value='{{this.Name}}' #name>
 
                           </div>
                       </div><br>
@@ -293,7 +263,7 @@
                               <label><b>Issue</b>&nbsp;<span class="text-danger">*</span></label>
                           </div>
                           <div class="col-sm-10">
-                              <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
+                              <textarea [readonly]="this.ASSIGN_ENG>0" rows="5" type="text" class="form-control p-2" placeholder=" "
 
                                   name="issue" id="itemissue" #issue (keyup)="prevent_null($event)"
 
@@ -305,125 +275,36 @@
                           </div>
                       </div>
                       <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                      <!-- <ng-template> -->
                       <div class="form-group row">
 
                           <div class="col-sm-2">
                               <label><b>Remarks</b></label>
                           </div>
                           <div class="col-sm-10">
-                              <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
+                              <!-- <textarea readonly rows="5" type="text" class="form-control p-2" placeholder=" "
                                 #remarks  name="remarks" id="itemremarks"
                                 value="{{this.Remarks}}"
-                                (keyup)="prevent_null($event)"></textarea>
-                                <span  class="text-danger"
-                    *ngIf="remarks_val&&prevent_init_remarks">*Please provide the remarks</span>
+                                (keyup)="prevent_null($event)"></textarea> -->
+                                <angular-editor  [(ngModel)]="Remarks" name="remarks" id="itemremarks" [config]="configEditor"></angular-editor>
+
+
                           </div>
                           <div class="col-sm-3"></div>
 
-
-                          <!-- <div class="col-sm-2" >
-                          <label><b>Technical Contact</b></label>
                       </div>
-                      <div class="col-sm-3" >
-                          <input type="text" class="form-control" placeholder="Enter contact" name="tan" id="itemname"   #tana>
+                      <!-- </ng-template> -->
+                      <div class="form-group row mt-5" *ngIf="_uploaded_type != 0">
+                        <div class="col-2"><label><b>Uploaded File: </b></label></div>
+                        <div class="col-3">
+                           <a *ngIf="this._uploaded_type == 2" href="{{_uploaded_img}}" target="_blank"><img src="{{_uploaded_img}}" height="150" width="150" *ngIf="this._uploaded_type == 2"/></a>
+                            <a href="{{_uploaded_img}}" target="_blank"><img src="../../../../assets/images/pdf.svg" height="80" width="80" *ngIf="this._uploaded_type == 1" /></a>
 
 
+                        </div>
 
-                          <span  class="text-danger ml-3"
-                          *ngIf="upload&&!tan">*please Enter TAN</span>
-
-                      </div>
-
-                  </div>
-
-                  <div class="form-group row" >
-
-                      <div class="col-sm-1">
-                          <label><b>Bank name</b></label>
-                      </div>
-                      <div class="col-sm-3" >
-                          <input type="text" class="form-control" placeholder="Enter Bank Name" name="bank_name"
-                              id="itemname"   #banknn>
-
-                               <span  class="text-danger"
-                              *ngIf="upload&&!bank">*please Enter Bank name</span>
                       </div>
 
-                      <div class="col-sm-3" ></div>
-                      <div class="col-sm-1" >
-                          <label><b>Branch name</b></label>
-                      </div>
-                      <div class="col-sm-3" >
-                          <input type="text" class="form-control" placeholder="Enter Branch Name" name="branch_name"
-                              id="itemname" #bran>
-
-                              <span  class="text-danger ml-3"
-                              *ngIf="upload&&!branch">*please Enter Branch name</span> -->
-                          <!-- </div> -->
-
-                      </div>
-                      <!-- <div class="form-group row" >
-
-
-                      <div class="col-sm-1">
-                          <label><b>Ac no</b></label>
-                      </div>
-                      <div class="col-sm-3" >
-                          <input type="text" class="form-control" placeholder="Enter Account Number" name="ac_no"
-                              id="itemname"   #no>
-
-                              < <span  class="text-danger"
-                              *ngIf="upload&&!ac">*please Enter Ac Number</span>
-
-                      </div>
-                      <div class="col-sm-3" ></div>
-                      <div class="col-sm-1" >
-                          <label><b>IFS code</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control" placeholder="Enter IFS Code" name="ifs_code"
-                              id="itemname"  #is>
-
-                              <span  class="text-danger ml-3"
-                              *ngIf="upload&&!ifs">*please Enter Ifsc</span>
-
-
-
-
-                      </div>
-                  </div>  -->
 
 
 
@@ -439,8 +320,28 @@
 
 
 
-                                  <input type="submit" class="btn btn-info" id="submit" name="submit"  [disabled]="mm_val||phone_val||issue_val||remarks_val"
-                                  value="Update" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
+                                  <!-- <input type="submit" class="btn btn-info" id="submit" name="submit"  [disabled]="mm_val||phone_val||issue_val||remarks_val || this.ASSIGN_ENG>0"
+                                  value="Update" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)"> -->
+
+                                  <input type="submit" class="btn btn-info" id="submit" name="submit"
+                                  [disabled]="
+                                  module.value == ''
+                                  ||issue.value == ''
+                                  ||Email.value == ''
+                                  || name.value == ''
+                                  || phone.value == ''
+                                  || this.ASSIGN_ENG>0"
+                                  value="Update" (click)="go_to_dashboard(
+                                    date.value,
+                                  client.value,
+                                  district.value,
+                                  clienttype.value,
+                                  phone.value,
+                                  priority.value,
+                                  module.value,
+                                  issue.value,
+                                  Email.value,
+                                  name.value)">
 
 
 

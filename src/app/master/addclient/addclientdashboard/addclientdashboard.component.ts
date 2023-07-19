@@ -27,8 +27,8 @@ mutation deleteClient($id: String){
 //   Name:any;
 //   Type:any;
 //   Phone:any;
-  
-  
+
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -38,16 +38,16 @@ mutation deleteClient($id: String){
 //     Name: 'abc',
 //     Type:'',
 //     Phone:'123',
-    
-   
-//   }, 
-  
+
+
+//   },
+
 // ];
 
 @Component({
   selector: 'app-addclientdashboard',
   templateUrl: './addclientdashboard.component.html',
-  styleUrls: ['./addclientdashboard.component.css', 
+  styleUrls: ['./addclientdashboard.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -58,9 +58,9 @@ export class AddclientdashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['Client_Code','Name','Type','Phone','District','Edit','Delete'];
 
-  
+
  x:any;
-  dataSource = new MatTableDataSource; 
+  dataSource = new MatTableDataSource;
 cl:any;
 userdel:any;
 dlt=true;
@@ -70,12 +70,14 @@ dlt=true;
   insrt=true;
   updatec:any;
   insertc:any;
- 
+
   constructor(private router:Router,private apollo:Apollo) { }
   posts:any;
   ngOnInit(): void {
+    console.log(this.router.getCurrentNavigation);
+
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address', '/addclient/dashboard');
+    localStorage.setItem('address', this.router.url);
 
     this.updatec=localStorage.getItem('updatec')
     this.insertc=localStorage.getItem('addc')
@@ -98,7 +100,7 @@ dlt=true;
           {
             this.insrt=false;
             localStorage.setItem('addc','0')
-   
+
           }
 
     this.fetch_data(1);
@@ -106,18 +108,18 @@ dlt=true;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
- 
+
   fetch_data(v:any){
     this.apollo.watchQuery<any>({
       query: SHOW_CLIENT,
-      pollInterval:100,
+      pollInterval:40000,
       variables:{
         active:v.toString()
       }
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
-        
+
         this.posts = data;
        console.log(data)
         console.log(this.posts);
@@ -136,10 +138,12 @@ dlt=true;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/addclient/addcl']); 
+    this.router.navigate(['/addclient/addcl']);
   }
   go_to_update(v1:any){
-    this.router.navigate(['/addclient/editclient',v1])
+    this.router.navigate(['/addclient/editclient',v1]).then(()=> {
+      location.reload();
+    })
   }
   showsnackbar() {
     // alert("error");
@@ -154,7 +158,7 @@ delete_item(){this.apollo.mutate({
     id:this.cl,
     // name:v2,
     // user_id:localStorage.getItem("UserId")
-    
+
   }
 }).subscribe(({data})=>{this.userdel=data;console.log(data);
   console.log("data:" +JSON.stringify(data))

@@ -1,0 +1,56 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <h2>
+              {{__actRT.snapshot.params.id > 0 ? 'Update ' : 'Add '}} Holiday
+            </h2>
+          </div>
+          <form [formGroup]="holiday" (ngSubmit)="submitHolidays()">
+            <div class="row form-group">
+              <div class="col-sm-1">
+                <label for="date">
+                  <b>Date <span class="text-danger">*</span></b>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <input type="date" name="date" id="date" class="form-control "
+                  [class.is-invalid]="holiday.get('date')!.invalid && (holiday.get('date')!.dirty || holiday.get('date')!.touched)"
+                  formControlName="date">
+                <span class="text-danger" *ngIf="holiday.get('date')!.touched && holiday.get('date')!.errors?.required">
+                  Date is required
+                </span>
+              </div>
+            </div>
+            <div class="row my-5 form-group">
+              <div class="col-sm-1">
+                <label for="event">
+                  <b>Event <span class="text-danger">*</span></b>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <textarea
+                  [class.is-invalid]="holiday.get('event')!.invalid && (holiday.get('event')!.dirty || holiday.get('event')!.touched)"
+                  name="event" id="event" cols="30" rows="4" class="form-control" placeholder="Enter Event"
+                  formControlName="event"></textarea>
+                <span class="text-danger"
+                  *ngIf="holiday.get('event')!.touched && holiday.get('event')!.errors?.required">
+                  Event is required
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 btnSubmitSec">
+                <input type="submit" [disabled]="holiday.invalid" value="Save" class="btn btn-info">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

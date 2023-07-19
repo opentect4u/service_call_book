@@ -34,13 +34,13 @@ export class EdittsComponent implements OnInit {
   ngOnInit(): void {
      this.pathname=window.location.href.split('#').pop();
      console.log("path:" +window.location.href.split('#').pop())
-     localStorage.setItem('address', decodeURIComponent(this.pathname));
+     localStorage.setItem('address', this.router.url);
     // console.log("pathname:",window.location.href);
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
     this.input_tag=document.getElementById('itemtype');
-    
+
 
   }
   prevent_null(e:any){
@@ -89,7 +89,7 @@ export class EdittsComponent implements OnInit {
   },error=>{ this.showsnackbar()
   });
       this.done=true;
-      
+
      //this.input_tag.value='';
      this.disable_button=false;
      this.input_tag.style.border="1px solid lightgrey";
@@ -107,6 +107,6 @@ export class EdittsComponent implements OnInit {
     this.error=false;
     this.done=false;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

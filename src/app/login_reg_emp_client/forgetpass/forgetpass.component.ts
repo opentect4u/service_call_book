@@ -46,7 +46,7 @@ export class ForgetpassComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    localStorage.setItem('address', '/forgetpassword');
+    localStorage.setItem('address', this.router.url);
     localStorage.setItem('forgetpassword','0');
     console.log('Branch');
     // localStorage.setItem("address",'/forgetpassword');

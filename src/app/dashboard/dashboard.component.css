@@ -35,6 +35,7 @@ small{
    color:#282a3c;
    transition:all 1s linear;
 } */
+
 button.hover-class:hover {
   background-color: white !important;
   color: #282a3c !important;
@@ -50,6 +51,9 @@ small{
  height: 400px;
   overflow: auto;
  }
+
+ 
+
  .example-container1{
   position: relative;
 
@@ -91,6 +95,10 @@ small{
         0% { opacity: 0; }
         50% { opacity: 1; }
         100% { opacity: 0; }
+      }
+      .dot3{
+        display: inline-block;
+        animation: blink 2s infinite;
       }
 /* slide toggle */
 
@@ -136,11 +144,64 @@ animation: pulsate 1s ease-out;
 }
 
 td,th{
-  width:30%;
+  /* width:30%; */
+  width: 20%;
+}
+
+
+.mat-row:nth-child(even){
+  background-color: #ffffff;
+
+}
+      
+.mat-row:nth-child(odd){
+  background-color: #f2f2f2;;
+  /* color:white ; */
+}
+
+::ng-deep.mat-menu-panel
+  {
+    margin-top:60px;  
+    position: sticky !important;
+      /* top : 1%; */
+  }
+
+
+
+/* For Profile Card */
+
+
+.modal{
+  position: absolute;
+  left: 50%;
 }
 
 
 
 
+.btn-circle {
+  border-radius: 100%;
+  height: 6rem;
+  background-color: #282a3c;
+  width: 6rem;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color:white
+}
+
+.mat-card1{
+  background-color: rgb(254 143 143);
+ 
+}
+.mat-card2{
+  background-color: #9492ff;
+
+}
+/* .fa-wechat{
+  height:30px;
+  width:20px;
+} */
 
 

@@ -27,8 +27,8 @@
 
 
             <div class="titleSec">
-              <button type="button" class="btn btn-primary" (click)="go_to_AddItem()">Add</button>
-              <h2>Raise Ticket</h2>
+              <!-- <button type="button" class="btn btn-primary" (click)="go_to_AddItem()">Add</button> -->
+              <h2>My Tickets</h2>
              </div>
 
 
@@ -37,14 +37,25 @@
 
             <div class="alert alert-success alert-dismissible fade in mb-3" style="text-align: center;" [hidden]="insertitckit">
               <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
-             <b> Insertion Successfull!!</b> <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="localstorage()">&times;</a>
+             <b>
+              {{getClientRaiseTktStatus == '2' ? 'Insertion Successfull!!'
+              :'Our support center is closed for the day. Your Ticket will be attained on the next working day'}}
+             </b>
+
+             <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="localstorage()">&times;</a>
             </div>
 
 
 
             <div class="alert alert-success alert-dismissible fade in mb-3" style="text-align: center;" [hidden]="edit">
               <!-- <div data-dismiss="alert" aria-label="close">&times;</div> -->
-             <b> Updation Successfull!!</b> <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="localstorage1()">&times;</a>
+             <b>
+              {{getClientRaiseTktStatusforEdit == '2' ? 'Updation Successfull!!'
+              :'Our support center is closed for the day. Your Ticket will be attained on the next working day'}}
+            </b>
+
+
+             <a style="float:right;" data-dismiss="alert" aria-label="close" (click)="localstorage1()">&times;</a>
             </div>
 
 
@@ -59,6 +70,7 @@
 
 
              <div class="row">
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#ffffff" type = "ball-pulse" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
 
               <!-- <div class="alert  ml-5" role="alert" [hidden]="alert_show">
                   Item Deleted Successfully!! &#x2714;
@@ -71,7 +83,13 @@
 
 
                 <div class="row">
-                  <div class="col-md-9 "></div>
+                  <div class="col-md-9 ">
+                    <input type="radio" id="pending" value="1"  checked="true" (click)="sendstatus('1')" name="status">
+                    <label for="pending" class="ml-1"> Pending</label>
+                    <input type="radio" id="done" value="0" class="ml-4" (click)="sendstatus('0')" name="status">
+                    <label for="done" class="ml-1"> Done</label>
+
+                  </div>
 
                   <div class="col-md-3 pull-right">
                     <mat-form-field appearance="outline">
@@ -87,22 +105,22 @@
 
                     <ng-container matColumnDef="Ticket_No">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header="tkt_no"><b>Ticket No.</b> </th>
-                      <td mat-cell *matCellDef="let row"> {{row.tkt_no}} </td>
+                      <td mat-cell *matCellDef="let row" > {{row.tkt_no}} </td>
                     </ng-container>
 
                       <ng-container matColumnDef="Log_date">
                       <th mat-header-cell *matHeaderCellDef ><b>Log Date</b></th>
-                      <td mat-cell *matCellDef="let row">{{row.log_in | date:'dd-MM-yyyy '}}</td>
+                      <td mat-cell *matCellDef="let row">{{row.log_in |  date: 'dd/MM/yyyy HH:mm'}}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="Status">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header="tktStatus"><b>Status</b></th>
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header="work_status"><b>Status</b></th>
                       <td mat-cell *matCellDef="let row"><div *ngIf="row.work_status=='0'">Pending</div><div *ngIf="row.work_status=='1'">Done</div></td>
                     </ng-container>
 
                     <ng-container matColumnDef="Edit">
-                      <th mat-header-cell *matHeaderCellDef ><b>Edit</b></th>
-                      <td mat-cell *matCellDef="let row">
+                      <th mat-header-cell *matHeaderCellDef >Edit</th>
+                      <td mat-cell *matCellDef="let row" >
                         <a (click)="go_to_update(row.id)"
                         data-toggle="tooltip" data-placement="bottom" title="Edit" class="deletCus">
                         <i class="fa fa-edit menu-icon"></i>
@@ -110,10 +128,11 @@
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Delete">
-                      <th mat-header-cell *matHeaderCellDef ><b>Delete</b></th>
-                      <td mat-cell *matCellDef="let row" class="p-2">
-                        <a (click)="delete(row.id)" class="delete editeCus"
+                    <ng-container matColumnDef="Delete" class="text-center">
+                      <th mat-header-cell *matHeaderCellDef  class="text-center"><b>Delete</b></th>
+                      <td mat-cell *matCellDef="let row" class=" text-center" >
+                        <a  (click)="delete(row.id)" class="delete editeCus"
+                        [hidden]="row.assign_engg>0"
 
                         title="Delete"
                         data-toggle="modal" data-target="#Modalmy"
@@ -136,7 +155,7 @@
                     </tr>
                   </table>
 
-                  <mat-paginator [pageSizeOptions]="[10, 25, 50,100]" showFirstLastButtons></mat-paginator>
+                  <mat-paginator [pageSizeOptions]="[100, 200, 500]" showFirstLastButtons></mat-paginator>
                 </div>
 
 

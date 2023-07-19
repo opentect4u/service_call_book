@@ -51,7 +51,7 @@
           <div class="titleSec">
             
             <!-- <button type="button" class="btn btn-primary" (click)="go_to_AddItem()">Add</button> -->
-            <h2>Attend & Deliver Ticket</h2>
+            <h2>Attend & Deliver Ticket ({{this._activateRoute.snapshot.params.id > 0 ? 'Web & Applications' : 'Others'}})</h2>
 
             <!-- <div id="snackbar" class="text-danger pull-right">{{linkshareinterpolation}}</div> -->
 
@@ -69,6 +69,9 @@
   
           <div class="row">
 
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#ffffff" type = "ball-pulse" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
+             
+
             <!-- <div class="alert  ml-5" role="alert" [hidden]="alert_show">
                 Item Deleted Successfully!! &#x2714;
                <span class="closebtn span pl-5" (click)="close_alert()">&times;</span>
@@ -81,7 +84,19 @@
 
 
               <div class="row">
-                <div class="col-md-9 "></div>
+                <div class="col-md-9 ">
+
+                 
+
+
+                    <input type="radio" id="a" value="1"  checked="true" (click)="sendstatus('1')" name="status">
+                    <label for="a" class="ml-1"> Pending</label>
+                    <input type="radio" id="i" value="0" class="ml-4" (click)="sendstatus('0')" name="status">
+                    <label for="i" class="ml-1"> Done</label>
+               
+
+
+                </div>
                 
                 <div class="col-md-3 pull-right">
                   <mat-form-field appearance="outline">
@@ -103,11 +118,20 @@
             </div><br> -->
               <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="dataSource" matSort>
+                  <ng-container matColumnDef="SL NO">
+                    <th mat-header-cell *matHeaderCellDef>#</th>
+                    <td mat-cell *matCellDef="let row;index as i"> {{i+1}} </td>
+                  </ng-container>
 
 
                   <ng-container matColumnDef="Ticket_No">
                     <th mat-header-cell *matHeaderCellDef>Ticket No. </th>
-                    <td mat-cell *matCellDef="let row"> {{row.tkt_no}} </td>
+                    <td mat-cell *matCellDef="let row;index as i"
+                    [ngStyle]="{'color':cr[i]}"> 
+                      <span #tooltip="matTooltip"
+                matTooltip="{{row.prob_reported}}"
+                matTooltipClass="custom-tooltip"
+               matTooltipPosition="below">{{row.tkt_no}} </span></td>
                   </ng-container>
 
                   <ng-container matColumnDef="Client_Name">
@@ -121,7 +145,7 @@
                   </ng-container> -->
                   <ng-container matColumnDef="ticket_log_date">
                     <th mat-header-cell *matHeaderCellDef >Log Date</th>
-                    <td mat-cell *matCellDef="let row">{{row.log_in |  date:'medium'}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.log_in |  date: 'dd/MM/yyyy HH:mm'}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="Assigned_to">
@@ -130,20 +154,51 @@
                   </ng-container>
                  
                   <ng-container matColumnDef="Priority">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="priority"> Priority </th>
-                    <td mat-cell *matCellDef="let row">{{row.priority}}</td>
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Priority </th>
+                    <td mat-cell *matCellDef="let row" [ngClass]="{'make-gold':row.priority == 'Low','make-medium':row.priority == 'Medium','make-high':row.priority=='High','make-critical':row.priority=='Critical','make-Customer':row.priority=='Customer Waiting'}">{{row.priority}}</td>
                   </ng-container>
                   <ng-container matColumnDef="Ticket_Status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="tktStatus"> Ticket&nbsp;Status </th>
-                    <td mat-cell *matCellDef="let row">{{row.tktStatus}}</td>
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Ticket&nbsp;Status </th>
+                    <td mat-cell *matCellDef="let row"  class="text-center" >
+                    
+                        <div *ngIf = "row.work_status != '1'">
+                         <div *ngIf="row.tkt_status != 4 && row.tkt_status!=0" >
+                                  <span>{{row.tktStatus}}</span>
+                         </div>
+
+                         <div *ngIf="row.tkt_status == 4 || row.tkt_status=='' || row.tkt_status == null ||  row.tkt_status == 0 ">
+                          <!-- <span>{{row.tktStatus}} {{row.tkt_status}}</span> -->
+                         <mat-slide-toggle 
+                      class="example-margin"
+                      [color]="color"
+                     [checked]='row.tkt_status==4'
+
+                    
+                      (change)="onToggle($event,row.id,row.emp_name,row.client_name)">
+                    
+                            </mat-slide-toggle>
+                     </div>
+                    </div>
+                    <div *ngIf="row.work_status > 0" >
+                      <span>{{row.tktStatus}}</span>
+                    </div>
+
+
+                 
+                    </td>
                   </ng-container>
                   <ng-container matColumnDef="Edit">
                     <th mat-header-cell *matHeaderCellDef class="p-3"> Edit</th>
-                    <td mat-cell *matCellDef="let row" class="p-3" [disabled]="row.work_status>0">
-                        <a (click)="go_to_update(row.id)"
+                   
+                    <td mat-cell *matCellDef="let row" class="p-3">  
+                   
+                      <div [hidden] = "row.tkt_status > 0 ? false : true" id="av_{{row.id}}">
+                        <a type="button" (click)="go_to_update(row.id)"                      
                         data-toggle="tooltip" data-placement="bottom" title="Edit" class="deletCus">
                         <i class="fa fa-edit menu-icon"></i>
                     </a>
+                      </div>
+                        
                 </td>
                   </ng-container>
 
@@ -155,7 +210,7 @@
                   </ng-container> -->
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
 
 
                   <tr class="mat-row" *matNoDataRow>
@@ -163,7 +218,7 @@
                   </tr>
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[10, 25, 50,100]" showFirstLastButtons></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[100, 200, 500,1000]" showFirstLastButtons></mat-paginator>
               </div>
 
 

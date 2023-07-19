@@ -25,7 +25,7 @@ query{
 //   Sl_No: any;
 //   Operational_Mode: any;
 //   Edit:any;
-  
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -33,9 +33,9 @@ query{
 //     Sl_No: 1,
 //     Operational_Mode: 'abc',
 //     Edit:''
-   
-//   }, 
-  
+
+//   },
+
 // ];
 @Component({
   selector: 'app-omdashboard',
@@ -69,7 +69,7 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address','/operationmode/dashboard'); 
+    localStorage.setItem('address', this.router.url);
 
     this.updateom=localStorage.getItem('updateom')
     this.insertom=localStorage.getItem('addom')
@@ -91,7 +91,7 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
           {
             this.insrt=false;
             localStorage.setItem('addom','0')
-   
+
           }
 
     this.posts_om.length=0;
@@ -102,14 +102,14 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_OP,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
         this.loading = loading;
         console.log(data+" "+loading);
         this.posts_om = data;
-       
+
         console.log(this.posts_om);
        this.putdata(this.posts_om);
       });
@@ -146,17 +146,17 @@ export class OmdashboardComponent implements OnInit,OnDestroy{
    }
   delete(v:any){
     this.oprnid=v;
-    
+
   }
   delete_item(){// alert(this.ctmid);
-  
+
     this.apollo.mutate({
       mutation:DEL_MAS,
       variables:{
         id:this.oprnid,
         // name:v2,
         // user_id:localStorage.getItem("UserId")
-        
+
       }
     }).subscribe(({data})=>{this.userdel=data;console.log(data);
       console.log("data:" +JSON.stringify(data))

@@ -31,7 +31,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control p-2" 
-                                            name="cust_code" id="itemcode" required #ecode (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
+                                            name="cust_code" id="itemcode" required #ecode (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)" (change)="prevent_null($event)">
 
                                         <span class="text-danger" *ngIf="code">*Please Enter Code</span>
 
@@ -48,7 +48,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control p-2" 
-                                            name="cust_name" id="itemname" required="" #ename (keyup)="prevent_null($event)">
+                                            name="cust_name" id="itemname" required="" #ename (keyup)="prevent_null($event)" (change)="prevent_null($event)" >
 
                                         <span class="text-danger" *ngIf="name">*Please Enter Name</span>
 
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="text" class="form-control p-2"  name="phone"
-                                            id="itemph" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)">
+                                            id="itemph" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)" (change)="prevent_null($event)" >
                                         <span class="text-danger" *ngIf="ph">*Please Enter Phone No.(Only numeric values)</span>
 
                                     </div>

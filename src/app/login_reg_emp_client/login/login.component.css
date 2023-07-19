@@ -1,15 +1,16 @@
 #capt_login{
     text-align: center;
     height:50px;
-    width: 100px;
+    width: 150px;
     background-color: antiquewhite;
     -webkit-text-stroke: 1px rgb(40, 83, 23);
      font-style: italic;
       font-size:larger;
       font-weight: 200;
-       letter-spacing: 2px;
+       letter-spacing: 7px;
        text-orientation:initial;
-  
+       font-family: 'Noto Serif', 'serif';
+      
  }
  .alert {
     position: relative;

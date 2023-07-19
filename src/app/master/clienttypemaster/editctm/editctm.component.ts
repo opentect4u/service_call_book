@@ -32,14 +32,14 @@ export class EditctmComponent implements OnInit {
   ngOnInit(): void {
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
-    localStorage.setItem('address', decodeURIComponent(this.pathname));
+    localStorage.setItem('address', this.router.url);
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
-     
+
      //  console.log(this.item1+" "+this.item2);
     this.input_tag=document.getElementById('itemtype');
-    
+
   }
 
   showsnackbar() {
@@ -81,7 +81,7 @@ export class EditctmComponent implements OnInit {
         id:v1,
         name:v2,
         user_id:localStorage.getItem("UserId")
-        
+
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -91,7 +91,7 @@ export class EditctmComponent implements OnInit {
      // this.ctmdash.ngOnInit();
         localStorage.setItem('updatectm','1')
         this.router.navigate(['/clienttypemaster/dashboard'])
-     
+
         }
         else
         this.showsnackbar();

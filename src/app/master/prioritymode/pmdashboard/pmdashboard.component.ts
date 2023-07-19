@@ -25,7 +25,7 @@ query{
 //   Sl_No: any;
 //   Operational_Mode: any;
 //   Edit:any;
-  
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -33,9 +33,9 @@ query{
 //     Sl_No: 1,
 //     Operational_Mode: 'abc',
 //     Edit:''
-   
-//   }, 
-  
+
+//   },
+
 // ];
 
 @Component({
@@ -49,7 +49,7 @@ query{
 })
 export class PmdashboardComponent implements OnInit,OnDestroy {
   displayedColumns: string[] = ['Sl_No', 'Operational_Mode','Edit','Delete'];
-  dataSource = new MatTableDataSource; 
+  dataSource = new MatTableDataSource;
   x:any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -67,8 +67,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address','/prioritymode/dashboard'); 
-
+    localStorage.setItem('address', this.router.url);
     this.updatepm=localStorage.getItem('updatepm')
     this.insertpm=localStorage.getItem('addpm')
     if(this.updatepm=='0')
@@ -89,7 +88,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
           {
             this.insrt=false;
             localStorage.setItem('addpm','0')
-   
+
           }
 
     this.fetch_data();
@@ -99,7 +98,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_PM,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
@@ -146,7 +145,7 @@ export class PmdashboardComponent implements OnInit,OnDestroy {
       id:this.pmid,
       // name:v2,
       // user_id:localStorage.getItem("UserId")
-      
+
     }
   }).subscribe(({data})=>{this.userdel=data;console.log(data);
     console.log("data:" +JSON.stringify(data))

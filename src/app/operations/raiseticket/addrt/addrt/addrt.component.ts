@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 import {Router} from '@angular/router';
-
+import { DatePipe } from '@angular/common'
+import { commonEditor } from 'src/app/utilitY/commonEditor';
 
 declare const $: any;
 const SHOW_CLIENT=gql`
@@ -75,12 +76,13 @@ mutation createTkt($client_id:String!,$tkt_module:String!,$phone_no:String!,$pri
   '../../../../../assets/masters_css_js/css/res.css']
 })
 export class AddrtComponent implements OnInit {
-
+  configEditor= commonEditor.config;
+  remarks:any
   // idfield:any=[{item_id:'',item_name:''}];
-
+  transform:any;
   // spinshow:boolean=true;
-
-  constructor(private apollo:Apollo,private route:Router) {
+  amc_date_ex:boolean=true;
+  constructor(private apollo:Apollo,private route:Router,public datepipe: DatePipe) {
     setInterval(() => {
       this.now = new Date();
     }, 1);
@@ -121,6 +123,7 @@ export class AddrtComponent implements OnInit {
   cl_id:any;
   cl_name:any;
   sel:any;
+  rental_date_ex:boolean=true;
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
@@ -130,7 +133,7 @@ export class AddrtComponent implements OnInit {
 
     this.input_issue=document.getElementById('itemissue');
 
-    localStorage.setItem('address','/operations/addraiseticket');
+    localStorage.setItem('address',this.route.url);
     this.apollo.watchQuery<any>({
       query: SHOW_MM
 
@@ -161,7 +164,6 @@ export class AddrtComponent implements OnInit {
 
         this.apollo.watchQuery<any>({
           query: SHOW_CLIENT,
-          //pollInterval:100,
           variables:{
             active:'1'
           }
@@ -175,15 +177,15 @@ export class AddrtComponent implements OnInit {
 
            });
 
-           $('.select2').select2({})
+           $('.client').select2({})
            .on("select2:select",  (e:any) => {
-            // have to fire our own change event because value set in JS
-            // TODO capture ahead of time instead of using default
-            //$(this).trigger('change');
-            console.log("select2:select",e.params.data.id);
-            console.log("select2:select",e.params.data.text);
              this.select_client(e.params.data.id);
          });
+         $('.module').select2({})
+         .on('select2:select', (e:any)=>{
+           this.select_mm(e.params.data.id)
+
+         })
 
 
   }
@@ -207,7 +209,7 @@ export class AddrtComponent implements OnInit {
       console.log("id:" +v);
       this.apollo.watchQuery<any>({
         query: GET_POST_DATA_USING_CLIENTTYPE,
-        pollInterval:100,
+        // pollInterval:100,
         variables:{
           id:v,
           active:''
@@ -223,15 +225,37 @@ export class AddrtComponent implements OnInit {
            this.working_hrs=data.getClient[0].working_hrs;
            this.amc_upto=data.getClient[0].amc_upto;
            this.rental_upto=data.getClient[0].rental_upto;
+          var myDate=new Date();
+           this.transform=this.datepipe.transform(myDate, 'yyyy-MM-dd');
+           this.rental_upto =this.datepipe.transform(this.rental_upto, 'yyyy-MM-dd');
+           this.amc_upto =this.datepipe.transform(this.amc_upto, 'yyyy-MM-dd');
+           console.log(this.rental_upto,"Date"+this.transform);
+
+           if(this.rental_upto<this.transform){
+             this.rental_date_ex=false;
+
+           }
+           else{
+            this.rental_date_ex=true;
+
+           }
+           this.amc_date_ex=this.amc_upto<this.transform?false:true;
            this.phone_no=data.getClient[0].phone_no;
 
 
           })
 
-
+            if(this.phone_no==''){
+              this.phone_val=true;
+            }
+            else{
+              this.phone_val=false;
+            }
     }
   }
   select_mm(v:any){
+    console.log(v);
+
     if(v=='')
     {
       this.mm_val=true;
@@ -307,7 +331,7 @@ export class AddrtComponent implements OnInit {
 
   }
 
-  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
+  go_to_dashboard(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any){
     // console.log("Date:" +this.cl_id);
     console.log("Date:" +v1);
     console.log("Client:" +v2);
@@ -323,6 +347,8 @@ export class AddrtComponent implements OnInit {
     // console.log("issue:" +v12);
     // console.log("remarks:" +v13);
     this.user=localStorage.getItem("UserId")
+    console.log(this.remarks);
+
 
     this.apollo.mutate({
       mutation: GET_POST_update,
@@ -332,7 +358,7 @@ export class AddrtComponent implements OnInit {
          phone_no: v9,
          priority_status:v10,
         prob_reported: v12,
-        remarks:v13,
+        remarks:this.remarks ? this.remarks : '',
         user_id:this.user
 
       }
@@ -344,7 +370,9 @@ export class AddrtComponent implements OnInit {
       localStorage.setItem('insertickit','1');
 
           this.successmsg=this.success.createTkt.message;
-          this.route.navigate(['/operations/raiseticket']);
+          this.route.navigate(['/operations/raiseticket']).then(() => {
+            window.location.reload()
+          })
      }
      else
      this.showsnackbar();
@@ -359,22 +387,4 @@ export class AddrtComponent implements OnInit {
      this.x.className = "show";
      setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

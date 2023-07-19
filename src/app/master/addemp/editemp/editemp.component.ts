@@ -26,7 +26,7 @@ mutation updateEmp($emp_code:Int, $id:String, $emp_name: String,$phone_no: Strin
 @Component({
   selector: 'app-editemp',
   templateUrl: './editemp.component.html',
-  styleUrls: ['./editemp.component.css', 
+  styleUrls: ['./editemp.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -40,7 +40,7 @@ export class EditempComponent implements OnInit {
   posts: any;
   private querySubscription: Subscription = new Subscription;
   constructor(private router:Router,private apollo:Apollo,private route:ActivatedRoute) { }
- 
+
   userdata:any;
   notavalidemail=true;
   confirm_email='';
@@ -67,9 +67,9 @@ export class EditempComponent implements OnInit {
  ngOnInit(): void {
   this.pathname=window.location.href.split('#').pop();
   console.log("path:" +window.location.href.split('#').pop())
- 
+
  console.log("pathname:" +decodeURIComponent(this.pathname));
- localStorage.setItem('address', decodeURIComponent(this.pathname));
+ localStorage.setItem('address', this.router.url);
   this.route.params.forEach((params: any) => {
     this.item0=params['id1']
     this.item1 = params['id2'];
@@ -153,7 +153,7 @@ export class EditempComponent implements OnInit {
  }
  preventNonNumericalInput(e:any){
    e = e || window.event;
-   
+
    var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
    var charStr = String.fromCharCode(charCode);
 
@@ -173,9 +173,9 @@ export class EditempComponent implements OnInit {
       id:this.item0,
       emp_code:Number(ecode),
       emp_name: ename,
-      phone_no: phone, 
-      email:email, 
-      emp_designation:designation, 
+      phone_no: phone,
+      email:email,
+      emp_designation:designation,
       remarks: remarks,
       user_id:localStorage.getItem("UserId")
     }

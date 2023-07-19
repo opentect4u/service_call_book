@@ -17,7 +17,7 @@ mutation insertClient($client_name: String,
   $amc_upto: String,
   $rental_upto: String,
   $support_status: String,
-  $remarks: String) {
+  $remarks: String,$schema_name: String) {
     insertClient(client_name: $client_name,
       district_id: $district_id,
       client_type_id: $client_type_id,
@@ -32,7 +32,7 @@ mutation insertClient($client_name: String,
       amc_upto: $amc_upto,
       rental_upto: $rental_upto,
       support_status: $support_status,
-      remarks: $remarks) {
+      remarks: $remarks,schema_name: $schema_name) {
      message
     }
   }`
@@ -60,7 +60,7 @@ query{
 @Component({
   selector: 'app-adcl',
   templateUrl: './adcl.component.html',
-  styleUrls: ['./adcl.component.css', 
+  styleUrls: ['./adcl.component.css',
   '../../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../../assets/masters_css_js/css/apps.css',
   '../../../../../assets/masters_css_js/css/apps_inner.css',
@@ -73,6 +73,7 @@ export class AdclComponent implements OnInit,OnDestroy {
   getinactive:any;
   loading: boolean=false;
   posts: any;
+  amc_date:boolean=false;
   loading1: boolean=false;
   posts1: any;
   done=false;
@@ -103,6 +104,7 @@ export class AdclComponent implements OnInit,OnDestroy {
   radio_inactive:any
   input_remarks:any;
   select_d: any;
+  rental_amc:any;
   constructor(private router:Router,private apollo:Apollo) { }
   userdata:any;
   ctmdata:any=[];
@@ -125,15 +127,15 @@ export class AdclComponent implements OnInit,OnDestroy {
   spinshow=false;
 
   ngOnInit(): void {
-    
-    localStorage.setItem('address', '/addclient/addcl');
+
+    localStorage.setItem('address', this.router.url);
     this.email_null=false;
     this.namevalid=true;
     this.addressvalid=false;
     this.phonevalid=true;
     this.distvalid=true;
     this.ctmvalid=true;
-    this.mode_select=true;
+    this.mode_select=false;
     this.oprnvalid=true;
     this.status=true;
     // this.amcvalid=true;
@@ -162,7 +164,7 @@ export class AdclComponent implements OnInit,OnDestroy {
     // this.fetch_ctm();
     this.apollo.watchQuery<any>({
       query: SHOW_DIST
-     
+
     })
       .valueChanges
       .subscribe(({ data }) => {
@@ -171,8 +173,8 @@ export class AdclComponent implements OnInit,OnDestroy {
         console.log(data);
         this.distdata=this.districts.getDistrict
         console.log(this.ctmdata);
-        
-       
+
+
        //this.putdata(this.posts);
       });
 
@@ -186,7 +188,7 @@ export class AdclComponent implements OnInit,OnDestroy {
   //   else
   //   this.amcvalid=false;
   // }
-  
+
   // change_rentalupto(v:any){
   //  // alert(v);
   //   if(v=='')
@@ -244,8 +246,20 @@ export class AdclComponent implements OnInit,OnDestroy {
 
 
   }
-  select_mode(){
+  select_mode(event:any,val:any){
    this.mode_select=false;
+   if(val=='AMC' && event.target.checked){
+    this.amc_date=false;
+    this.rental_amc=document.getElementById('itemrental');
+    this.rental_amc.value='';
+   }
+   else{
+    this.amc_date=true;
+    this.rental_amc=document.getElementById('itemamc');
+    this.rental_amc.value='';
+
+   }
+
   }
   prevent_null(e:any){
     this.done=false;
@@ -299,7 +313,7 @@ export class AdclComponent implements OnInit,OnDestroy {
       else
        {this.addressvalid=false;this.input_address.style.border="solid lightgrey 1px";}
     }
-    
+
     else{}
 
   }
@@ -325,13 +339,13 @@ export class AdclComponent implements OnInit,OnDestroy {
         this.posts = data;
         this.ctmdata=this.posts.getClientTypeData
         console.log(this.ctmdata);
-        
-       
+
+
        //this.putdata(this.posts);
       });
-      
+
   }
-  fetch_op(){ 
+  fetch_op(){
     this.apollo.watchQuery<any>({
     query: SHOW_OP,
     variables:{
@@ -346,7 +360,7 @@ export class AdclComponent implements OnInit,OnDestroy {
       console.log(this.opdata);
     // this.putdata(this.posts);
     });}
-  send_data(name:any,dist:any,comp:any,ctm:any,address:any,contact:any,designation:any,phone:any,email:any,amcupto:any,rentalupto:any,remarks:any,amcrentalradio:any,activeinactiveradio:any,workinghours:any){
+  send_data(name:any,dist:any,comp:any,ctm:any,address:any,contact:any,designation:any,phone:any,email:any,amcupto:any,rentalupto:any,remarks:any,amcrentalradio:any,activeinactiveradio:any,workinghours:any,schema_name:any){
     this.getamc=document.getElementById('AMC');
     this.getrental=document.getElementById('Rental');
     this.getactive=document.getElementById('a');
@@ -355,7 +369,6 @@ export class AdclComponent implements OnInit,OnDestroy {
     amcrentalradio=this.getamc.value;
     if(this.getrental.checked)
     amcrentalradio=this.getrental.value;
-
     if(this.getactive.checked)
     activeinactiveradio=this.getactive.value;
     if(this.getinactive.checked)
@@ -377,8 +390,8 @@ export class AdclComponent implements OnInit,OnDestroy {
         amc_upto: amcupto,
         rental_upto: rentalupto,
         support_status:activeinactiveradio,
-        remarks: remarks
-        
+        remarks: remarks,
+        schema_name: schema_name
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -414,20 +427,19 @@ export class AdclComponent implements OnInit,OnDestroy {
         this.radio_amc.checked=false;
         this.radio_rental.checked=false;
         this.input_workinghours.value='';
-        
         this.select_c.value='';
         this.select_d.value='';
         this.select_o.value='';}
-      
-
-
         else
         this.showsnackbar();
     },error=>{ this.showsnackbar()
    } );
 
 
-    //console.log(name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio)
+    // console.log(name+" "+dist+" "+comp+" "+ctm+" "+address+" "+contact+" "+designation+" "+phone+" "+email+" "+amcupto+" "+rentalupto+" "+remarks+" "+amcrentalradio+" "+activeinactiveradio );
+    // console.log(schema_name);
+
+
   }
 
 
@@ -441,7 +453,7 @@ export class AdclComponent implements OnInit,OnDestroy {
    }
   preventNonNumericalInput(e:any){
     e = e || window.event;
-    
+
     var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
     var charStr = String.fromCharCode(charCode);
 
@@ -484,15 +496,21 @@ export class AdclComponent implements OnInit,OnDestroy {
     this.radio_amc.checked=false;
     this.radio_rental.checked=false;
     this.input_workinghours.value='';
-    
+
     this.select_c.value='';
     this.select_d.value='';
     this.select_o.value='';
     //location.reload();
   }
 
-  
-    
 
-  
+
+
+
+
+
+
+
+
+
 }

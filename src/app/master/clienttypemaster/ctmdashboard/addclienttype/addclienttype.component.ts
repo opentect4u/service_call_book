@@ -13,7 +13,7 @@ mutation insertMaster($client_type: String,$user_id: String) {
 @Component({
   selector: 'app-addclienttype',
   templateUrl: './addclienttype.component.html',
-  styleUrls: ['./addclienttype.component.css', 
+  styleUrls: ['./addclienttype.component.css',
   '../../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../../assets/masters_css_js/css/apps.css',
   '../../../../../assets/masters_css_js/css/apps_inner.css',
@@ -22,7 +22,7 @@ mutation insertMaster($client_type: String,$user_id: String) {
 export class AddclienttypeComponent implements OnInit {
 
 
- 
+
   User:any;
   x:any;
   constructor(private apollo: Apollo,private router:Router) { }
@@ -36,8 +36,8 @@ export class AddclienttypeComponent implements OnInit {
   done=false;
   disable_button=true;
   ngOnInit(): void {
-    
-    localStorage.setItem('address','/clienttype/addctm');
+
+    localStorage.setItem('address', this.router.url);
     this.User=localStorage.getItem("UserId");
     console.log("type:" +typeof(this.User));
     this.input_tag=document.getElementById('itemname');
@@ -93,15 +93,15 @@ export class AddclienttypeComponent implements OnInit {
 
       this.done=true;
       // console.log(this.userdata.message)
-      
+
      //this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
     }
   }
 
- 
- 
+
+
   showsnackbar() {
     // alert("error");
      this.x = document.getElementById("snackbar");
@@ -112,13 +112,13 @@ export class AddclienttypeComponent implements OnInit {
     this.spinshow=true;
     setTimeout(()=>{this.spinshow=false;;},1000);
     // this.spinshow=false;
-    
+
     this.input_tag.value='';
     this.error=false;
     this.done=false;
     this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

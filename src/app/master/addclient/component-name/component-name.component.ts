@@ -22,6 +22,8 @@ amc_upto
 rental_upto
 support_status
 remarks
+schema_name
+
   }
 }`
 const SHOW_DIST=gql`
@@ -79,8 +81,9 @@ const SHOW_DIST_1=gql`query{
   $rental_upto: String,
   $support_status: String,
   $remarks: String,
+  $schema_name: String,
   $user_id: String!){
-  updateClient(id:$id, 
+  updateClient(id:$id,
   client_name: $client_name,
       district_id: $district_id,
       client_type_id: $client_type_id,
@@ -95,7 +98,7 @@ const SHOW_DIST_1=gql`query{
       amc_upto: $amc_upto,
       rental_upto: $rental_upto,
       support_status: $support_status,
-      remarks: $remarks,
+      remarks: $remarks,schema_name: $schema_name,
   user_id: $user_id){
     success
     message
@@ -104,7 +107,7 @@ const SHOW_DIST_1=gql`query{
 @Component({
   selector: 'app-component-name',
   templateUrl: './component-name.component.html',
-  styleUrls: ['./component-name.component.css', 
+  styleUrls: ['./component-name.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -128,6 +131,7 @@ export class ComponentNameComponent implements OnInit {
   opdata:any;
   remarks1:any;
   working_hrs:any;
+  Schema_Name:any;
   radioamc:any;
   radiorental:any;
   radioactive:any;
@@ -142,8 +146,8 @@ export class ComponentNameComponent implements OnInit {
   clidselect:any;
   amcdate:any;
   rentaldate:any;
-
-  
+  amc_rental_Check:boolean=false;
+  AMC_RENTAL:any;
 
   constructor(private datepipe:DatePipe,private router:Router,private apollo:Apollo,private route:ActivatedRoute){ }
   item:any;
@@ -163,7 +167,7 @@ export class ComponentNameComponent implements OnInit {
   input_name:any;
   input_phone:any;
 // <<<<<<< HEAD
-  
+
 //   ngOnInit(): void {
 //     this.input_name=document.getElementById('itemname');
 //     this.input_phone=document.getElementById('itemphone');
@@ -175,7 +179,7 @@ export class ComponentNameComponent implements OnInit {
     this.input_phone=document.getElementById('itemphone');
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
-    localStorage.setItem('address', decodeURIComponent(this.pathname));
+    localStorage.setItem('address', this.router.url);
 
 
     this.apollo.watchQuery<any>({
@@ -190,8 +194,8 @@ export class ComponentNameComponent implements OnInit {
         this.posts = data;
         this.ctmdata=this.posts.getClientTypeData
         console.log(this.ctmdata);
-        
-       
+
+
        //this.putdata(this.posts);
       });
       this.apollo.watchQuery<any>({
@@ -210,8 +214,8 @@ export class ComponentNameComponent implements OnInit {
         });
     this.apollo.watchQuery<any>({
       query: SHOW_DIST,
-      pollInterval:100
-     
+      // pollInterval:100
+
     })
       .valueChanges
       .subscribe(({ data }) => {
@@ -220,8 +224,8 @@ export class ComponentNameComponent implements OnInit {
         console.log(data);
         this.distdata=this.districts.getDistrict
        // console.log(this.ctmdata);
-        
-       
+
+
        //this.putdata(this.posts);
       });
     this.radioamc=document.getElementById('AMC');
@@ -231,115 +235,101 @@ export class ComponentNameComponent implements OnInit {
     this.route.params.forEach((params: any) => {
       this.item=params['id1']
       })
-      this.apollo.watchQuery<any>({
-        query: SHOW_CLIENT,
-        pollInterval:100,
-        variables:{
-          id: this.item,
-          active:''
-        }
-      })
-        .valueChanges
-        .subscribe(({ data }) => {
-          
-          this.posts = data;
-          console.log(this.posts);
-          this.client_name=this.posts.getClient[0].client_name;
-          this.client_addr=this.posts.getClient[0].client_addr;
-          this.tech_person=this.posts.getClient[0].tech_person;
-          this.tech_designation=this.posts.getClient[0].tech_designation;
-          this.phone_no=this.posts.getClient[0].phone_no;
-          this.mail=this.posts.getClient[0].email;
-          this.working_hrs=this.posts.getClient[0].working_hrs;
-          this.remarks1=this.posts.getClient[0].remarks;
-          this.supportmode=this.posts.getClient[0].support_mode;
-          this.supportstatus=this.posts.getClient[0].support_status;
-          this.clientid=this.posts.getClient[0].client_type_id;
-          this.opid=this.posts.getClient[0].oprn_mode_id;
-          this.getdist=this.posts.getClient[0].district_id;
-          this.amcdate=this.posts.getClient[0].amc_upto;
-          this.amcdate =this.datepipe.transform(this.amcdate, 'yyyy-MM-dd');
-          this.rentaldate=this.posts.getClient[0].rental_upto;
 
-          this.rentaldate =this.datepipe.transform(this.rentaldate, 'yyyy-MM-dd');
-          console.log(this.clientid);
-
-          console.log("support:" + this.supportstatus);
-          if(this.supportmode=='A')
-          this.radioamc.checked=true;
-          else
-          this.radiorental.checked=true;
-         
-          if(this.supportstatus=='A'){
-          this.radioactive.checked=true;
-          this.active1=true;
-          this.active2=false;
-          this.radioinactive.checked=false;
-          } 
-          else
-          {
-            this.active1=false;
-            this.active2=true;
-            this.radioinactive.checked=true;
-            this.radioactive.checked=false;
-          }
-          
-          console.log(this.radioactive.checked);
-          console.log(this.radioinactive.checked);
-          //console.log(this.remarks1)
-         //this.putdata(this.posts);
-         this.apollo.watchQuery<any>({
-          query: SHOW_CLIENT_1,
-          variables:{
-            id:this.clientid
-          }
-        })
-          .valueChanges
-          .subscribe(({ data }) => {
-            //this.loading = loading;
-            this.posts = data;
-            this.clidselect=this.posts.getClientTypeData[0].client_id;
-            this.client_data=this.posts.getClientTypeData[0].client_type;
-
-            
-            
-           
-           //this.putdata(this.posts);
-          });
-          this.apollo.watchQuery<any>({
-            query: SHOW_OP_1,
-            variables:{
-              id:this.opid
-            }
-          })
-            .valueChanges
-            .subscribe(({ data }) => {
-              //this.loading = loading;
-              this.posts = data;
-              this.opselect=this.posts.getOprnModeData[0].oprn_id;
-              this.op_data=this.posts.getOprnModeData[0].oprn_mode;
-  
-              
-              
-             
-             //this.putdata(this.posts);
-            });
-            for(let i=0;i<this.distdata.length;i++)
-            {
-              if(this.getdist==this.distdata[i].id)
-              {
-                this.distselect=this.distdata[i].id;
-                this.d_data=this.distdata[i].name;
-              }
-            }
-        });
-        //console.log(this.clientid)
-        
-          
-      
+  this.apollo.watchQuery<any>({
+    query: SHOW_CLIENT,
+    // pollInterval:200,
+    variables:{
+      id: this.item,
+      active:''
+    }
+  })
+    .valueChanges
+    .subscribe(({ data }) => {
+      this.posts = data;
+      console.log(this.posts);
+      this.client_name=this.posts.getClient[0].client_name;
+      this.Schema_Name = this.posts.getClient[0].schema_name;
+      this.client_addr=this.posts.getClient[0].client_addr;
+      this.tech_person=this.posts.getClient[0].tech_person;
+      this.tech_designation=this.posts.getClient[0].tech_designation;
+      this.phone_no=this.posts.getClient[0].phone_no;
+      this.mail=this.posts.getClient[0].email;
+      this.working_hrs=this.posts.getClient[0].working_hrs;
+      this.remarks1=this.posts.getClient[0].remarks;
+      this.supportmode=this.posts.getClient[0].support_mode;
+      this.supportstatus=this.posts.getClient[0].support_status;
+      this.clientid=this.posts.getClient[0].client_type_id;
+      this.opid=this.posts.getClient[0].oprn_mode_id;
+      this.getdist=this.posts.getClient[0].district_id;
+      this.amcdate=this.posts.getClient[0].amc_upto;
+      this.amcdate =this.datepipe.transform(this.amcdate, 'yyyy-MM-dd');
+      this.rentaldate=this.posts.getClient[0].rental_upto;
+      this.rentaldate =this.datepipe.transform(this.rentaldate, 'yyyy-MM-dd');
+      if(this.supportmode=='A'){
+        this.radioamc.checked=true;
+        this.AMC_RENTAL=document.getElementById('itemrental');
+        this.AMC_RENTAL.value='';
+        this.amc_rental_Check=false;
+      }
+      else{
+      this.radiorental.checked=true;
+        this.AMC_RENTAL=document.getElementById('itemamc');
+        this.AMC_RENTAL.value='';
+        this.amc_rental_Check=true;
+      }
+      if(this.supportstatus=='A'){
+      this.radioactive.checked=true;
+      this.active1=true;
+      this.active2=false;
+      this.radioinactive.checked=false;
+      }
+      else
+      {
+        this.active1=false;
+        this.active2=true;
+        this.radioinactive.checked=true;
+        this.radioactive.checked=false;
+      }
+      //console.log(this.remarks1)
+     //this.putdata(this.posts);
+    //  this.apollo.watchQuery<any>({
+    //   query: SHOW_CLIENT_1,
+    //   variables:{
+    //     id:this.clientid
+    //   }
+    // })
+    //   .valueChanges
+    //   .subscribe(({ data }) => {
+    //     //this.loading = loading;
+    //     this.posts = data;
+    //     this.clidselect=this.posts.getClientTypeData[0].client_id;
+    //     this.client_data=this.posts.getClientTypeData[0].client_type;
+    //   });
+    //   this.apollo.watchQuery<any>({
+    //     query: SHOW_OP_1,
+    //     variables:{
+    //       id:this.opid
+    //     }
+    //   })
+    //     .valueChanges
+    //     .subscribe(({ data }) => {
+    //       this.posts = data;
+    //       this.opselect=this.posts.getOprnModeData[0].oprn_id;
+    //       this.op_data=this.posts.getOprnModeData[0].oprn_mode;
+    //     });
+        // for(let i=0;i<this.distdata.length;i++)
+        // {
+        //   if(this.getdist==this.distdata[i].id)
+        //   {
+        //     this.distselect=this.distdata[i].id;
+        //     this.d_data=this.distdata[i].name;
+        //   }
+        // }
+    });
   }
-  send_data(cd:any,name:any,dist:any,comp:any,ctm:any,address:any,contact:any,designation:any,phone:any,email:any,amcupto:any,rentalupto:any,remarks:any,amcrentalradio:any,activeinactiveradio:any,workinghours:any){
-   
+  send_data(cd:any,name:any,dist:any,comp:any,ctm:any,address:any,contact:any,designation:any,phone:any,email:any,amcupto:any,rentalupto:any,remarks:any,amcrentalradio:any,activeinactiveradio:any,workinghours:any,schema_name:any){
+
     this.getamc=document.getElementById('AMC');
     this.getrental=document.getElementById('Rental');
     this.getactive=document.getElementById('a');
@@ -372,14 +362,15 @@ export class ComponentNameComponent implements OnInit {
         rental_upto: rentalupto,
         support_status:activeinactiveradio,
         remarks: remarks,
-        user_id:localStorage.getItem("UserId")
-        
+        user_id:localStorage.getItem("UserId"),
+        schema_name:schema_name
+
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
       console.log(this.userdata.updateClient.message)
       if(this.userdata.updateClient.success==1)
-      { 
+      {
         //this.done=true;
         localStorage.setItem('updatec','1');
         this.router.navigate(['/addclient/dashboard'])
@@ -435,7 +426,19 @@ prevent_null(e:any){this.done=false;
 
 change_rentalupto(v:any){}
 select_status(){}
-select_mode(){}
+select_mode(event:any,val:any){
+  if(val=='Amc' && event.target.checked){
+  this.AMC_RENTAL=document.getElementById('itemrental');
+  this.AMC_RENTAL.value='';
+  this.amc_rental_Check=false;
+  }
+  else{
+    this.AMC_RENTAL=document.getElementById('itemamc');
+    this.AMC_RENTAL.value='';
+  this.amc_rental_Check=true;
+
+  }
+}
 change_amcupto(v:any){}
 select_district(v:any){}
 select_client_type(v:any){}
@@ -443,7 +446,7 @@ select_operation(v:any){}
 
 preventNonNumericalInput(e:any){e = e || window.event;
 
-    
+
   var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
   var charStr = String.fromCharCode(charCode);
 

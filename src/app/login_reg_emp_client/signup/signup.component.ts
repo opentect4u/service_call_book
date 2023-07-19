@@ -119,7 +119,7 @@ export class SignupComponent implements OnInit {
     var e=alpha[Math.floor(Math.random()*62)]
     var f=alpha[Math.floor(Math.random()*62)]
     var g=alpha[Math.floor(Math.random()*62)]
-    var sum=a+b+c+d+e+f+g;
+    var sum=a+b+c+d;
     this.recaptcha=document.getElementById("capt");
     this.recaptcha.value=sum;
     this.recaptcha=document.getElementById("capt_client");
@@ -139,13 +139,13 @@ export class SignupComponent implements OnInit {
     var e=alpha[Math.floor(Math.random()*62)]
     var f=alpha[Math.floor(Math.random()*62)]
     var g=alpha[Math.floor(Math.random()*62)]
-    var sum=a+b+c+d+e+f+g;
+    var sum=a+b+c+d;
     this.recaptcha=document.getElementById("capt");
     this.recaptcha.value=sum;
 
 
 
-    localStorage.setItem('address','/signup')
+    localStorage.setItem('address',this.router.url)
     localStorage.setItem("Employee_signup",'0')
 
 
@@ -193,11 +193,6 @@ export class SignupComponent implements OnInit {
   }
 
   open_employee(){
-
-
-
-
-
     this.login_c=false;
     this.display=true;
     this.val=document.getElementById('menu1');
@@ -221,12 +216,15 @@ export class SignupComponent implements OnInit {
     console.log("Client_type:" ,this.c.client_type.value)
     this.recaptcha=document.getElementById("capt_client");
      this.c_Email=document.getElementById('c_email')
+     this.Client_Name = document.getElementById('c_name');
      this.LoginForm_client.value.client_email= this.c_Email.value
       this.c.client_email.setValue(this.LoginForm_client.value.client_email);
+      this.c.client_name.setValue(this.Client_Name.value);
     this.login_c=true;
+    console.log(this.LoginForm_client);
+
     if(this.LoginForm_client.invalid){
-    console.log("fire");
-     return ;
+         return ;
       }
      else{
        if(this.c.client_pass.value == this.c.client_conpass.value){
@@ -273,10 +271,7 @@ export class SignupComponent implements OnInit {
            }
         }
         else{
-          //  this.dialog=document.getElementById('clickdialog');
-          //  this.dialog.click();
           this.Dialog.open(DialogElementsExampleDialog);
-           console.log("wrong password");
           }
        }
 
@@ -396,9 +391,14 @@ export class SignupComponent implements OnInit {
                  }else{
                   this.disabled_client_submit=false;
                   console.log("data:" +JSON.stringify(data.getClient[0].client_name));
-                  this.Client_Name=document.getElementById('name');
+                  this.Client_Name=document.getElementById('c_name');
                   this.Client_Name.value=data.getClient[0].client_name;
                   console.log(this.Client_Name.value);
+                  // this.LoginForm.patchValue({
+                  //   client_name: data.getClient[0].client_name
+                  // })
+                  // console.log(this.LoginForm_client);
+
                 }
            })
         }
@@ -569,7 +569,7 @@ export class SignupComponent implements OnInit {
     var e=alpha[Math.floor(Math.random()*62)]
     var f=alpha[Math.floor(Math.random()*62)]
     var g=alpha[Math.floor(Math.random()*62)]
-    var sum=a+b+c+d+e+f+g;
+    var sum=a+b+c+d;
     this.recaptcha=document.getElementById("capt");
     this.recaptcha.value=sum;
 
@@ -589,7 +589,7 @@ export class SignupComponent implements OnInit {
       var e=alpha[Math.floor(Math.random()*62)]
       var f=alpha[Math.floor(Math.random()*62)]
       var g=alpha[Math.floor(Math.random()*62)]
-      var sum=a+b+c+d+e+f+g;
+      var sum=a+b+c+d;
       this.recaptcha=document.getElementById("capt_client");
       this.recaptcha.value=sum;
 

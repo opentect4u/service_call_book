@@ -10,7 +10,7 @@ mutation insertMaster($mm: String,$user_id: String) {
 @Component({
   selector: 'app-addmm',
   templateUrl: './addmm.component.html',
-  styleUrls: ['./addmm.component.css', 
+  styleUrls: ['./addmm.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -28,8 +28,8 @@ export class AddmmComponent implements OnInit {
   done=false;
   x:any;
   ngOnInit(): void {
-   
-    localStorage.setItem('address','/mastermodule/addmm'); 
+
+    localStorage.setItem('address', this.router.url);
     this.input_tag=document.getElementById('itemname');
   }
 
@@ -86,7 +86,7 @@ export class AddmmComponent implements OnInit {
     },error=>{ this.showsnackbar()
     });
       this.done=true;
-      
+
     // this.input_tag.value='';
      this.disable_button=true;
      this.input_tag.style.border="1px solid lightgrey";
@@ -101,6 +101,6 @@ export class AddmmComponent implements OnInit {
     this.msg='';
     this.disable_button=true;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
 }

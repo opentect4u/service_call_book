@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editnotify',
@@ -11,11 +12,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditnotifyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address','/Admin/Edit/editnotify');
+    localStorage.setItem('address',this.router.url);
   }
 
 }

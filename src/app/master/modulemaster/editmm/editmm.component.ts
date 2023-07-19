@@ -10,7 +10,7 @@ mutation updateMaster($id:String, $name: String,$user_id: String) {
 @Component({
   selector: 'app-editmm',
   templateUrl: './editmm.component.html',
-  styleUrls: ['./editmm.component.css', 
+  styleUrls: ['./editmm.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -35,7 +35,7 @@ export class EditmmComponent implements OnInit {
   ngOnInit(): void {
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
-    localStorage.setItem('address', decodeURIComponent(this.pathname));
+    localStorage.setItem('address', this.router.url);
     this.route.params.forEach((params: any) => {
       this.item1 = params['id1'];
       this.item2 = params['id2'];})
@@ -95,7 +95,7 @@ export class EditmmComponent implements OnInit {
     },error=>{ this.showsnackbar()
     });
       this.done=true;
-      
+
      //this.input_tag.value='';
      this.disable_button=false;
      this.input_tag.style.border="1px solid lightgrey";
@@ -106,7 +106,7 @@ export class EditmmComponent implements OnInit {
     this.error=false;
     this.done=false;
     this.input_tag.style.border="1px solid lightgrey";
-      
+
   }
-  
+
 }

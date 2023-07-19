@@ -12,7 +12,7 @@ mutation insertEmpMaster($emp_code: Int,$emp_name: String,$phone_no:String,$emai
 @Component({
   selector: 'app-adde',
   templateUrl: './adde.component.html',
-  styleUrls: ['./adde.component.css', 
+  styleUrls: ['./adde.component.css',
   '../../../../assets/masters_css_js/css/font-awesome.css',
   '../../../../assets/masters_css_js/css/apps.css',
   '../../../../assets/masters_css_js/css/apps_inner.css',
@@ -39,8 +39,8 @@ export class AddeComponent implements OnInit {
    done=false;
    x:any;
   ngOnInit(): void {
-    
-    localStorage.setItem('address', '/addemp/adde');
+
+    localStorage.setItem('address', this.router.url);
     this.input_code=document.getElementById('itemcode');
     this.input_name=document.getElementById('itemname');
     this.input_phone=document.getElementById('itemph');
@@ -101,7 +101,7 @@ export class AddeComponent implements OnInit {
   }
   preventNonNumericalInput(e:any){
     e = e || window.event;
-    
+
     var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
     var charStr = String.fromCharCode(charCode);
 
@@ -109,7 +109,7 @@ export class AddeComponent implements OnInit {
      { e.preventDefault();}
 
   }
-  
+
   check_email_validity(event: any) {
     var em = new RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/);
     if (!em.test(event.target.value)) { this.confirm_email = "*Not a valid Email ID";this.input_email.style.border="solid red 1px";this.notavalidemail=true; if(event.target.value==''){this.notavalidemail=false;this.email_null=true;this.input_email.style.border="solid red 1px"}}
@@ -127,7 +127,7 @@ export class AddeComponent implements OnInit {
         email:email,
         emp_designation:designation,
         remarks:remarks
-        
+
       }
     }).subscribe(({data})=>{this.userdata=data;console.log(data);
       console.log("data:" +JSON.stringify(data))
@@ -140,7 +140,7 @@ export class AddeComponent implements OnInit {
        this.showsnackbar();
    },error=>{ this.showsnackbar()
   } );
-    
+
   }
   showsnackbar() {
     // alert("error");

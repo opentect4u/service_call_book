@@ -25,7 +25,7 @@ mutation deleteEmp($id: String){
 //   Employee_Code: any;
 //   Name:any;
 //   Edit:any;
-  
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -34,9 +34,9 @@ mutation deleteEmp($id: String){
 //     Employee_Code:1,
 //     Name: 'abc',
 //     Edit:''
-   
-//   }, 
-  
+
+//   },
+
 // ];
 @Component({
   selector: 'app-addempdashboard',
@@ -50,7 +50,7 @@ mutation deleteEmp($id: String){
 export class AddempdashboardComponent implements OnInit {
   dlt=true;
   displayedColumns: string[] = ['Sl_No', 'Employee_Code','Name','Edit','Delete'];
-  dataSource = new MatTableDataSource; 
+  dataSource = new MatTableDataSource;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -68,7 +68,7 @@ empid:any;
 
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
-    localStorage.setItem('address', '/addemp/dashboard');
+    localStorage.setItem('address', this.router.url);
 
     console.log(this.updt);
     this.updatee=localStorage.getItem('updatee');
@@ -92,7 +92,7 @@ empid:any;
           {
             this.insrt=false;
             localStorage.setItem('adde','0')
-   
+
           }
 
     this.fetch_data();
@@ -103,7 +103,7 @@ empid:any;
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_EMP,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
@@ -125,7 +125,7 @@ empid:any;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   go_to_AddItem(){
-    this.router.navigate(['/addemp/adde'])   ; 
+    this.router.navigate(['/addemp/adde'])   ;
   }
   go_to_update(v1:any,v2:any,v3:any){
     //console.log(v1+" "+v2+" "+" "+v3);
@@ -144,7 +144,7 @@ empid:any;
       id:this.empid,
       // name:v2,
       // user_id:localStorage.getItem("UserId")
-      
+
     }
   }).subscribe(({data})=>{this.userdel=data;console.log(data);
     console.log("data:" +JSON.stringify(data))

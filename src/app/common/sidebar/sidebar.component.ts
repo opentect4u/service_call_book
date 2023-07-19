@@ -3,8 +3,45 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { interval } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { global } from 'src/app/global';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+declare const $: any;
 //import {MatDialog} from '@angular/material/dialog';
+
+const SHOW_CLIENT=gql`
+query getClient($active: String){
+  getClient(id:"", active: $active){
+    id
+    client_name
+    client_type
+    phone_no
+    district_name
+  }
+}`
+
+const SHOW_EMP=gql`
+query{
+  getEmp(id:""){
+    id
+    emp_code
+    emp_name
+  }
+}`;
+
+
+const GET_DATA_A = gql`
+query getUserDetailsA($tag:String!){
+  getUserDetailsA(tag:$tag){
+    id
+    code_no
+    user_name
+    user_type
+    user_status
+    login_status
+    image
+  }
+}`;
 
 
 const GET_USER_TYPE=gql`
@@ -22,6 +59,7 @@ const conf_tkt=gql`query checkTktNo($tkt_no: String!){
     success
   }
 }`
+
 
 @Component({
   selector: 'app-sidebar',
@@ -41,28 +79,52 @@ export class SidebarComponent implements OnInit {
   marker1:any;
   admindropdown:any;
   searchtkt:any;
+  im:any;
   utype:boolean=true;
   Etype:boolean=true;
   Ctype:boolean=true;
   user:any;
+  u_id:any;
   done_dt_frm=true;
   done_dt_to=true;
   done=true;
   prevent=false;
   old_u_type:any;
-
+  user_data:any;
+  uri=global.img;
+  backend_image_url:any;
   tkt:any;
   ct=0;
+  image_ur:any;
   frm:any;
   done_dt=true;
   t:any;
+  getForm!:FormGroup;
+  form_type:string='';
+  clients:any=[];
+  employee:any=[];
+  constructor(private fb:FormBuilder,public toastr: ToastrManager,private router:Router,private apollo:Apollo) {
+   
+     this.getForm=this.fb.group({
+      tkt_no:['',Validators.required],
+      frm_dt:['',Validators.required],
+      to_dt:['',Validators.required],
+      client_name:['',Validators.required],
+      employee_name:['',Validators.required]
+     })
 
-  constructor(public toastr: ToastrManager,private router:Router,private apollo:Apollo) {
-
+    //  if(localStorage.getItem('user_Type')=='A'||localStorage.getItem('user_Type')=='M')
+    //   {this.type=''; console.log("type="+localStorage.getItem('user_Type'))}
+    //   else
+    //   this.type=localStorage.getItem('UserId');
 
    }
 
+    get f(){return this.getForm.controls}
+
   ngOnInit(): void {
+
+  
     this.frm=document.getElementById('frm');
     this.t=document.getElementById('t');
       this.old_u_type=localStorage.getItem('user_Type');
@@ -71,9 +133,7 @@ export class SidebarComponent implements OnInit {
       variables:{
         user_email:localStorage.getItem('user_email')
       },
-      pollInterval:500
-
-
+      pollInterval:40000
     }).valueChanges
     .subscribe(({ data}) => {
       console.log(data);
@@ -92,7 +152,7 @@ export class SidebarComponent implements OnInit {
         else{
             this.utype=false;
         }
-        if(this.u_type=='E'){
+        if(this.u_type=='E' || this.u_type=='W'){
             this.Etype=true;
         }
         else{
@@ -108,12 +168,30 @@ export class SidebarComponent implements OnInit {
 
 //  }
     })
+   
+    this.u_id=localStorage.getItem('UserId');
 
+//Get Category
+this.getClients()
+//Get Employee
+this.getEmployee();
+    this.apollo.watchQuery<any>({
+      query:GET_DATA_A,
+      variables: {
+        tag: '1'
+      },
+      pollInterval:40000
+    })
+      .valueChanges
+      .subscribe(({ data, loading }) => {
+        console.log(data);
+        this.user_data = data.getUserDetailsA;})
+       
+// setInterval(()=>{alert(localStorage.getItem('user_Type'));},6000)
+$('.select2').select2({}) .on("select2:select",  (e:any) => {
 
-
-
-
-    // setInterval(()=>{alert(localStorage.getItem('user_Type'));},6000)
+   this.select_client(e.params.data.id);
+});
 
   }
   make_date_true(){this.done_dt_frm=true;this.done_dt_to=true;this.ct=0; this.done_dt=true;
@@ -143,11 +221,19 @@ prevent_null_to(){this.done_dt_to=false;
   { this.done=false;this.prevent=false;}
  }
 
-make_true(){
+make_true(form_type:string){
+  this.form_type = form_type;
+  this.getForm.patchValue({
+    tkt_no:'',
+      frm_dt:'',
+      to_dt:'',
+      client_name:'',
+      employee_name:''
+  })
   this.prevent=false;
   this.done=true;
-  this.tkt=document.getElementById('tkt_no');
-  this.tkt.value='';
+  // this.tkt=document.getElementById('tkt_no');
+  // this.tkt.value='';
 }
 srch_tkt(v:any){
 //alert(v);
@@ -160,7 +246,9 @@ this.apollo
 })
 .valueChanges.subscribe(({ data }) => {
     if(data.checkTktNo.success==1){
-      this.router.navigate(['/search_ticket',btoa(v)]);
+      this.router.navigate(['/search_ticket',btoa(v)])
+      .then(() => {
+        window.location.reload();})
 
     }
     else{
@@ -172,8 +260,45 @@ this.apollo
 
 
 }
-srch_dt(v1:any,v2:any){
-  this.router.navigate(['/search_date',btoa(v1),btoa(v2)])
+select_client(id:any){
+   this.getForm.patchValue({
+     client_name: id
+   })
+}
+searchTkt(){
+
+  switch(this.form_type){
+    case 'T':  this.apollo
+              .watchQuery<any>({
+                query:conf_tkt,
+                variables: {
+                  tkt_no:this.f.tkt_no.value,
+                },
+              })
+              .valueChanges.subscribe(({ data }) => {
+                  if(data.checkTktNo.success==1){
+                    this.router.navigate(['/search_ticket',btoa(this.f.tkt_no.value)])
+                    .then(() => {
+                      window.location.reload();})
+                  }
+                  else{
+                      this.toastr.errorToastr('No Data Found','Error!')
+                  }
+              }, (error=>{
+                this.toastr.errorToastr('Something went wrong!','Error!')
+              }))
+              break;
+    case 'D':  this.srch_dt(this.f.frm_dt.value,this.f.to_dt.value,'',this.form_type);break;
+    default : this.srch_dt(this.f.frm_dt.value,this.f.to_dt.value,this.form_type == 'E' ? this.f.employee_name.value: this.f.client_name.value,this.form_type);break;
+  }
+ 
+  
+}
+
+srch_dt(v1:any,v2:any,id:any,type:any){
+  var Id = id == '' ? 0 : id;  
+  this.router.navigate(['/search_date',btoa(v1),btoa(v2),btoa(Id),btoa(type)]).then(() => {
+    window.location.reload();})
 }
   openclosedropdown1(){
 
@@ -371,7 +496,67 @@ srch_dt(v1:any,v2:any){
       localStorage.setItem('isLoggedIn',"false");
       this.router.navigate(['/']).then(() => {
         window.location.reload();
-      });;
+      });
     }
 
+
+    show_Image(v:any){
+      console.log(v);
+      this.image_ur=v;
+    
+    }
+
+    getClients(){
+      this.apollo.watchQuery<any>({
+        query: SHOW_CLIENT,
+        pollInterval:40000,
+        variables:{
+          active:"1"
+        }
+      })
+        .valueChanges
+        .subscribe(({ data, loading }) => {
+          this.clients = data.getClient;
+        });
+    }
+
+    getEmployee(){
+      this.apollo.watchQuery<any>({
+        query: SHOW_EMP,
+        pollInterval:40000
+      })
+        .valueChanges
+        .subscribe(({ data, loading }) => {
+
+          this.employee = data.getEmp;
+        });
+    }
+
+    // dateLessThan(from: string, to: string) {
+    //   return (group: FormGroup): {[key: string]: any} => {
+    //    let f = group.controls[from];
+    //    let t = group.controls[to];
+    //    if (f.value > t.value) {
+    //      return {
+    //        dates: "Date from should be less than Date to"
+    //      };
+    //    }
+    //    return {};
+    //   }
+    // }
+    dateLessThan():boolean{
+      // console.log(this.f.frm_dt.value);
+       if(this.f.frm_dt.value && this.f.to_dt.value){
+        if(this.f.frm_dt.value < this.f.to_dt.value){
+          return false;
+        }
+        else
+          return true;
+         }
+       else{
+         return false;
+       }
+      }
+  
+      
 }

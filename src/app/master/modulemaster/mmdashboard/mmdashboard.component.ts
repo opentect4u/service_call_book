@@ -25,7 +25,7 @@ query{
 //   Sl_No: any;
 //   Module: any;
 //   Edit:any;
-  
+
 // }
 
 // const ELEMENT_DATA: PeriodicElement[] = [
@@ -33,9 +33,9 @@ query{
 //     Sl_No: 1,
 //     Module: 'abc',
 //     Edit:''
-   
-//   }, 
-  
+
+//   },
+
 // ];
 @Component({
   selector: 'app-mmdashboard',
@@ -49,7 +49,7 @@ query{
 export class MmdashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['Sl_No', 'Module','Edit','Delete'];
-  dataSource = new MatTableDataSource; 
+  dataSource = new MatTableDataSource;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -69,7 +69,7 @@ export class MmdashboardComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('Active', '1');
 
-    localStorage.setItem('address','/mastermodule/dashboard'); 
+    localStorage.setItem('address', this.router.url);
 
     this.updatemm=localStorage.getItem('updatemm')
     this.insertmm=localStorage.getItem('addmm')
@@ -92,7 +92,7 @@ export class MmdashboardComponent implements OnInit {
           {
             this.insrt=false;
             localStorage.setItem('addmm','0')
-   
+
           }
 
     this.fetch_data();
@@ -102,7 +102,7 @@ export class MmdashboardComponent implements OnInit {
   fetch_data(){
     this.querySubscription = this.apollo.watchQuery<any>({
       query: SHOW_MM,
-      pollInterval:100
+      pollInterval:40000
     })
       .valueChanges
       .subscribe(({ data, loading }) => {
@@ -149,7 +149,7 @@ export class MmdashboardComponent implements OnInit {
       id:this.mmid,
       // name:v2,
       // user_id:localStorage.getItem("UserId")
-      
+
     }
   }).subscribe(({data})=>{this.userdel=data;console.log(data);
     console.log("data:" +JSON.stringify(data))

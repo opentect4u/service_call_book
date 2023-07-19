@@ -69,7 +69,13 @@
                         <h2>Raise Ticket</h2>
                     </div>
 
-
+                    <div class="alert alert-danger text-center p-5" role="alert" [hidden]="rental_date_ex">
+                       <h4 >Rental Pending</h4> 
+                      
+                      </div><br>
+                      <div class="alert alert-danger text-center p-5" role="alert" [hidden]="amc_date_ex">
+                        <h4>AMC Pending</h4> 
+                       </div>
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -111,7 +117,7 @@
 
                                         </select> -->
 
-                                        <select class="form-control select2" name="client" #Client >
+                                        <select class="form-control client select2" name="client" #Client >
 
                                             <option value="">Select</option>
                                             <option   *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
@@ -250,7 +256,7 @@
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder=""
                                         name="amcupto" id="itemamcupto" #amcupto readonly
-                                        value="{{this.amc_upto}}">
+                                        value="{{this.amc_upto | date:'dd/MM/YYYY'}}">
                                     <!-- <span  class="text-danger"
                                     *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
@@ -262,7 +268,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder="" name=""
-                                        id="itemrentalupto" #rentalupto readonly value="{{this.rental_upto}}">
+                                        id="itemrentalupto" #rentalupto readonly value="{{this.rental_upto | date:'dd/MM/YYYY'}}">
                                     <!-- <span  class="text-danger ml-3"
                                     *ngIf="upload&&!email">*please Enter Email</span> -->
 
@@ -279,7 +285,7 @@
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control p-2" placeholder=""
 
-                                        name="phone" id="itemphone" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)"
+                                        name="phone" id="itemphone" #phone (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)" (change)="prevent_null($event)"
 
 
                                       value="{{this.phone_no}}">
@@ -293,8 +299,9 @@
                                     <label><b>Priority Status</b>&nbsp;<span class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <select class="form-control" name="module" #priority (click)="select_priority(priority.value)">
+                                    <select class="form-control " name="module" #priority (click)="select_priority(priority.value)" (change)="select_priority(priority.value)">
 
+                                        <option value="">Select</option>
                                         <!-- <option value="p.priority_id=='3'" selected>{{p.priority_mode}}</option> -->
                                         <option *ngFor="let p of pmdata" value="{{p.priority_id}}" [selected]="p.priority_id == '3'">{{p.priority_mode}}</option>
 
@@ -361,7 +368,7 @@
                                         <label><b>Module</b>&nbsp;<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="module" #module (click)="select_mm(module.value)">
+                                        <select class="form-control module select2" name="module" #module (change)="select_mm(module.value)">
 
                                             <option value="">Select</option>
                                             <option *ngFor="let m of moddata" value="{{m.module_id}}">{{m.module_type}}</option>
@@ -383,7 +390,7 @@
                                         <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
 
                                             name="issue" id="itemissue" #issue (keyup)="prevent_null($event)"
-
+                                            (change)="prevent_null($event)"
 
                                         ></textarea>
                                          <span  class="text-danger"
@@ -402,8 +409,10 @@
                                         <label><b>Remarks</b></label>
                                     </div>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
-                                          #remarks  name="remarks" id="itemremarks"></textarea>
+                                        <!-- <textarea rows="5" type="text" class="form-control p-2" placeholder=" "
+                                          #remarks  name="remarks" id="itemremarks"></textarea> -->
+
+                                          <angular-editor [(ngModel)]="remarks" name="remarks" id="itemremarks" [config]="configEditor"></angular-editor>
                                     </div>
                                     <div class="col-sm-3"></div>
 
@@ -482,7 +491,7 @@
                                 <div class="form-group row mt-5">
                                     <div class="col-sm-12 btnSubmitSec">
                                         <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="cl_val||mm_val||phone_val||issue_val||priority.value==''"
-                                            value="Submit" (click)="go_to_dashboard(date.value,Client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)">
+                                            value="Submit" (click)="go_to_dashboard(date.value,Client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value)">
                                             <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button>
                                         <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
 

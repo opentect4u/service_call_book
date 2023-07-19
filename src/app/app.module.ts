@@ -1,4 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,16 +17,16 @@ import { PmdashboardComponent } from './master/prioritymode/pmdashboard/pmdashbo
 import { MmdashboardComponent } from './master/modulemaster/mmdashboard/mmdashboard.component';
 import { AddempdashboardComponent } from './master/addemp/addempdashboard/addempdashboard.component';
 import { AddclientdashboardComponent } from './master/addclient/addclientdashboard/addclientdashboard.component';
-import { DatePipe } from '@angular/common'
-import {MatButtonModule} from '@angular/material/button';
+import { DatePipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from'@angular/material/paginator'
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { AddclienttypeComponent } from './master/clienttypemaster/ctmdashboard/addclienttype/addclienttype.component';
 import { AddomComponent } from './master/operationalmode/addom/addom.component';
 import { AddtsComponent } from './master/ticketstatus/addts/addts.component';
@@ -53,24 +57,25 @@ import { EditadanddComponent } from './operations/attendanddeliverticket/attenda
 import { AddrtComponent } from './operations/raiseticket/addrt/addrt/addrt.component';
 
 import { ToastrModule } from 'ng6-toastr-notifications';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 // import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
 // import {MatButtonModule} from '@angular/material/button';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ComponentNameComponent } from './master/addclient/component-name/component-name.component';
-
 
 import { UsermaintananceComponent } from './operations/Admin/usermaintanance/usermaintanance.component';
 import { NotificationsComponent } from './operations/Admin/notifications/notifications.component';
 import { AddnotifyComponent } from './operations/Admin/Addnotification/addnotify/addnotify.component';
 import { EditnotifyComponent } from './operations/Admin/Edit/editnotify/editnotify.component';
 
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { TemplateComponent } from './mail_template_reg_verification/template/template.component';
 import { EdittktComponent } from './operations/raiseticket/edittkt/edittkt.component';
@@ -79,23 +84,26 @@ import { SearchByTicketComponent } from './search/search-by-ticket/search-by-tic
 import { ClientHeaderComponent } from './common/client-header/client-header.component';
 import { ViewComponent } from './search/view/view.component';
 
-
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DialogmodalComponent } from './login_reg_emp_client/dialogmodal/dialogmodal.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 // import { ToastrModule } from 'ngx-toastr';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { NotificationService } from './service/notification.service';
 import { ClientraisetktComponent } from './operations/Client_Raiseticket/clientraisetkt/clientraisetkt.component';
 import { AddclientraisetktComponent } from './operations/Client_Raiseticket/addclientraisetkt/addclientraisetkt.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { EditclientraiseticketComponent } from './operations/Client_Raiseticket/editclientraiseticket/editclientraiseticket.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatListModule} from '@angular/material/list';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ChartsModule } from 'ng2-charts';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { HolidayModificationComponent } from './master/Holiday/holiday-modification/holiday-modification.component';
+import { HolidayDashboardComponent } from './master/Holiday/holiday-dashboard/holiday-dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +117,7 @@ import { ChartsModule } from 'ng2-charts';
     MmdashboardComponent,
     AddempdashboardComponent,
     AddclientdashboardComponent,
-   AddclienttypeComponent,
+    AddclienttypeComponent,
     AddomComponent,
     AddtsComponent,
     AddpmComponent,
@@ -134,15 +142,10 @@ import { ChartsModule } from 'ng2-charts';
     ComponentNameComponent,
     RightclickoffDirective,
     ControlkeyoffDirective,
-
-
-
-
+    HolidayModificationComponent,
+    HolidayDashboardComponent,
     TemplateComponent,
-
-
     UsermaintananceComponent,
-
     NotificationsComponent,
     AddnotifyComponent,
     EditnotifyComponent,
@@ -156,11 +159,10 @@ import { ChartsModule } from 'ng2-charts';
     SearchByTicketComponent,
     ClientHeaderComponent,
     ViewComponent,
-    EditclientraiseticketComponent
-
-
+    EditclientraiseticketComponent,
   ],
   imports: [
+    AngularEditorModule,
     NgMultiSelectDropDownModule.forRoot(),
     AngularMultiSelectModule,
     NgSelectModule,
@@ -192,25 +194,25 @@ import { ChartsModule } from 'ng2-charts';
     MatListModule,
     MatBadgeModule,
     ChartsModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
 
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
     // ToastrModule.forRoot({
     //   timeOut: 10000,
     //   positionClass: 'toast-top-center',
     //   preventDuplicates: false,
     // }),
-
-],
-
-  providers: [NotificationService,
-    {provide:LocationStrategy, useClass:HashLocationStrategy},DatePipe,CtmdashboardComponent,
-
   ],
 
+  providers: [
+    NotificationService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    DatePipe,
+    CtmdashboardComponent,
+  ],
 
   bootstrap: [AppComponent],
-  schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {
-
-}
+export class AppModule {}
