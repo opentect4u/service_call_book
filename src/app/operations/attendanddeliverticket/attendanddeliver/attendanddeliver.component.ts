@@ -229,7 +229,8 @@ export class AttendanddeliverComponent implements OnInit {
       query: FETCH,
       variables:{
          user_type:localStorage.getItem('user_Type'),
-         user_id:localStorage.getItem('UserId')
+         user_id:localStorage.getItem('UserId'),
+         assigned_by:localStorage.getItem("user_name")
 
       },
       pollInterval:20000

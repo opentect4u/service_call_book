@@ -57,8 +57,8 @@ query{
 }`
 ;
 const FOR_EMPLOYEE=gql`
-mutation  updateAssignEng($user_id:String!, $id: String!, $assign_engg: String!){
-  updateAssignEng(user_id:$user_id, id:$id, assign_engg:$assign_engg){
+mutation  updateAssignEng($user_id:String!, $id: String!, $assign_engg: String!, $assigned_by: String!){
+  updateAssignEng(user_id:$user_id, id:$id, assign_engg:$assign_engg, assigned_by:$assigned_by){
     message
     success
   }
@@ -255,6 +255,7 @@ SHOW_Employee(v:any,v1:any){
       user_id: localStorage.getItem("UserId"),
       id:v1,
       assign_engg:v,
+      assigned_by: localStorage.getItem('user_name')
       }
   }).subscribe(({data})=>{
     console.log(data);

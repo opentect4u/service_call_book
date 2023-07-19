@@ -9,14 +9,14 @@ import { commonEditor } from 'src/app/utilitY/commonEditor';
 // For update data
 const EDITABLE=gql`
 mutation updateAssignTkt($id:String!,$assign_engg: String!,
-  $remarks:String!,$user_id:String!,$prob_reported:String!) {
+  $remarks:String!,$user_id:String!,$prob_reported:String!,$assigned_by:String!) {
 
-    updateAssignTkt(id: $id
-      assign_engg: $assign_engg
-      remarks: $remarks
+    updateAssignTkt(id: $id,
+      assign_engg: $assign_engg,
+      remarks: $remarks,
       user_id: $user_id,
-      prob_reported:$prob_reported)  {
-
+      prob_reported:$prob_reported,
+      assigned_by: $assigned_by) {
        success
        message
 
@@ -45,7 +45,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     id
     tkt_no
     client_name
-     district_name
+    district_name
     client_type
     oprn_mode
     working_hrs
@@ -57,6 +57,8 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     prob_reported
     emp_name
     assign_engg
+    assigned_by
+    assigned_dt
     remarks,
     log_in,
     file_path
@@ -106,6 +108,8 @@ export class EditatComponent implements OnInit {
     assign_to:any;
     _uploaded_type:any;
     _uploaded_img:any;
+  assigned_by: any = '';
+  assigned_dt: any = '';
   constructor(private route:ActivatedRoute,private apollo:Apollo,private router:Router) {
    console.log(this.router.url);
 
@@ -127,7 +131,6 @@ export class EditatComponent implements OnInit {
     console.log(this.route.snapshot.params.u_type_code)
     this.prob=document.getElementById('itemissue');
     // console.log(this.prob.value)
-
     localStorage.setItem('edittickit','0');
     this.pathname=window.location.href.split('#').pop();
     console.log("path:" +window.location.href.split('#').pop())
@@ -136,7 +139,6 @@ export class EditatComponent implements OnInit {
     this.assign_to=document.getElementById('assign');
     this.apollo.watchQuery<any>({
       query: FOR_GET_EMPLOYEE
-
     })
       .valueChanges
       .subscribe(({ data}) => {
@@ -154,10 +156,7 @@ export class EditatComponent implements OnInit {
            id: this.id,
           user_type:localStorage.getItem('user_Type'),
           user_id:localStorage.getItem('UserId')
-
-
         }
-
       })
         .valueChanges
         .subscribe(({ data}) => {
@@ -179,10 +178,13 @@ export class EditatComponent implements OnInit {
           this.emp_name=data.getSupportLogDtls[0].emp_name;
           this.assss_id=data.getSupportLogDtls[0].assign_engg;
           this.valid_init = data.getSupportLogDtls[0].assign_engg!='' ? false : true;
+          this.assigned_by=data.getSupportLogDtls[0]?.assigned_by;
+          this.assigned_dt=data.getSupportLogDtls[0]?.assigned_dt;
           this.Remarks=data.getSupportLogDtls[0].remarks;
           this.LogDate=data.getSupportLogDtls[0].log_in;
           this._uploaded_img = global.raw_url+data.getSupportLogDtls[0].file_path;
           this._uploaded_type = data.getSupportLogDtls[0].file_path ? ( data.getSupportLogDtls[0].file_path.substring(data.getSupportLogDtls[0].file_path.length -3) == 'pdf' ? 1 : 2) : 0;
+          
          if(this.prob_reported==""){
           this.valid_issue=true;
           console.log("empty",this.prob_reported)
@@ -229,6 +231,8 @@ export class EditatComponent implements OnInit {
     this.company=false;
      this.valid_init=false;
      this.assign_to.style.border="solid lightgrey 1px"
+     this.assigned_by = localStorage.getItem('user_name')
+     this.assigned_dt = new Date();
     }
   }
   preventNonNumericalInput(e:any){}
@@ -259,7 +263,8 @@ export class EditatComponent implements OnInit {
         assign_engg:v14,
         remarks:this.Remarks ? this.Remarks : '',
         user_id: localStorage.getItem("UserId"),
-        prob_reported:v13
+        prob_reported:v13,
+        assigned_by:localStorage.getItem("user_name")
 
       }
     }).subscribe(({data})=>{

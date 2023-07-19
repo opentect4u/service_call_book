@@ -67,8 +67,10 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     call_attend,
     delivery,
     work_status,
-    file_path
-    schema_name
+    file_path,
+    schema_name,
+    assigned_by
+    assigned_dt
   }
 }`
 @Component({
@@ -136,6 +138,8 @@ export class EditadanddComponent implements OnInit {
   issue:any;
   work:any;
   wrork_stat:boolean=false;
+  assigned_by: any = '';
+  assigned_dt: any= '';
   constructor(public datepipe: DatePipe,private apollo:Apollo,public route:ActivatedRoute,private router:Router,public toastr: ToastrManager) {}
   ngOnInit(): void {
    this.issue=document.getElementById("itemissue");
@@ -194,8 +198,7 @@ export class EditadanddComponent implements OnInit {
           variables:{
              id: this.id,
               user_type:localStorage.getItem('user_Type'),
-              user_id:localStorage.getItem('UserId')
-
+              user_id:localStorage.getItem('UserId'),
           },
           pollInterval:500
 
@@ -222,6 +225,8 @@ export class EditadanddComponent implements OnInit {
             this.TktStatus=data.getSupportLogDtls[0].tktStatus;
             this.tktid=data.getSupportLogDtls[0].tkt_status;
             this._schema_name = data.getSupportLogDtls[0].schema_name;
+            this.assigned_by=data.getSupportLogDtls[0]?.assigned_by;
+          this.assigned_dt=data.getSupportLogDtls[0]?.assigned_dt;
             console.log(this._schema_name);
 
             this.logDate=data.getSupportLogDtls[0].log_in;
@@ -332,8 +337,7 @@ else{
         remarks:this.Remarks ? this.Remarks : '',
         user_id:localStorage.getItem("UserId"),
         work_status:v19,
-        prob_reported:v13
-
+        prob_reported:v13,
       }
     }).subscribe(({data})=>{
       console.log(data);
