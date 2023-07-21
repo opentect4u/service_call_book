@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,10 +19,12 @@ query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!,$user_ty
     tktStatus
     emp_name
     work_status
+    assigned_dt
+    call_attend
+    delivery
+    assigned_by
   }
- }
-`;
-
+ }`
 const searchByDateClient = gql`query searchByDateClient($frm_dt: String!,$to_dt: String!,$client_id: String!,$user_id: String!,$user_type: String!){
   searchByDateClient(frm_dt: $frm_dt,to_dt: $to_dt,client_id: $client_id,user_id: $user_id,user_type: $user_type){
     id,
@@ -34,8 +36,7 @@ const searchByDateClient = gql`query searchByDateClient($frm_dt: String!,$to_dt:
     work_status,
     tkt_no
   }
-}`;
-
+}`
 const searchByDateEmp = gql`query searchByDateEmp($frm_dt: String!,$to_dt: String!,$emp_id: String!,$user_id: String!,$user_type: String!){
   searchByDateEmp(frm_dt: $frm_dt,to_dt: $to_dt,emp_id: $emp_id,user_id: $user_id,user_type: $user_type){
     id,
@@ -61,8 +62,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     tktStatus
     log_in
   }
-}`;
-
+}`
 const GET_EDITABLE=gql`
 query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
   getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
@@ -90,25 +90,19 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     delivery
   }
 }`
-;
-
-
-
-
 @Component({
-  selector: 'app-search-by-date',
-  templateUrl: './search-by-date.component.html',
-  styleUrls: ['./search-by-date.component.css',
-    '../../../assets/css/bootstrap.css',
-    '../../../assets/css/font-awesome.css',
-    '../../../assets/css/apps.css',
-    '../../../assets/css/apps_inner.css',
-    '../../../assets/css/res.css']
+  selector: 'app-report',
+  templateUrl: './report.component.html',
+  styleUrls: ['./report.component.css',
+  '../../../assets/css/bootstrap.css',
+  '../../../assets/css/font-awesome.css',
+  '../../../assets/css/apps.css',
+  '../../../assets/css/apps_inner.css',
+  '../../../assets/css/res.css']
 })
-export class SearchByDateComponent implements OnInit {
-   showForm!:FormGroup;
+export class ReportComponent implements OnInit {
+  showForm!:FormGroup;
   constructor(private datePipe: DatePipe,private fb:FormBuilder,private activatedroute: ActivatedRoute, private apollo: Apollo, private router: Router, private spinner: NgxSpinnerService) { 
-
     this.showForm= this.fb.group({
       date:[{value:'',disabled:true}],
       client:[{value:'',disabled:true}],
@@ -137,15 +131,24 @@ export class SearchByDateComponent implements OnInit {
   dt: any;
   _id: any;
   _type:any;
+  rptDate:any;
+  asgnDate:any
+  duration1:any
   public now: Date = new Date();
   user_type: any;
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource([]);
   dlt = true;
+  fnDate1:any
+  fnDate2:any
+  fnTime:any
+  fnHour:any
+  fnMin:any
+  fnSec:any
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  ngOnInit(): void {
-    this.displayedColumns = atob(this.activatedroute.snapshot.params['type']) == 'D' ? ['Report Date', 'Ticket No.', 'Client Name', 'Assigned To', 'Status', 'View'] : atob(this.activatedroute.snapshot.params['type']) == 'E'  ? ['Assigned To','Client Name','prob_reported','Status','View']  : ['Ticket No.','Client Name','Assigned To','prob_reported','Status','View']
+  ngOnInit() {
+    this.displayedColumns = ['Report-Date','Client-Name', 'Assigned-By','Assigned-Date','Duration1','Attended-At','Duration2','Delivery-At','Duration3']
     this.from_date = this.activatedroute.snapshot.params['id1'];
     this.from_date = atob(this.from_date);
     this.to_date = this.activatedroute.snapshot.params['id2'];
@@ -161,46 +164,58 @@ export class SearchByDateComponent implements OnInit {
   fetch_data() {
     this.spinner.show();
     this.apollo.watchQuery<any>({
-      query: atob(this.activatedroute.snapshot.params['type']) == 'D' ? srch_dt : atob(this.activatedroute.snapshot.params['type']) == 'E' ? searchByDateEmp : searchByDateClient,
+      query: srch_dt,
       variables:
-        atob(this.activatedroute.snapshot.params['type']) == 'D' ? {
-          frm_dt: this.from_date,
+        {frm_dt: this.from_date,
           to_dt: this.to_date,
           user_id: this.type,
-          user_type: localStorage.getItem('user_Type')
-        } :
-          atob(this.activatedroute.snapshot.params['type']) == 'E' ?
-            {
-              frm_dt: this.from_date,
-              to_dt: this.to_date,
-              emp_id: this._id,
-              user_id: localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M' ? '' : localStorage.getItem('UserId'),
-              user_type: localStorage.getItem('user_Type')
-            } : {
-              frm_dt: this.from_date,
-              to_dt: this.to_date,
-              client_id: this._id,
-              user_id: localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M' ? '' : localStorage.getItem('UserId'),
-              user_type: localStorage.getItem('user_Type')
-            },
+          user_type: localStorage.getItem('user_Type')}
     })
       .valueChanges
       .subscribe(({ data }) => {
-
         this.posts = data;
+        // for(let dt of this.posts.searchByDate){
+        //   // console.log(dt.assigned_dt);
+        //   dt = JSON.parse(JSON.stringify(dt));
+        //   // console.log(this.calculateDuration(dt.assigned_dt, dt.log_in));
+        //   // break;
+        //   dt['duration1'] = this.calculateDuration(dt.assigned_dt, dt.log_in)
+        //   dt['duration2'] = this.calculateDuration(dt.call_attend, dt.assigned_dt)
+        //   dt['duration3'] = this.calculateDuration(dt.delivery, dt.call_attend)
+        // }
         console.log(this.posts);
         this.putdata(this.posts);
         this.spinner.hide();
       });
-
   }
-  // view_page(v: any) {
+  calculateDuration(date1:any, date2:any){
+    this.fnDate1 = this.datePipe.transform(date1, 'yyyy-MM-dd H:mm:ss');
+    this.fnDate2 = this.datePipe.transform(date2, 'yyyy-MM-dd H:mm:ss');
+    
+    // console.log(Date.parse(this.fnDate1), this.fnDate2);
+    this.fnDate1 = Date.parse(this.fnDate1)
+    this.fnDate2 = Date.parse(this.fnDate2)
+
+    
+    this.fnTime = (this.fnDate1 - this.fnDate2) / (1000 * 60 * 60);
+    console.log(this.fnTime);
+    this.fnTime = this.fnTime > 0 ? this.fnTime.toString().split('.') : 0.0
+    this.fnHour = this.fnTime[0]
+    this.fnMin = this.fnTime[1] > 0 ? this.fnTime[1] / 60 : 0.0
+    // this.fnMin=this.fnMin.toFixed(2)
+    // console.log(this.fnMin)
+    this.fnMin = this.fnMin.toString().split('.')[0]
+    this.fnSec = this.fnMin.toString().split('.')[1]
+    var time = `${this.fnHour > 0 ? `${this.fnHour}h` : ''} ${this.fnMin > 0 ? `${this.fnMin.substr(0,2)}m` : ''} ${this.fnSec > 0 ? `${this.fnSec}s` : ''}`
+    // this.duration1 = Time / (1000 * 3600)
+    return time;
+  }
+// view_page(v: any) {
   //   this.user_type = localStorage.getItem('user_Type')
   //   this.router.navigate(['/view', btoa(v), btoa(this.user_type)])
-
   // }
   public putdata(posts: any) {
-    this.dataSource = new MatTableDataSource(atob(this.activatedroute.snapshot.params['type']) == 'D' ? posts.searchByDate : atob(this.activatedroute.snapshot.params['type']) == 'E' ? posts.searchByDateEmp : posts.searchByDateClient);
+    this.dataSource = new MatTableDataSource(posts.searchByDate);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -211,7 +226,6 @@ export class SearchByDateComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
   view_page(v: any) {
        this.get_details(v);
        this.get_editable(v);
@@ -222,8 +236,7 @@ export class SearchByDateComponent implements OnInit {
       variables:{
          id:_id,
          user_type:localStorage.getItem('user_Type'),
-         user_id:localStorage.getItem('UserId')
-         
+         user_id:localStorage.getItem('UserId')    
       },
       pollInterval: 500
     })
@@ -235,8 +248,7 @@ export class SearchByDateComponent implements OnInit {
         priority:data.getSupportLogDtls[0].priority,
         ticketstatus:data.getSupportLogDtls[0].tktStatus,
       })
-      })
-     
+      })     
   }
   get_editable(_id:any){
     this.apollo.watchQuery<any>({
@@ -254,6 +266,8 @@ export class SearchByDateComponent implements OnInit {
             tkt_module:data.getSupportLogDtls[0].module,
             prob_reported:data.getSupportLogDtls[0].prob_reported,  
             assign_to:data.getSupportLogDtls[0].emp_name,
+            assigned_dt:this.datePipe.transform(data.getSupportLogDtls[0].assigned_dt , 'dd-MM-yyyy'),
+            call_attend:this.datePipe.transform(data.getSupportLogDtls[0].call_attend , 'dd-MM-yyyy'),  
             attendedat:this.datePipe.transform(data.getSupportLogDtls[0].call_attend , 'dd-MM-yyyy'),  
             deliveryat:this.datePipe.transform(data.getSupportLogDtls[0].delivery , 'dd-MM-yyyy'),
             work_status:data.getSupportLogDtls[0].work_status > 0 ? 'Done' : 'Pending',
@@ -267,4 +281,5 @@ export class SearchByDateComponent implements OnInit {
            })
        })
   }
+
 }

@@ -104,6 +104,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HolidayModificationComponent } from './master/Holiday/holiday-modification/holiday-modification.component';
 import { HolidayDashboardComponent } from './master/Holiday/holiday-dashboard/holiday-dashboard.component';
+import { ReportComponent } from './search/report/report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -160,6 +161,7 @@ import { HolidayDashboardComponent } from './master/Holiday/holiday-dashboard/ho
     ClientHeaderComponent,
     ViewComponent,
     EditclientraiseticketComponent,
+    ReportComponent
   ],
   imports: [
     AngularEditorModule,

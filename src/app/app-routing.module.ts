@@ -52,6 +52,7 @@ import { SearchByTicketComponent } from './search/search-by-ticket/search-by-tic
 import { ViewComponent } from './search/view/view.component';
 import { HolidayDashboardComponent } from './master/Holiday/holiday-dashboard/holiday-dashboard.component';
 import { HolidayModificationComponent } from './master/Holiday/holiday-modification/holiday-modification.component';
+import { ReportComponent } from './search/report/report.component';
 
 const routes: Routes = [
   {
@@ -286,6 +287,10 @@ const routes: Routes = [
   {
     path:'search_date/:id1/:id2/:name/:type',
     component:SearchByDateComponent
+  },
+  {
+    path: 'report/:id1/:id2/:name/:type',
+    component: ReportComponent
   },
   {
     path:'view/:id1/:id2',

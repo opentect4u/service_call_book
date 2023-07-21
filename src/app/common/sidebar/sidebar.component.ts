@@ -289,22 +289,22 @@ searchTkt(){
               }))
               break;
     case 'D':  this.srch_dt(this.f.frm_dt.value,this.f.to_dt.value,'',this.form_type);break;
+    case 'R': this.srch_rpt(this.f.frm_dt.value,this.f.to_dt.value,'',this.form_type);break;
     default : this.srch_dt(this.f.frm_dt.value,this.f.to_dt.value,this.form_type == 'E' ? this.f.employee_name.value: this.f.client_name.value,this.form_type);break;
-  }
- 
-  
+  }  
 }
-
 srch_dt(v1:any,v2:any,id:any,type:any){
   var Id = id == '' ? 0 : id;  
   this.router.navigate(['/search_date',btoa(v1),btoa(v2),btoa(Id),btoa(type)]).then(() => {
     window.location.reload();})
 }
+srch_rpt(v1:any,v2:any,id:any,type:any){
+  var Id = id == '' ? 0 : id;  
+  this.router.navigate(['/report',btoa(v1),btoa(v2),btoa(Id),btoa(type)]).then(() => {
+    window.location.reload();})
+}
   openclosedropdown1(){
-
-
     this.u_type=localStorage.getItem('user_Type');
-
     this.store=document.getElementById('openclose');
     console.log(this.store.style);
     this.marker1=document.getElementById('openclose1');
@@ -313,11 +313,7 @@ srch_dt(v1:any,v2:any,id:any,type:any){
     if( this.u_type=='A'||  this.u_type=='M' || this.u_type=='T'){
     if(this.store.style.display=='block'){
         this.store.style.display='none';
-
-
       this.marker=document.getElementById('down');
-
-
       console.log("block");
      }
      else{
@@ -342,27 +338,16 @@ srch_dt(v1:any,v2:any,id:any,type:any){
     this.store=document.getElementById('openclose');
     if(this.store.style.display=='block'){
       this.store.style.display='none';
-
-
       this.marker=document.getElementById('down');
-
-
     console.log("block");
    }
    else{
        this.store.style.display='block';
        this.searchtkt.style.display='none';
       //  this.admindropdown.style.display='none';
-
    }
-
     }
-
-
-
-
     }
-
     openclosedropdown(){
       this.u_type=localStorage.getItem('user_Type');
       this.marker1=document.getElementById('openclose');
@@ -384,19 +369,10 @@ srch_dt(v1:any,v2:any,id:any,type:any){
 
       if(this.u_type=='A'||this.u_type=='M')
       this.admindropdown.style.display='none';
-
       this.searchtkt.style.display='none';
-
       this.store.style.display='block';
-
-
       console.log("none");
-
      }
-
-
-
-
     }
     opencloseadminsubmenu(){
       this.u_type=localStorage.getItem('user_Type');
@@ -407,17 +383,12 @@ srch_dt(v1:any,v2:any,id:any,type:any){
       if( this.u_type=='A'||  this.u_type=='M'){
       if(this.admindropdown.style.display == 'block'){
         this.admindropdown.style.display='none';
-
-
-
       }
       else{
         this.store.style.display='none';
         this.marker1.style.display='none';
         this.searchtkt.style.display='none';
         this.admindropdown.style.display='block';
-
-
       }
     }
     // else{
@@ -463,13 +434,10 @@ srch_dt(v1:any,v2:any,id:any,type:any){
         if(this.u_type=='A' || this.u_type=='M'){
           this.admindropdown.style.display='none';
         }
-
-
       }
     }
     else{
       this.marker1=document.getElementById('openclose');
-
       this.searchtkt=document.getElementById('openclose_searchtkt');
       if(this.searchtkt.style.display == 'block')
       {
@@ -547,7 +515,7 @@ srch_dt(v1:any,v2:any,id:any,type:any){
     dateLessThan():boolean{
       // console.log(this.f.frm_dt.value);
        if(this.f.frm_dt.value && this.f.to_dt.value){
-        if(this.f.frm_dt.value < this.f.to_dt.value){
+        if(this.f.frm_dt.value <= this.f.to_dt.value){
           return false;
         }
         else

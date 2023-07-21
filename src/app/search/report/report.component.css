@@ -1,0 +1,68 @@
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {text-align: center!important;}
+.form-control{
+    font-size:15px!important;
+}
+.cursor_pointer{padding: 7px 12px;background: #fff;font-size: 11px;font-weight: 700;cursor:pointer;border:1px solid gray;}
+.modal-title{
+    background: #f3f3f3;
+    padding: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.mat-column-Report-Date {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Client-Name {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Assigned-By {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Assigned-Date {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Duration1 {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Attended-At {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Duration2 {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Delivery-At {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-column-Duration3 {
+    width: 32px;
+    border-right: 1px solid rgb(199, 199, 199);
+    padding-right: 24px;
+    text-align: center;
+  }
