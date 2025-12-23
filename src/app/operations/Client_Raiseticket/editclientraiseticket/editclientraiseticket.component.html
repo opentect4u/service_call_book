@@ -5,63 +5,62 @@
 <div class="page-body-wrapper">
     <app-sidebar></app-sidebar>
     <div class="main-panel">
-      <div class="content-wrapper">
+        <div class="content-wrapper">
 
 
-        <div class="card">
+            <div class="card">
 
-          <div class="card-body">
+                <div class="card-body">
 
-            <div class="row">
-              <div class="col-sm-12">
-
-
-
-                  <form>
+                    <div class="row">
+                        <div class="col-sm-12">
 
 
-                      <div class="form-group row">
 
-                          <div class="col-sm-2">
-                              <label><b>Date</b></label>
-                          </div>
-                          <div class="col-sm-10">
-                              <input type="text" class="form-control p-2" placeholder=""
-                                  name="date" id="itemdate" #date readonly value="{{this.log | date:'medium'}}"
-                                  >
-                              <!-- <span  class="text-danger"
+                            <form>
+
+
+                                <div class="form-group row">
+
+                                    <div class="col-sm-2">
+                                        <label><b>Date</b></label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control p-2" placeholder="" name="date"
+                                            id="itemdate" #date readonly value="{{this.log | date:'medium'}}">
+                                        <!-- <span  class="text-danger"
                               *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
-                          </div>
+                                    </div>
 
-                          <div class="col-sm-3"></div>
+                                    <div class="col-sm-3"></div>
 
-                      </div>
-                      <br>
+                                </div>
+                                <br>
 
-                      <div class="form-group row">
-                          <div class="col-sm-2">
-                              <label><b>Client</b></label>
-                          </div>
-                          <div class="col-sm-10">
-                              <!-- <select class="form-control" name="client" #client value="{{this.client_name}}" readonly>
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <label><b>Client</b></label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!-- <select class="form-control" name="client" #client value="{{this.client_name}}" readonly>
 
                                   <option value="">Select</option>
                                   <option *ngFor="let c of ctmdata" value="{{c.id}}">{{c.client_name}}</option>
 
                               </select> -->
-                              <input type="text" class="form-control p-2" placeholder=""
-                              name="client" id="itemclient" required="" #client readonly value="{{this.client_name}}">
+                                        <input type="text" class="form-control p-2" placeholder="" name="client"
+                                            id="itemclient" required="" #client readonly value="{{this.client_name}}">
 
-                              <!-- <span  class="text-danger"
+                                        <!-- <span  class="text-danger"
                           *ngIf="cl_val&&prevent_init_client">*Please select a client</span>  -->
 
 
-                          </div>
+                                    </div>
 
-                      </div>
-                      <br>
-                      <!-- <div class="form-group row">
+                                </div>
+                                <br>
+                                <!-- <div class="form-group row">
                       <div class="col-sm-1" >
                           <label><b> Address1</b></label>
                       </div>
@@ -89,7 +88,7 @@
 
                   </div> -->
 
-                      <!-- <div class="form-group row">
+                                <!-- <div class="form-group row">
                       <div class="col-sm-1" >
                           <label ><b>Pin</b></label>
                       </div>
@@ -103,235 +102,262 @@
                       *ngIf="upload&&!pin">*please Enter Pin</span>
                   </div>
                     -->
-                    <div class="form-group row">
+                                <div class="form-group row">
 
-                      <div class="col-sm-2">
-                          <label><b>District</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder=""
-                              name="district" id="itemdistrict" #district readonly value="{{this.district_name}}"
-                              >
-                          <!-- <span  class="text-danger"
+                                    <div class="col-sm-2">
+                                        <label><b>District</b></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control p-2" placeholder="" name="district"
+                                            id="itemdistrict" #district readonly value="{{this.district_name}}">
+                                        <!-- <span  class="text-danger"
                           *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
-                      </div>
+                                    </div>
 
-                      <div class="col-sm-3"></div>
-                      <div class="col-sm-1">
-                          <label><b>Client Type</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder="" name="clienttype"
-                              id="itemclienttype" #clienttype readonly value="{{this.client_type}}">
-                          <!-- <span  class="text-danger ml-3"
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-1">
+                                        <label><b>Client Type</b></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control p-2" placeholder="" name="clienttype"
+                                            id="itemclienttype" #clienttype readonly value="{{this.client_type}}">
+                                        <!-- <span  class="text-danger ml-3"
                           *ngIf="upload&&!email">*please Enter Email</span> -->
 
 
 
-                      </div>
-                  </div>
-                  <!-- <br> -->
-                  <ng-template>
-                  <div class="form-group row">
+                                    </div>
+                                </div>
+                                <!-- <br> -->
+                                <ng-template>
+                                    <div class="form-group row">
 
-                      <div class="col-sm-2">
-                          <label><b>Operational Mode</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder=""
-                              name="text" id="itemoperationalmode" #operationalmode readonly
-                              value="{{this.oprn_mode_id}}">
-                          <!-- <span  class="text-danger"
+                                        <div class="col-sm-2">
+                                            <label><b>Operational Mode</b></label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control p-2" placeholder="" name="text"
+                                                id="itemoperationalmode" #operationalmode readonly
+                                                value="{{this.oprn_mode_id}}">
+                                            <!-- <span  class="text-danger"
                           *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
-                      </div>
+                                        </div>
 
-                      <div class="col-sm-3"></div>
-                      <div class="col-sm-1">
-                          <label><b>Working Hours</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder="" name="workinghours"
-                              id="itemworkinghours" #workinghours readonly value="{{this.working_hrs}}">
-                          <!-- <span  class="text-danger ml-3"
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-1">
+                                            <label><b>Working Hours</b></label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control p-2" placeholder=""
+                                                name="workinghours" id="itemworkinghours" #workinghours readonly
+                                                value="{{this.working_hrs}}">
+                                            <!-- <span  class="text-danger ml-3"
                           *ngIf="upload&&!email">*please Enter Email</span> -->
 
 
 
-                      </div>
-                  </div>
-                  <br>
-                  <div class="form-group row">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group row">
 
-                      <div class="col-sm-2">
-                          <label><b>AMC Upto</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder=""
-                              name="amcupto" id="itemamcupto" #amcupto readonly
-                              value="{{this.amc_upto}}">
-                          <!-- <span  class="text-danger"
+                                        <div class="col-sm-2">
+                                            <label><b>AMC Upto</b></label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control p-2" placeholder="" name="amcupto"
+                                                id="itemamcupto" #amcupto readonly value="{{this.amc_upto}}">
+                                            <!-- <span  class="text-danger"
                           *ngIf="upload&&!mobile">*please Enter Mobile Number</span>  -->
 
-                      </div>
+                                        </div>
 
-                      <div class="col-sm-3"></div>
-                      <div class="col-sm-1">
-                          <label><b>Rental Upto</b></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input type="text" class="form-control p-2" placeholder="" name=""
-                              id="itemrentalupto" #rentalupto readonly value="{{this.rental_upto}}">
-                          <!-- <span  class="text-danger ml-3"
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-1">
+                                            <label><b>Rental Upto</b></label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control p-2" placeholder="" name=""
+                                                id="itemrentalupto" #rentalupto readonly value="{{this.rental_upto}}">
+                                            <!-- <span  class="text-danger ml-3"
                           *ngIf="upload&&!email">*please Enter Email</span> -->
 
 
 
-                      </div>
-                  </div>
-                </ng-template>
-                  <br>
-                  <div class="form-group row">
-                      <div class="col-sm-2">
-                          <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
-                      </div>
-                      <div class="col-sm-3">
-                          <input [readonly]="this.ASSIGN_ENG>0" type="text" class="form-control p-2" placeholder=""
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <br>
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <label><b>Phone No.</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input [readonly]="this.ASSIGN_ENG>0" type="text" class="form-control p-2"
+                                            placeholder="" name="phone" id="itemphone" #phone
+                                            (keypress)="preventNonNumericalInput($event)" (keyup)="prevent_null($event)"
+                                            value="{{this.phone_no}}">
+                                        <span class="text-danger" *ngIf="phone_val&&prevent_init_phone">*Please enter a
+                                            phone number</span>
 
-                              name="phone" id="itemphone" #phone
-                              (keypress)="preventNonNumericalInput($event)"
-                              (keyup)="prevent_null($event)"
+                                    </div>
 
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-1">
+                                        <label><b>Email</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type='text' [readonly]="this.ASSIGN_ENG>0" class="form-control p-2"
+                                            value='{{email}}' #Email>
 
-                            value="{{this.phone_no}}">
-                          <span  class="text-danger"
-                          *ngIf="phone_val&&prevent_init_phone">*Please enter a phone number</span>
-
-                      </div>
-
-                      <div class="col-sm-3"></div>
-                      <div class="col-sm-1">
-                          <label><b>Email</b>&nbsp;<span class="text-danger">*</span></label>
-                      </div>
-                      <div class="col-3">
-                        <input type='text' [readonly]="this.ASSIGN_ENG>0" class="form-control p-2" value='{{email}}' #Email>
-
-                      </div>
-                      <div class="col-sm-3"[hidden]="true">
-                          <input [readonly]="this.ASSIGN_ENG>0" type='text' class="form-control" value='{{this.prior}}' #priority>
+                                    </div>
+                                    <div class="col-sm-3" [hidden]="true">
+                                        <input [readonly]="this.ASSIGN_ENG>0" type='text' class="form-control"
+                                            value='{{this.prior}}' #priority>
 
 
-                      </div>
+                                    </div>
 
-                  </div>
-                  <br>
-                      <br>
+                                </div>
+                                <br>
+                                <br>
 
-                      <div class="form-group row">
+                                <div class="form-group row">
 
-                          <div class="col-sm-2">
-                              <label><b>Module</b>&nbsp;<span class="text-danger">*</span></label>
-                          </div>
-                          <div class="col-sm-3">
-                              <select [disabled]="this.ASSIGN_ENG>0" class="form-control select2" id="mod"  name="module" #module (click)="select_mm(module.value)"
-                             >
+                                    <div class="col-sm-2">
+                                        <label><b>Module</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select [disabled]="this.ASSIGN_ENG>0" class="form-control select2" id="mod"
+                                            name="module" #module (click)="select_mm(module.value)">
 
-                                  <option value="">Select</option>
-                                  <option *ngFor="let m of moddata" value="{{m.module_id}}"  [selected]="tkt_module==m.module_id">{{m.module_type}}</option>
-
-
-                              </select>
-                              <span  class="text-danger"
-                          *ngIf="mm_val&&prevent_init_module">*Please select module</span>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let m of moddata" value="{{m.module_id}}"
+                                                [selected]="tkt_module==m.module_id">{{m.module_type}}</option>
 
 
-                          </div>
-                          <div class="col-3"></div>
-                          <div class="col-1">
-                          <label><b>Name</b>&nbsp;<span class="text-danger">*</span></label>
-
-                          </div>
-                          <div class="col-3">
-                        <input [readonly]="this.ASSIGN_ENG>0" type='text' class="form-control p-2" value='{{this.Name}}' #name>
-
-                          </div>
-                      </div><br>
-                      <div class="form-group row">
-
-                          <div class="col-sm-2">
-                              <label><b>Issue</b>&nbsp;<span class="text-danger">*</span></label>
-                          </div>
-                          <div class="col-sm-10">
-                              <textarea [readonly]="this.ASSIGN_ENG>0" rows="5" type="text" class="form-control p-2" placeholder=" "
-
-                                  name="issue" id="itemissue" #issue (keyup)="prevent_null($event)"
+                                        </select>
+                                        <span class="text-danger" *ngIf="mm_val&&prevent_init_module">*Please select
+                                            module</span>
 
 
-                              value="{{this.prob_reported}}"></textarea>
-                               <span  class="text-danger"
-  *ngIf="issue_val&&prevent_init_issue">*Please provide the issue</span>
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <div class="col-1">
+                                        <label><b>Name</b>&nbsp;<span class="text-danger">*</span></label>
 
-                          </div>
-                      </div>
-                      <br>
-                      <!-- <ng-template> -->
-                      <div class="form-group row">
+                                    </div>
+                                    <div class="col-3">
+                                        <input [readonly]="this.ASSIGN_ENG>0" type='text' class="form-control p-2"
+                                            value='{{this.Name}}' #name>
 
-                          <div class="col-sm-2">
-                              <label><b>Remarks</b></label>
-                          </div>
-                          <div class="col-sm-10">
-                              <!-- <textarea readonly rows="5" type="text" class="form-control p-2" placeholder=" "
-                                #remarks  name="remarks" id="itemremarks"
-                                value="{{this.Remarks}}"
-                                (keyup)="prevent_null($event)"></textarea> -->
-                                <angular-editor  [(ngModel)]="Remarks" name="remarks" id="itemremarks" [config]="configEditor"></angular-editor>
+                                    </div>
+                                </div><br>
+                                <div class="form-group row">
 
+                                    <div class="col-sm-2">
+                                        <label><b>Issue</b>&nbsp;<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <textarea [readonly]="this.ASSIGN_ENG>0" rows="5" type="text"
+                                            class="form-control p-2" placeholder=" " name="issue" id="itemissue" #issue
+                                            (keyup)="prevent_null($event)" value="{{this.prob_reported}}"></textarea>
+                                        <span class="text-danger" *ngIf="issue_val&&prevent_init_issue">*Please provide
+                                            the issue</span>
 
-                          </div>
-                          <div class="col-sm-3"></div>
+                                    </div>
+                                </div>
+                                <br>
+                                <!-- <ng-template> -->
+                                <div class="form-group row">
 
-                      </div>
-                      <!-- </ng-template> -->
-                      <div class="form-group row mt-5" *ngIf="_uploaded_type != 0">
-                        <div class="col-2"><label><b>Uploaded File: </b></label></div>
-                        <div class="col-3">
-                           <a *ngIf="this._uploaded_type == 2" href="{{_uploaded_img}}" target="_blank"><img src="{{_uploaded_img}}" height="150" width="150" *ngIf="this._uploaded_type == 2"/></a>
-                            <a href="{{_uploaded_img}}" target="_blank"><img src="../../../../assets/images/pdf.svg" height="80" width="80" *ngIf="this._uploaded_type == 1" /></a>
+                                    <div class="col-sm-2">
+                                        <label><b>Remarks</b></label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <angular-editor [(ngModel)]="Remarks" name="remarks" id="itemremarks"
+                                            [config]="configEditor"></angular-editor>
+                                    </div>
+                                </div>
+                                <!-- </ng-template> -->
 
+                                <div class="form-group row mt-5" *ngIf="_uploaded_type != 0">
+                                    <div class="col-2"><label><b>Uploaded File: </b></label></div>
+                                    <div class="col-3">
+                                        <a *ngIf="this._uploaded_type == 2" href="{{_uploaded_img}}"
+                                            target="_blank"><img src="{{_uploaded_img}}" height="150" width="150"
+                                                *ngIf="this._uploaded_type == 2" /></a>
+                                        <a href="{{_uploaded_img}}" target="_blank"><img
+                                                src="../../../../assets/images/pdf.svg" height="80" width="80"
+                                                *ngIf="this._uploaded_type == 1" /></a>
+                                    </div>
+                                </div>
 
-                        </div>
+                                <ng-container *ngIf="work_status>0">
+                                    <hr class="my-4" />
+    
+                                    <div class="form-group row mt-3">
+                                        <div class="col-sm-12">
+                                            <h5 class="mb-2"><b>Closing Remarks & Experience</b></h5>
+                                            <p class="text-muted">Please enter the closing remarks and describe your
+                                                experience.</p>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row mt-3">
+                                        <div class="col-sm-2">
+                                            <label><b>Closing Remarks</b>&nbsp;<span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <textarea rows="4" class="form-control p-2" placeholder="Enter closing remarks"
+                                                [(ngModel)]="closingRemarks" name="closingRemarks"></textarea>
+                                            <span class="text-danger"
+                                                *ngIf="closingRemarks===undefined || closingRemarks==''">*Please enter
+                                                closing remarks</span>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row mt-3">
+                                        <div class="col-sm-2">
+                                            <label><b>Experience</b></label>
+                                        </div>
+                                        <div class="col-sm-10" style="display: flex; gap: 20px;">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" id="expExcellent"
+                                                    name="experience" [(ngModel)]="closingExperience" value="E">
+                                                <label class="form-check-label" for="expExcellent">Excellent</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" id="expGood" name="experience"
+                                                    [(ngModel)]="closingExperience" value="G">
+                                                <label class="form-check-label" for="expGood">Good</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" id="expFair" name="experience"
+                                                    [(ngModel)]="closingExperience" value="F">
+                                                <label class="form-check-label" for="expFair">Fair</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" id="expPoor" name="experience"
+                                                    [(ngModel)]="closingExperience" value="P">
+                                                <label class="form-check-label" for="expPoor">Poor</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
 
-                      </div>
+                                <div class="form-group row mt-5">
+                                    <div class="col-sm-12 btnSubmitSec">
 
-
-
-
-
-
-
-
-
-                      <div class="form-group row mt-5">
-                          <div class="col-sm-12 btnSubmitSec">
-                              <!-- <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="mm_val||prior_val||phone_val||issue_val"
-                                  value="Submit" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)"> -->
-
-
-
-                                  <!-- <input type="submit" class="btn btn-info" id="submit" name="submit"  [disabled]="mm_val||phone_val||issue_val||remarks_val || this.ASSIGN_ENG>0"
-                                  value="Update" (click)="go_to_dashboard(date.value,client.value,district.value,clienttype.value,operationalmode.value,workinghours.value,amcupto.value,rentalupto.value,phone.value,priority.value,module.value,issue.value,remarks.value)"> -->
-
-                                  <input type="submit" class="btn btn-info" id="submit" name="submit"
-                                  [disabled]="
+                                        <input type="submit" class="btn btn-info" id="submit" name="submit" [disabled]="
                                   module.value == ''
                                   ||issue.value == ''
                                   ||Email.value == ''
                                   || name.value == ''
                                   || phone.value == ''
-                                  || this.ASSIGN_ENG>0"
-                                  value="Update" (click)="go_to_dashboard(
+                                  || this.ASSIGN_ENG>0" value="Update" (click)="go_to_dashboard(
                                     date.value,
                                   client.value,
                                   district.value,
@@ -343,34 +369,31 @@
                                   Email.value,
                                   name.value)">
 
-
-
-                                  <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
-                                      &nbsp; Updation failed.Please try again after some time</div>
-                                  <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button> -->
-                              <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
-                          </div>
-
-                      </div>
-
-
-
-                  </form>
-
-              </div>
-          </div>
+                                        <ng-container *ngIf="work_status>0 && isClientColosedTicket == 'N'">
+                                            <input type="submit" class="btn btn-info" id="close" name="close"
+                                                [disabled]="this.ASSIGN_ENG>0 && work_status>0 && isClientColosedTicket != 'N'"
+                                                value="Close" (click)="closeTicketByClient(
+                                    date.value,
+                                  client.value,
+                                  Email.value,
+                                  name.value,
+                                closingRemarks,
+                                closingExperience)">
+                                        </ng-container>
 
 
 
-
-
-
-
-
-
-
-          </div>
+                                        <div id="snackbar"><i class="fa fa-exclamation-triangle" style="color:red"></i>
+                                            &nbsp; Updation failed.Please try again after some time</div>
+                                        <!-- <button type="reset" class="btn btn-danger" id="cancel" name="cancel" (click)="clearfield()">Reset <i class="fa fa-refresh" [hidden]="spinshow"style="color:white;"></i><i class="fa fa-refresh fa-spin" [hidden]="!spinshow" style="color:white"></i></button> -->
+                                        <!-- <input type="reset" class="btn btn-info " id="Cancel" name="Cancel" value="Reset"> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>

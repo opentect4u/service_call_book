@@ -1,753 +1,664 @@
-
-
-
-
 <app-header></app-header>
-<!-- <app-client-header *ngIf="this.u_type=='C'"></app-client-header> -->
-
-
-
 
 <div class="page-body-wrapper">
   <app-sidebar></app-sidebar>
 
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <!-- 
+          <mat-grid-list [cols]="2" gutterSize="10px" rowHeight="500px"> -->
+          <!-- Last Two Completed Tickets Section - HIGHLIGHTED -->
+          <div class="dashboard-top-row tile-grid">
+            <div colspan="2" class="dashboard-tile shadow-xl p-4 mb-5 bg-gradient rounded tile-success"
+              *ngIf="u_type=='C' && lastTwoCompleted.length > 0">
+              <mat-card style="width: 100%; border: none; background: transparent;">
+                <div class="card-header"
+                  style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h4 style="color: white; margin: 0; font-weight: 600;">
+                        <i class="fa fa-check-double" aria-hidden="true" style="margin-right: 10px;"></i>Completed
+                        Tickets
+                      </h4>
+                      <small style="color: rgba(255,255,255,0.9); font-size: 12px;">
+                        <i class="fa fa-info-circle"></i> Your successfully closed tickets
+                      </small>
+                    </div>
+                    <div style="text-align: center;">
+                      <h2 style="color: white; margin: 0; font-weight: 700;">{{lastTwoCompleted.length}}</h2>
+                      <small style="color: rgba(255,255,255,0.9);">Recent</small>
+                    </div>
+                    <div>
+                      <span class="small-badge blue">Summary</span>
+                    </div>
+                  </div>
+                </div>
+                <mat-card-content>
+                  <div class="row" style="margin: 0;">
+                    <div class="col-md-6 mb-4" *ngFor="let ticket of lastTwoCompleted; let last = last"
+                      [style.padding-right]="!last ? '10px' : '0'">
+                      <mat-card class="completed-ticket-card shadow-md p-4 rounded border-0"
+                        (click)="go_to_update(ticket.id)"
+                        style="cursor: pointer; border: 2px solid #28a745; transition: all 0.3s ease; background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%); position: relative; overflow: hidden;">
 
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="card">
-           <div class="card-body">
+                        <!-- Success Badge -->
+                        <div
+                          style="position: absolute; top: -35px; right: -35px; width: 80px; height: 80px; background: rgba(40, 167, 69, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                          <i class="fa fa-check-circle" style="font-size: 40px; color: #28a745; opacity: 0.2;"></i>
+                        </div>
 
+                        <mat-card-content style="padding: 0; position: relative; z-index: 1;">
+                          <!-- Ticket Number and Status -->
+                          <div class="mb-3" style="padding-bottom: 15px; border-bottom: 2px solid #e9ecef;">
+                            <div class="d-flex justify-content-between align-items-start">
+                              <div>
+                                <h5 class="mb-2" style="color: #282a3c; font-weight: 700; margin: 0;">
+                                  <i class="fa fa-ticket"
+                                    style="color: #28a745; margin-right: 8px;"></i>{{ticket.tkt_no}}
+                                </h5>
+                                <small class="text-muted" style="font-size: 11px;">
+                                  <i class="fa fa-calendar"></i> {{ticket.log_in | date: 'dd MMM yyyy, HH:mm'}}
+                                </small>
+                              </div>
+                              <span class="badge"
+                                style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 8px 12px; font-size: 12px; border-radius: 20px;">
+                                <i class="fa fa-check-circle"></i> Completed
+                              </span>
+                            </div>
+                          </div>
 
-            <mat-grid-list [cols]="2" gutterSize="10px" rowHeight="150px">
-              <mat-grid-tile colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded">
-                <mat-card>
-                   <div class="card-header">
-                    <ul class="card-list">
-                      <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Opened/Closed Tickets</b></h5></li>
-                      <li><small> <i class="fa fa-caret-up"></i></small></li>
-                    </ul>
-                  </div><br>
-                  <!--Not  For Clients -->
-                  <mat-card-content *ngIf="u_type!='C'">
+                          <!-- Assigned Engineer Info -->
+                          <div class="mb-3"
+                            style="padding: 12px; background: rgba(40, 167, 69, 0.08); border-radius: 6px;">
+                            <small style="color: #6c757d; display: block; margin-bottom: 5px;">
+                              <i class="fa fa-user-circle"></i> Handled By
+                            </small>
+                            <h6 class="mb-0" style="color: #282a3c; font-weight: 600;">{{ticket.emp_name}}</h6>
+                          </div>
 
-                    <div class="row">
-                       <div class="col-3 text-center text-success">
-                        <h1>{{this.op}}</h1>
-                        <span >Opened</span>
+                          <!-- Details Section -->
+                          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div style="padding: 10px; background: #f8f9fa; border-radius: 6px; text-align: center;">
+                              <small class="text-muted" style="display: block; margin-bottom: 5px;">Status</small>
+                              <span style="color: #28a745; font-weight: 600; font-size: 13px;">
+                                <i class="fa fa-check"></i> Closed
+                              </span>
+                            </div>
+                            <div style="padding: 10px; background: #f8f9fa; border-radius: 6px; text-align: center;">
+                              <small class="text-muted" style="display: block; margin-bottom: 5px;">Ticket
+                                Status</small>
+                              <span style="color: #0066cc; font-weight: 600; font-size: 13px;">
+                                {{ticket.tktStatus ? ticket.tktStatus : 'N/A'}}
+                              </span>
+                            </div>
+                          </div>
 
+                          <!-- View Details Link -->
+                          <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e9ecef;">
+                            <a href="javascript:void(0)" class="text-decoration-none"
+                              style="color: #28a745; font-weight: 600; font-size: 13px; transition: all 0.3s ease;">
+                              <i class="fa fa-eye mr-2"></i> View Full Details
+                              <i class="fa fa-arrow-right" style="margin-left: 5px;"></i>
+                            </a>
+                          </div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </div>
 
-                       </div>
-                       <div class="col-3 text-center ">
-                        <h1>{{this.clos}}</h1>
-                        <span >Closed</span>
-                       </div>
+                  <!-- Footer Message -->
+                  <div
+                    style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(32, 201, 151, 0.1) 100%); border-radius: 6px; border-left: 4px solid #28a745;">
+                    <small style="color: #282a3c;">
+                      <i class="fa fa-info-circle"></i>
+                      <strong>Important:</strong> Please close these completed tickets to maintain your service record.
+                    </small>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
 
-                       <div class="col-3 text-center text-primary">
+            <div colspan="2" class="dashboard-tile shadow-lg mb-5 mt-5 rounded tile-accent">
+              <mat-card style="width: 100%; border: none; background: transparent;">
+                <div class="card-header tile-title mb-4">
+                  <div class="title-left">
+                    <div class="title-icon bg-success"><i class="fa fa-exchange" aria-hidden="true"></i></div>
+                    <div class="title-text">
+                      <div class="card-title">Tickets Overview</div>
+                      <div class="card-subtitle">Quick status summary</div>
+                    </div>
+                  </div>
+                  <div class="title-actions">
+                    <span class="small-badge blue">Chart</span>
+                  </div>
+                </div>
 
-                         <h1>{{this.tot}}</h1>
-                        <span >Total</span>
-                       </div>
-
-                       <div class="col-3 float-end">
-                        <button mat-raised-button  class='hover-class pull-right mt-2' style="background-color:#282a3c;color:white;" (click)="go_to_page()"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
-
-
-                       </div>
-
+                <mat-card-content *ngIf="u_type!='C'">
+                  <div class="row" style="margin: 0;">
+                    <!-- Opened Tickets Card -->
+                    <div class="col-3 mb-3 px-2">
+                      <div class="status-card"
+                        style="background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%); border: 2px solid #ff6b6b;">
+                        <div style="font-size: 28px; color: #ff6b6b; margin-bottom: 10px;">
+                          <i class="fa fa-folder-open"></i>
+                        </div>
+                        <div class="metric badge-red">
+                          <div class="num">{{this.op}}</div>
+                        </div>
+                        <span style="color: #6c757d; font-weight: 600; display: block;">Opened</span>
+                        <small style="color: #999; font-size: 11px; display: block; margin-top: 8px;">Active
+                          tickets</small>
                       </div>
-                  </mat-card-content>
-                  <!-- For Clients -->
-                  <mat-card-content *ngIf="u_type=='C'">
-                    <div class="row">
-                      <div class="col-4 text-center text-success">
-                       <h1>{{this.op}}</h1>
-                       <span >Opened</span>
+                    </div>
 
-
+                    <!-- Closed Tickets Card -->
+                    <div class="col-3 mb-3 px-2">
+                      <div class="status-card"
+                        style="background: linear-gradient(135deg, #f0fff4 0%, #d4edda 100%); border: 2px solid #28a745;">
+                        <div style="font-size: 28px; color: #28a745; margin-bottom: 10px;">
+                          <i class="fa fa-check-circle"></i>
+                        </div>
+                        <div class="metric badge-green">
+                          <div class="num">{{this.clos}}</div>
+                        </div>
+                        <span style="color: #6c757d; font-weight: 600; display: block;">Closed</span>
+                        <small style="color: #999; font-size: 11px; display: block; margin-top: 8px;">Resolved
+                          tickets</small>
                       </div>
-                      <div class="col-4 text-center ">
-                       <h1>{{this.clos}}</h1>
-                       <span >Closed</span>
+                    </div>
+
+                    <!-- Total Tickets Card -->
+                    <div class="col-3 mb-3 px-2">
+                      <div class="status-card"
+                        style="background: linear-gradient(135deg, #e7f5ff 0%, #d6e4ff 100%); border: 2px solid #0099ff;">
+                        <div style="font-size: 28px; color: #0099ff; margin-bottom: 10px;">
+                          <i class="fa fa-list"></i>
+                        </div>
+                        <div class="metric badge-blue">
+                          <div class="num">{{this.tot}}</div>
+                        </div>
+                        <span style="color: #6c757d; font-weight: 600; display: block;">Total</span>
+                        <small style="color: #999; font-size: 11px; display: block; margin-top: 8px;">All
+                          tickets</small>
                       </div>
+                    </div>
 
-                      <div class="col-4 text-center text-primary">
+                    <!-- View Button -->
+                    <div class="col-3 mb-3 px-2">
+                      <button mat-raised-button class='hover-class'
+                        style="background: linear-gradient(135deg, #282a3c 0%, #3d3d5c 100%); color: white; width: 100%; height: 100%; border-radius: 10px; font-weight: 600; box-shadow: 0 4px 12px rgba(40, 42, 60, 0.12); display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;"
+                        (click)="go_to_page()">
+                        <i class="fa fa-eye mr-4" style="font-size: 20px;"></i>
+                        <small>View Opened</small>
+                      </button>
+                    </div>
+                  </div>
+                </mat-card-content>
 
-                        <h1>{{this.tot}}</h1>
-                       <span >Total</span>
+                <!-- For Clients -->
+                <mat-card-content *ngIf="u_type=='C'">
+                  <div class="row" style="margin: 0;">
+                    <!-- Opened Tickets Card -->
+                    <div class="col-4 mb-3 px-2">
+                      <div class="status-card"
+                        style="background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%); border: 2px solid #ff6b6b; border-radius: 10px; padding: 25px; text-align: center; transition: all 0.3s ease; cursor: default; height: 100%;">
+                        <div style="font-size: 28px; color: #ff6b6b; margin-bottom: 10px;">
+                          <i class="fa fa-folder-open"></i>
+                        </div>
+                        <div class="metric badge-red">
+                          <div class="num">{{this.op}}</div>
+                        </div>
+                        <span style="color: #6c757d; font-weight: 600; display: block;">Opened</span>
+                        <small style="color: #999; font-size: 11px; display: block; margin-top: 8px;">Pending
+                          action</small>
                       </div>
+                    </div>
 
-                      <!-- <div class="col-3 float-end">
-                       <button mat-raised-button  class='hover-class pull-right mt-2' style="background-color:#282a3c;color:white;"><small><i class="fa fa-eye"></i>&nbsp;View Opened Tickets</small></button>
-                      </div> -->
+                    <!-- Closed Tickets Card -->
+                    <div class="col-4 mb-3 px-2">
+                      <div class="status-card"
+                        style="background: linear-gradient(135deg, #f0fff4 0%, #d4edda 100%); border: 2px solid #28a745; border-radius: 10px; padding: 25px; text-align: center; transition: all 0.3s ease; cursor: default; height: 100%;">
+                        <div style="font-size: 28px; color: #28a745; margin-bottom: 10px;">
+                          <i class="fa fa-check-circle"></i>
+                        </div>
+                        <div class="metric badge-green">
+                          <div class="num">{{this.clos}}</div>
+                        </div>
+                        <span style="color: #6c757d; font-weight: 600; display: block;">Closed</span>
+                        <small style="color: #999; font-size: 11px; display: block; margin-top: 8px;">Completed</small>
+                      </div>
+                    </div>
 
-                     </div>
+                    <!-- Total Tickets Card -->
+                    <div class="col-4 mb-3 px-2">
+                      <div class="status-card"
+                        style="background: linear-gradient(135deg, #e7f5ff 0%, #d6e4ff 100%); border: 2px solid #0099ff; border-radius: 10px; padding: 25px; text-align: center; transition: all 0.3s ease; cursor: default; height: 100%;">
+                        <div style="font-size: 28px; color: #0099ff; margin-bottom: 10px;">
+                          <i class="fa fa-list"></i>
+                        </div>
+                        <div class="metric badge-blue">
+                          <div class="num">{{this.tot}}</div>
+                        </div>
+                        <span style="color: #6c757d; font-weight: 600; display: block;">Total</span>
+                        <small style="color: #999; font-size: 11px; display: block; margin-top: 8px;">All
+                          tickets</small>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card-content>
 
-                  </mat-card-content>
-
-
+                <!-- Summary Footer -->
+                <div
+                  style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, rgba(255, 107, 107, 0.08) 0%, rgba(0, 153, 255, 0.08) 100%); border-radius: 8px; border-left: 4px solid #ff6b6b; text-align: center;">
+                  <small style="color: #282a3c;">
+                    <i class="fa fa-lightbulb-o text-warning h5 mr-2"></i>
+                    <span *ngIf="u_type!='C'" class="h6"><strong>Tip:</strong> Monitor open tickets regularly to ensure
+                      timely
+                      resolution.</span>
+                    <span *ngIf="u_type=='C'" class="h6"><strong>Note:</strong> Close completed tickets to maintain
+                      accurate records.</span>
+                  </small>
+                </div>
 
               </mat-card>
 
+            </div>
 
-              </mat-grid-tile>
 
-                <!-- For bar chart -->
-              <!-- <mat-grid-tile rowspan="2" class="shadow-lg p-3 mb-5 bg-body rounded">
-                <mat-card>
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets of last deven days</b></small></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div>
-                 <mat-card-content>
-
-                    <div  id="container" style="width:100%;height:38vh;">
-                     <canvas id="ctx">
-
-                     </canvas>
+            <!-- For Engineers Admin and Manager telecaller -->
+            <div colspan="2" class="dashboard-tile shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type!='C'">
+              <mat-card class="dashboard-tile">
+                <div class="card-header tile-title mb-4">
+                  <div class="title-left">
+                    <div class="title-icon bg-success"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                    <div class="title-text">
+                      <div class="card-title">Total Tickets</div>
+                      <div class="card-subtitle">Quick glance of recent counts</div>
                     </div>
-
-
-
-                 </mat-card-content>
-                </mat-card>
-
-              </mat-grid-tile> -->
-
-
-
-              <!-- For Engineers Admin and Manager telecaller -->
-              <mat-grid-tile colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type!='C'">
-                <mat-card>
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class='p-1' style="color:#282a3c">Total Tickets</b></small></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div>
-                 <mat-card-content >
-
-                  <div class='row mt-5'>
-                    <div class="col-2 text-center">
-                     <!-- <span class="label label-default bg-success pb-1">{{today}}</span> -->
-                     <h2 class="text-success ">{{today}}</h2>
-                     <span class='text-success p-1'>Today</span>
-
-
+                  </div>
+                  <div class="title-actions">
+                    <span class="small-badge blue">Summary</span>
+                  </div>
+                </div>
+                <mat-card-content>
+                  <div class="metric-grid" aria-label="Total tickets metrics">
+                    <div class="stat" *ngFor="let s of [
+                      {label:'Today', value: today, icon: 'fa-calendar', cls: 'icon-open'},
+                      {label:'Yesterday', value: yesterday, icon: 'fa-history', cls: 'icon-muted'},
+                      {label:'This Month', value: this_month, icon: 'fa-calendar-o', cls: 'icon-accent'},
+                      {label:'Last Month', value: last_month, icon: 'fa-calendar', cls: 'icon-muted'},
+                      {label:'This Year', value: this_year, icon: 'fa-globe', cls: 'icon-muted'},
+                      {label:'Lifetime', value: lifetime, icon: 'fa-hourglass', cls: 'icon-lifetime'}
+                    ]">
+                      <div class="stat-icon" [ngClass]="s.cls" aria-hidden="true"><i class="fa {{s.icon}}"></i></div>
+                      <div class="stat-value">{{s.value}}</div>
+                      <div class="stat-label">{{s.label}}</div>
+                      <!-- progress bar removed as data logic is not available -->
                     </div>
+                  </div>
+                </mat-card-content>
 
-                    <div class="col-2 text-center">
-                     <h2>{{yesterday}}</h2>
-                     <span class='text-dark p-1'>Yesterday</span>
+              </mat-card>
 
+            </div>
+
+            <div class="row w-100">
+              <div class="col-md-6 pr-2">
+                <!--1st horizontal bar Chart -->
+                <div class="dashboard-tile shadow-lg mb-5 row tile-chart tile-compact">
+
+                  <div class="col p-3">
+                    <div class="card-header tile-title mb-4">
+                      <div class="title-left">
+                        <div class="title-icon bg-success"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
+                        <div class="title-text">
+                          <div class="card-title">Ticket Status Overview</div>
+                          <div class="card-subtitle">Current ticket distribution</div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-2 text-center">
-                      <h2>{{this_month}}</h2>
-                      <span class='text-dark p-1'>This Month</span>
+                    <mat-card-content *ngIf="u_type!='C'">
 
-                     </div>
-                     <div class="col-2 text-center">
-                      <h2>{{last_month}}</h2>
-                      <span class='text-dark p-1'>Last Month</span>
+                      <div class="chart-container mt-4" id="outerpie">
+                        <canvas id="pie1"></canvas>
+                      </div>
+                    </mat-card-content>
+                    <mat-card-content *ngIf="u_type=='C'">
 
-                     </div>
-                     <div class="col-2 text-center">
-                      <h2>{{this_year}}</h2>
-                      <span class='text-dark p-1'>This Year</span>
+                      <!-- Current Ticket Status Cards -->
+                      <div class="row" style="margin: 0;">
+                        <div class="col mb-3 mr-2">
+                          <div class="ticket-info-card"
+                            style="background: linear-gradient(135deg, #e7f5ff 0%, #f0f9ff 100%); border: 2px solid #0099ff; border-radius: 10px; padding: 20px; height: 100%; transition: all 0.3s ease; cursor: default;">
+                            <div style="text-align: center;">
+                              <div style="font-size: 24px; color: #0099ff; margin-bottom: 10px;">
+                                <i class="fa fa-hashtag"></i>
+                              </div>
+                              <small style="color: #6c757d; display: block; margin-bottom: 8px; font-size: 12px;">
+                                <strong>Ticket Number</strong>
+                              </small>
+                              <h5 style="color: #0066cc; margin: 0; font-weight: 700;">
+                                {{client_last_tkt_no ? client_last_tkt_no : 'N/A'}}
+                              </h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-3 mr-2">
+                          <div class="ticket-info-card"
+                            style="background: linear-gradient(135deg, #fff0e6 0%, #fffbf0 100%); border: 2px solid #ff9500; border-radius: 10px; padding: 20px; height: 100%; transition: all 0.3s ease; cursor: default;">
+                            <div style="text-align: center;">
+                              <div style="font-size: 24px; color: #ff9500; margin-bottom: 10px;">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <small style="color: #6c757d; display: block; margin-bottom: 8px; font-size: 12px;">
+                                <strong>Logged Date & Time</strong>
+                              </small>
+                              <h6 style="color: #e67e00; margin: 0; font-weight: 700; font-size: 13px;">
+                                {{client_last_tkt_log_date ? (client_last_tkt_log_date | date: 'dd MMM yyyy, HH:mm') :
+                                'N/A'}}
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-3">
+                          <div class="ticket-info-card"
+                            style="background: linear-gradient(135deg, #f0e6ff 0%, #f8f0ff 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; height: 100%; transition: all 0.3s ease; cursor: default;">
+                            <div style="text-align: center;">
+                              <div style="font-size: 24px; color: #9b59b6; margin-bottom: 10px;">
+                                <i class="fa fa-cog"></i>
+                              </div>
+                              <small style="color: #6c757d; display: block; margin-bottom: 8px; font-size: 12px;">
+                                <strong>Work Status</strong>
+                              </small>
+                              <span *ngIf="client_last_tkt_wrk_status==0 && _tkt_status == null"
+                                style="color: #9b59b6; font-weight: 700; font-size: 13px;">
+                                <span class="dot3" style="display: inline-block; margin-right: 5px;"><i
+                                    class="fa fa-spinner fa-spin"></i></span>Pending
+                              </span>
+                              <span *ngIf="client_last_tkt_wrk_status==0 && _tkt_status"
+                                style="color: #9b59b6; font-weight: 700; font-size: 13px;">
+                                <span class="dot3" style="display: inline-block; margin-right: 5px;"><i
+                                    class="fa fa-spinner fa-spin"></i></span>{{_tkt_status ? _tkt_status : 'N/A'}}
+                              </span>
+                              <span *ngIf="client_last_tkt_wrk_status==1"
+                                style="color: #28a745; font-weight: 700; font-size: 13px;">
+                                <i class="fa fa-check-circle"></i> Completed
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div><br>
+                      <mat-divider style="margin: 20px 0;"></mat-divider>
 
-                     </div>
-                     <div class="col-2 text-center">
-                      <h2 class="text-primary">{{lifetime}}</h2>
-                      <span class='text-primary p-1'>Lifetime</span>
+                      <!-- Assigned Engineer Section -->
+                      <div *ngIf="this.emp_id>0" class="engineer-section" style="margin-top: 20px;">
+                        <h6 style="color: #282a3c; font-weight: 700; margin-bottom: 15px;">
+                          <i class="fa fa-user-circle" style="color: #28a745; margin-right: 8px;"></i>Assigned Engineer
+                        </h6>
+                        <div class="engineer-card"
+                          style="background: linear-gradient(135deg, rgba(40, 167, 69, 0.08) 0%, rgba(32, 201, 151, 0.08) 100%); border: 1px solid rgba(40, 167, 69, 0.12); border-radius: 10px; padding: 20px;">
+                          <div class="row g-0 align-items-center">
+                            <div class="col-md-3 text-center">
+                              <img src="{{this.emp_img}}" class="img-fluid rounded-circle shadow-sm"
+                                alt="Engineer Image" height="90px" width="90px"
+                                style="border: 3px solid #28a745; object-fit: cover;">
+                            </div>
+                            <div class="col-md-9" style="padding-left: 20px;">
+                              <h5 style="color: #282a3c; margin: 0 0 10px 0; font-weight: 700;">
+                                <i class="fa fa-user-circle"
+                                  style="color: #28a745; margin-right: 8px;"></i>{{this.employee_name}}
+                              </h5>
+                              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                                <div>
+                                  <small style="color: #6c757d; display: block; margin-bottom: 5px;">
+                                    <i class="fa fa-phone" style="color: #28a745; margin-right: 5px;"></i>Phone
+                                  </small>
+                                  <p style="color: #282a3c; margin: 0; font-weight: 600;">{{this.employee_phone}}</p>
+                                </div>
+                                <div>
+                                  <small style="color: #6c757d; display: block; margin-bottom: 5px;">
+                                    <i class="fa fa-envelope" style="color: #28a745; margin-right: 5px;"></i>Email
+                                  </small>
+                                  <p style="color: #282a3c; margin: 0; font-weight: 600; font-size: 13px;">
+                                    {{this.employee_email}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                     </div>
+                      <!-- Action Button -->
+                      <div class="row" style="margin-top: 25px;">
+                        <div class="col-md-12 text-center">
+                          <button class='hover-class btn btn-lg rounded-pill'
+                            style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; font-weight: 600; padding: 12px 40px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);"
+                            (click)="go_to_view()">
+                            <i class="fa fa-eye"></i>&nbsp;View All Tickets
+                          </button>
+                        </div>
+                      </div>
+
+                    </mat-card-content>
 
                   </div>
-
-
-
-
-                 </mat-card-content>
-
-
-
-             </mat-card>
-
-
-
-              </mat-grid-tile>
-
-              <!-- For clients -->
-                  <!-- <mat-grid-tile rowspan="3" colspan="2" class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type=='C'">
-                    <mat-card>
-                      <div class="card-header">
-                       <ul class="card-list">
-                         <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets of last seven days</b></h5></li>
-                         <li><small> <i class="fa fa-caret-up"></i></small></li>
-                       </ul>
-                     </div>
-                     <mat-card-content >
-
-
-
-
-
-                     </mat-card-content>
-
-
-                    </mat-card>
-
-                  </mat-grid-tile> -->
-
-
-                   <!--1st horizontal bar Chart -->
-                <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded"  >
-
-                  <mat-card >
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Ticket Status</b></small></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div><br>
-                   <mat-card-content *ngIf="u_type!='C'">
-
-                    <div style="display: block" class="mt-5" id="outerpie"  style="width:100%;height:50vh;">
-                      <canvas id="pie1"
-
-                      ></canvas>
-                    </div>
-                  </mat-card-content>
-                  <mat-card-content *ngIf="u_type=='C'">
-                    <!-- <mat-grid-list  [cols]="3" gutterSize="10px" rowHeight="80px" class="mt-5">
-                      <mat-grid-tile class="tile1 rounded-pill shadow-lg  bg-body">tile1</mat-grid-tile>
-                      <mat-grid-tile class=' rounded-pill  shadow-lg  bg-body'>tile2</mat-grid-tile>
-                      <mat-grid-tile class="tile2  rounded-pill  shadow-lg  bg-body">tile3</mat-grid-tile>
-                    </mat-grid-list>
-                    <br><br>
-                    <mat-divider></mat-divider>
-                    <br><br>
-
-                   <mat-card>
-                     <div class="row">
-                       <div class="col-md-3 text-center"> <img src="assets/profile.png" class="rounded-circle" height="80px" width="80px"></div>
-                       <div class="col-md-6 text-center pt-5">
-                         <b>Suman Mitra</b>
-
-                         <p>sumanmitra0096@gmail.com</p>
-                        </div>
-                       <div class="col-md-3 text-center pt-5">
-                        <button class="btn hover-class " style="background-color: #282a3c;color:white"><i class="fa fa-wechat"></i>&nbsp;Message</button>
-
-                       </div>
-
-
-
-
-                     </div>
-                   </mat-card>
-                    <br>
-                    <div class="text-center">
-                      <button class="btn hover-class mt-2 rounded-pill" style="background-color: #282a3c;color:white; width:50%"><small><i class="fa fa-eye"></i>&nbsp;View Tickets</small></button>
-
-                    </div> -->
-
-
-
-
-                    <mat-grid-list [cols]="3" gutterSize="20px" rowHeight="80px" class="mt-5">
-                      <mat-grid-tile class="rounded-pill shadow-lg  bg-body">
-
-                        <mat-card  class="rounded-pill text-white mat-card1">
-                        <mat-card-content class="text-center">
-                          <h5>Ticket No</h5><br>
-                          <small><b>{{client_last_tkt_no ? client_last_tkt_no : 'N/A'}}</b></small>
-                        </mat-card-content>
-                        </mat-card>
-                      </mat-grid-tile>
-                      <mat-grid-tile class="rounded-pill shadow-lg  bg-body">
-                        <mat-card  class="rounded-pill text-center">
-                          <mat-card-content >
-                            <h5>Log Date</h5><br>
-                            <small><b>{{client_last_tkt_log_date ? (client_last_tkt_log_date | date: 'dd/MM/yyyy HH:mm') : 'N/A'}}</b></small>
-                          </mat-card-content>
-                          </mat-card>
-
-                      </mat-grid-tile>
-                      <mat-grid-tile class="rounded-pill shadow-lg  bg-body">
-
-                        <mat-card  class="rounded-pill  mat-card2 text-white ">
-                        <mat-card-content class="text-center">
-                          <h5>Work Status</h5><br>
-                          <p *ngIf="client_last_tkt_wrk_status==0 && _tkt_status == null"><b class="dot3">pending...</b></p>
-                          <p *ngIf="client_last_tkt_wrk_status==0 && _tkt_status"><b class="dot3">{{_tkt_status ? _tkt_status : 'N/A'}}</b></p>
-                          <p *ngIf="client_last_tkt_wrk_status==1"><b>
-                            Done
-                          </b></p>
-                        </mat-card-content>
-                        </mat-card>
-                      </mat-grid-tile>
-                    </mat-grid-list><br>
-                    <mat-divider></mat-divider>
-
-                    <div class="card mt-5 rounded-3" style="max-width: 570px;" *ngIf="this.emp_id>0">
-                      <div class="row g-0">
-                        <div class="col-md-4 text-center">
-                          <img src="{{this.emp_img}}" class="img-fluid rounded-pill mt-5" alt="Enginner Img" height="80px" width="80px">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body ">
-                            <h4 class="card-title"><i class="fa fa-user-circle-o p-2 text-muted"></i><b>{{this.employee_name}}</b></h4><br>
-                            <p class="card-text"><i class="fa fa-phone p-2 text-muted"></i><b>{{this.employee_phone}}</b></p>
-                            <p class="card-text"><i class="fa fa-envelope p-2 text-muted"></i><small class="text-dark"><b>{{this.employee_email}}</b></small></p>
-                            <!-- <button class="btn btn-info m-1">Message</button> -->
-                            <button hidden mat-raised-button  class='hover-class btn-lg rounded-pill pull-right mb-2' style="background-color:#282a3c;color:white;"><small><i class="fa fa-wechat"></i>&nbsp;Message</small></button>
-
-
-
+                </div>
+              </div>
+              <div class="col-md-6 pl-2">
+                <!-- Split out the Progress Status into its own tile -->
+                <div class="dashboard-tile shadow-lg mb-5"
+                  style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 12px; padding: 10px; border-top: 4px solid #28a745;">
+                  <div class="col p-3">
+                    <div class="card-header tile-title mb-4">
+                      <div class="title-left">
+                        <div class="title-icon bg-success"><i class="fa fa-line-chart" aria-hidden="true"></i></div>
+                        <div class="title-text">
+                          <div class="card-title">
+                            <span *ngIf="u_type!='C'">Progress Status</span>
+                            <span *ngIf="u_type=='C'">Monthly Tickets Status</span>
+                          </div>
+                          <div class="card-subtitle">
+                            <span *ngIf="u_type!='C'">Ticket progress metrics</span>
+                            <span *ngIf="u_type=='C'">Your monthly ticket statistics</span>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-12 text-center">
-                    <button   class='hover-class btn  btn-lg rounded-pill mt-3' style="background-color:#282a3c;color:white;" (click)="go_to_view()"><small><i class="fa fa-eye"></i>&nbsp;View Tickets</small></button>
-
-                      </div>
-                    </div>
-
-
-
-
-
-
-
-                  </mat-card-content>
-
-               </mat-card>
-
-                </mat-grid-tile>
-
-
-
-                 <!--2nd horizontal bar Chart -->  <!-- Not For clients -->
-                 <mat-grid-tile rowspan="3"  class="shadow-lg p-5 mb-5 bg-body rounded">
-
-                  <mat-card >
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li *ngIf="u_type!='C'"><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Progress Status</b></small></li>
-                       <li *ngIf="u_type=='C'"><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Monthly Tickites Status</b></small></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div><br>
-                   <mat-card-content >
-
-                    <div style="display: block" class="mt-5" style="width:100%;height:50vh;">
+                    <div class="chart-container mt-4">
                       <canvas id="pie2"></canvas>
                     </div>
-                  </mat-card-content>
-
-               </mat-card>
-
-                </mat-grid-tile>
-
-
-
-
-              <!-- For Clients -->
-              <mat-grid-tile colspan="2" rowspan="3" class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type=='C'">
-                <mat-card>
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><h5><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class='p-1' style="color:#282a3c">Last 10 Tickets</b></h5></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div>
-
-                 <mat-card-content>
-                  <div class="example-container  mat-elevation-z8">
-
-                  <table mat-table [dataSource]="dataSource2">
-
-                    <!--- Note that these columns can be defined in any order.
-                          The actual rendered columns are set as a property on the row definition" -->
-
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="position">
-                      <th mat-header-cell *matHeaderCellDef class="bg-success text-white"> # </th>
-                      <td mat-cell *matCellDef="let element;index as i"> {{i+1}} </td>
-                    </ng-container>
-
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="tkt_no">
-                      <th mat-header-cell *matHeaderCellDef class="bg-success text-white"> Tickite No</th>
-                      <td mat-cell *matCellDef="let element;index as i">{{element.tkt_no}}</td>
-                    </ng-container>
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="Log">
-                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white"> Log Date </th>
-                      <td mat-cell *matCellDef="let element" > {{element.log_in |  date: 'dd/MM/yyyy HH:mm'}} </td>
-                    </ng-container>
-
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="Assignedto">
-                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white">Assigned To</th>
-                      <!-- <td mat-cell *matCellDef="let element" class="text-center" style="cursor:pointer" data-toggle="modal" data-target="#myModal"> {{element.Assignedto}} </td> -->
-                      <td mat-cell *matCellDef="let element" style="cursor:pointer" ><p [matMenuTriggerFor]="menuHero" (click)="get_emp_details(element.email,element.emp_name)">{{element.emp_name}} </p> </td>
-
-                    </ng-container>
-
-                     <!-- Weight Column -->
-                     <ng-container matColumnDef="Status">
-                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white">Status</th>
-                      <!-- <td mat-cell *matCellDef="let element" class="text-center" style="cursor:pointer" data-toggle="modal" data-target="#myModal"> {{element.Assignedto}} </td> -->
-                      <td mat-cell *matCellDef="let element" style="cursor:pointer">
-                        <mat-icon *ngIf="element.work_status > 0">check</mat-icon>
-
-                        <!-- <p [matMenuTriggerFor]="menuHero" (click)="get_emp_details(element.email,element.emp_name)">{{element.emp_name}} </p>  -->
-                      </td>
-
-                    </ng-container>
-
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="Action">
-                      <th mat-header-cell *matHeaderCellDef   class="bg-success text-white text-center" >Action</th>
-                      <td mat-cell *matCellDef="let element" class="text-center">
-                        <a (click)="go_to_update(element.id)"><i class="fa fa-eye" style="color:#282a3c"></i></a>
-
-                      </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;" ></tr>
-                  </table>
-
-                </div>
-
-
-
-
-
-                </mat-card-content>
-
-
-
-            </mat-card>
-
-
-
-             </mat-grid-tile>
-
-
-
-              <!-- <mat-grid-tile rowspan="2" colspan='2' class="shadow-lg p-5 mb-5 bg-body rounded">
-                <mat-card >
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Open Tickets By Status</b></small></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div><br>
-                 <mat-card-content>
-
-                  <div class="example-container1 mat-elevation-z8">
-
-                    <table mat-table [dataSource]="dataSource1" matSort>
-                      <ng-container matColumnDef="Id">
-                        <th mat-header-cell *matHeaderCellDef   class='text-center'><b>Sl No.</b></th>
-                        <td mat-cell *matCellDef="let row;index as i"  class='text-center'>{{i+1}}</td>
-                      </ng-container>
-
-
-                      <ng-container matColumnDef="Status">
-                        <th mat-header-cell *matHeaderCellDef  class='text-center'><b>Status</b></th>
-                        <td mat-cell *matCellDef="let row"  class='text-center'
-
-                        ><p [ngStyle]="{'color':(row.tkt_status=='Temporary'|| row.tkt_status=='Discard'?'red':(row.tkt_status=='Permanent'?'blue':(row.tkt_status=='working'?'lightgreen':'#282a3c')))}">{{row.tkt_status}}</p></td>
-                      </ng-container>
-
-                     <ng-container matColumnDef="Count">
-                        <th mat-header-cell *matHeaderCellDef class='text-center'><b>Count</b></th>
-                        <td mat-cell *matCellDef="let row" class='text-center'>{{row.status}}</td>
-                      </ng-container>
-
-
-
-
-
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns1;"
-                     ></tr>
-
-                     <tr class="mat-row" *matNoDataRow>
-                      <td class="mat-cell" colspan="4">No data found</td>
-                    </tr>
-
-                    </table>
 
                   </div>
+                </div>
+              </div>
+            </div>
 
 
-
-
-
-
-
-                 </mat-card-content>
-
-
-
-             </mat-card>
-
-
-              </mat-grid-tile> -->
-
-
-
-
-              <!-- For Line Chart -->
-              <!-- <mat-grid-tile rowspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
-                <mat-card>
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b style="color:#282a3c">Depertment Open tickets</b></small></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div>
-                 <mat-card-content>
-
-                  <div  id="container" style="width:100%;height: 38vh;">
-                     <canvas id="line">
-
-                     </canvas>
+            <!-- For Clients -->
+            <div colspan="2" rowspan="3" class="dashboard-tile shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type=='C'">
+              <mat-card class="dashboard-tile">
+                <div class="card-header tile-title">
+                  <div class="title-left">
+                    <div class="title-icon bg-success"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                    <div class="title-text">
+                      <div class="card-title">Tickets</div>
+                      <div class="card-subtitle">Last 10 Tickets</div>
                     </div>
+                  </div>
+                </div>
+                <mat-card-content>
+                  <div class="example-container  mat-elevation-z8">
 
+                    <table mat-table [dataSource]="dataSource2">
 
+                      <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
 
-
-                 </mat-card-content>
-                </mat-card>
-
-
-
-              </mat-grid-tile> -->
-
-
-             <!-- For Table -->
-              <!-- <mat-grid-tile rowspan="2" colspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
-
-                <mat-card >
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Engineer Status</b></small></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div><br>
-                 <mat-card-content>
-                <div class="example-container mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource"  matSort matSortActive="username" matSortDirection="asc" >
-                      <ng-container matColumnDef="imge">
-                        <th mat-header-cell *matHeaderCellDef  [hidden]="true">Image</th>
-                        <td mat-cell *matCellDef="let row"> <img src="/assets/profile.png" alt="Avatar" class="avatar1"/> </td>
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef class="bg-success text-white"> # </th>
+                        <td mat-cell *matCellDef="let element;index as i"> {{i+1}} </td>
                       </ng-container>
 
-
-                      <ng-container matColumnDef="Username">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header="user_name"  [hidden]="true">User Name </th>
-                        <td mat-cell *matCellDef="let row"> {{row.user_name}} </td>
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="tkt_no">
+                        <th mat-header-cell *matHeaderCellDef class="bg-success text-white"> Tickite No</th>
+                        <td mat-cell *matCellDef="let element;index as i">{{element.tkt_no}}</td>
+                      </ng-container>
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="Log">
+                        <th mat-header-cell *matHeaderCellDef class="bg-success text-white"> Log Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.log_in | date: 'dd/MM/yyyy HH:mm'}} </td>
                       </ng-container>
 
-                     <ng-container matColumnDef="Login_Status">
-                        <th mat-header-cell *matHeaderCellDef  [hidden]="true"  >Working Status</th>
-                        <td mat-cell *matCellDef="let row">
+                      <!-- Weight Column -->
+                      <ng-container matColumnDef="Assignedto">
+                        <th mat-header-cell *matHeaderCellDef class="bg-success text-white">Assigned To</th>
+                        <!-- <td mat-cell *matCellDef="let element" class="text-center" style="cursor:pointer" data-toggle="modal" data-target="#myModal"> {{element.Assignedto}} </td> -->
+                        <td mat-cell *matCellDef="let element" style="cursor:pointer">
+                          <p [matMenuTriggerFor]="menuHero" (click)="get_emp_details(element.email,element.emp_name)">
+                            {{element.emp_name}} </p>
+                        </td>
 
-                          <a role="menuitem" tabindex="-1"
-                          >
-                          <div class="ring-container" *ngIf="row.login_status == '1'">
-                            <div class="ringring"></div>
-                            <div class="circle"></div>
+                      </ng-container>
 
+                      <!-- Weight Column -->
+                      <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef class="bg-success text-white">Status</th>
+                        <!-- <td mat-cell *matCellDef="let element" class="text-center" style="cursor:pointer" data-toggle="modal" data-target="#myModal"> {{element.Assignedto}} </td> -->
+                        <td mat-cell *matCellDef="let element" style="cursor:pointer">
+                          <mat-icon *ngIf="element.work_status > 0">check</mat-icon>
 
-                           </div>
+                          <!-- <p [matMenuTriggerFor]="menuHero" (click)="get_emp_details(element.email,element.emp_name)">{{element.emp_name}} </p>  -->
+                        </td>
 
-                          <span class="dot2" *ngIf="row.login_status == '0'"></span
-                          >
-                          <span class="dot1" *ngIf="row.login_status == '2'"></span
-                            >
-                            <small  *ngIf="row.login_status == '1'" class="ml-4">Working</small>
-                            <small  *ngIf="row.login_status == '0'" class="ml-3 text-muted">Logged Out</small>
-                            <small  *ngIf="row.login_status == '2'" class="ml-3">Idle</small>
+                      </ng-container>
 
-                        </a>
+                      <!-- Symbol Column -->
+                      <ng-container matColumnDef="Action">
+                        <th mat-header-cell *matHeaderCellDef class="bg-success text-white text-center">Action</th>
+                        <td mat-cell *matCellDef="let element" class="text-center">
+                          <a (click)="go_to_update(element.id)"><i class="fa fa-eye" style="color:#282a3c"></i></a>
+
                         </td>
                       </ng-container>
 
-
-
-
-
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                     ></tr>
-
-
-
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                     </table>
 
+                    <div class="tile-footer" style="margin-top: 12px;">
+                      <small class="text-muted">Showing latest 10 tickets</small>
+                      <span style="flex:1"></span>
+                      <button mat-button class="btn btn-sm btn-outline-secondary" (click)="go_to_page()">View
+                        All</button>
+                    </div>
 
                   </div>
 
-
-
-
-
-                 </mat-card-content>
-
-
-
-             </mat-card>
-
-              </mat-grid-tile> -->
-
-
-             <!-- For Horizental Line chart -->
-            <!-- <mat-grid-tile rowspan="2" class="shadow-lg p-5 mb-5 bg-body rounded">
-                <mat-card>
-                  <div class="card-header">
-                   <ul class="card-list">
-                     <li><small><i class="fa fa-ticket" aria-hidden="true"></i><b>Agent Open tickets</b></small></li>
-                     <li><small> <i class="fa fa-caret-up"></i></small></li>
-                   </ul>
-                 </div>
-                 <mat-card-content>
-                  <div  id="container" style="width:100%;height: 38vh;">
-                     <canvas id="hrline">
-
-                     </canvas>
-                  </div>
                 </mat-card-content>
-                </mat-card>
-                </mat-grid-tile>  -->
 
-
-
-
-                 <!-- Not For clients -->
-                <mat-grid-tile rowspan="3"  class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type!='C'">
-                  <mat-card>
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets of last seven days</b></small></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div>
-                   <mat-card-content >
-
-                      <div  id="container" class="mt-5" style="width:100%;height:50vh;">
-                       <canvas id="ctx">
-
-                       </canvas>
-                      </div>
-
-
-
-                   </mat-card-content>
-
-
-                  </mat-card>
-
-                </mat-grid-tile>
-
-
-
-
-
-               <!-- Not For clients -->
-                <mat-grid-tile rowspan="3"  class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type!='C'">
-                  <mat-card>
-                    <div class="card-header">
-                     <ul class="card-list">
-                       <li><small><i class="fa fa-ticket text-success" aria-hidden="true"></i><b class="p-1" style="color:#282a3c">Total Tickets by client type</b></small></li>
-                       <li><small> <i class="fa fa-caret-up"></i></small></li>
-                     </ul>
-                   </div>
-                   <mat-card-content >
-
-                      <div  id="container-pie3" class="mt-5" style="width:100%;height:50vh;">
-                       <canvas id="pie3">
-
-                       </canvas>
-                      </div>
-
-
-
-                   </mat-card-content>
-
-                  </mat-card>
-
-                </mat-grid-tile>
-
-
-
-
-
-
-
-
-
-            </mat-grid-list>
-
-
-
-
-
-
+              </mat-card>
+            </div>
           </div>
 
+
+          <!-- Not For clients -->
+          <div rowspan="3" class="shadow-lg p-3 mb-5 bg-body rounded" *ngIf="u_type!='C'">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-card class="dashboard-tile">
+                  <div class="card-header tile-title">
+                    <div class="title-left">
+                      <div class="title-icon bg-success"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                      <div class="title-text">
+                        <div class="card-title">Total Tickets</div>
+                        <div class="card-subtitle">Recent & lifetime metrics</div>
+                      </div>
+                    </div>
+                    <div class="title-actions">
+                      <span class="small-badge blue">Stats</span>
+                    </div>
+                  </div>
+
+                  <mat-card-content>
+
+                    <div id="container" class="mt-5" style="width:100%;height:50vh;">
+                      <canvas id="ctx">
+                      </canvas>
+                    </div>
+
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-md-6">
+                <mat-card class="dashboard-tile shadow-lg mb-5"
+                  style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 12px; padding: 10px; border-top: 4px solid #28a745;">
+                  <div class="card-header tile-title">
+                    <div class="title-left">
+                      <div class="title-icon bg-success"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                      <div class="title-text">
+                        <div class="card-title">Total Tickets</div>
+                        <div class="card-subtitle">Client Type</div>
+                      </div>
+                    </div>
+                    <div class="title-actions">
+                      <span class="small-badge blue">Clients</span>
+                    </div>
+                  </div>
+                  <mat-card-content>
+
+                    <div id="container-pie3" class="mt-5" style="width:100%;height:50vh;">
+                      <canvas id="pie3">
+
+                      </canvas>
+                    </div>
+
+                  </mat-card-content>
+
+                </mat-card>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
+  <mat-menu #menuHero="matMenu" class="p-5">
 
+    <div class="d-flex justify-content-center">
+      <img src="{{this.i}}" class="img-fluid thumbnail mt-2" />
+    </div>
 
+    <div class="row">
+      <div class="col-12 text-center">
+        <label><strong>{{this.EMP_NAME}}</strong></label><br>
+        <!-- <small class="text-primary">Web Developer</small> -->
+        <p><b>{{this.pn}}</b></p>
 
-
-
-    <mat-menu #menuHero="matMenu" class="p-5" >
-
-      <div class="d-flex justify-content-center">
-        <img src="{{this.i}}" class="img-fluid thumbnail mt-2"/>
       </div>
 
-       <div class="row">
-          <div class="col-12 text-center">
-            <label><strong>{{this.EMP_NAME}}</strong></label><br>
-            <!-- <small class="text-primary">Web Developer</small> -->
-            <p><b>{{this.pn}}</b></p>
+    </div>
+    <mat-divider></mat-divider><br>
+    <div class="row">
+      <div class="col-12">
+        <strong>{{this.Email}}</strong>
+      </div>
+    </div>
+    <br>
+    <mat-divider></mat-divider><br>
 
-          </div>
+    <div class="row">
+      <div class="col-12 text-center">
+        <button class="btn btn-primary btn-block"><i class="fa fa-wechat"></i>&nbsp;Message</button>
+        <!-- <button class="btn btn-primary ml-2">Following</button> -->
 
-        </div>
-        <mat-divider></mat-divider><br>
-        <div class="row">
-          <div class="col-12">
-            <strong>{{this.Email}}</strong>
-          </div>
-        </div>
-        <br>
-        <mat-divider></mat-divider><br>
-
-
-        <div class="row">
-          <div class="col-12 text-center">
-            <button class="btn btn-primary btn-block"><i class="fa fa-wechat"></i>&nbsp;Message</button>
-            <!-- <button class="btn btn-primary ml-2">Following</button> -->
-
-          </div>
-        </div>
-        <!-- <div class="row">
+      </div>
+    </div>
+    <!-- <div class="row">
 
           <div class="col-4">
             <a href="#" class="fa fa-facebook icon"></a>
@@ -760,17 +671,11 @@
           </div>
         </div> -->
 
-
   </mat-menu>
 
+  <router-outlet></router-outlet>
 
-
-
-
-
-<router-outlet></router-outlet>
-
-<!-- <div class="modal fade" id="myModal" role="dialog">
+  <!-- <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-primary text-center">
@@ -818,7 +723,3 @@
     </div>
   </div>
 </div> -->
-
-
-
-

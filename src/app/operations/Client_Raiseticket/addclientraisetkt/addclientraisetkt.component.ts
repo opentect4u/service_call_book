@@ -2,8 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { NgxSpinnerService } from 'ngx-spinner';
 
-const GET_POST_DATA_USING_CLIENTTYPE=gql`
+const GET_POST_DATA_USING_CLIENTTYPE = gql`
 
  query getClient($id:String!,$active:String!){
     getClient(id:$id, active:$active){
@@ -18,19 +19,19 @@ const GET_POST_DATA_USING_CLIENTTYPE=gql`
 
   }
 }`
-;
+  ;
 
 
-const SHOW_MM=gql`
+const SHOW_MM = gql`
 query{
   getModuleTypeData(id:"", db_type: 5){
     module_id
     module_type
   }
 }`
-;
+  ;
 
-const FOR_GET=gql`
+const FOR_GET = gql`
 
 mutation  clientTktSave(
   $client_id: String!,
@@ -51,7 +52,7 @@ message
 }
 `;
 
-const img_upload=gql`
+const img_upload = gql`
 mutation clientTktUpload($user_id: String!, $image: Upload!, $id:String!){
   clientTktUpload(user_id: $user_id, image: $image, id: $id){
     message
@@ -59,156 +60,163 @@ mutation clientTktUpload($user_id: String!, $image: Upload!, $id:String!){
   }
 }`;
 
+const CHECK_CLIENT_PRIVILEGE = gql`
+query getClientPrivilege($client_id:String!){
+  getClientPrivilege(client_id:$client_id){
+    client_id
+    tkt_can_entry
+    pending_close
+  }
+}`
+
 @Component({
   selector: 'app-addclientraisetkt',
   templateUrl: './addclientraisetkt.component.html',
   styleUrls: ['./addclientraisetkt.component.css',
-  '../../../../assets/masters_css_js/css/font-awesome.css',
-  '../../../../assets/masters_css_js/css/apps.css',
-  '../../../../assets/masters_css_js/css/apps_inner.css',
-  '../../../../assets/masters_css_js/css/res.css']
+    '../../../../assets/masters_css_js/css/font-awesome.css',
+    '../../../../assets/masters_css_js/css/apps.css',
+    '../../../../assets/masters_css_js/css/apps_inner.css',
+    '../../../../assets/masters_css_js/css/res.css']
 })
 export class AddclientraisetktComponent implements OnInit {
-  @ViewChild('files',{static:true}) files!:ElementRef
-  _file_msg:any=''
+  @ViewChild('files', { static: true }) files!: ElementRef
+  _file_msg: any = ''
   public now: Date = new Date();
-  district_name:any;
-  client_type:any;
-  oprn_mode_id:any;
-  working_hrs:any;
-  amc_upto:any;
-  rental_upto:any;
-  phone_no:any;
+  district_name: any;
+  client_type: any;
+  oprn_mode_id: any;
+  working_hrs: any;
+  amc_upto: any;
+  rental_upto: any;
+  phone_no: any;
   email_id = localStorage.getItem('user_email');
-  v:any;
-  posts_pm:any;
-  pmdata:any;
-  posts:any;
-  mod:any;
-  moddata:any;
-  client_name:any;
-  res:any;
-  file:any;
+  v: any;
+  posts_pm: any;
+  pmdata: any;
+  posts: any;
+  mod: any;
+  moddata: any;
+  client_name: any;
+  res: any;
+  file: any;
 
 
 
 
-  keyword:any;
-  user:any;
+  keyword: any;
+  user: any;
 
-  ctmdata:any;
-  prevent_init_client=false;
-  prevent_init_module=false;
-  prevent_init_priority=false;
-  prevent_init_issue=false;
-  prevent_init_phone=false;
-  prevent_init_remarks=false;
+  ctmdata: any;
+  prevent_init_client = false;
+  prevent_init_module = false;
+  prevent_init_priority = false;
+  prevent_init_issue = false;
+  prevent_init_phone = false;
+  prevent_init_remarks = false;
   clName_status = false;
-  prevent_email =false;
+  prevent_email = false;
   emailpattern = false;
-  Moblngth=false;
-  cl_val=true;
-  mm_val=true;
-  prior_val=true;
-  issue_val=true;
-  phone_val=true;
-  remarks_val=true;
-  input_phone:any;
+  Moblngth = false;
+  cl_val = true;
+  mm_val = true;
+  prior_val = true;
+  issue_val = true;
+  phone_val = true;
+  remarks_val = true;
+  input_phone: any;
   input_name: any;
-  input_remarks:any;
-  input_issue:any;
-  success:any;
-  successmsg:any;
-  x:any;
-  dropdown:any=[];
-  cl_id:any;
-  cl_name:any;
-  sel:any;
-  spinshow:boolean=true;
-  constructor(private apollo:Apollo,private router:Router,private toastr:ToastrManager) {
+  input_remarks: any;
+  input_issue: any;
+  success: any;
+  successmsg: any;
+  x: any;
+  dropdown: any = [];
+  cl_id: any;
+  cl_name: any;
+  sel: any;
+  spinshow: boolean = true;
+  tkt_can_entry: any
+  pending_close: any
+  constructor(private apollo: Apollo, private router: Router, private toastr: ToastrManager, private spinner: NgxSpinnerService) {
     setInterval(() => {
       this.now = new Date();
     }, 1);
-   }
+  }
 
   ngOnInit(): void {
-    localStorage.setItem('address',this.router.url);
+    localStorage.setItem('address', this.router.url);
     this.input_name = document.getElementById('clName');
-    this.input_phone=document.getElementById('itemphone');
+    this.input_phone = document.getElementById('itemphone');
 
-    this.input_issue=document.getElementById('itemissue');
-    this.input_remarks=document.getElementById('itemremarks')
+    this.input_issue = document.getElementById('itemissue');
+    this.input_remarks = document.getElementById('itemremarks')
 
 
-    this.v=localStorage.getItem('UserId')
+    this.v = localStorage.getItem('UserId')
     this.apollo.watchQuery<any>({
       query: GET_POST_DATA_USING_CLIENTTYPE,
       // pollInterval:100,
-      variables:{
-        id:this.v,
-        active:''
+      variables: {
+        id: this.v,
+        active: ''
       }
     }).valueChanges
-    .subscribe(({ data, loading }) => {
-      console.log(data);
-         this.district_name=data.getClient[0].district_name;
-         this.client_type=data.getClient[0].client_type;
-         this.oprn_mode_id=data.getClient[0].oprn_mode;
-         this.working_hrs=data.getClient[0].working_hrs;
-         this.amc_upto=data.getClient[0].amc_upto;
-         this.rental_upto=data.getClient[0].rental_upto;
-         this.phone_no=data.getClient[0].phone_no ? data.getClient[0].phone_no : 0;
-         this.client_name=data.getClient[0].client_name;
+      .subscribe(({ data, loading }) => {
+        console.log(data);
+        this.district_name = data.getClient[0].district_name;
+        this.client_type = data.getClient[0].client_type;
+        this.oprn_mode_id = data.getClient[0].oprn_mode;
+        this.working_hrs = data.getClient[0].working_hrs;
+        this.amc_upto = data.getClient[0].amc_upto;
+        this.rental_upto = data.getClient[0].rental_upto;
+        this.phone_no = data.getClient[0].phone_no ? data.getClient[0].phone_no : 0;
+        this.client_name = data.getClient[0].client_name;
 
-        })
-         this.apollo.watchQuery<any>({
-          query: SHOW_MM
+      })
+    this.apollo.watchQuery<any>({
+      query: SHOW_MM
 
-        })
-          .valueChanges
-          .subscribe(({ data }) => {
+    })
+      .valueChanges
+      .subscribe(({ data }) => {
 
-            this.mod= data;
-            console.log(data);
-            this.moddata=this.mod.getModuleTypeData
-            });
+        this.mod = data;
+        console.log(data);
+        this.moddata = this.mod.getModuleTypeData
+      });
 
-
+    this.getClientPrivilege()
 
   }
 
 
 
-  preventNonNumericalInput(e:any){
+  preventNonNumericalInput(e: any) {
     e = e || window.event;
 
     var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
     var charStr = String.fromCharCode(charCode);
 
-    if (!charStr.match(/^[0-9]+$/))
-     { e.preventDefault();}
+    if (!charStr.match(/^[0-9]+$/)) { e.preventDefault(); }
 
   }
-  prevent_null(e:any){
-    if(e.target.id=='itemphone')
-    {
-      if(e.target.value=='')
-      {
-        this.phone_val=true;
-        this.prevent_init_phone=true;
-        this.input_phone.style.border="solid red 1px";
+  prevent_null(e: any) {
+    if (e.target.id == 'itemphone') {
+      if (e.target.value == '') {
+        this.phone_val = true;
+        this.prevent_init_phone = true;
+        this.input_phone.style.border = "solid red 1px";
         this.Moblngth = false;
         //this.hide_val=true;
       }
-      else
-       {
-        this.prevent_init_phone=false;
-        this.phone_val=false;
-        if(e.target.value.length != 10){
+      else {
+        this.prevent_init_phone = false;
+        this.phone_val = false;
+        if (e.target.value.length != 10) {
           this.Moblngth = true;
         }
-        else{
-          this.input_phone.style.border="solid lightgrey 1px";
+        else {
+          this.input_phone.style.border = "solid lightgrey 1px";
           this.Moblngth = false;
         }
 
@@ -216,161 +224,175 @@ export class AddclientraisetktComponent implements OnInit {
       }
 
     }
-    if(e.target.id=='itemissue')
-    {
-      if(e.target.value=='')
-      {
-        this.issue_val=true;
-        this.prevent_init_issue=true;
-        this.input_issue.style.border="solid red 1px"
+    if (e.target.id == 'itemissue') {
+      if (e.target.value == '') {
+        this.issue_val = true;
+        this.prevent_init_issue = true;
+        this.input_issue.style.border = "solid red 1px"
         console.log("phone")
 
       }
-      else
-
-       {
-        this.prevent_init_issue=false;this.issue_val=false;this.input_issue.style.border="solid lightgrey 1px"}
+      else {
+        this.prevent_init_issue = false; this.issue_val = false; this.input_issue.style.border = "solid lightgrey 1px"
+      }
 
     }
-    if(e.target.id=='itemremarks'){
+    if (e.target.id == 'itemremarks') {
 
 
-      if(e.target.value=='')
-      {
-        this.remarks_val=true;
-        this.prevent_init_remarks=true;
-        this.input_remarks.style.border="solid red 1px"
+      if (e.target.value == '') {
+        this.remarks_val = true;
+        this.prevent_init_remarks = true;
+        this.input_remarks.style.border = "solid red 1px"
         console.log("phone")
         //this.hide_val=true;
       }
-      else
-
-       {
-        this.prevent_init_remarks=false;this.remarks_val=false;this.input_remarks.style.border="solid lightgrey 1px"}
+      else {
+        this.prevent_init_remarks = false; this.remarks_val = false; this.input_remarks.style.border = "solid lightgrey 1px"
+      }
 
 
     }
-    if(e.target.id == 'clName'){
-      this.clName_status=e.target.value=='' ? true : false;
-      this.input_name.style.border= e.target.value == '' ? 'solid red 1px' : 'solid lightgrey 1px';
+    if (e.target.id == 'clName') {
+      this.clName_status = e.target.value == '' ? true : false;
+      this.input_name.style.border = e.target.value == '' ? 'solid red 1px' : 'solid lightgrey 1px';
     }
-    if(e.target.id == 'itememail'){
+    if (e.target.id == 'itememail') {
       var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
       this.prevent_email = e.target.value == '' ? true : false;
-      if(e.target.value){
+      if (e.target.value) {
         this.emailpattern = (e.target.value.match(mailformat)) ? false : true
       }
-      else{
+      else {
         this.emailpattern = false;
       }
     }
   }
-  select_mm(e:any){
-  console.log(e);
+  select_mm(e: any) {
+    console.log(e);
 
-    if(e.target.value=='')
-    {
-      this.mm_val=true;
-      this.prevent_init_module=true;
+    if (e.target.value == '') {
+      this.mm_val = true;
+      this.prevent_init_module = true;
       console.log('ss');
 
     }
-    else
-    {
-      this.mm_val=false;
-      this.prevent_init_module=false;
+    else {
+      this.mm_val = false;
+      this.prevent_init_module = false;
     }
 
   }
 
   // submit(v1:any,v2:any,v3:any,v4:any,v5:any,v6:any,v7:any,v8:any,v9:any,v10:any,v11:any,v12:any,v13:any){
-    submit(v1:any,v2:any,v3:any,v4:any,v9:any,v10:any,v11:any,v12:any,_email:any,_name:any){
-          this.apollo.mutate({
-            mutation:FOR_GET,
-            variables:{
-              client_id:localStorage.getItem('UserId'),
-              tkt_module:v11,
-              phone_no: v9,
-              priority_status:v10,
-              prob_reported: v12,
-              email:_email,
-              user_id:localStorage.getItem('UserId'),
-              name:_name
-            }
-          }).subscribe(({data})=>{
-            this.res=data;
-            var dt= JSON.parse(this.res.clientTktSave.message);
-            if(this.res.clientTktSave.success=="1"){
+  submit(v1: any, v2: any, v3: any, v4: any, v9: any, v10: any, v11: any, v12: any, _email: any, _name: any) {
+    this.apollo.mutate({
+      mutation: FOR_GET,
+      variables: {
+        client_id: localStorage.getItem('UserId'),
+        tkt_module: v11,
+        phone_no: v9,
+        priority_status: v10,
+        prob_reported: v12,
+        email: _email,
+        user_id: localStorage.getItem('UserId'),
+        name: _name
+      }
+    }).subscribe(({ data }) => {
+      this.res = data;
+      var dt = JSON.parse(this.res.clientTktSave.message);
+      if (this.res.clientTktSave.success == "1") {
 
-              var now = new Date();
-              var time = "06:30 PM";
-              var getModDateTime = (now.getMonth()+1) + "/" + now.getDate() + "/" + now.getFullYear() + " " + time;
-              var userval = new Date(getModDateTime);
+        var now = new Date();
+        var time = "06:30 PM";
+        var getModDateTime = (now.getMonth() + 1) + "/" + now.getDate() + "/" + now.getFullYear() + " " + time;
+        var userval = new Date(getModDateTime);
 
-              if(this.file != ''){
-                console.log("file exist");
+        if (this.file != '') {
+          console.log("file exist");
 
-                this.apollo
-                .mutate({
-                    mutation: img_upload,
-                    variables:{
-                      user_id:localStorage.getItem('user_email'),
-                      image: this.file,
-                      id: dt.insertId.toString()
-                    },
-                    context: {
-                      useMultipart: true
-                    }
-                  })
-                  .subscribe(({ data}) => {
-                  })
+          this.apollo
+            .mutate({
+              mutation: img_upload,
+              variables: {
+                user_id: localStorage.getItem('user_email'),
+                image: this.file,
+                id: dt.insertId.toString()
+              },
+              context: {
+                useMultipart: true
               }
+            })
+            .subscribe(({ data }) => {
+            })
+        }
 
-              localStorage.setItem('client_raiseticket', (now >= userval || localStorage.getItem('active_day') == 'N') ? '1' : '2');
-              this.router.navigate(['/Clientraisetkt']).then(() => {
-               window.location.reload()});
-            }
-            else
-            this.showsnackbar();
-            },error=>{ this.showsnackbar()
-            });
+        localStorage.setItem('client_raiseticket', (now >= userval || localStorage.getItem('active_day') == 'N') ? '1' : '2');
+        this.router.navigate(['/Clientraisetkt']).then(() => {
+          window.location.reload()
+        });
+      }
+      else
+        this.showsnackbar();
+    }, error => {
+      this.showsnackbar()
+    });
   }
-          showsnackbar() {
-            // alert("error");
-             this.x = document.getElementById("snackbar");
-             this.x.className = "show";
-             setTimeout(()=>{ this.x.className = this.x.className.replace("show", ""); }, 3000);
-           }
-           selectFile(event:any){
-            this._file_msg = '';
-            if(event.target.files.length > 0){
-              if((event.target.files[0].size /1024/1024) > 8){
-                  console.log("File Size greater than 8MB");
-                  this._file_msg = "File size must not greater than 8MB";
-                  this.file = '';
+  showsnackbar() {
+    // alert("error");
+    this.x = document.getElementById("snackbar");
+    this.x.className = "show";
+    setTimeout(() => { this.x.className = this.x.className.replace("show", ""); }, 3000);
+  }
+  selectFile(event: any) {
+    this._file_msg = '';
+    if (event.target.files.length > 0) {
+      if ((event.target.files[0].size / 1024 / 1024) > 8) {
+        console.log("File Size greater than 8MB");
+        this._file_msg = "File size must not greater than 8MB";
+        this.file = '';
 
-              }
-              else{
-                console.log(event.target.files[0].type );
+      }
+      else {
+        console.log(event.target.files[0].type);
 
-                if(event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/jpg' || event.target.files[0].type == 'image/png' || event.target.files[0].type == 'application/pdf')
-                  {
-                    this.file = event.target.files[0];
-                  }
-                else{
-                  this._file_msg = "Invalid File Type";
-                  this.file = '';
-                  console.log(this.file);
-                }
-            }
-            }
-            else{
-                  this.file = '';
-            }
-            console.log(this.file);
+        if (event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/jpg' || event.target.files[0].type == 'image/png' || event.target.files[0].type == 'application/pdf') {
+          this.file = event.target.files[0];
+        }
+        else {
+          this._file_msg = "Invalid File Type";
+          this.file = '';
+          console.log(this.file);
+        }
+      }
+    }
+    else {
+      this.file = '';
+    }
+    console.log(this.file);
 
-          }
+  }
 
-
+  getClientPrivilege() {
+    this.spinner.show();
+    this.apollo.watchQuery<any>({
+      query: CHECK_CLIENT_PRIVILEGE,
+      variables:{
+        client_id: localStorage.getItem('UserId'),
+      },
+      pollInterval: 40000,
+    })
+      .valueChanges
+      .subscribe(({ data }) => {
+        var response = data
+        console.log(response, 'Response Pri');
+        
+        this.tkt_can_entry = response.getClientPrivilege[0].tkt_can_entry
+        this.pending_close = response.getClientPrivilege[0].pending_close
+        console.log(this.tkt_can_entry, '++++++++');
+        
+        this.spinner.hide();
+      });
+  }
 }

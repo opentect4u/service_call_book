@@ -10,8 +10,8 @@ import { AddclientdashboardComponent } from 'src/app/master/addclient/addclientd
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 const srch_dt = gql`
-query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!,$user_type:String!){
-  searchByDate(frm_dt: $frm_dt, to_dt: $to_dt, user_id: $user_id,user_type:$user_type){
+query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!,$user_type:String!,$repo_type:String!){
+  searchByDate(frm_dt: $frm_dt, to_dt: $to_dt, user_id: $user_id,user_type:$user_type,repo_type:$repo_type){
     id
     log_in
     tkt_no
@@ -146,7 +146,7 @@ export class SearchByDateComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngOnInit(): void {
-    this.displayedColumns = atob(this.activatedroute.snapshot.params['type']) == 'D' ? ['Report Date', 'Ticket No.', 'Client Name', 'Assigned To', 'Status', 'View'] : atob(this.activatedroute.snapshot.params['type']) == 'E'  ? ['Assigned To','Client Name','prob_reported','Status','View']  : ['Ticket No.','Client Name','Assigned To','prob_reported','Status','View']
+    this.displayedColumns = ['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? ['Report Date', 'Ticket No.', 'Client Name', 'Assigned To', 'Status', 'View'] : atob(this.activatedroute.snapshot.params['type']) == 'E'  ? ['Assigned To','Client Name','prob_reported','Status','View']  : ['Ticket No.','Client Name','Assigned To','prob_reported','Status','View']
     this.from_date = this.activatedroute.snapshot.params['id1'];
     this.from_date = atob(this.from_date);
     this.to_date = this.activatedroute.snapshot.params['id2'];
@@ -162,13 +162,14 @@ export class SearchByDateComponent implements OnInit {
   fetch_data() {
     this.spinner.show();
     this.apollo.watchQuery<any>({
-      query: atob(this.activatedroute.snapshot.params['type']) == 'D' ? srch_dt : atob(this.activatedroute.snapshot.params['type']) == 'E' ? searchByDateEmp : searchByDateClient,
+      query: ['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? srch_dt : atob(this.activatedroute.snapshot.params['type']) == 'E' ? searchByDateEmp : searchByDateClient,
       variables:
-        atob(this.activatedroute.snapshot.params['type']) == 'D' ? {
+        ['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? {
           frm_dt: this.from_date,
           to_dt: this.to_date,
           user_id: this.type,
-          user_type: localStorage.getItem('user_Type')
+          user_type: localStorage.getItem('user_Type'),
+          repo_type: atob(this.activatedroute.snapshot.params['type'])
         } :
           atob(this.activatedroute.snapshot.params['type']) == 'E' ?
             {
@@ -201,7 +202,7 @@ export class SearchByDateComponent implements OnInit {
 
   // }
   public putdata(posts: any) {
-    this.dataSource = new MatTableDataSource(atob(this.activatedroute.snapshot.params['type']) == 'D' ? posts.searchByDate : atob(this.activatedroute.snapshot.params['type']) == 'E' ? posts.searchByDateEmp : posts.searchByDateClient);
+    this.dataSource = new MatTableDataSource(['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? posts.searchByDate : atob(this.activatedroute.snapshot.params['type']) == 'E' ? posts.searchByDateEmp : posts.searchByDateClient);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

@@ -1,35 +1,378 @@
 mat-card {
   width: 100%;
-  height:100%;
+  height: 100%;
 
 }
-.card-list{
-  list-style-type:none;
-  display:flex;
+
+.card-list {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* New: Visual Theme & Tile Styles */
+:root {
+  --brand-green: #28a745;
+  --brand-blue: #007bff;
+  --brand-red: #ff6b6b;
+  --card-bg: linear-gradient(135deg, #ffffff 0%, #f8f9fb 100%);
+}
+
+.dashboard-tile {
+  border-radius: 12px;
+  padding: 18px;
+  background: var(--card-bg);
+  box-shadow: 0 8px 20px rgba(39, 42, 48, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(39, 42, 48, 0.12);
+}
+
+.tile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tile-header .title {
+  font-weight: 700;
+  color: #222;
+}
+
+.tile-header .subtitle {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+/* New: modern card title styles */
+.tile-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.title-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+}
+
+.title-icon.bg-success {
+  background: linear-gradient(135deg, var(--brand-green), #20c997);
+}
+
+.title-icon.bg-accent {
+  background: linear-gradient(135deg, #ff6b6b, #ff9b9b);
+}
+
+.title-text .card-title {
+  font-weight: 700;
+  color: #282a3c;
+  font-size: 16px;
+}
+
+.title-text .card-subtitle {
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 2px;
+}
+
+.title-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 576px) {
+  .title-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .title-text .card-title {
+    font-size: 15px;
+  }
+}
+
+
+.tile-metrics {
+  display: flex;
+  gap: 12px;
+  align-items: center
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* New stat grid for Total Tickets */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.stat {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(39, 42, 48, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(39, 42, 48, 0.12);
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.icon-open {
+  background: linear-gradient(135deg, #ff6b6b, #ff9b9b);
+}
+
+.icon-accent {
+  background: linear-gradient(135deg, #0099ff, #4da6ff);
+}
+
+.icon-lifetime {
+  background: linear-gradient(135deg, #6f42c1, #9b59b6);
+}
+
+.icon-muted {
+  /* subtle background with visible icon color */
+  background: rgba(108, 117, 125, 0.08);
+  color: #6c757d;
+  /* darker icon color for contrast */
+  border: 1px solid rgba(108, 117, 125, 0.10);
+}
+
+/* progress bars removed — metrics are now icon + value based */
+.stat-icon i {
+  font-size: 16px;
+}
+
+.stat-value {
+  font-weight: 800;
+  color: var(--brand-green);
+  font-size: 20px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 6px;
+}
+
+/* progress bars removed */
+
+@media (max-width: 1024px) {
+  .metric-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat {
+    padding: 10px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+}
+
+.metric .num {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--brand-green)
+}
+
+.metric .label {
+  font-size: 12px;
+  color: #6c757d
+}
+
+.metric.badge-blue .num {
+  color: var(--brand-blue)
+}
+
+.metric.badge-red .num {
+  color: var(--brand-red)
+}
+
+.small-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  color: #fff
+}
+
+.small-badge.green {
+  background: linear-gradient(135deg, #28a745, #20c997)
+}
+
+.small-badge.blue {
+  background: linear-gradient(135deg, #007bff, #0099ff)
+}
+
+.small-badge.red {
+  background: linear-gradient(135deg, #ff6b6b, #ff8f7a)
+}
+
+/* Utility & new layout classes */
+.tile-success {
+  border-left: 5px solid var(--brand-green);
+  background: rgba(40, 167, 69, 0.04);
+  padding: 18px;
+  border-radius: 12px;
+}
+
+.tile-accent {
+  border-top: 4px solid var(--brand-red);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.tile-chart {
+  border-top: 4px solid var(--brand-green);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.tile-compact {
+  padding: 16px;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.status-card {
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.completed-ticket-card {
+  cursor: pointer;
+}
+
+/* Responsive improvements for the chart canvas */
+.chart-container {
+  width: 100%;
+  height: 320px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 240px;
+  }
+}
+
+.tile-footer {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.tile-footer small {
+  color: #6c757d
+}
+
+.ticket-card {
+  border-radius: 10px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06)
+}
+
+.ticket-card .tkt-no {
+  font-weight: 700;
+  color: #1f7aeb
+}
+
+.ticket-card .emp-name {
+  font-weight: 600;
+  color: #2b2b2b
+}
+
+@media (max-width:768px) {
+  .metric .num {
+    font-size: 28px
+  }
+
+  .dashboard-tile {
+    padding: 14px
+  }
+}
+
+.card-header {
+  width: 100%;
+}
+
+.card-content {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.card-content-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
 
 }
-.card-header{
-  width:100%;
-}
 
-.card-content{
-  list-style-type:none;
-  display:flex;
-  flex-direction: row;
-}
-.card-content-list{
-  list-style-type:none;
-  display:flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-}
-small{
+small {
   font-size: 10px;
   overflow-wrap: initial;
 
 }
+
 /* .metrial_button:hover{
    background-color: blanchedalmond;
    color:#282a3c;
@@ -38,34 +381,35 @@ small{
 
 button.hover-class:hover {
   background-color: white !important;
-  color: #282a3c !important;
+  color: #fff !important;
   transition: all .1s linear;
 }
 
-small{
+small {
   font-size: 10px;
 }
 
 /* For make the material data table scrollable */
-.example-container  {
- height: 400px;
+.example-container {
+  height: 400px;
   overflow: auto;
- }
+}
 
- 
 
- .example-container1{
+
+.example-container1 {
   position: relative;
 
-  height: 246px;;
+  height: 246px;
+  ;
   overflow: auto;
 
- }
+}
 
- .thumbnail{
+.thumbnail {
   border-radius: 50%;
-  height:100px;
-  width:100px;
+  height: 100px;
+  width: 100px;
 }
 
 
@@ -74,32 +418,45 @@ small{
   width: 9px;
   background-color: green;
   border-radius: 50%;
-  display: inline-block;}
-  .dot1 {
-    height: 9px;
-    width: 9px;
-    background-color:#ff8f07;
-    border-radius: 50%;
-    display: inline-block;
-    animation: blink 2s infinite;}
+  display: inline-block;
+}
 
-    .dot2 {
-      height: 9px;
-      width: 9px;
-      background-color:red;
-      border-radius: 50%;
-      display: inline-block;
-    }
+.dot1 {
+  height: 9px;
+  width: 9px;
+  background-color: #ff8f07;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 2s infinite;
+}
 
-      @keyframes blink {
-        0% { opacity: 0; }
-        50% { opacity: 1; }
-        100% { opacity: 0; }
-      }
-      .dot3{
-        display: inline-block;
-        animation: blink 2s infinite;
-      }
+.dot2 {
+  height: 9px;
+  width: 9px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot3 {
+  display: inline-block;
+  animation: blink 2s infinite;
+}
+
 /* slide toggle */
 
 /* For dot animation */
@@ -126,52 +483,64 @@ small{
   position: absolute;
   left: -7px;
   top: -2px;
-animation: pulsate 1s ease-out;
- animation-iteration-count: infinite;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
   opacity: 0.0
 }
+
 @keyframes pulsate {
-  0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
-  50% {opacity: 1.0;}
-  100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+  0% {
+    -webkit-transform: scale(0.1, 0.1);
+    opacity: 0.0;
+  }
+
+  50% {
+    opacity: 1.0;
+  }
+
+  100% {
+    -webkit-transform: scale(1.2, 1.2);
+    opacity: 0.0;
+  }
 }
 
-.avatar1{
+.avatar1 {
   vertical-align: middle;
   width: 40px;
   height: 35px;
   border-radius: 50%;
 }
 
-td,th{
+td,
+th {
   /* width:30%; */
   width: 20%;
 }
 
 
-.mat-row:nth-child(even){
+.mat-row:nth-child(even) {
   background-color: #ffffff;
 
 }
-      
-.mat-row:nth-child(odd){
-  background-color: #f2f2f2;;
+
+.mat-row:nth-child(odd) {
+  background-color: #f2f2f2;
+  ;
   /* color:white ; */
 }
 
-::ng-deep.mat-menu-panel
-  {
-    margin-top:60px;  
-    position: sticky !important;
-      /* top : 1%; */
-  }
+::ng-deep.mat-menu-panel {
+  margin-top: 60px;
+  position: sticky !important;
+  /* top : 1%; */
+}
 
 
 
 /* For Profile Card */
 
 
-.modal{
+.modal {
   position: absolute;
   left: 50%;
 }
@@ -188,20 +557,346 @@ td,th{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color:white
+  color: white
 }
 
-.mat-card1{
+.mat-card1 {
   background-color: rgb(254 143 143);
- 
+
 }
-.mat-card2{
+
+.mat-card2 {
   background-color: #9492ff;
 
 }
+
 /* .fa-wechat{
   height:30px;
   width:20px;
 } */
 
+/* Enhanced Completed Tickets Section Styles */
+.completed-ticket-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+}
 
+.completed-ticket-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 12px 24px rgba(40, 167, 69, 0.25) !important;
+  border-color: #20c997 !important;
+}
+
+.completed-ticket-card:hover a {
+  color: #20c997 !important;
+}
+
+.completed-ticket-card .card-header-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.completed-ticket-card .success-badge {
+  background: rgba(40, 167, 69, 0.08);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  z-index: 0;
+}
+
+.completed-ticket-card .ticket-meta {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  margin-bottom: 12px;
+}
+
+.completed-ticket-card .ticket-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.bg-gradient {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.05) 0%, rgba(40, 167, 69, 0.02) 100%) !important;
+}
+
+/* Animation for ticket cards entrance */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.completed-ticket-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+/* Buttons */
+.btn-cta {
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-top-row {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+@media(min-width:992px) {
+  .dashboard-top-row {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 18px;
+    align-items: start;
+  }
+}
+
+.completed-ticket-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .completed-ticket-card {
+    margin-bottom: 15px !important;
+  }
+}
+
+/* Enhanced Ticket Info Cards Styles */
+.ticket-info-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.3s ease;
+  border-radius: 10px;
+}
+
+.ticket-info-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ticket-info-card:hover::before {
+  left: 100%;
+}
+
+.ticket-info-card>div {
+  position: relative;
+  z-index: 1;
+}
+
+/* Engineer Card Styling */
+.engineer-card {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.engineer-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.15) !important;
+}
+
+.engineer-card img {
+  transition: all 0.3s ease;
+}
+
+.engineer-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Spinning animation for pending status */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fa-spin {
+  animation: spin 2s linear infinite;
+}
+
+/* Status Card Styling for Tickets Overview */
+.status-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.status-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: left 0.3s ease;
+  border-radius: 10px;
+}
+
+.status-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.status-card:hover::before {
+  left: 100%;
+}
+
+.status-card>div {
+  position: relative;
+  z-index: 1;
+}
+
+/* Animation for status card entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.status-card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.status-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.status-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.status-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+/* Responsive adjustments for status cards */
+@media (max-width: 768px) {
+  .status-card {
+    margin-bottom: 12px !important;
+  }
+}
+
+/* Top Row: keep main tiles in one line */
+.dashboard-top-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: nowrap;
+  /* Do not wrap: keep in single line */
+  overflow-x: auto;
+  /* Allow horizontal scroll on small screens */
+  padding-bottom: 8px;
+  flex-direction: column;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dashboard-top-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.dashboard-top-row::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.dashboard-tile {
+  flex: 0 0 16.6667%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+}
+
+/* Make sure mats cards stretch inside tiles */
+.dashboard-tile mat-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Ensure any large tables inside tiles scroll internally */
+.dashboard-tile .example-container {
+  max-height: 300px;
+  overflow: auto;
+}
+
+/* Table hover & header styles for Last 10 Tickets */
+.example-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mat-header-row {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: #fff;
+}
+
+.mat-header-row th {
+  color: #fff;
+}
+
+.mat-row:hover {
+  background-color: rgba(39, 42, 48, 0.04);
+}
+
+.card-header {
+  background-color: transparent;
+}
