@@ -19,6 +19,8 @@ query searchByDate($frm_dt: String!, $to_dt: String!, $user_id: String!,$user_ty
     tktStatus
     emp_name
     work_status
+    prob_reported
+    remarks
   }
  }
 `;
@@ -48,7 +50,7 @@ const searchByDateEmp = gql`query searchByDateEmp($frm_dt: String!,$to_dt: Strin
     tkt_no
   }
 }`;
-const GET_DETAILS=gql`
+const GET_DETAILS = gql`
 query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
   getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
     assign_engg
@@ -64,7 +66,7 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
   }
 }`;
 
-const GET_EDITABLE=gql`
+const GET_EDITABLE = gql`
 query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
   getSupportLogDtls(id:$id,user_type:$user_type,user_id:$user_id){
     id
@@ -89,12 +91,34 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     work_status
     call_attend
     delivery
+    assigned_by
+    closed_by_client_datetime
+    client_closed_rating
+    client_closing_remarks
   }
 }`
-;
+  ;
 
 
-
+const GET_CLIENT_RATING_FOR_EMPP = gql`
+query getSupportRating($frm_dt: String!,$to_dt: String!,$user_id: String!,$user_type: String!){
+  getSupportRating(frm_dt: $frm_dt, to_dt: $to_dt, user_id: $user_id,user_type:$user_type){
+    id
+    tkt_no
+    client_name
+    log_in
+    user_name
+    call_attend
+    delivery
+    emp_name
+    assigned_by
+    prob_reported
+    closed_by_client_datetime
+    client_closing_remarks
+    client_closed_rating
+  }
+}`
+  ;
 
 @Component({
   selector: 'app-search-by-date',
@@ -107,28 +131,32 @@ query getSupportLogDtls($id:String!,$user_type:String!,$user_id:String!){
     '../../../assets/css/res.css']
 })
 export class SearchByDateComponent implements OnInit {
-   showForm!:FormGroup;
-  constructor(private datePipe: DatePipe,private fb:FormBuilder,private activatedroute: ActivatedRoute, private apollo: Apollo, private router: Router, private spinner: NgxSpinnerService) { 
+  showForm!: FormGroup;
+  constructor(private datePipe: DatePipe, private fb: FormBuilder, private activatedroute: ActivatedRoute, private apollo: Apollo, private router: Router, private spinner: NgxSpinnerService) {
 
-    this.showForm= this.fb.group({
-      date:[{value:'',disabled:true}],
-      client:[{value:'',disabled:true}],
-      district:[{value:'',disabled:true}],
-      client_type:[{value:'',disabled:true}] ,  
-      oprn_mode:[{value:'',disabled:true}],
-      working_hrs:[{value:'',disabled:true}] ,  
-      amc_upto:[{value:'',disabled:true}],
-      rental_upto:[{value:'',disabled:true}],
-      phoneno:[{value:'',disabled:true}],
-      priority:[{value:'',disabled:true}],
-      tkt_module:[{value:'',disabled:true}],
-      prob_reported:[{value:'',disabled:true}] ,  
-      assign_to:[{value:'',disabled:true}],
-      attendedat:[{value:'',disabled:true}] ,  
-      deliveryat:[{value:'',disabled:true}],
-      ticketstatus:[{value:'',disabled:true}],
-      work_status:[{value:'',disabled:true}],
-      remarks:[{value:'',disabled:true}],
+    this.showForm = this.fb.group({
+      date: [{ value: '', disabled: true }],
+      client: [{ value: '', disabled: true }],
+      district: [{ value: '', disabled: true }],
+      client_type: [{ value: '', disabled: true }],
+      oprn_mode: [{ value: '', disabled: true }],
+      working_hrs: [{ value: '', disabled: true }],
+      amc_upto: [{ value: '', disabled: true }],
+      rental_upto: [{ value: '', disabled: true }],
+      phoneno: [{ value: '', disabled: true }],
+      priority: [{ value: '', disabled: true }],
+      tkt_module: [{ value: '', disabled: true }],
+      prob_reported: [{ value: '', disabled: true }],
+      assign_to: [{ value: '', disabled: true }],
+      attendedat: [{ value: '', disabled: true }],
+      deliveryat: [{ value: '', disabled: true }],
+      ticketstatus: [{ value: '', disabled: true }],
+      work_status: [{ value: '', disabled: true }],
+      remarks: [{ value: '', disabled: true }],
+      assign_by: [{ value: '', disabled: true }],
+      client_closing_dt: [{ value: '', disabled: true }],
+      rating: [{ value: '', disabled: true }],
+      closing_remarks: [{ value: '', disabled: true }],
     })
   }
   from_date: any;
@@ -137,22 +165,28 @@ export class SearchByDateComponent implements OnInit {
   type: any;
   dt: any;
   _id: any;
-  _type:any;
+  _type: any;
   public now: Date = new Date();
   user_type: any;
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource([]);
   dlt = true;
+  ratingData: any = {
+    E: "Excellent",
+    G: "Good",
+    F: "Fair",
+    P: "Poor"
+  }
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngOnInit(): void {
-    this.displayedColumns = ['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? ['Report Date', 'Ticket No.', 'Client Name', 'Assigned To', 'Status', 'View'] : atob(this.activatedroute.snapshot.params['type']) == 'E'  ? ['Assigned To','Client Name','prob_reported','Status','View']  : ['Ticket No.','Client Name','Assigned To','prob_reported','Status','View']
+    this.displayedColumns = ['D', 'A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? ['Report Date', 'Ticket No.', 'Client Name', 'Assigned To', 'Status', 'View'] : atob(this.activatedroute.snapshot.params['type']) == 'E' ? ['Assigned To', 'Client Name', 'prob_reported', 'Status', 'View'] : atob(this.activatedroute.snapshot.params['type']) == 'R' ? ['Report Date', 'Ticket No.', 'Client Name', 'Assigned To', 'Client Remarks', 'Rating', 'View'] : ['Ticket No.', 'Client Name', 'Assigned To', 'prob_reported', 'Status', 'View']
     this.from_date = this.activatedroute.snapshot.params['id1'];
     this.from_date = atob(this.from_date);
     this.to_date = this.activatedroute.snapshot.params['id2'];
     this.to_date = atob(this.to_date)
     this._id = atob(this.activatedroute.snapshot.params['name'])
-    this._type= atob(this.activatedroute.snapshot.params['type'])
+    this._type = atob(this.activatedroute.snapshot.params['type'])
 
     if (localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M') { this.type = ''; console.log("type=" + localStorage.getItem('user_Type')) }
     else
@@ -162,29 +196,33 @@ export class SearchByDateComponent implements OnInit {
   fetch_data() {
     this.spinner.show();
     this.apollo.watchQuery<any>({
-      query: ['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? srch_dt : atob(this.activatedroute.snapshot.params['type']) == 'E' ? searchByDateEmp : searchByDateClient,
+      query: ['D', 'A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? srch_dt : atob(this.activatedroute.snapshot.params['type']) == 'E' ? searchByDateEmp : atob(this.activatedroute.snapshot.params['type']) == 'R' ? GET_CLIENT_RATING_FOR_EMPP : searchByDateClient,
       variables:
-        ['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? {
+        ['D', 'A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? {
           frm_dt: this.from_date,
           to_dt: this.to_date,
           user_id: this.type,
           user_type: localStorage.getItem('user_Type'),
           repo_type: atob(this.activatedroute.snapshot.params['type'])
-        } :
-          atob(this.activatedroute.snapshot.params['type']) == 'E' ?
-            {
-              frm_dt: this.from_date,
-              to_dt: this.to_date,
-              emp_id: this._id,
-              user_id: localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M' ? '' : localStorage.getItem('UserId'),
-              user_type: localStorage.getItem('user_Type')
-            } : {
-              frm_dt: this.from_date,
-              to_dt: this.to_date,
-              client_id: this._id,
-              user_id: localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M' ? '' : localStorage.getItem('UserId'),
-              user_type: localStorage.getItem('user_Type')
-            },
+        } : atob(this.activatedroute.snapshot.params['type']) == 'R' ? {
+          frm_dt: this.from_date,
+          to_dt: this.to_date,
+          user_id: this.type,
+          user_type: localStorage.getItem('user_Type'),
+        } : atob(this.activatedroute.snapshot.params['type']) == 'E' ?
+          {
+            frm_dt: this.from_date,
+            to_dt: this.to_date,
+            emp_id: this._id,
+            user_id: localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M' ? '' : localStorage.getItem('UserId'),
+            user_type: localStorage.getItem('user_Type')
+          } : {
+            frm_dt: this.from_date,
+            to_dt: this.to_date,
+            client_id: this._id,
+            user_id: localStorage.getItem('user_Type') == 'A' || localStorage.getItem('user_Type') == 'M' ? '' : localStorage.getItem('UserId'),
+            user_type: localStorage.getItem('user_Type')
+          },
     })
       .valueChanges
       .subscribe(({ data }) => {
@@ -202,7 +240,7 @@ export class SearchByDateComponent implements OnInit {
 
   // }
   public putdata(posts: any) {
-    this.dataSource = new MatTableDataSource(['D','A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? posts.searchByDate : atob(this.activatedroute.snapshot.params['type']) == 'E' ? posts.searchByDateEmp : posts.searchByDateClient);
+    this.dataSource = new MatTableDataSource(['D', 'A'].includes(atob(this.activatedroute.snapshot.params['type'])) ? posts.searchByDate : atob(this.activatedroute.snapshot.params['type']) == 'E' ? posts.searchByDateEmp : atob(this.activatedroute.snapshot.params['type']) == 'R' ? posts.getSupportRating : posts.searchByDateClient);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -215,57 +253,61 @@ export class SearchByDateComponent implements OnInit {
   }
 
   view_page(v: any) {
-       this.get_details(v);
-       this.get_editable(v);
-}
-  get_details(_id:any){
+    this.get_details(v);
+    this.get_editable(v);
+  }
+  get_details(_id: any) {
     this.apollo.watchQuery<any>({
       query: GET_DETAILS,
-      variables:{
-         id:_id,
-         user_type:localStorage.getItem('user_Type'),
-         user_id:localStorage.getItem('UserId')
+      variables: {
+        id: _id,
+        user_type: localStorage.getItem('user_Type'),
+        user_id: localStorage.getItem('UserId')
       },
       pollInterval: 500
     })
-      .valueChanges.subscribe(({ data}) => {
-      this.showForm.patchValue({
-        date:this.datePipe.transform(data.getSupportLogDtls[0].log_in , 'dd-MM-yyyy h:mm:ss a'),
-        client:data.getSupportLogDtls[0].client_name,
-        phoneno:data.getSupportLogDtls[0].phone_no,
-        priority:data.getSupportLogDtls[0].priority,
-        ticketstatus:data.getSupportLogDtls[0].tktStatus,
+      .valueChanges.subscribe(({ data }) => {
+        this.showForm.patchValue({
+          date: this.datePipe.transform(data.getSupportLogDtls[0].log_in, 'dd-MM-yyyy h:mm:ss a'),
+          client: data.getSupportLogDtls[0].client_name,
+          phoneno: data.getSupportLogDtls[0].phone_no,
+          priority: data.getSupportLogDtls[0].priority,
+          ticketstatus: data.getSupportLogDtls[0].tktStatus,
+        })
       })
-      })
-     
+
   }
-  get_editable(_id:any){
+  get_editable(_id: any) {
     this.apollo.watchQuery<any>({
       query: GET_EDITABLE,
-      variables:{
-         id:_id,
-         user_type:localStorage.getItem('user_Type'),
-         user_id:localStorage.getItem('UserId')
+      variables: {
+        id: _id,
+        user_type: localStorage.getItem('user_Type'),
+        user_id: localStorage.getItem('UserId')
       },
-       pollInterval:500
+      pollInterval: 500
     })
       .valueChanges
-      .subscribe(({ data}) => {
-           this.showForm.patchValue({  
-            tkt_module:data.getSupportLogDtls[0].module,
-            prob_reported:data.getSupportLogDtls[0].prob_reported,  
-            assign_to:data.getSupportLogDtls[0].emp_name,
-            attendedat:this.datePipe.transform(data.getSupportLogDtls[0].call_attend , 'dd-MM-yyyy'),  
-            deliveryat:this.datePipe.transform(data.getSupportLogDtls[0].delivery , 'dd-MM-yyyy'),
-            work_status:data.getSupportLogDtls[0].work_status > 0 ? 'Done' : 'Pending',
-            remarks:data.getSupportLogDtls[0].remarks,
-            district:data.getSupportLogDtls[0].district_name,
-            client_type:data.getSupportLogDtls[0].client_type ,  
-            oprn_mode:data.getSupportLogDtls[0].oprn_mode,
-            working_hrs:data.getSupportLogDtls[0].working_hrs ,  
-            amc_upto:this.datePipe.transform(data.getSupportLogDtls[0].amc_upto, 'dd-MM-yyyy'),
-            rental_upto:this.datePipe.transform(data.getSupportLogDtls[0].rental_upto, 'dd-MM-yyyy'),
-           })
-       })
+      .subscribe(({ data }) => {
+        this.showForm.patchValue({
+          tkt_module: data.getSupportLogDtls[0].module,
+          prob_reported: data.getSupportLogDtls[0].prob_reported,
+          assign_to: data.getSupportLogDtls[0].emp_name,
+          attendedat: this.datePipe.transform(data.getSupportLogDtls[0].call_attend, 'dd-MM-yyyy'),
+          deliveryat: this.datePipe.transform(data.getSupportLogDtls[0].delivery, 'dd-MM-yyyy'),
+          work_status: data.getSupportLogDtls[0].work_status > 0 ? 'Done' : 'Pending',
+          remarks: data.getSupportLogDtls[0].remarks,
+          district: data.getSupportLogDtls[0].district_name,
+          client_type: data.getSupportLogDtls[0].client_type,
+          oprn_mode: data.getSupportLogDtls[0].oprn_mode,
+          working_hrs: data.getSupportLogDtls[0].working_hrs,
+          amc_upto: this.datePipe.transform(data.getSupportLogDtls[0].amc_upto, 'dd-MM-yyyy'),
+          rental_upto: this.datePipe.transform(data.getSupportLogDtls[0].rental_upto, 'dd-MM-yyyy'),
+          assign_by: data.getSupportLogDtls[0].assigned_by && data.getSupportLogDtls[0].assigned_by != 'undefined' ? data.getSupportLogDtls[0].assigned_by : 'N/A',
+          client_closing_dt: this.datePipe.transform(data.getSupportLogDtls[0].closed_by_client_datetime, 'dd-MM-yyyy'),
+          rating: data.getSupportLogDtls[0].client_closed_rating,
+          closing_remarks: data.getSupportLogDtls[0].client_closing_remarks
+        })
+      })
   }
 }

@@ -293,6 +293,7 @@ export class SidebarComponent implements OnInit {
         break;
       case 'D': this.srch_dt(this.f.frm_dt.value, this.f.to_dt.value, '', this.form_type); break;
       case 'A': this.srch_dt(this.f.frm_dt.value, this.f.to_dt.value, '', this.form_type); break;
+      case 'R': this.srch_dt(this.f.frm_dt.value, this.f.to_dt.value, '', this.form_type); break;
       default: this.srch_dt(this.f.frm_dt.value, this.f.to_dt.value, this.form_type == 'E' ? this.f.employee_name.value : this.f.client_name.value, this.form_type); break;
     }
 

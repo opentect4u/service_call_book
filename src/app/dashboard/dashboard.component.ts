@@ -158,7 +158,17 @@ query totalTktByClient($user_type: String!, $user_id: String!){
   }
 }`;
 
-
+const RATING_FOR_CLIENT = gql`
+query totalRatingForEmployee($user_type:String!,$user_id:String!){
+  totalRatingForEmployee(user_type: $user_type, user_id: $user_id){
+    emp_name
+    emp_code
+    tot_exc
+    tot_gd
+    tot_fr
+		tot_pr
+  }
+}`;
 
 
 
@@ -320,7 +330,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .valueChanges
       .subscribe(({ data, loading }) => {
         console.log(data, localStorage.getItem('user_Type'), localStorage.getItem('UserId'), 'Data');
-        
+
         this.tkt = localStorage.getItem('user_Type') != 'C' ? data.openCloseTkt[0] : data.clientOpenCloseTkt[0];
         this.op = this.tkt.opened;
         this.clos = this.tkt.closed;
@@ -584,10 +594,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           }
         });
       });
-      var user_type = localStorage.getItem('user_Type');
-      if (user_type == 'C') {
-        this.getClosedTickets();
-      }
+    var user_type = localStorage.getItem('user_Type');
+    if (user_type == 'C') {
+      this.getClosedTickets();
+    }
+
+    if (user_type != 'C') {
+      this.ratingForEmployee()
+    }
 
   }
 
@@ -758,7 +772,99 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     // TODO: Implement modal for remarks and mutation for permanent close
   }
 
+  ratingForEmployee() {
+    this.apollo.watchQuery<any>({
+      query: RATING_FOR_CLIENT,
+      variables: {
+        user_type: localStorage.getItem('user_Type'),
+        user_id: localStorage.getItem('UserId')
+      },
+      pollInterval: 40000,
 
+    })
+      .valueChanges
+      .subscribe(({ data, loading }) => {
+        console.log('Rating data:', data.totalRatingForEmployee);
+
+        const ratings = data.totalRatingForEmployee;
+        const labels = ratings.map((emp: any) => emp.emp_name);
+        const excData = ratings.map((emp: any) => emp.tot_exc);
+        const gdData = ratings.map((emp: any) => emp.tot_gd);
+        const frData = ratings.map((emp: any) => emp.tot_fr);
+        const prData = ratings.map((emp: any) => emp.tot_pr);
+
+        const ctx = document.getElementById('bar') as HTMLCanvasElement;
+        if (ctx) {
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Excellent',
+                  data: excData,
+                  backgroundColor: '#28a745',
+                  borderColor: '#28a745',
+                  borderWidth: 1
+                },
+                {
+                  label: 'Good',
+                  data: gdData,
+                  backgroundColor: '#ffc107',
+                  borderColor: '#ffc107',
+                  borderWidth: 1
+                },
+                {
+                  label: 'Fair',
+                  data: frData,
+                  backgroundColor: '#fd7e14',
+                  borderColor: '#fd7e14',
+                  borderWidth: 1
+                },
+                {
+                  label: 'Poor',
+                  data: prData,
+                  backgroundColor: '#dc3545',
+                  borderColor: '#dc3545',
+                  borderWidth: 1
+                }
+              ]
+            },
+            options: {
+              scales: {
+                xAxes: [{
+                  stacked: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Employees'
+                  }
+                }],
+                yAxes: [{
+                  stacked: true,
+                  ticks: {
+                    beginAtZero: true
+                  },
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Number of Ratings'
+                  }
+                }]
+              },
+              legend: {
+                display: true,
+                position: 'top'
+              },
+              tooltips: {
+                mode: 'index',
+                intersect: false
+              },
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+        }
+      });
+  }
 
 
 }

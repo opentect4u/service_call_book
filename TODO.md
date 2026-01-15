@@ -1,0 +1,2 @@
+- [ ] Add matTooltip directive to the table row in search-by-date.component.html to display problem reported on hover
+- [ ] Test the tooltip functionality

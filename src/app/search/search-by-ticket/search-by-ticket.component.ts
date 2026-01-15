@@ -14,6 +14,8 @@ const srch_tkt=gql`query searchByTktNo($tkt_no:String!,$user_id:String!,$user_ty
     tktStatus
     emp_name
     work_status
+    prob_reported
+    remarks
   }
  }`;
 

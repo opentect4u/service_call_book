@@ -1,0 +1,6 @@
+::ng-deep .mat-tooltip {
+    color: white;
+    background-color: #282a3c;
+    text-overflow: inherit;
+    font-size: 15px;
+}
